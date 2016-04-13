@@ -11,13 +11,6 @@ namespace OilSimulationModel
     {
         public CommonModel()
         {
-        }
-
-        //判断是不是访问的本机数据
-        public static bool IsLoacal()
-        {
-
-            return false;
         } 
 
         /// <summary>
