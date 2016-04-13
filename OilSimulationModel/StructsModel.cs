@@ -58,5 +58,6 @@ namespace OilSimulationModel
         public bool   bThreadBusy;
         public Thread thread;
         public string szFilePath;
-    }  
+    } 
+     
 }
