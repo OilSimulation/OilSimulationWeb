@@ -34,7 +34,7 @@
 	                    </div> 
                     </div>
                 <div id="RightPanl" >
-                    <iframe id="iframe1Id" name="I1" scrolling="no" style="height: 400px; width: 100%; border:0;" src="http://www.baidu.com"></iframe>  
+                    <iframe id="iframe1Id" name="I1" scrolling="no" style="height: 400px; width: 100%; border:0;" src="<%=Url.Content("/Home/ViewBaseKnow1")%>"></iframe>  
                 </div>
                 <div class="clear"></div>
             </div> 
