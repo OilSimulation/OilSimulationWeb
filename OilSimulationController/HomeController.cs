@@ -31,5 +31,10 @@ namespace OilSimulationController
             return View();
         }
 
+        public ActionResult ViewBaseKnow1()
+        {
+            return View();
+        }
+
     }
 }
