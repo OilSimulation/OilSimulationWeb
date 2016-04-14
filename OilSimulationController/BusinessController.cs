@@ -48,9 +48,9 @@ namespace OilSimulationController
         /// <param name="fMinValue"></param>
         /// <param name="egridFilePath"></param>
         /// <returns></returns>
-        private List<stCubeInfo> GetAllPoint(EclipseModel model, string szProName, int iStep, int k, float fMaxValue, float fMinValue, string egridFilePath)
+        private List<float[]> GetAllPoint(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
         {
-            List<stCubeInfo> lst = new List<stCubeInfo>();
+            List<float[]> lst = new List<float[]>();
             if (szProName == "FIPOIL" || szProName == "FIPWAT" || szProName == "PRESSURE" || szProName == "SWAT" || szProName == "SOIL")
             {
                 //
@@ -82,16 +82,16 @@ namespace OilSimulationController
                                 PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
                                 int pos = k * model.nx * model.ny + j * model.nx + i;
                                 ///!!!! 这里的v才是网格(i,j,k)上的属性值
-                                float v = propValues[pos]; 
+                                float v = propValues[pos];
                                 stCubeInfo dwInfo = new stCubeInfo();
-                                 
-                                dwInfo.ct = new float[3];
+
+                                dwInfo.ct = new float[4];
                                 dwInfo.ct[0] = (center.x);
                                 dwInfo.ct[1] = (center.y);
                                 dwInfo.ct[2] = (center.z);
                                 dwInfo.ct[3] = (v);
 
-                                lst.Add(dwInfo);
+                                lst.Add(new float[4] { center.x, center.y, center.z, v });
                             }
                     }
                     else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
@@ -111,13 +111,13 @@ namespace OilSimulationController
                                     float v = propValues[pos];
                                     stCubeInfo dwInfo = new stCubeInfo();
 
-                                    dwInfo.ct = new float[3];
+                                    dwInfo.ct = new float[4];
                                     dwInfo.ct[0] = (center.x);
                                     dwInfo.ct[1] = (center.y);
                                     dwInfo.ct[2] = (center.z);
                                     dwInfo.ct[3] = (v);
 
-                                    lst.Add(dwInfo);
+                                    lst.Add(new float[4] { center.x, center.y, center.z, v });
                                 }
                             }
                     }
@@ -132,8 +132,8 @@ namespace OilSimulationController
                 {
                     // 由于eclipse模型中只记录了有效网格的数值，所以这里的propValues与(i,j,k)并不是直接对应的
                     float[] propValues = initParser.ParseEclipsePropertyFromInit(szProName);
-                    fMinValue = propValues.Min();
-                    fMaxValue = propValues.Max();
+                    //fMinValue = propValues.Min();
+                    //fMaxValue = propValues.Max();
                     if (propValues.Length == model.TotalGrids)
                     {
                         for (int j = 0; j < model.ny; j++)
@@ -147,13 +147,13 @@ namespace OilSimulationController
                                 float v = propValues[pos];
                                 stCubeInfo dwInfo = new stCubeInfo();
 
-                                dwInfo.ct = new float[3];
+                                dwInfo.ct = new float[4];
                                 dwInfo.ct[0] = (center.x);
                                 dwInfo.ct[1] = (center.y);
                                 dwInfo.ct[2] = (center.z);
                                 dwInfo.ct[3] = (v);
 
-                                lst.Add(dwInfo);
+                                lst.Add(new float[4] { center.x, center.y, center.z, v });
                             }
                     }
                     else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
@@ -173,13 +173,13 @@ namespace OilSimulationController
                                     float v = propValues[pos];
                                     stCubeInfo dwInfo = new stCubeInfo();
 
-                                    dwInfo.ct = new float[3];
+                                    dwInfo.ct = new float[4];
                                     dwInfo.ct[0] = (center.x);
                                     dwInfo.ct[1] = (center.y);
                                     dwInfo.ct[2] = (center.z);
                                     dwInfo.ct[3] = (v);
 
-                                    lst.Add(dwInfo);
+                                    lst.Add(new float[4] { center.x, center.y, center.z, v });
                                 }
                             }
                     }
@@ -188,6 +188,25 @@ namespace OilSimulationController
 
             return lst;
 
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetData()
+        { 
+            string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
+            EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
+
+            List<float[]> lstData = new List<float[]>();
+            for ( int i = 0; i < gridModel.nz; i++ )
+            {
+                lstData.AddRange(GetAllPoint(gridModel, "SOIL", 1, i, eGridFile));
+            }
+            var res = new ConfigurableJsonResult();
+            res.Data = lstData;
+            return res;
         }
     }
 }

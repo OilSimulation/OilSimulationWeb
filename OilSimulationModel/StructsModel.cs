@@ -51,13 +51,20 @@ namespace OilSimulationModel
     }
 
     /// <summary>
-    /// 
+    /// 线程结构
     /// </summary>
     public struct stMultiTread
     {
+        public string szUserMac;
+        public string szFilePath;
         public bool   bThreadBusy;
         public Thread thread;
-        public string szFilePath;
-    } 
+    }
+
+    public struct stCubeInfo
+    { 
+        public float[] ct { get; set; } 
+    }
+     
      
 }

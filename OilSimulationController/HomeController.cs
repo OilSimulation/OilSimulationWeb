@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.IO;
 using System.Management;
 using OilSimulationModel;
+using EclipseUtils;
 
 namespace OilSimulationController
 {
@@ -27,7 +28,8 @@ namespace OilSimulationController
             else
             {
                 lstThread.Add(new stMultiTread());
-            }
+            } 
+            
             return View();
         }
 

@@ -14,6 +14,7 @@ namespace OilSimulationModel
     {
         public override void ExecuteResult(ControllerContext context)
         {
+            JsonRequestBehavior = JsonRequestBehavior.AllowGet;
             if (context == null)
             {
                 throw new ArgumentNullException("context");
