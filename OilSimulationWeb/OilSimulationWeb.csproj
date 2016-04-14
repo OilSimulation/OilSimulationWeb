@@ -77,12 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\EclipseParser.dll" />
-    <Content Include="bin\OilSimulationController.dll" />
-    <Content Include="bin\OilSimulationController.pdb" />
-    <Content Include="bin\OilSimulationModel.dll" />
-    <Content Include="bin\OilSimulationModel.pdb" />
-    <Content Include="bin\OilSimulationWeb.dll" />
-    <Content Include="bin\OilSimulationWeb.pdb" />
     <Content Include="Content\UserDefine.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
