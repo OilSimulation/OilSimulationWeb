@@ -7,6 +7,7 @@ using OilSimulationModel;
 using EclipseUtils;
 using System.IO;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace OilSimulationController
 {
@@ -35,6 +36,52 @@ namespace OilSimulationController
         {  
             string strData = "本地可用"; 
             return Json(strData, JsonRequestBehavior.AllowGet); 
+        }
+
+        /// <summary>
+        /// 打开控制台执行拼接完成的批处理命令字符串
+        /// </summary>
+        /// <param name="inputAction">需要执行的命令委托方法：每次调用 <paramref name="inputAction"/> 中的参数都会执行一次</param>
+        private static void ExecBatCommand(Action<Action<string>> inputAction)
+        {
+            Process pro = null;
+            StreamWriter sIn = null;
+            StreamReader sOut = null;
+
+            try
+            {
+                pro = new Process();
+                pro.StartInfo.FileName = "cmd.exe";
+                pro.StartInfo.UseShellExecute = false;
+                pro.StartInfo.CreateNoWindow = true;
+                pro.StartInfo.RedirectStandardInput = true;
+                pro.StartInfo.RedirectStandardOutput = true;
+                pro.StartInfo.RedirectStandardError = true;
+
+                pro.OutputDataReceived += (sender, e) => Console.WriteLine(e.Data);
+                pro.ErrorDataReceived += (sender, e) => Console.WriteLine(e.Data);
+
+                pro.Start();
+                sIn = pro.StandardInput;
+                sIn.AutoFlush = true;
+
+                pro.BeginOutputReadLine();
+                inputAction(value => sIn.WriteLine(value));
+
+                pro.WaitForExit();
+            }
+            finally
+            {
+                if (pro != null && !pro.HasExited)
+                    pro.Kill();
+
+                if (sIn != null)
+                    sIn.Close();
+                if (sOut != null)
+                    sOut.Close();
+                if (pro != null)
+                    pro.Close();
+            }
         }
 
         /// <summary>
@@ -368,7 +415,7 @@ namespace OilSimulationController
         public ActionResult GetData()
         { 
             string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
-            EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
+            EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile); 
 
             List<float[]> lstData = new List<float[]>();
             for ( int i = 0; i < gridModel.nz; i++ )
