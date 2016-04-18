@@ -95,7 +95,272 @@ namespace OilSimulationController
         /// <param name="fMinValue"></param>
         /// <param name="egridFilePath"></param>
         /// <returns></returns>
-        private List<float[]> GetAllPoint(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
+        private List<stDrawInfo> GetAllPoint(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
+        {
+            List<stDrawInfo> lst = new List<stDrawInfo>();
+            if (szProName == "FIPOIL" || szProName == "FIPWAT" || szProName == "PRESSURE" || szProName == "SWAT" || szProName == "SOIL")
+            {
+                //
+                string initFilename = Path.ChangeExtension(egridFilePath, StepFileExt[iStep]);
+
+                using (EclipseParser initParser = new EclipseParser(initFilename))
+                {
+                    // 由于eclipse模型中只记录了有效网格的数值，所以这里的propValues与(i,j,k)并不是直接对应的
+                    float[] propValues;// = initParser.ParseEclipsePropertyFromInit(szProName);
+                    if (szProName == "SOIL")
+                    {
+                        propValues = initParser.ParseEclipsePropertyFromInit("SWAT");
+                        for (int z = 0; z < propValues.Length; ++z)
+                        {
+                            propValues[z] = 1 - propValues[z];
+                        }
+                    }
+                    else
+                    {
+                        propValues = initParser.ParseEclipsePropertyFromInit(szProName);
+                    }
+                    if (propValues.Length == model.TotalGrids)
+                    {
+                        for (int j = 0; j < model.ny; j++)
+                            for (int i = 0; i < model.nx; i++)
+                            {
+                                //这里面的所有网格都输出
+                                Pillar p = model.GetGridAtIJK(i, j, k);
+                                PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
+                                int pos = k * model.nx * model.ny + j * model.nx + i;
+                                ///!!!! 这里的v才是网格(i,j,k)上的属性值
+                                float v = propValues[pos];
+                                stDrawInfo dwInfo = new stDrawInfo();
+
+                                dwInfo.a = new float[3];
+                                dwInfo.a[0] = p.a.x;
+                                dwInfo.a[1] = p.a.y;
+                                dwInfo.a[2] = p.a.z;
+                                dwInfo.b = new float[3];
+                                dwInfo.b[0] = p.b.x;
+                                dwInfo.b[1] = p.b.y;
+                                dwInfo.b[2] = p.b.z;
+                                dwInfo.c = new float[3];
+                                dwInfo.c[0] = p.c.x;
+                                dwInfo.c[1] = p.c.y;
+                                dwInfo.c[2] = p.c.z;
+                                dwInfo.d = new float[3];
+                                dwInfo.d[0] = p.d.x;
+                                dwInfo.d[1] = p.d.y;
+                                dwInfo.d[2] = p.d.z;
+                                dwInfo.e = new float[3];
+                                dwInfo.e[0] = p.e.x;
+                                dwInfo.e[1] = p.e.y;
+                                dwInfo.e[2] = p.e.z;
+                                dwInfo.f = new float[3];
+                                dwInfo.f[0] = p.f.x;
+                                dwInfo.f[1] = p.f.y;
+                                dwInfo.f[2] = p.f.z;
+                                dwInfo.g = new float[3];
+                                dwInfo.g[0] = p.g.x;
+                                dwInfo.g[1] = p.g.y;
+                                dwInfo.g[2] = p.g.z;
+                                dwInfo.h = new float[3];
+                                dwInfo.h[0] = p.h.x;
+                                dwInfo.h[1] = p.h.y;
+                                dwInfo.h[2] = p.h.z;
+                                dwInfo.v = (v);
+
+                                lst.Add(dwInfo);
+                            }
+                    }
+                    else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
+                    {
+                        for (int j = 0; j < model.ny; j++)
+                            for (int i = 0; i < model.nx; i++)
+                            {
+                                Pillar p = model.GetGridAtIJK(i, j, k);
+                                PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
+                                bool isActive = model.IsActive(i, j, k);
+                                if (isActive)
+                                {
+                                    //  通过I，J，K算出在整个有效网格中的位置
+                                    int indexPos = k * model.nx * model.ny + j * model.nx + i;
+                                    int pos = model.IndexNode[indexPos];
+                                    ///!!!! 这里的v才是网格(i,j,k)上的属性值
+                                    float v = propValues[pos];
+                                    stDrawInfo dwInfo = new stDrawInfo();
+
+                                    dwInfo.a = new float[3];
+                                    dwInfo.a[0] = p.a.x;
+                                    dwInfo.a[1] = p.a.y;
+                                    dwInfo.a[2] = p.a.z;
+                                    dwInfo.b = new float[3];
+                                    dwInfo.b[0] = p.b.x;
+                                    dwInfo.b[1] = p.b.y;
+                                    dwInfo.b[2] = p.b.z;
+                                    dwInfo.c = new float[3];
+                                    dwInfo.c[0] = p.c.x;
+                                    dwInfo.c[1] = p.c.y;
+                                    dwInfo.c[2] = p.c.z;
+                                    dwInfo.d = new float[3];
+                                    dwInfo.d[0] = p.d.x;
+                                    dwInfo.d[1] = p.d.y;
+                                    dwInfo.d[2] = p.d.z;
+                                    dwInfo.e = new float[3];
+                                    dwInfo.e[0] = p.e.x;
+                                    dwInfo.e[1] = p.e.y;
+                                    dwInfo.e[2] = p.e.z;
+                                    dwInfo.f = new float[3];
+                                    dwInfo.f[0] = p.f.x;
+                                    dwInfo.f[1] = p.f.y;
+                                    dwInfo.f[2] = p.f.z;
+                                    dwInfo.g = new float[3];
+                                    dwInfo.g[0] = p.g.x;
+                                    dwInfo.g[1] = p.g.y;
+                                    dwInfo.g[2] = p.g.z;
+                                    dwInfo.h = new float[3];
+                                    dwInfo.h[0] = p.h.x;
+                                    dwInfo.h[1] = p.h.y;
+                                    dwInfo.h[2] = p.h.z;
+                                    dwInfo.v = (v);
+
+                                    lst.Add(dwInfo);
+                                }
+                            }
+                    }
+                }
+            }
+            else//静态
+            {
+                // 下面是读取一种静态属性的例子
+                // 从init文件中读出一种静态属性的数据
+                String initFilename = Path.ChangeExtension(egridFilePath, ".INIT");
+                using (EclipseParser initParser = new EclipseParser(initFilename))
+                {
+                    // 由于eclipse模型中只记录了有效网格的数值，所以这里的propValues与(i,j,k)并不是直接对应的
+                    float[] propValues = initParser.ParseEclipsePropertyFromInit(szProName);
+                    //fMinValue = propValues.Min();
+                    //fMaxValue = propValues.Max();
+                    if (propValues.Length == model.TotalGrids)
+                    {
+                        for (int j = 0; j < model.ny; j++)
+                            for (int i = 0; i < model.nx; i++)
+                            {
+                                //这里面的所有网格都输出
+                                Pillar p = model.GetGridAtIJK(i, j, k);
+                                PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
+                                int pos = k * model.nx * model.ny + j * model.nx + i;
+                                ///!!!! 这里的v才是网格(i,j,k)上的属性值
+                                float v = propValues[pos];
+                                stDrawInfo dwInfo = new stDrawInfo();
+
+                                dwInfo.a = new float[3];
+                                dwInfo.a[0] = p.a.x;
+                                dwInfo.a[1] = p.a.y;
+                                dwInfo.a[2] = p.a.z;
+                                dwInfo.b = new float[3];
+                                dwInfo.b[0] = p.b.x;
+                                dwInfo.b[1] = p.b.y;
+                                dwInfo.b[2] = p.b.z;
+                                dwInfo.c = new float[3];
+                                dwInfo.c[0] = p.c.x;
+                                dwInfo.c[1] = p.c.y;
+                                dwInfo.c[2] = p.c.z;
+                                dwInfo.d = new float[3];
+                                dwInfo.d[0] = p.d.x;
+                                dwInfo.d[1] = p.d.y;
+                                dwInfo.d[2] = p.d.z;
+                                dwInfo.e = new float[3];
+                                dwInfo.e[0] = p.e.x;
+                                dwInfo.e[1] = p.e.y;
+                                dwInfo.e[2] = p.e.z;
+                                dwInfo.f = new float[3];
+                                dwInfo.f[0] = p.f.x;
+                                dwInfo.f[1] = p.f.y;
+                                dwInfo.f[2] = p.f.z;
+                                dwInfo.g = new float[3];
+                                dwInfo.g[0] = p.g.x;
+                                dwInfo.g[1] = p.g.y;
+                                dwInfo.g[2] = p.g.z;
+                                dwInfo.h = new float[3];
+                                dwInfo.h[0] = p.h.x;
+                                dwInfo.h[1] = p.h.y;
+                                dwInfo.h[2] = p.h.z;
+                                dwInfo.v = (v);
+
+                                lst.Add(dwInfo);
+                            }
+                    }
+                    else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
+                    {
+                        for (int j = 0; j < model.ny; j++)
+                            for (int i = 0; i < model.nx; i++)
+                            {
+                                Pillar p = model.GetGridAtIJK(i, j, k);
+                                PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
+                                bool isActive = model.IsActive(i, j, k);
+                                if (isActive)
+                                {
+                                    //  通过I，J，K算出在整个有效网格中的位置
+                                    int indexPos = k * model.nx * model.ny + j * model.nx + i;
+                                    int pos = model.IndexNode[indexPos];
+                                    ///!!!! 这里的v才是网格(i,j,k)上的属性值
+                                    float v = propValues[pos];
+                                    stDrawInfo dwInfo = new stDrawInfo();
+
+                                    dwInfo.a = new float[3];
+                                    dwInfo.a[0] = p.a.x;
+                                    dwInfo.a[1] = p.a.y;
+                                    dwInfo.a[2] = p.a.z;
+                                    dwInfo.b = new float[3];
+                                    dwInfo.b[0] = p.b.x;
+                                    dwInfo.b[1] = p.b.y;
+                                    dwInfo.b[2] = p.b.z;
+                                    dwInfo.c = new float[3];
+                                    dwInfo.c[0] = p.c.x;
+                                    dwInfo.c[1] = p.c.y;
+                                    dwInfo.c[2] = p.c.z;
+                                    dwInfo.d = new float[3];
+                                    dwInfo.d[0] = p.d.x;
+                                    dwInfo.d[1] = p.d.y;
+                                    dwInfo.d[2] = p.d.z;
+                                    dwInfo.e = new float[3];
+                                    dwInfo.e[0] = p.e.x;
+                                    dwInfo.e[1] = p.e.y;
+                                    dwInfo.e[2] = p.e.z;
+                                    dwInfo.f = new float[3];
+                                    dwInfo.f[0] = p.f.x;
+                                    dwInfo.f[1] = p.f.y;
+                                    dwInfo.f[2] = p.f.z;
+                                    dwInfo.g = new float[3];
+                                    dwInfo.g[0] = p.g.x;
+                                    dwInfo.g[1] = p.g.y;
+                                    dwInfo.g[2] = p.g.z;
+                                    dwInfo.h = new float[3];
+                                    dwInfo.h[0] = p.h.x;
+                                    dwInfo.h[1] = p.h.y;
+                                    dwInfo.h[2] = p.h.z;
+                                    dwInfo.v = (v);
+
+                                    lst.Add(dwInfo);
+                                }
+                            }
+                    }
+                }
+            }
+
+            return lst;
+
+        }
+
+        /// <summary>
+        /// 获取指定帧，指定层数据
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="szProName"></param>
+        /// <param name="iStep"></param>
+        /// <param name="k"></param>
+        /// <param name="fMaxValue"></param>
+        /// <param name="fMinValue"></param>
+        /// <param name="egridFilePath"></param>
+        /// <returns></returns>
+        private List<float[]> GetCenterPoint(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
         {
             List<float[]> lst = new List<float[]>();
             if (szProName == "FIPOIL" || szProName == "FIPWAT" || szProName == "PRESSURE" || szProName == "SWAT" || szProName == "SOIL")
@@ -415,10 +680,15 @@ namespace OilSimulationController
         public ActionResult GetData()
         { 
             string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
-            EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile); 
+            EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
 
-            List<float[]> lstData = new List<float[]>();
-            for ( int i = 0; i < gridModel.nz; i++ )
+            //List<float[]> lstData = new List<float[]>();
+            //for (int i = 0; i < gridModel.nz; i++)
+            //{
+            //    lstData.AddRange(GetAllPoint(gridModel, "SOIL", 1, i, eGridFile));
+            //}
+            List<stDrawInfo> lstData = new List<stDrawInfo>();
+            for (int i = 0; i < gridModel.nz; i++)
             {
                 lstData.AddRange(GetAllPoint(gridModel, "SOIL", 1, i, eGridFile));
             }

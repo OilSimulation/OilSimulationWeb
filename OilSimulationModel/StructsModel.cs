@@ -66,6 +66,19 @@ namespace OilSimulationModel
         public float[] ct { get; set; } 
     }
 
+    public struct stDrawInfo
+    {
+        public float[] a { get; set; }
+        public float[] b { get; set; }
+        public float[] c { get; set; }
+        public float[] d { get; set; }
+        public float[] e { get; set; }
+        public float[] f { get; set; }
+        public float[] g { get; set; }
+        public float[] h { get; set; }
+        public float v { get; set; }
+    }
+
     public class View3DPoint
     {
         private float x;
