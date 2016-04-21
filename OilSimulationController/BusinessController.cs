@@ -702,13 +702,13 @@ namespace OilSimulationController
         [HttpPost]
         public ActionResult GetModelData()
         {
-            string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
+            string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
             EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
 
             List<View3DPoint> lstData = new List<View3DPoint>();
             for (int i = 0; i < gridModel.nz; i++)
             {
-                lstData.AddRange(GetOutlinePoint(Get3DAllPoint(gridModel, "SOIL", 1, i, eGridFile)));
+                lstData.AddRange(GetOutlinePoint(Get3DAllPoint(gridModel, "SOIL", 40, i, eGridFile), false));
             }
 
             return Json(new
@@ -727,11 +727,18 @@ namespace OilSimulationController
             List<View3DPoint> listResult = new List<View3DPoint>();
             var varX = listData.GroupBy(s => s.X);//相同X坐标的分一组
             var varY = listData.GroupBy(s => s.Y);//相同Y坐标的分一组
+
+            float maxColor = listData.Max(s => s.Color);
+            float minColor = listData.Min(s => s.Color);
             //var varZ = listData.GroupBy(s => s.Z);//相同Z坐标的分一组
             foreach (var varM in varX)//取X坐标最大值和最小值对应的坐标
             {
                 var varMin = varM.OrderByDescending(s => s.Y).First();
+                varMin.MinColor = minColor;
+                varMin.MaxColor = maxColor;
                 var varMax = varM.OrderBy(s => s.Y).First();
+                varMax.MinColor = minColor;
+                varMax.MaxColor = maxColor;
                 listResult.Add(varMin);
                 listResult.Add(varMax);
             }
@@ -740,6 +747,10 @@ namespace OilSimulationController
             {
                 var varMin = varM.OrderByDescending(s => s.X).First();
                 var varMax = varM.OrderBy(s => s.X).First();
+                varMin.MinColor = minColor;
+                varMin.MaxColor = maxColor;
+                varMax.MinColor = minColor;
+                varMax.MaxColor = maxColor;
                 listResult.Add(varMin);
                 listResult.Add(varMax);
             }
@@ -747,5 +758,66 @@ namespace OilSimulationController
 
             return listResult;
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="listData"></param>
+        /// <param name="isOutLine">是否做轮廓过滤</param>
+        /// <returns></returns>
+        private List<View3DPoint> GetOutlinePoint(List<View3DPoint> listData,bool isOutLine)
+        {
+            float maxColor = listData.Max(s => s.Color);
+            float minColor = listData.Min(s => s.Color);
+            float xx = listData.Max(s => s.X);
+            float yy = listData.Max(s => s.Y);
+            float zz = listData.Max(s => s.Z);
+            float xx1 = listData.Min(s => s.X);
+            float yy2 = listData.Min(s => s.Y);
+            float zz3 = listData.Min(s => s.Z);
+
+            List<View3DPoint> listResult = new List<View3DPoint>();
+            if (!isOutLine)//不做轮廓过滤
+            {
+                foreach (View3DPoint point in listData)
+                {
+                    point.MaxColor = maxColor;
+                    point.MinColor = minColor;
+                }
+                return listData;
+            }
+            var varX = listData.GroupBy(s => s.X);//相同X坐标的分一组
+            var varY = listData.GroupBy(s => s.Y);//相同Y坐标的分一组
+
+            //var varZ = listData.GroupBy(s => s.Z);//相同Z坐标的分一组
+            foreach (var varM in varX)//取X坐标最大值和最小值对应的坐标
+            {
+                var varMin = varM.OrderByDescending(s => s.Y).First();
+                varMin.MinColor = minColor;
+                varMin.MaxColor = maxColor;
+                var varMax = varM.OrderBy(s => s.Y).First();
+                varMax.MinColor = minColor;
+                varMax.MaxColor = maxColor;
+                listResult.Add(varMin);
+                listResult.Add(varMax);
+            }
+
+            foreach (var varM in varY)//取Y坐标最大值和最小值对应的坐标
+            {
+                var varMin = varM.OrderByDescending(s => s.X).First();
+                var varMax = varM.OrderBy(s => s.X).First();
+                varMin.MinColor = minColor;
+                varMin.MaxColor = maxColor;
+                varMax.MinColor = minColor;
+                varMax.MaxColor = maxColor;
+                listResult.Add(varMin);
+                listResult.Add(varMax);
+            }
+
+
+            return listResult;
+        }
+
     }
 }

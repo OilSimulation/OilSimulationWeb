@@ -109,6 +109,21 @@ namespace OilSimulationModel
             get { return color; }
             set { color = value; }
         }
+
+        private float minColor;
+
+        public float MinColor
+        {
+            get { return minColor; }
+            set { minColor = value; }
+        }
+        private float maxColor;
+
+        public float MaxColor
+        {
+            get { return maxColor; }
+            set { maxColor = value; }
+        }
     }
      
 }
