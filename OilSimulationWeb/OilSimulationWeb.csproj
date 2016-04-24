@@ -121,6 +121,7 @@
     <Content Include="Views\Base\ViewPageFunc1.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Home\View3DControl.ascx" />
+    <Content Include="Views\Home\View3DTest.ascx" />
     <Content Include="Views\Home\ViewBaseKnow1.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
