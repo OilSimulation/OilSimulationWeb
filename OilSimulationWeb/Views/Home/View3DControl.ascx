@@ -15,16 +15,19 @@
         		        frame = document.getElementById('canvas-frame');
         		        width = document.getElementById('canvas-frame').clientWidth;
         		        height = document.getElementById('canvas-frame').clientHeight;
-        		        //        		        renderer = new THREE.WebGLRenderer({
-        		        //        		            antialias: true
-        		        //        		        });//显卡渲染
+        		                		        renderer = new THREE.WebGLRenderer({
+        		                		            antialias: true
+        		                		        });//显卡渲染
 
-        		        renderer = new THREE.CanvasRenderer({
-        		            antialias: true
-        		        });//软件渲染
+//        		        renderer = new THREE.CanvasRenderer({
+//        		            antialias: true
+//        		        });//软件渲染
         		        renderer.setSize(width, height);
         		        document.getElementById('canvas-frame').appendChild(renderer.domElement);
         		        //renderer.setClearColorHex(0xFFFFFF, 1.0);
+
+
+        		        window.addEventListener('resize', onWindowResize, false);
         		    }
 
         		    var camera;
@@ -35,7 +38,7 @@
         		        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);//透视
         		        camera.position.z = 1000;
 
-//        		        camera = new THREE.OrthographicCamera(-2, 600, 3000, -1.5, 1, 5000);//正交投影，
+//        		        camera = new THREE.OrthographicCamera(0, 600, 3000, 0, 1, 5000);//正交投影，
 //        		        camera.position.set(500, 3000, 4000);
 //        		        
         		        //scene.add(camera);
@@ -54,7 +57,7 @@
         		        //                    z : 0
         		        //                });
 
-        		        camera.lookAt(new THREE.Vector3(0, 0, 0));
+        		        camera.lookAt(new THREE.Vector3(0, 0, 0));//视野中心坐标
         		    }
 
         		    var scene;
@@ -72,12 +75,11 @@
         		    var cube;
         		    var mesh;
         		    var varCubeGeometry;
-        		    var group;
 
                     //加载模型
         		    function initObject(x, y, z, color) {
-        		        varCubeGeometry = new THREE.CubeGeometry(0.25, 25, 25);
-        		        group = new THREE.Group();
+        		        varCubeGeometry = new THREE.CubeGeometry(100, 100, 100);
+        		        //group = new THREE.Group();
         		        //varCubeGeometry.position.x = 1 + a;
         		        cube = new THREE.Mesh(varCubeGeometry,
                                                     new THREE.MeshBasicMaterial({
@@ -87,8 +89,8 @@
         		        cube.position.x = x;
         		        cube.position.z = y;
         		        cube.position.y = z;
-        		        group.add(cube);
-        		        //scene.add(cube);
+        		        //group.add(cube);
+        		        scene.add(cube);
 
                     }
 
@@ -309,7 +311,6 @@
         		        initLight();
         		        //initObject();
         		        funGetModelData();
-        		        scene.add(group);
         		        InitStats();
         		        //InitControl();
 
@@ -325,7 +326,11 @@
         		        //camera.toTopView();
 
         		    }
-
+        		    function onWindowResize() {
+        		        camera.aspect = window.innerWidth / window.innerHeight;
+        		        camera.updateProjectionMatrix();
+        		        renderer.setSize(window.innerWidth, window.innerHeight);
+        		    }
 
         		    function animation() {
 

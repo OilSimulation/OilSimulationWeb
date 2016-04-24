@@ -702,7 +702,8 @@ namespace OilSimulationController
         [HttpPost]
         public ActionResult GetModelData()
         {
-            string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
+            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
+            string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/气藏开发/均质/QICANG/123_E100.EGRID");
             EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
 
             List<View3DPoint> lstData = new List<View3DPoint>();
@@ -768,6 +769,10 @@ namespace OilSimulationController
         /// <returns></returns>
         private List<View3DPoint> GetOutlinePoint(List<View3DPoint> listData,bool isOutLine)
         {
+            if (listData.Count <= 0)
+            {
+                return new List<View3DPoint>();
+            }
             float maxColor = listData.Max(s => s.Color);
             float minColor = listData.Min(s => s.Color);
             float xx = listData.Max(s => s.X);
@@ -777,6 +782,11 @@ namespace OilSimulationController
             float yy2 = listData.Min(s => s.Y);
             float zz3 = listData.Min(s => s.Z);
 
+            //
+            float movex = (xx - xx1) / 2 + xx1;
+            float movey = (yy - yy2) / 2 + yy2;
+            float movez = (zz - zz3) / 2 + zz3;
+
             List<View3DPoint> listResult = new List<View3DPoint>();
             if (!isOutLine)//不做轮廓过滤
             {
@@ -784,6 +794,9 @@ namespace OilSimulationController
                 {
                     point.MaxColor = maxColor;
                     point.MinColor = minColor;
+                    point.X -= movex;//将坐标点移动到以0,0,0为中心
+                    point.Y -= movey;
+                    point.Z -= movez;
                 }
                 return listData;
             }
