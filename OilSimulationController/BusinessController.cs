@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.Mvc;
 using OilSimulationModel;
 using EclipseUtils;
@@ -682,18 +683,19 @@ namespace OilSimulationController
             string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
             EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
 
-            //List<float[]> lstData = new List<float[]>();
+            List<float[]> lstData = new List<float[]>();
+            for (int i = 0; i < gridModel.nz; i++)
+            {
+                lstData.AddRange(GetCenterPoint(gridModel, "SOIL", 1, i, eGridFile));
+            }
+            //List<stDrawInfo> lstData = new List<stDrawInfo>();
             //for (int i = 0; i < gridModel.nz; i++)
             //{
             //    lstData.AddRange(GetAllPoint(gridModel, "SOIL", 1, i, eGridFile));
             //}
-            List<stDrawInfo> lstData = new List<stDrawInfo>();
-            for (int i = 0; i < gridModel.nz; i++)
-            {
-                lstData.AddRange(GetAllPoint(gridModel, "SOIL", 1, i, eGridFile));
-            }
             var res = new ConfigurableJsonResult();
             res.Data = lstData;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return res;
         }
 
