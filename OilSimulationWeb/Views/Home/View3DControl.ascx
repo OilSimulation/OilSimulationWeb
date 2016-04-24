@@ -10,7 +10,7 @@
 
 		</style>
         		<script type="text/javascript">
-
+        		    
         		    function List() {
         		        this.value = [];
         		        /* 添加 */
@@ -109,7 +109,6 @@
         		    var cube;
         		    var mesh;
         		    var varCubeGeometry;
-        		    var listCube = new List();
         		    var geometry = new THREE.Geometry();
         		    var colors = new THREE.Color();
                     //加载模型
@@ -117,17 +116,15 @@
         		        varCubeGeometry = new THREE.CubeGeometry(100, 100, 100);
         		        cube = new THREE.Mesh(varCubeGeometry,
                                                     new THREE.MeshBasicMaterial({
-                                                        color: color
+                                                         vertexColors: THREE.VertexColors
 
                                                     }));
         		        cube.position.x = x;
         		        cube.position.z = y;
         		        cube.position.y = z;
         		        cube.updateMatrix();
-        		        applyVertexColors(varCubeGeometry, colors.setHex(color));
+        		        applyVertexColors(varCubeGeometry, colors.setHex(color));//设置面颜色
         		        geometry.merge(cube.geometry, cube.matrix);
-        		        listCube.add(varCubeGeometry);
-
                     }
 
 
@@ -292,8 +289,10 @@
         		        controls = new THREE.OrbitControls(camera, renderer.domElement);
         		    }
         		    var cubeMaterial = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors });
+        		    //var cubeMaterial = new THREE.MeshBasicMaterial({ vertexColors: THREE.FaceColors });
 
         		    function funGetModelData() {
+        		        debugger
         		        $.ajax({
         		            type: "post",
         		            url: "/Business/GetModelData",
@@ -359,36 +358,43 @@
 
                     //设置颜色 
         		    function applyVertexColors(g, c) {
-
         		        g.faces.forEach(function (f) {
-
         		            var n = (f instanceof THREE.Face3) ? 3 : 4;
-
         		            for (var j = 0; j < n; j++) {
-
         		                f.vertexColors[j] = c;
-
         		            }
-
         		        });
+        		    }
 
+        		    function applyVertexColorsSet(g, c) {
+        		        g.faces.forEach(function (f) {
+        		            var n = (f instanceof THREE.Face3) ? 3 : 4;
+        		            for (var j = 0; j < n; j++) {
+        		                f.vertexColors[j].setHex(c);
+        		            }
+        		        });
         		    }
         		    var cccc = new THREE.Color();
         		    function ChangeColor() {
-        		        //alert(listCube.size());
+
         		        
-        		        scene.remove(mesh);
-        		        for (var i = 0; i < listCube.size(); i++) {
-        		            var xx = listCube.get(i);
-        		            applyVertexColors(listCube.get(i), cccc.setHex(0xff + i));
-        		            geometry.merge(listCube.get(i), listCube.get(i).matrix);
+        		        //applyVertexColorsSet(geometry, c);
+        		        //alert(geometry.faces.length);
+        		        for (var i = 0; i < geometry.faces.length; i++) {
+        		            var c;
+        		            if ((i % 12) == 0)
+                            {
+                                c = Math.random() * 0xffffff;
+                             }
+        		            var face = geometry.faces[i];
+        		            for (var j = 0; j < 3; j++) {
+        		                face.vertexColors[j].setHex(c);
+        		            }
         		        }
-        		        mesh = new THREE.Mesh(geometry, cubeMaterial);
-        		        scene.add(mesh);
-        		        
-        		        //scene.update();
-        		        //geometry.update();
-        		        //mesh.update();
+
+
+        		        geometry.colorsNeedUpdate = true;
+
                     }
 
 
