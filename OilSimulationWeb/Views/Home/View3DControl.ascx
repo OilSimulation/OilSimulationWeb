@@ -9,7 +9,60 @@
 			}
 
 		</style>
-        		<script>
+        		<script type="text/javascript">
+
+        		    function List() {
+        		        this.value = [];
+        		        /* 添加 */
+        		        this.add = function (obj) {
+        		            return this.value.push(obj);
+        		        };
+        		        /* 大小 */
+        		        this.size = function () {
+        		            return this.value.length;
+        		        };
+        		        /* 返回指定索引的值 */
+        		        this.get = function (index) {
+        		            return this.value[index];
+        		        };
+        		        /* 删除指定索引的值 */
+        		        this.remove = function (index) {
+        		            this.value.splice(index, 1);
+        		            return this.value;
+        		        };
+        		        /* 删除全部值 */
+        		        this.removeAll = function () {
+        		            return this.value = [];
+        		        };
+        		        /* 是否包含某个对象 */
+        		        this.constains = function (obj) {
+        		            for (var i in this.value) {
+        		                if (obj == this.value[i]) {
+        		                    return true;
+        		                } else {
+        		                    continue;
+        		                }
+        		            }
+        		            return false;
+        		        };
+
+        		        /* 是否包含某个对象 */
+        		        this.getAll = function () {
+        		            var allInfos = '';
+        		            for (var i in this.value) {
+        		                if (i != (value.length - 1)) {
+        		                    allInfos += this.value[i] + ",";
+        		                } else {
+        		                    allInfos += this.value[i];
+        		                }
+        		            }
+        		            alert(allInfos);
+        		            return allInfos += this.value[i] + ","; ;
+        		        };
+
+        		    } 
+
+
         		    var renderer, stats, frame;
         		    function initThree() {
         		        frame = document.getElementById('canvas-frame');
@@ -32,30 +85,13 @@
 
         		    var camera;
         		    function initCamera() {
-
-        		        //                camera = new THREE.OrthographicCamera(-2, 2, 1.5, -1.5, 1, 10);
-        		        //                camera.position.set(0, 0, 5);
+                        
         		        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);//透视
         		        camera.position.z = 1000;
 
 //        		        camera = new THREE.OrthographicCamera(0, 600, 3000, 0, 1, 5000);//正交投影，
 //        		        camera.position.set(500, 3000, 4000);
 //        		        
-        		        //scene.add(camera);
-
-        		        //                //camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);//透
-        		        //                camera = new THREE.OrthographicCamera(-1, 4, 2, -1,1,10); //正交
-        		        //              camera.position.x = 0;
-        		        //                camera.position.y = 1;
-        		        //                camera.position.z = 5;
-        		        ////                camera.up.x = 4;
-        		        ////                camera.up.y = 3;
-        		        ////                camera.up.z = 3;
-        		        //                camera.lookat({
-        		        //                    x : 0,
-        		        //                    y : 0,
-        		        //                    z : 0
-        		        //                });
 
         		        camera.lookAt(new THREE.Vector3(0, 0, 0));//视野中心坐标
         		    }
@@ -68,19 +104,17 @@
         		    var light;
         		    function initLight() {
         		        light = new THREE.PointLight(0x00FF00);
-        		        //light.position.set(5, 5, 5);
-        		        //scene.add(light);
         		    }
 
         		    var cube;
         		    var mesh;
         		    var varCubeGeometry;
-
+        		    var listCube = new List();
+        		    var geometry = new THREE.Geometry();
+        		    var colors = new THREE.Color();
                     //加载模型
         		    function initObject(x, y, z, color) {
         		        varCubeGeometry = new THREE.CubeGeometry(100, 100, 100);
-        		        //group = new THREE.Group();
-        		        //varCubeGeometry.position.x = 1 + a;
         		        cube = new THREE.Mesh(varCubeGeometry,
                                                     new THREE.MeshBasicMaterial({
                                                         color: color
@@ -89,8 +123,10 @@
         		        cube.position.x = x;
         		        cube.position.z = y;
         		        cube.position.y = z;
-        		        //group.add(cube);
-        		        scene.add(cube);
+        		        cube.updateMatrix();
+        		        applyVertexColors(varCubeGeometry, colors.setHex(color));
+        		        geometry.merge(cube.geometry, cube.matrix);
+        		        listCube.add(varCubeGeometry);
 
                     }
 
@@ -242,35 +278,12 @@
 
                      
 
-//                    function initObject() {
-
-//                        //CubeGeometry  BoxGeometry
-//                        for (var a = 0; a < 10; a++) {
-//                            for (var b = 0; b < 10; b++) {
-//                                for (var c = 0; c < 10; c++) {
-
-//                                    varCubeGeometry = new THREE.CubeGeometry(0.01, 0.01, 0.01);
-//                                    //varCubeGeometry.position.x = 1 + a;
-//                                    cube = new THREE.Mesh(varCubeGeometry,
-//                                                    new THREE.MeshBasicMaterial({
-//                                                        color: 0xff0000 * Math.random()
-
-//                                                    }));
-//                                    cube.position.x = a * 0.01;
-//                                    cube.position.z = b * 0.01;
-//                                    cube.position.y = c * 0.01;
-//                                    scene.add(cube);
-//                                }
-//                            }
-//                        }
-//                    }
-
                     //帧情况
                     function InitStats() {
                         stats = new Stats();
-                        stats.domElement.style.position = 'absolute';
-                        stats.domElement.style.top = '0px';
-                        frame.appendChild(stats.domElement);
+//                        stats.domElement.style.position = 'absolute';
+//                        stats.domElement.style.top = '0px';
+//                        frame.appendChild(stats.domElement);
 
                     }
 
@@ -278,7 +291,7 @@
         		    function InitControl() {
         		        controls = new THREE.OrbitControls(camera, renderer.domElement);
         		    }
-
+        		    var cubeMaterial = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors });
 
         		    function funGetModelData() {
         		        $.ajax({
@@ -296,6 +309,9 @@
         		                    }
         		                    initObject(list[i].X, list[i].Y, list[i].Z, color);
         		                }
+
+        		                mesh = new THREE.Mesh(geometry, cubeMaterial)
+        		                scene.add(mesh);
         		            }
         		        });
         		    }
@@ -308,7 +324,7 @@
         		        initThree();
         		        initCamera();
         		        initScene();
-        		        initLight();
+        		        //initLight();
         		        //initObject();
         		        funGetModelData();
         		        InitStats();
@@ -323,7 +339,6 @@
         		        controls.target.set(0, 0, 0);
         		        
         		        controls.update();
-        		        //camera.toTopView();
 
         		    }
         		    function onWindowResize() {
@@ -334,10 +349,6 @@
 
         		    function animation() {
 
-        		        //                cube.rotation.y += 0.01;
-        		        //                if (cube.rotation.y > Math.PI * 2) {
-        		        //                    cube.rotation.y -= Math.PI * 2;
-        		        //                }
         		        renderer.render(scene, camera);
         		        requestAnimationFrame(animation);
         		        stats.update(); //帧情况
@@ -346,8 +357,41 @@
         		        //controls.update();
         		    }
 
+                    //设置颜色 
+        		    function applyVertexColors(g, c) {
+
+        		        g.faces.forEach(function (f) {
+
+        		            var n = (f instanceof THREE.Face3) ? 3 : 4;
+
+        		            for (var j = 0; j < n; j++) {
+
+        		                f.vertexColors[j] = c;
+
+        		            }
+
+        		        });
+
+        		    }
+        		    var cccc = new THREE.Color();
+        		    function ChangeColor() {
+        		        //alert(listCube.size());
+        		        
+        		        scene.remove(mesh);
+        		        for (var i = 0; i < listCube.size(); i++) {
+        		            var xx = listCube.get(i);
+        		            applyVertexColors(listCube.get(i), cccc.setHex(0xff + i));
+        		            geometry.merge(listCube.get(i), listCube.get(i).matrix);
+        		        }
+        		        mesh = new THREE.Mesh(geometry, cubeMaterial);
+        		        scene.add(mesh);
+        		        
+        		        //scene.update();
+        		        //geometry.update();
+        		        //mesh.update();
+                    }
 
 
                 </script>
-                <div><button onclick="funGetModelData">sdf</button></div>
+                <div><button onclick="ChangeColor()">sdf</button></div>
                 <div id="canvas-frame"></div>
