@@ -724,6 +724,8 @@ namespace OilSimulationController
         [HttpPost]
         public ActionResult GetModelData(int step)
         {
+            //int step;
+            //int.TryParse(HttpContext.Request.QueryString["Step"], out step);
             //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
             string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/气藏开发/均质/QICANG/123_E100.EGRID");
             EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);

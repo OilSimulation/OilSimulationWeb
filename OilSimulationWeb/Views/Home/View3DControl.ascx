@@ -87,7 +87,7 @@
         		    function initCamera() {
                         
         		        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);//透视
-        		        camera.position.z = 1000;
+        		        camera.position.z = 1500;
 
 //        		        camera = new THREE.OrthographicCamera(0, 600, 3000, 0, 1, 5000);//正交投影，
 //        		        camera.position.set(500, 3000, 4000);
@@ -112,7 +112,7 @@
         		    var geometry = new THREE.Geometry();
         		    var colors = new THREE.Color();
                     //加载模型
-        		    function initObject(x, y, z, color) {
+        		    function initObject(x, y, z,xWidth,yWidth,zWidth, color) {
         		        varCubeGeometry = new THREE.CubeGeometry(100, 100, 100);
         		        cube = new THREE.Mesh(varCubeGeometry,
                                                     new THREE.MeshBasicMaterial({
@@ -297,6 +297,7 @@
         		            type: "post",
         		            url: "/Business/GetModelData",
         		            dataType: "json",
+        		            data: { "Step": 0 },
         		            success: function (data) {
         		                var list = data.list; //模型列表数据
         		                var info, color;
@@ -306,15 +307,41 @@
         		                    if (info) {
         		                        color = (info["R"] << 16) | (info["G"] << 8) | info["B"];
         		                    }
-        		                    initObject(list[i].X, list[i].Y, list[i].Z, color);
+        		                    initObject(list[i].X, list[i].Y, list[i].Z,list[i].xWidth,list[i].yWidth,list[i].zWidth, color);
         		                }
-
+        		                if (mesh)
+        		                    scene.remove(mesh);
         		                mesh = new THREE.Mesh(geometry, cubeMaterial)
         		                scene.add(mesh);
         		            }
         		        });
         		    }
 
+                    //获取颜色 数据
+        		    function funGetColorData(step) {
+        		        $.ajax({
+        		            type: "post",
+        		            url: "/Business/GetModelData",
+        		            dataType: "json",
+        		            data: { "Step": step },
+        		            success: function (data) {
+        		                var list = data.list; //模型列表数据
+        		                var info, color;
+        		                var colors = [];
+        		                //alert(list.length);
+        		                for (var i = 0; i < list.length; i++) {
+        		                    info = CaculateColor(255, 0, 0, 0, 0, 255, list[i].Color, list[i].MaxColor, list[i].MinColor);
+        		                    if (info) {
+        		                        color = (info["R"] << 16) | (info["G"] << 8) | info["B"];
+        		                        colors[i] = color;
+        		                    }
+        		                }
+        		                //修改颜色 
+        		                setFacesVertexColors(geometry, colors);
+
+        		            }
+        		        });
+        		    }
 
 
 
@@ -356,48 +383,139 @@
         		        //controls.update();
         		    }
 
-                    //设置颜色 
+        		    //设置颜色 g:geometry对象，c:颜色(0xff0000)
         		    function applyVertexColors(g, c) {
+
         		        g.faces.forEach(function (f) {
         		            var n = (f instanceof THREE.Face3) ? 3 : 4;
-        		            for (var j = 0; j < n; j++) {
-        		                f.vertexColors[j] = c;
+        		            if (f.vertexColors.length <= 0) {
+        		                for (var j = 0; j < n; j++) {
+        		                    f.vertexColors[j] = c;
+        		                }
+        		            }
+        		            else {
+        		                for (var j = 0; j < n; j++) {
+        		                    f.vertexColors[j].setHex(c);
+        		                }
         		            }
         		        });
         		    }
 
-        		    function applyVertexColorsSet(g, c) {
-        		        g.faces.forEach(function (f) {
-        		            var n = (f instanceof THREE.Face3) ? 3 : 4;
-        		            for (var j = 0; j < n; j++) {
-        		                f.vertexColors[j].setHex(c);
+        		    //设置 面颜色 g:geometry对象，c:颜色json列表
+        		    function setFacesVertexColors(g, c) {
+        		        //每十二个面表示一个立方体。
+        		        var faceColor = new THREE.Color;
+        		        var facesLen = g.faces.length;
+        		        var colorLen = c.length;
+        		        var colorIndex = 0;
+        		        for (var i = 0; i < facesLen; i += 12) {
+        		            if (i / 12 > colorLen) {
+        		                colorIndex = colorLen - 1;
         		            }
-        		        });
-        		    }
-        		    var cccc = new THREE.Color();
-        		    function ChangeColor() {
-
-        		        
-        		        //applyVertexColorsSet(geometry, c);
-        		        //alert(geometry.faces.length);
-        		        for (var i = 0; i < geometry.faces.length; i++) {
-        		            var c;
-        		            if ((i % 12) == 0)
-                            {
-                                c = Math.random() * 0xffffff;
-                             }
-        		            var face = geometry.faces[i];
-        		            for (var j = 0; j < 3; j++) {
-        		                face.vertexColors[j].setHex(c);
+        		            else {
+        		                colorIndex = i / 12;
+        		            }
+        		            for (var j = 0; j < 12; j++) {
+        		                if (g.faces[i + j].vertexColors.length <= 0) {
+        		                    g.faces[i + j].vertexColors[0] = faceColor.setHex(c[colorIndex]);
+        		                    g.faces[i + j].vertexColors[1] = faceColor.setHex(c[colorIndex]);
+        		                    g.faces[i + j].vertexColors[2] = faceColor.setHex(c[colorIndex]);
+        		                }
+        		                else {
+        		                    g.faces[i + j].vertexColors[0].setHex(c[colorIndex]);
+        		                    g.faces[i + j].vertexColors[1].setHex( c[colorIndex]);
+        		                    g.faces[i + j].vertexColors[2].setHex( c[colorIndex]);
+        		                }
         		            }
         		        }
+        		        g.colorsNeedUpdate = true;
+        		    }
 
+        		    
+        		    function ChangeColor() {
+        		        var cccc = new THREE.Color();
+        		        applyVertexColors(geometry, 0xff0000);
 
         		        geometry.colorsNeedUpdate = true;
 
+        		    }
+
+        		    //暂停 numberMillis毫秒
+        		    function sleep(numberMillis) {
+        		        var now = new Date();
+        		        var exitTime = now.getTime() + numberMillis;
+        		        while (true) { now = new Date(); if (now.getTime() > exitTime) return; } 
+                     }
+
+                    var curStep = 0;
+                    function UpStep() {
+                        if (curStep <= 0) {
+                            $("#upstep").attr("disabled", true);
+
+                        }
+                        else {
+                            $("#upstep").removeAttr("disabled");
+                            curStep--;
+                            funGetColorData(curStep);
+
+                        }
+                        ShowStep(curStep);
+                        
+                    }
+
+                    function DownStep() {
+                        if (curStep >=99) {
+                            $("#downstep").attr("disabled", true);
+
+                        }
+                        else {
+                            $("#downstep").removeAttr("disabled");
+                            curStep++;
+                            funGetColorData(curStep);
+
+                        }
+                        ShowStep(curStep);
+                    }
+                    var intervalId;
+                    function Play() {
+                        intervalId = setInterval(start, 500);
+                    }
+
+                    function start() {
+                        if (curStep >= 99) {
+                            clearInterval(intervalId);
+                            $("#downstep").attr("disabled", true);
+
+                        }
+                        curStep++;
+                        funGetColorData(curStep);
+                        ShowStep(curStep);
+                    }
+
+                    function Stop() {
+                        clearInterval(intervalId);
+                        curStep = 0;
+                        ShowStep(curStep);
+                    }
+
+                    function Pause() {
+                        clearInterval(intervalId);
+                        curStep = 0;
+                        ShowStep(curStep);
+                    }
+
+                    function ShowStep(step) {
+                        $("#curStep").text(step);
                     }
 
 
                 </script>
-                <div><button onclick="ChangeColor()">sdf</button></div>
+                <div>
+                <button id="upstep" onclick="UpStep()">上一步</button>
+                <button id="stop" onclick="Stop()">停止</button>
+                <button id="play" onclick="Play()">播放</button>
+                <button id="pause" onclick="Pause()">暂停</button>
+                <button id="downstep" onclick="DownStep()">下一步</button>
+                <label id="curStep"></label>
+                </div>
                 <div id="canvas-frame"></div>
