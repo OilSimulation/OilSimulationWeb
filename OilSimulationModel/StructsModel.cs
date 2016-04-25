@@ -102,6 +102,29 @@ namespace OilSimulationModel
             get { return z; }
             set { z = value; }
         }
+
+        private float xWidth;
+
+        public float XWidth
+        {
+            get { return xWidth; }
+            set { xWidth = value; }
+        }
+        private float yWidth;
+
+        public float YWidth
+        {
+            get { return yWidth; }
+            set { yWidth = value; }
+        }
+        private float zWidth;
+
+        public float ZWidth
+        {
+            get { return zWidth; }
+            set { zWidth = value; }
+        }
+
         private float color;
 
         public float Color
