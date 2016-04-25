@@ -363,6 +363,7 @@ namespace OilSimulationController
         /// <returns></returns>
         private List<float[]> GetCenterPoint(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
         {
+            //listColors = new List<float>();
             List<float[]> lst = new List<float[]>();
             if (szProName == "FIPOIL" || szProName == "FIPWAT" || szProName == "PRESSURE" || szProName == "SWAT" || szProName == "SOIL")
             {
@@ -403,7 +404,7 @@ namespace OilSimulationController
                                 dwInfo.ct[1] = (center.y);
                                 dwInfo.ct[2] = (center.z);
                                 dwInfo.ct[3] = (v);
-
+                                //listColors.Add(v);
                                 lst.Add(new float[4] { center.x, center.y, center.z, v });
                             }
                     }
@@ -429,7 +430,7 @@ namespace OilSimulationController
                                     dwInfo.ct[1] = (center.y);
                                     dwInfo.ct[2] = (center.z);
                                     dwInfo.ct[3] = (v);
-
+                                    //listColors.Add(v);
                                     lst.Add(new float[4] { center.x, center.y, center.z, v });
                                 }
                             }
@@ -465,7 +466,7 @@ namespace OilSimulationController
                                 dwInfo.ct[1] = (center.y);
                                 dwInfo.ct[2] = (center.z);
                                 dwInfo.ct[3] = (v);
-
+                                //listColors.Add(v);
                                 lst.Add(new float[4] { center.x, center.y, center.z, v });
                             }
                     }
@@ -491,7 +492,7 @@ namespace OilSimulationController
                                     dwInfo.ct[1] = (center.y);
                                     dwInfo.ct[2] = (center.z);
                                     dwInfo.ct[3] = (v);
-
+                                    //listColors.Add(v);
                                     lst.Add(new float[4] { center.x, center.y, center.z, v });
                                 }
                             }
@@ -502,6 +503,8 @@ namespace OilSimulationController
             return lst;
 
         }
+
+
 
 
 
@@ -535,8 +538,8 @@ namespace OilSimulationController
                             for (int i = 0; i < model.nx; i++)
                             {
                                 //这里面的所有网格都输出
-                                //Pillar p = model.GetGridAtIJK(i, j, k);
-                                PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
+                                Pillar p = model.GetGridAtIJK(i, j, k);
+                                PillarPoint center = p.Center;
                                 int pos = k * model.nx * model.ny + j * model.nx + i;
                                 ///!!!! 这里的v才是网格(i,j,k)上的属性值
                                 float v = propValues[pos];
@@ -545,6 +548,9 @@ namespace OilSimulationController
                                 point.Y = center.y;
                                 point.Z = center.z;
                                 point.Color = v;
+                                point.XWidth = Math.Abs(p.a.x - point.X) * 2;
+                                point.YWidth = Math.Abs(p.a.y - point.Y) * 2;
+                                point.ZWidth = Math.Abs(p.a.z - point.Z) * 2;
                                 lst.Add(point);
 
                                 //stCubeInfo dwInfo = new stCubeInfo();
@@ -563,8 +569,8 @@ namespace OilSimulationController
                         for (int j = 0; j < model.ny; j++)
                             for (int i = 0; i < model.nx; i++)
                             {
-                                //Pillar p = model.GetGridAtIJK(i, j, k);
-                                PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
+                                Pillar p = model.GetGridAtIJK(i, j, k);
+                                PillarPoint center = p.Center;
                                 bool isActive = model.IsActive(i, j, k);
                                 if (isActive)
                                 {
@@ -578,6 +584,10 @@ namespace OilSimulationController
                                     point.Y = center.y;
                                     point.Z = center.z;
                                     point.Color = v;
+                                    point.XWidth = Math.Abs(p.a.x - point.X) * 2;
+                                    point.YWidth = Math.Abs(p.a.y - point.Y) * 2;
+                                    point.ZWidth = Math.Abs(p.a.z - point.Z) * 2;
+
                                     lst.Add(point);
                                     //stCubeInfo dwInfo = new stCubeInfo();
 
@@ -610,8 +620,8 @@ namespace OilSimulationController
                             for (int i = 0; i < model.nx; i++)
                             {
                                 //这里面的所有网格都输出
-                                //Pillar p = model.GetGridAtIJK(i, j, k);
-                                PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
+                                Pillar p = model.GetGridAtIJK(i, j, k);
+                                PillarPoint center = p.Center;
                                 int pos = k * model.nx * model.ny + j * model.nx + i;
                                 ///!!!! 这里的v才是网格(i,j,k)上的属性值
                                 float v = propValues[pos];
@@ -620,6 +630,11 @@ namespace OilSimulationController
                                 point.Y = center.y;
                                 point.Z = center.z;
                                 point.Color = v;
+                                point.XWidth = Math.Abs(p.a.x - point.X) * 2;
+                                point.YWidth = Math.Abs(p.a.y - point.Y) * 2;
+                                point.ZWidth = Math.Abs(p.a.z - point.Z) * 2;
+
+
                                 lst.Add(point);
 
                                 //stCubeInfo dwInfo = new stCubeInfo();
@@ -638,8 +653,8 @@ namespace OilSimulationController
                         for (int j = 0; j < model.ny; j++)
                             for (int i = 0; i < model.nx; i++)
                             {
-                                //Pillar p = model.GetGridAtIJK(i, j, k);
-                                PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
+                                Pillar p = model.GetGridAtIJK(i, j, k);
+                                PillarPoint center = p.Center;
                                 bool isActive = model.IsActive(i, j, k);
                                 if (isActive)
                                 {
@@ -653,6 +668,11 @@ namespace OilSimulationController
                                     point.Y = center.y;
                                     point.Z = center.z;
                                     point.Color = v;
+                                    point.XWidth = Math.Abs(p.a.x - point.X) * 2;
+                                    point.YWidth = Math.Abs(p.a.y - point.Y) * 2;
+                                    point.ZWidth = Math.Abs(p.a.z - point.Z) * 2;
+
+
                                     lst.Add(point);
 
                                     //stCubeInfo dwInfo = new stCubeInfo();
@@ -702,7 +722,7 @@ namespace OilSimulationController
 
 
         [HttpPost]
-        public ActionResult GetModelData()
+        public ActionResult GetModelData(int step)
         {
             //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
             string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/气藏开发/均质/QICANG/123_E100.EGRID");
@@ -711,7 +731,8 @@ namespace OilSimulationController
             List<View3DPoint> lstData = new List<View3DPoint>();
             for (int i = 0; i < gridModel.nz; i++)
             {
-                lstData.AddRange(GetOutlinePoint(Get3DAllPoint(gridModel, "SOIL", 40, i, eGridFile), false));
+
+                lstData.AddRange(GetOutlinePoint(Get3DAllPoint(gridModel, "SWAT", step, i, eGridFile), false));
             }
 
             return Json(new
