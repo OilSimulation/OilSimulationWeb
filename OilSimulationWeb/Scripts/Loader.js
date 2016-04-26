@@ -43,9 +43,9 @@ THREE.MyLoader.prototype = {
         for (var i = 0; i < jsonData.Data.length; i++) {
 
             var xw, yw, zw;
-            xw = jsonData.xyz[i / (jsonData.Data.length / 3)][0];
-            yw = jsonData.xyz[i / (jsonData.Data.length / 3)][1];
-            zw = jsonData.xyz[i / (jsonData.Data.length / 3)][2];
+            xw = jsonData.xyz[parseInt(i / (jsonData.Data.length / 3))][0];
+            yw = jsonData.xyz[parseInt(i / (jsonData.Data.length / 3))][1];
+            zw = jsonData.xyz[parseInt(i / (jsonData.Data.length / 3))][2];
             var cubeMesh = addcube(jsonData.Data[i][0] - 400, jsonData.Data[i][1] - 500, jsonData.Data[i][2] - 3010, xw, yw, zw);
             cubeMesh.updateMatrix();
             geometry.merge(cubeMesh.geometry, cubeMesh.matrix);
