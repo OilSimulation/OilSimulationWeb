@@ -32,9 +32,7 @@ THREE.MyLoader.prototype = {
 
         var vertices = [];
 
-        var jsonData = JSON.parse(text);
-        alert(jsonData.mm);
-        return;
+        var jsonData = JSON.parse(text);  
         var lines = text.split('\n');
         var line = lines[0].trim();
         var re = /([\d]+)(\,)([\d]+)(\,)([\d]+)(\,)([\d|\.|\+|\-|e|E]+)/g;
