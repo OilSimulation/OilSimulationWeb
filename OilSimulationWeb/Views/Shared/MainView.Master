@@ -79,67 +79,57 @@
         </asp:ContentPlaceHolder>
     </div>
     <div id="controls_container_r" style="display: inline-block;">
-				<div id="controls_innercontainer"> 
-					
-					<div class="controls">
-						<legend>操作面板</legend>
-						<ul>
+		<div id="controls_innercontainer">  
+			<div class="controls">
+				<legend>操作面板</legend>
+				<ul> 
+					<li>
+						<div id="button_toolbar">
+							<button id="button_reset" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="初始化"><span class="ui-button-icon-primary ui-icon ui-icon-seek-start"></span><span class="ui-button-text">初始化</span></button>
+							<button id="button_play" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="播放"><span class="ui-button-icon-primary ui-icon ui-icon-play"></span><span class="ui-button-text">播放</span></button>
+							<button id="button_backward" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="上一步"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">上一步</span></button>
+							<button id="button_forward" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="下一步"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">下一步</span></button>
+						</div>
+					</li>
 
-							<li>
-								<div id="button_toolbar">
-								  <button id="button_reset" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="初始化"><span class="ui-button-icon-primary ui-icon ui-icon-seek-start"></span><span class="ui-button-text">初始化</span></button>
-								  <button id="button_play" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="播放"><span class="ui-button-icon-primary ui-icon ui-icon-play"></span><span class="ui-button-text">播放</span></button>
-								  <button id="button_backward" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="上一步"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">上一步</span></button>
-								  <button id="button_forward" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="下一步"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">下一步</span></button>
-								</div>
-							</li>
+					<li>
+						<div class="mini_label">网格数#:</div>
+						<div class="mini_field"><% =ViewData["TotalGrids"]%></div>
+						<div class="mini_label">Speed:</div>
+						<div id="playback_speed_field" class="mini_field">1.0x</div>
+					</li> 
+					<li class="spacer"></li>
+					<li>
+						<div class="label">参数选择:</div>
+						<div class="control">
+							<select id="paramSelect"> 
+                            <% List<String> opts= (List<String>)ViewData["DynamicProps"];
+                                for (int i = 0; i <opts.Count; i++)
+                                { %>
+                                    <option value="<%:i %>"><%:opts[i] %></option>
+                                <% } %>
+							</select>
+						</div>
+					</li>
+					<li class="spacer"></li>
+					<li>
+						<div class="label">当前时间步:</div>
+						<div class="control">
+							<select id="timeSelect">
+								<% String[] timeOpts = (String[])ViewData["TimeStep"];
+                                for (int i = 0; i < timeOpts.Length; i++)
+                                { %>
+                                    <option value="<%:i%>"><%:timeOpts[i]%></option>
+                                <% } %> 
+							</select>
+						</div>
+					</li>
+					<li class="spacer"></li>
 
-							<li>
-								<div class="mini_label"> 网格数#:</div>
-								<div id="step_field" class="mini_field">0</div>
-								<div class="mini_label">Speed:</div>
-								<div id="playback_speed_field" class="mini_field">1.0x</div>
-							</li> 
-							<li class="spacer"></li>
-							<li>
-								<div class="label">参数选择:</div>
-								<div class="control">
-								    <select id="Select1">
-									  <option value="random">Random</option>
-									  <option value="elevator">Elevator</option>
-									  <option value="outliner">Outliner</option>
-									  <option value="rail">Rail</option>
-									  <option value="rail2">Rail variant</option>
-									  <option value="life">Game of Life</option>
-									  <option value="life13">Life S:1-3 B:1/3</option>
-									  <option value="life246">Life S:1/3/5 B:2/4/6</option>
-									  <option value="xsmear">X Smear (use wrap)</option>
-									</select>
-								</div>
-							</li>
-							<li class="spacer"></li>
-							<li>
-								<div class="label">当前时间步:</div>
-								<div class="control">
-								    <select id="rules_combobox">
-									  <option value="random">Random</option>
-									  <option value="elevator">Elevator</option>
-									  <option value="outliner">Outliner</option>
-									  <option value="rail">Rail</option>
-									  <option value="rail2">Rail variant</option>
-									  <option value="life">Game of Life</option>
-									  <option value="life13">Life S:1-3 B:1/3</option>
-									  <option value="life246">Life S:1/3/5 B:2/4/6</option>
-									  <option value="xsmear">X Smear (use wrap)</option>
-									</select>
-								</div>
-							</li>
-							<li class="spacer"></li>
-
-						</ul>
+				</ul>
 						
-					</div> 
-				</div>
 			</div> 
+		</div>
+	</div> 
 </body>
 </html>
