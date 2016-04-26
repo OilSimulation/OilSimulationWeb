@@ -85,6 +85,9 @@
     <Content Include="Images\bodybg.jpg" />
     <Content Include="Images\db-bg.jpg" />
     <Content Include="Images\foot-nei-bg.jpg" />
+    <Content Include="Images\icon-step.png" />
+    <Content Include="Images\ui-bg_glass_20_555555_1x400.png" />
+    <Content Include="Images\ui-icons_cccccc_256x240.png" />
     <Content Include="Images\zbar-bg.png" />
     <Content Include="Images\zbar-libg.png" />
     <Content Include="Images\zbar-libgh.png" />
