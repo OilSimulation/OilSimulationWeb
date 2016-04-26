@@ -4,8 +4,5 @@
 	BaseModeOne
 </asp:Content>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
-    <h2>BaseModeOne</h2>
-
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server"> 
 </asp:Content>

@@ -235,6 +235,7 @@
     <Content Include="Scripts\libs\VRMLLoader.js" />
     <Content Include="Scripts\libs\VTKLoader.js" />
     <Content Include="Scripts\libs\WebGLDeferredRenderer.js" />
+    <Content Include="Scripts\Loader.js" />
     <Content Include="Scripts\renderers\CanvasRenderer.js" />
     <Content Include="Scripts\renderers\CSS2DRenderer.js" />
     <Content Include="Scripts\renderers\CSS3DRenderer.js" />
