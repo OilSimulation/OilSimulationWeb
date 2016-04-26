@@ -78,82 +78,48 @@
         
         </asp:ContentPlaceHolder>
     </div>
-
     <div id="controls_container_r" style="display: inline-block;">
-				<div id="controls_innercontainer">
-					
+				<div id="controls_innercontainer"> 
 					
 					<div class="controls">
-						<legend>操作</legend>
+						<legend>操作面板</legend>
 						<ul>
 
 							<li>
 								<div id="button_toolbar">
-								  <button id="button_reset" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="Reset initial state"><span class="ui-button-icon-primary ui-icon ui-icon-seek-start"></span><span class="ui-button-text">初始化</span></button>
-								  <button id="button_play" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="Play"><span class="ui-button-icon-primary ui-icon ui-icon-play"></span><span class="ui-button-text">播放</span></button>
-								  <button id="button_backward" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="Advance one step"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">上一步</span></button>
-								  <button id="button_forward" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="Fast-forward"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">下一步</span></button>
+								  <button id="button_reset" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="初始化"><span class="ui-button-icon-primary ui-icon ui-icon-seek-start"></span><span class="ui-button-text">初始化</span></button>
+								  <button id="button_play" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="播放"><span class="ui-button-icon-primary ui-icon ui-icon-play"></span><span class="ui-button-text">播放</span></button>
+								  <button id="button_backward" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="上一步"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">上一步</span></button>
+								  <button id="button_forward" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="下一步"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">下一步</span></button>
 								</div>
 							</li>
 
 							<li>
-								<div class="mini_label">Step #:</div>
+								<div class="mini_label"> 网格数#:</div>
 								<div id="step_field" class="mini_field">0</div>
 								<div class="mini_label">Speed:</div>
 								<div id="playback_speed_field" class="mini_field">1.0x</div>
-							</li>
-
-							<li>
-								<div class="mini_label">Active:</div>
-								<div id="active_field" class="mini_field">0</div>
-								<div class="mini_label">Changed:</div>
-								<div id="changed_field" class="mini_field">0</div>
-							</li>
-
-							<li>
-								<div class="label">Transition:</div>
-								<div class="control">
-									<span id="transition" class="ui-buttonset">
-								    <input type="radio" id="transition_0" name="transition" checked="checked" class="ui-helper-hidden-accessible"><label for="transition_0" class="ui-state-active ui-button ui-widget ui-state-default ui-button-text-only ui-corner-left" role="button" aria-disabled="false"><span class="ui-button-text">Shrink</span></label>
-								    <!--input type="radio" id="transition_1" name="transition" /><label for="transition_1">Fade</label-->
-								    <input type="radio" id="transition_2" name="transition" class="ui-helper-hidden-accessible"><label for="transition_2" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-right" role="button" aria-disabled="false"><span class="ui-button-text">None</span></label>
-								  </span>
-								</div>
-							</li>
-							<li>
-								<div class="label">Edges:</div>
-								<div class="control">
-									<span id="geometry" class="ui-buttonset">
-								    <input type="radio" id="geometry_0" name="geometry" checked="checked" class="ui-helper-hidden-accessible"><label for="geometry_0" class="ui-state-active ui-button ui-widget ui-state-default ui-button-text-only ui-corner-left" role="button" aria-disabled="false"><span class="ui-button-text">Null</span></label>
-								    
-								    <input type="radio" id="geometry_1" name="geometry" class="ui-helper-hidden-accessible"><label for="geometry_1" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-right" role="button" aria-disabled="false"><span class="ui-button-text">Wraparound</span></label>
-								  </span>
-								</div>
-							</li>
-						</ul>
-						
-					</div>
-
-					<div class="controls">
-						<legend>Rules of Evolution</legend>
-						<ul>
-
-							<li>
-								<div class="label">Rule ID:</div>
-								<div class="control">
-									<input type="text" name="rule_id_field" id="rule_id_field" size="20">
-								</div>
-							</li>
-
-							<li>
-								<div class="label"></div>
-								<div class="control">
-									<canvas id="rule_canvas" width="39" height="30"></canvas><button id="edit_rules_button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">Rule Editor...</span></button>
-								
-							</div></li>
+							</li> 
 							<li class="spacer"></li>
 							<li>
-								<div class="label">Preset:</div>
+								<div class="label">参数选择:</div>
+								<div class="control">
+								    <select id="Select1">
+									  <option value="random">Random</option>
+									  <option value="elevator">Elevator</option>
+									  <option value="outliner">Outliner</option>
+									  <option value="rail">Rail</option>
+									  <option value="rail2">Rail variant</option>
+									  <option value="life">Game of Life</option>
+									  <option value="life13">Life S:1-3 B:1/3</option>
+									  <option value="life246">Life S:1/3/5 B:2/4/6</option>
+									  <option value="xsmear">X Smear (use wrap)</option>
+									</select>
+								</div>
+							</li>
+							<li class="spacer"></li>
+							<li>
+								<div class="label">当前时间步:</div>
 								<div class="control">
 								    <select id="rules_combobox">
 									  <option value="random">Random</option>
@@ -168,39 +134,12 @@
 									</select>
 								</div>
 							</li>
-							<li class="noise_rules_parameter" style="display: none;">
-								<div class="label">Density:</div>
-								<div class="mini_control">
-									<input type="text" name="rulesdensity_input" id="rulesdensity_input" size="4">
-								</div>
-								<div class="mini_slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="rulesdensity_slider" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 25%;"></a></div>
-							</li>
-							<li class="explanation_parameter" style="display: block;">
-								<span class="explanation">This is a version of the Game of Life where cells survive with 1, 3, or 5 neighbors, and birth with 2, 4, or 6.</span>
-							</li>
-							<li class="life_rules_parameter" style="display: none;">
-								<div class="label">Survival:</div>
-								<div class="mini_control">
-									<input type="text" name="survival_input" id="survival_input" size="4">
-								</div>
-								<div class="mini_slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="survival_slider" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 20%;"></a><div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 20%; width: 20%;"></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 40%;"></a></div>
-							</li>
-							<li class="life_rules_parameter" style="display: none;">
-								<div class="label">Birth:</div>
-								<div class="mini_control">
-									<input type="text" name="birth_input" id="birth_input" size="4">
-								</div>
-								<div class="mini_slider ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" id="birth_slider" aria-disabled="false"><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 20%;"></a><div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 20%; width: 0%;"></div><a class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="left: 20%;"></a></div>
-							</li>
-							<!--li>
-								<div class="label"></div>
-								<div class="control">
-									<button id="apply_rules_button">Apply Rules</button>
-								</button>
-							</li-->
+							<li class="spacer"></li>
+
+						</ul>
 						
-					</ul></div>
+					</div> 
 				</div>
-			</div>
+			</div> 
 </body>
 </html>

@@ -34,7 +34,7 @@
 	                    </div> 
                     </div>
                 <div id="RightPanl" >
-                    <iframe id="iframe1Id" name="I1" scrolling="no" style="height: 400px; width: 100%; border:0;" src="<%=Url.Content("/Home/ViewBaseKnow1")%>" allowfullscreen="true"></iframe>  
+                    <iframe id="iframe1Id" name="I1" scrolling="no" style="height: 600px; width: 100%; border:0;" src="<%=Url.Content("/Base/BaseModeOne")%>" allowfullscreen="true"></iframe>  
                 </div>
                 <div class="clear"></div>
             </div> 
