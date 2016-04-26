@@ -852,8 +852,15 @@ namespace OilSimulationController
         /// 获取数据
         /// </summary>
         /// <returns></returns>
-        public ActionResult GetData()
+        [HttpPost]
+        public ActionResult GetData(PostData inputData)
         {
+            if (ModelState.IsValid)
+            {
+
+
+            }
+            int iS = inputData.Step;
             string szModel = HttpContext.Request.QueryString["m"];
             //模型补数
             string szStep = HttpContext.Request.QueryString["s"];

@@ -70,6 +70,12 @@ namespace OilSimulationModel
         public List<float> Data;
     }
 
+    public class PostData
+    {
+        public string Para { set; get; }
+        public int Mode { set; get; }
+        public int Step { set; get; }
+    }
 
     /// <summary>
     /// 线程结构
