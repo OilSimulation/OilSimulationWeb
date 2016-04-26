@@ -244,6 +244,7 @@
     <Content Include="Scripts\renderers\SoftwareRenderer.js" />
     <Content Include="Scripts\renderers\SVGRenderer.js" />
     <Content Include="Scripts\three.js" />
+    <Content Include="Views\Base\BaseModeOne.aspx" />
     <Content Include="Views\Base\ViewPageFunc1.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Home\View3DControl.ascx" />
