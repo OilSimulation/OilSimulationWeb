@@ -69,14 +69,10 @@ namespace OilSimulationController
 
             List<string> lst = new List<string>();
             lst.AddRange(dynamicProps);
-            lst.AddRange(staticProps);
-            //var resDynamic = new JsonResult();
-            //resDynamic.Data = staticProps;
+            lst.AddRange(staticProps); 
             ViewData["DynamicProps"] = lst;
-
-            //var resStatic = new JsonResult();;
-            //resStatic.Data = staticProps;
-            ViewData["StaticProps"] = staticProps;
+             
+            //ViewData["StaticProps"] = staticProps;
 
             string[] szTimeStep = new string[timesteps.Length];
             for (int i = 0; i < timesteps.Length; ++i)
