@@ -11494,6 +11494,7 @@ THREE.XHRLoader.prototype = {
 
 		var request = new XMLHttpRequest();
 		request.open( 'POST', url, true );
+        request.setRequestHeader("Content-Type", "application/json");
 
 		request.addEventListener( 'load', function ( event ) {
 
