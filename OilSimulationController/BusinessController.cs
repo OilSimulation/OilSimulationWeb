@@ -855,26 +855,18 @@ namespace OilSimulationController
         [HttpPost]
         public ActionResult GetData(PostData inputData)
         {
+            int iModel = 0;
+            string szPara = "";
+            int iStep = 0;
             if (ModelState.IsValid)
             {
-
-
-            }
-            int iS = inputData.Step;
-            string szModel = HttpContext.Request.QueryString["m"];
-            //模型补数
-            string szStep = HttpContext.Request.QueryString["s"];
-            int iStep = 0;
-            if ( false == Int32.TryParse(szStep, out iStep))
-            {
-                iStep = 0;    
-            }
-            string szPara = HttpContext.Request.QueryString["p"];
+                iModel = inputData.Mode;
+                szPara = inputData.Para;
+                iStep = inputData.Step;
+            }  
             string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
             EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
-
-            szPara = "SOIL";
-             
+              
             ModeData stModeData = new ModeData();
             //获取最大最小值 
             stModeData.mm = CaculateMaxMinValue(szPara, 100, eGridFile); 
@@ -882,7 +874,7 @@ namespace OilSimulationController
             stModeData.Data = new List<float[]>();
             for (int i = 0; i < gridModel.nz; i++)
             {
-                stModeData.Data.AddRange(GetCenterPointData(gridModel, szPara, 1, i, eGridFile));
+                stModeData.Data.AddRange(GetCenterPointData(gridModel, szPara, iStep, i, eGridFile));
             } 
             //计算XYZ的距离
             Pillar p = gridModel.GetGridAtIJK(0, 0, 0); 
