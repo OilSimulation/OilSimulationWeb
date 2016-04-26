@@ -872,6 +872,7 @@ namespace OilSimulationController
             stModeData.mm = CaculateMaxMinValue(szPara, 100, eGridFile); 
             //获取数据
             stModeData.Data = new List<float[]>();
+            stModeData.xyz = new List<float[]>();
             for (int i = 0; i < gridModel.nz; i++)
             {
                 stModeData.Data.AddRange(GetCenterPointData(gridModel, szPara, iStep, i, eGridFile));

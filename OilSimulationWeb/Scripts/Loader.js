@@ -38,24 +38,21 @@ THREE.MyLoader.prototype = {
 
         var geometry = new THREE.Geometry();
         var cubeMaterial = new THREE.MeshNormalMaterial({ color: 0x0f00f1, transparent: true, opacity: 0.5 });
-        var iLeive = 3;
+
 
         for (var i = 0; i < jsonData.Data.length; i++) {
-            var zWidth = 20;
-            if (i == 1000) {
-                zWidth = 30;
-            }
-            if (i == 2000) {
-                zWidth = 50;
-            }
-            var cubeMesh = addcube(jsonData.Data[i][0] - 400, jsonData.Data[i][1] - 500, jsonData.Data[i][2] - 3010, zWidth);
+
+            var xw, yw, zw;
+            xw = jsonData.xyz[i / (jsonData.Data.length / 3)][0];
+            yw = jsonData.xyz[i / (jsonData.Data.length / 3)][1];
+            zw = jsonData.xyz[i / (jsonData.Data.length / 3)][2];
+            var cubeMesh = addcube(jsonData.Data[i][0] - 400, jsonData.Data[i][1] - 500, jsonData.Data[i][2] - 3010, xw, yw, zw);
             cubeMesh.updateMatrix();
             geometry.merge(cubeMesh.geometry, cubeMesh.matrix);
         }
 
-        function addcube(x, y, z, zw) {
-            var cubeSize = 10.0;
-            var cubeGeometry = new THREE.BoxGeometry(cubeSize, cubeSize, zw);
+        function addcube(x, y, z, xw, yw, zw) {
+            var cubeGeometry = new THREE.BoxGeometry(xw, yw, zw);
 
             var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
             cube.castShadow = true;
