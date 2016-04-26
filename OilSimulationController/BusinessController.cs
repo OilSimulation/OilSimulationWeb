@@ -854,15 +854,15 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult GetData()
         {
-            string szModel = HttpContext.Request.QueryString["Model"];
+            string szModel = HttpContext.Request.QueryString["m"];
             //模型补数
-            string szStep = HttpContext.Request.QueryString["Step"];
+            string szStep = HttpContext.Request.QueryString["s"];
             int iStep = 0;
             if ( false == Int32.TryParse(szStep, out iStep))
             {
                 iStep = 0;    
             }
-            string szPara = HttpContext.Request.QueryString["Para"];
+            string szPara = HttpContext.Request.QueryString["p"];
             string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
             EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
 
@@ -878,9 +878,14 @@ namespace OilSimulationController
                 stModeData.Data.AddRange(GetCenterPointData(gridModel, szPara, 1, i, eGridFile));
             } 
             //计算XYZ的距离
-            Pillar p = gridModel.GetGridAtIJK(0, 0, 0);
-            PillarPoint center = gridModel.GetGridAtIJK(0, 0, 0).Center;
-            stModeData.xyz = new float[] { (center.x - p.a.x)*2, (center.y - p.a.y)*2, (center.z - p.a.z)*2 };
+            Pillar p = gridModel.GetGridAtIJK(0, 0, 0); 
+
+
+             p = gridModel.GetGridAtIJK(0, 0, 1); 
+
+
+             p = gridModel.GetGridAtIJK(0, 0, 2); 
+             stModeData.xyz = new float[] { (p.Center.x - p.a.x) * 2, (p.Center.y - p.a.y) * 2, (p.Center.z - p.a.z) * 2 };
             var res = new ConfigurableJsonResult();
             res.Data = stModeData; 
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
