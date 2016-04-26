@@ -51,6 +51,27 @@ namespace OilSimulationModel
     }
 
     /// <summary>
+    /// 模型数据
+    /// </summary>
+    public struct ModeData
+    {
+        public float[] mm;
+        public float[] xyz;
+        public List<float[]> Data;
+    }
+
+    /// <summary>
+    /// 颜色数据
+    /// </summary>
+    public struct ColorData
+    {
+        public float[] mm;
+        public float[] xyz;
+        public List<float> Data;
+    }
+
+
+    /// <summary>
     /// 线程结构
     /// </summary>
     public struct stMultiTread

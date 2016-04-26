@@ -29,6 +29,9 @@ namespace OilSimulationController
                                               , ".X0081", ".X0082", ".X0083", ".X0084", ".X0085", ".X0086", ".X0087", ".X0088", ".X0089", ".X0090"
                                               , ".X0091", ".X0092", ".X0093", ".X0094", ".X0095", ".X0096", ".X0097", ".X0098", ".X0099", ".X0100"
                                               };
+        private static string[] szDynamicPara = { "FIPOIL", "FIPWAT", "PRESSURE", "SWAT", "SOIL" };
+        private static List<string> lstDynamicPara = new List<string>(szDynamicPara);
+
         /// <summary>
         /// 判断本地是否可用
         /// </summary>
@@ -98,8 +101,8 @@ namespace OilSimulationController
         /// <returns></returns>
         private List<stDrawInfo> GetAllPoint(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
         {
-            List<stDrawInfo> lst = new List<stDrawInfo>();
-            if (szProName == "FIPOIL" || szProName == "FIPWAT" || szProName == "PRESSURE" || szProName == "SWAT" || szProName == "SOIL")
+            List<stDrawInfo> lst = new List<stDrawInfo>(); 
+            if ( lstDynamicPara.IndexOf(szProName) != -1 )
             {
                 //
                 string initFilename = Path.ChangeExtension(egridFilePath, StepFileExt[iStep]);
@@ -361,11 +364,10 @@ namespace OilSimulationController
         /// <param name="fMinValue"></param>
         /// <param name="egridFilePath"></param>
         /// <returns></returns>
-        private List<float[]> GetCenterPoint(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
-        {
-            //listColors = new List<float>();
+        private List<float[]> GetCenterPointData(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
+        { 
             List<float[]> lst = new List<float[]>();
-            if (szProName == "FIPOIL" || szProName == "FIPWAT" || szProName == "PRESSURE" || szProName == "SWAT" || szProName == "SOIL")
+            if ( lstDynamicPara.IndexOf(szProName) != -1 )
             {
                 //
                 string initFilename = Path.ChangeExtension(egridFilePath, StepFileExt[iStep]);
@@ -403,8 +405,7 @@ namespace OilSimulationController
                                 dwInfo.ct[0] = (center.x);
                                 dwInfo.ct[1] = (center.y);
                                 dwInfo.ct[2] = (center.z);
-                                dwInfo.ct[3] = (v);
-                                //listColors.Add(v);
+                                dwInfo.ct[3] = (v); 
                                 lst.Add(new float[4] { center.x, center.y, center.z, v });
                             }
                     }
@@ -504,8 +505,161 @@ namespace OilSimulationController
 
         }
 
+       /// <summary>
+       /// 获取颜色属性
+       /// </summary>
+       /// <param name="model"></param>
+       /// <param name="szProName"></param>
+       /// <param name="iStep"></param>
+       /// <param name="k"></param>
+       /// <param name="egridFilePath"></param>
+       /// <returns></returns>
+        private List<float> GetCenterPointColor(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
+        {
+            List<float> lst = new List<float>();
+            if (lstDynamicPara.IndexOf(szProName) != -1)
+            {
+                //
+                string initFilename = Path.ChangeExtension(egridFilePath, StepFileExt[iStep]);
 
+                using (EclipseParser initParser = new EclipseParser(initFilename))
+                {
+                    // 由于eclipse模型中只记录了有效网格的数值，所以这里的propValues与(i,j,k)并不是直接对应的
+                    float[] propValues;// = initParser.ParseEclipsePropertyFromInit(szProName);
+                    if (szProName == "SOIL")
+                    {
+                        propValues = initParser.ParseEclipsePropertyFromInit("SWAT");
+                        for (int z = 0; z < propValues.Length; ++z)
+                        {
+                            propValues[z] = 1 - propValues[z];
+                        }
+                    }
+                    else
+                    {
+                        propValues = initParser.ParseEclipsePropertyFromInit(szProName);
+                    }
+                    if (propValues.Length == model.TotalGrids)
+                    {
+                        for (int j = 0; j < model.ny; j++)
+                            for (int i = 0; i < model.nx; i++)
+                            {
+                                //这里面的所有网格都输出 
+                                int pos = k * model.nx * model.ny + j * model.nx + i;
+                                ///!!!! 这里的v才是网格(i,j,k)上的属性值
+                                float v = propValues[pos]; 
+                                lst.Add(v);
+                            }
+                    }
+                    else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
+                    {
+                        for (int j = 0; j < model.ny; j++)
+                            for (int i = 0; i < model.nx; i++)
+                            { 
+                                bool isActive = model.IsActive(i, j, k);
+                                if (isActive)
+                                {
+                                    //  通过I，J，K算出在整个有效网格中的位置
+                                    int indexPos = k * model.nx * model.ny + j * model.nx + i;
+                                    int pos = model.IndexNode[indexPos];
+                                    ///!!!! 这里的v才是网格(i,j,k)上的属性值
+                                    float v = propValues[pos]; 
+                                    //listColors.Add(v);
+                                    lst.Add(v);
+                                }
+                            }
+                    }
+                }
+            }
+            else//静态
+            {
+                // 下面是读取一种静态属性的例子
+                // 从init文件中读出一种静态属性的数据
+                String initFilename = Path.ChangeExtension(egridFilePath, ".INIT");
+                using (EclipseParser initParser = new EclipseParser(initFilename))
+                {
+                    // 由于eclipse模型中只记录了有效网格的数值，所以这里的propValues与(i,j,k)并不是直接对应的
+                    float[] propValues = initParser.ParseEclipsePropertyFromInit(szProName);
+                    //fMinValue = propValues.Min();
+                    //fMaxValue = propValues.Max();
+                    if (propValues.Length == model.TotalGrids)
+                    {
+                        for (int j = 0; j < model.ny; j++)
+                            for (int i = 0; i < model.nx; i++)
+                            {
+                                //这里面的所有网格都输出 
+                                int pos = k * model.nx * model.ny + j * model.nx + i;
+                                ///!!!! 这里的v才是网格(i,j,k)上的属性值
+                                float v = propValues[pos]; 
+                                lst.Add(v);
+                            }
+                    }
+                    else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
+                    {
+                        for (int j = 0; j < model.ny; j++)
+                            for (int i = 0; i < model.nx; i++)
+                            { 
+                                bool isActive = model.IsActive(i, j, k);
+                                if (isActive)
+                                {
+                                    //  通过I，J，K算出在整个有效网格中的位置
+                                    int indexPos = k * model.nx * model.ny + j * model.nx + i;
+                                    int pos = model.IndexNode[indexPos];
+                                    ///!!!! 这里的v才是网格(i,j,k)上的属性值
+                                    float v = propValues[pos];  
+                                    lst.Add(v);
+                                }
+                            }
+                    }
+                }
+            }
 
+            return lst;
+
+        }
+
+        /// <summary>
+        /// 计算模型数据最大最小值
+        /// </summary>
+        /// <param name="szProName"></param>
+        /// <param name="iStepAll"></param>
+        /// <param name="egridFilePath"></param>
+        /// <returns></returns>
+        private float[] CaculateMaxMinValue(string szProName, int iStepAll,string egridFilePath)
+        {
+            //List<float[]> lst = new List<float[]>();
+            float fMinValue = 0.0f;
+            float fMaxValue = 0.0f;
+            for (int i = 0; i < iStepAll; ++i)
+            {
+                string initFilename = Path.ChangeExtension(egridFilePath, StepFileExt[i]);
+
+                using (EclipseParser initParser = new EclipseParser(initFilename))
+                {
+                    float[] propValues;
+                    if (szProName == "SOIL")
+                    {
+                        propValues = initParser.ParseEclipsePropertyFromInit("SWAT");
+                        for (int z = 0; z < propValues.Length; ++z)
+                        {
+                            propValues[z] = 1 - propValues[z];
+                        }
+                    }
+                    else
+                    {
+                        propValues = initParser.ParseEclipsePropertyFromInit(szProName);
+                    }
+                    if (propValues.Min() < fMinValue)
+                    {
+                        fMinValue = propValues.Min();
+                    }
+                    if (propValues.Max() > fMaxValue)
+                    {
+                        fMaxValue = propValues.Max();
+                    }
+                }
+            }
+            return new float[2] { fMinValue, fMaxValue };
+        }
 
 
         private List<View3DPoint> Get3DAllPoint(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
@@ -695,26 +849,40 @@ namespace OilSimulationController
         }
 
         /// <summary>
-        /// 
+        /// 获取数据
         /// </summary>
         /// <returns></returns>
         public ActionResult GetData()
-        { 
+        {
+            string szModel = HttpContext.Request.QueryString["Model"];
+            //模型补数
+            string szStep = HttpContext.Request.QueryString["Step"];
+            int iStep = 0;
+            if ( false == Int32.TryParse(szStep, out iStep))
+            {
+                iStep = 0;    
+            }
+            string szPara = HttpContext.Request.QueryString["Para"];
             string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
             EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
 
-            List<float[]> lstData = new List<float[]>();
+            szPara = "SOIL";
+             
+            ModeData stModeData = new ModeData();
+            //获取最大最小值 
+            stModeData.mm = CaculateMaxMinValue(szPara, 100, eGridFile); 
+            //获取数据
+            stModeData.Data = new List<float[]>();
             for (int i = 0; i < gridModel.nz; i++)
             {
-                lstData.AddRange(GetCenterPoint(gridModel, "SOIL", 1, i, eGridFile));
-            }
-            //List<stDrawInfo> lstData = new List<stDrawInfo>();
-            //for (int i = 0; i < gridModel.nz; i++)
-            //{
-            //    lstData.AddRange(GetAllPoint(gridModel, "SOIL", 1, i, eGridFile));
-            //}
+                stModeData.Data.AddRange(GetCenterPointData(gridModel, szPara, 1, i, eGridFile));
+            } 
+            //计算XYZ的距离
+            Pillar p = gridModel.GetGridAtIJK(0, 0, 0);
+            PillarPoint center = gridModel.GetGridAtIJK(0, 0, 0).Center;
+            stModeData.xyz = new float[] { (center.x - p.a.x)*2, (center.y - p.a.y)*2, (center.z - p.a.z)*2 };
             var res = new ConfigurableJsonResult();
-            res.Data = lstData;
+            res.Data = stModeData; 
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return res;
         }
