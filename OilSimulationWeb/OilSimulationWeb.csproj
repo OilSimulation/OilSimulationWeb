@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\EclipseParser.dll" />
+    <Content Include="bin\Microsoft.Web.Mvc.dll" />
     <Content Include="Content\cubes.css" />
     <Content Include="Content\jquery-ui-1.10.2.custom.css" />
     <Content Include="Content\UserDefine.css" />
