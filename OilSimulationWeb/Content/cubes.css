@@ -1,0 +1,355 @@
+
+		
+			
+			#bigblueboo a {
+				color:#d8dfff;
+			}
+			#bigblueboo
+			{
+				color:#ffffff;
+				position:absolute;
+				top:0px;
+				left:0px;
+				margin:10px;
+				text-shadow: 0px 2px #000;
+				font-weight: 800;
+				opacity:.75;
+			}
+			#page_info_container
+			{
+				bottom:0px;
+				width:100%;
+				position:absolute;
+				height:40px;
+			}
+			#page_info
+			{
+				display:block;
+				width:500px;
+				margin-left:auto;
+				margin-right:auto;
+				height:40px;
+				background-color:rgba(0,0,0,.4);
+			}
+			#page_info li
+			{
+				clear:none;
+				width:auto;
+			    text-shadow: 1px 1px 0 #888;
+			}
+			.loading_progressbar_label {
+			    float: left;
+			    margin-left: 5px;
+			    width:100%;
+			    text-align:center;
+			    margin-top: 5px;
+			    font-weight: bold;
+			    text-shadow: 1px 1px 0 #888;
+			  }
+			#info {
+				position: absolute;
+				top: 10px; width: 100%;
+				color: #ffffff;
+				padding: 5px;
+				font-family: Monospace;
+				font-size: 13px;
+				text-align: center;
+				z-index:100;
+			}
+			a {
+				color: orange;
+				text-decoration: none;
+			}
+			a:hover {
+				color: #0080ff;
+			}
+			#controls_innercontainer
+			{
+				
+			}
+			.controls
+			{
+				width:250px;
+				
+				background-color:rgba(0,0,0,.4);
+				display:block;
+				margin-left:0px;
+				margin-right:0px;
+				margin-bottom:10px;
+				float:left;
+				clear:both;
+				padding:5px;
+			}
+			div .mini_label
+			{
+				float:left;
+				width:70px;
+				margin-right:0.5em;
+				padding-top:0.4em;
+				text-align:right;	
+				font-size:.9em;
+			}
+			div .mini_field
+			{
+				float:left;
+			 	width:40px;
+				
+				padding-top:0.4em;
+			}
+			
+			div .label
+			{
+				float:left;
+				width:70px;
+				margin-right:0.5em;
+				padding-top:0.4em;
+				text-align:right;
+				font-size:.9em;
+			}
+			div .control
+			{
+				float:left;
+			 	width:170px;
+			  
+			}
+			div .mini_control
+			{
+				float:left;
+			 	width:50px;
+			  
+			}
+			.mini_slider
+			{
+				width: 100px;
+				float:left;
+				margin-left:10px;
+				margin-top:4px;
+			}
+			#button_toolbar {
+			    padding: 4px;
+    			display: table;
+    			width:240px;
+    			margin-left:8px;
+  			}
+  			#button_toolbar button {
+    			display: table-cell;
+  			}
+			ul
+			{
+				margin:0px;
+				margin-top:10px;
+				padding:0px;
+				list-style:none;
+			}
+			li
+			{
+				clear:both;
+				float:left;
+				margin-bottom:5px;
+				width:100%;
+			}
+			.explanation
+			{
+				text-align: center;
+				padding-left: 20px;
+				padding-right: 20px;
+				font-size: .8em;
+				display: block;
+			}
+			.loading_explanation
+			{
+				float:left;
+			}
+			.loading_explanation p
+			{
+				float:left;
+				color:#ddd;
+			}
+			.loading_explanation p .highlight
+			{
+				font-weight:bold;
+				color:#fff;
+			}
+			.loading_explanation p img.left
+			{
+				float:left;
+				margin-right:10px;
+				margin-bottom:10px;
+			}
+			#edit_text p
+			{
+				float:left;
+				color:#ccc;
+				font-size:.9em;
+				padding:5px;
+				margin-top:5px;
+				margin-bottom:5px;
+			}
+			#edit_text p .highlight
+			{
+				color:#fff;
+				font-weight:bold;
+			}
+			#edit_text p .dim
+			{
+				color:#888;
+				font-weight:bold;
+			}			
+			#edit_text p img.left
+			{
+				float:left;
+			}
+			#edit_text p img.right
+			{
+				float:right;
+				margin-left:5px;
+				margin-bottom:5px;
+			}
+			#snapshot_dialog .snapshot_explanation
+			{
+				width:100%;
+				text-align:center;
+			}
+			#snapshot_dialog .snapshot_photo
+			{
+				margin:auto;
+				width:640px;
+			}
+			#snapshot_dialog .centered_button
+			{
+				width:100%;
+				text-align:center;
+				margin-bottom:10px;
+			}
+			.loading_explanation p img.right
+			{
+				float:right;
+				margin-left:10px;
+				margin-bottom:10px;
+			}
+			#loading_dialog .centered_button
+			{
+				width:100%;
+				text-align:center;
+				margin-bottom:10px;
+			}
+			#loading_close_button
+			{
+				width:140px;
+				height:34px;
+				font-size:1.4em;
+				display:none;
+			}
+			#loading_info
+			{
+				width:100%;
+				text-align:center;
+				color:#ccc;
+			}
+			
+			.clearboth {
+				clear:both;
+			}
+			li.spacer
+			{
+				height:10px;
+			}
+			
+			.ui-widget {
+				font-size:1em;
+				font-family:"Helvetica", sans-serif;
+			}
+			button.ui-button-icon-only { height:18px;}
+			.ui-button, .ui-widget .ui-button {
+				font-size: .8em;
+				line-height:1;
+				padding:1px;
+			}
+			.ui-button-text-only .ui-button-text {
+			padding: 0px 5px 0px 5px;
+			}
+			.ui-button .ui-icon.stepforward {
+			    background-image: url('images/icon-step.png');
+			    width: 16px	;
+			    height: 16px;
+			}
+			.ui-button.ui-state-hover .ui-icon.stepforward {
+			    background-image: url('images/icon-step.png');
+			    width: 16px	;
+			    height: 16px;
+			}
+			#nav_buttons
+			{
+				margin-left:10px;
+			}
+			#button_toolbar button.ui-button-icon-only { margin-right:5px; width:50px;}
+			#nav_buttons button.ui-button-icon-only { width:50px;}
+			.single_button
+			{
+				float:left;
+				display:block;
+				width:58px;
+				margin:0px;
+				padding:0px;
+				margin-top:8px;
+			}
+			.double_button
+			{
+				float:left;
+				display:block;
+				width:58px;
+			}
+	
+			select {
+				font-family:"Helvetica", sans-serif;
+				border-color:#888;
+				color:#ddd;
+				background-color:#222;
+			}
+			input {
+				font-family:"Helvetica", sans-serif;
+				height:14px;
+				border-color:#888;
+				color:#ddd;
+				background-color:#222;
+			}
+			legend {
+				font-weight:bold;
+				color:#fff
+				text-shadow: 0px 1px 1px #4d4d4d;;
+			}
+			#rule_canvas
+			{
+				float:left;
+				display:block;
+				margin-right:3px;
+			}
+			#edit_rules_button
+			{
+				float:left;
+				display:block;
+			}
+			#editor {
+				width:475px;
+				float:left;
+			}
+			#edit_buttons {
+				width:468px;
+				margin:auto;
+				padding:5px;
+			}
+			#edit_canvas_container {
+				width:468px;
+				height:432px;
+				margin:auto;
+				padding:0px;
+			}
+			#edit_text {
+				float:left;
+				width:195px;
+				margin:auto;
+				padding:5px;
+			}
+			.ui-dialog {
+				box-shadow: rgba(0, 0, 0, 0.498039) 10px 10px 10px;
+			}
