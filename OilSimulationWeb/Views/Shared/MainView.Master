@@ -173,9 +173,8 @@
             stats.update();
             var delta = clock.getDelta();
 
-            if (reload) {
-                reload = false; 
-                loader.load("<%:Url.Action("GetData","Business") %>", {"s":"100"} ,function (loadedMesh) {
+            if (reload) { 
+                loader.load("<%:Url.Action("GetData","Business") %>", {"s":"100"} ,function (loadedMesh) { 
                     // loadedMesh is a group of meshes. For
                     // each mesh set the material, and compute the information
                     // three.js needs for rendering.
