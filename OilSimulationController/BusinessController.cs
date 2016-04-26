@@ -875,16 +875,13 @@ namespace OilSimulationController
             for (int i = 0; i < gridModel.nz; i++)
             {
                 stModeData.Data.AddRange(GetCenterPointData(gridModel, szPara, iStep, i, eGridFile));
-            } 
-            //计算XYZ的距离
-            Pillar p = gridModel.GetGridAtIJK(0, 0, 0); 
 
+                //计算XYZ的距离
+                Pillar p = gridModel.GetGridAtIJK(0, 0, i);
+                stModeData.xyz.Add(new float[] { (p.Center.x - p.a.x) * 2, (p.Center.y - p.a.y) * 2, (p.Center.z - p.a.z) * 2 });
 
-             p = gridModel.GetGridAtIJK(0, 0, 1); 
-
-
-             p = gridModel.GetGridAtIJK(0, 0, 2); 
-             stModeData.xyz = new float[] { (p.Center.x - p.a.x) * 2, (p.Center.y - p.a.y) * 2, (p.Center.z - p.a.z) * 2 };
+            }
+            stModeData.lev = gridModel.nz;
             var res = new ConfigurableJsonResult();
             res.Data = stModeData; 
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");

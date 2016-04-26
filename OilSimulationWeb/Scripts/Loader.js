@@ -33,25 +33,26 @@ THREE.MyLoader.prototype = {
         var vertices = [];
 
         var jsonData = JSON.parse(text);
-         
+
         var container = new THREE.Object3D();
 
         var geometry = new THREE.Geometry();
         var cubeMaterial = new THREE.MeshNormalMaterial({ color: 0x0f00f1, transparent: true, opacity: 0.5 });
         var iLeive = 3;
 
-        for (var i = 0; i < jsonData.Data.length; i++) 
-        {
-            var cubeMesh = addcube(jsonData.Data[i][0] - 400, jsonData.Data[i][1] - 500, jsonData.Data[i][2] - 3010, 10);
+        for (var i = 0; i < jsonData.Data.length; i++) {
+            var zWidth = 20;
+            if (i == 1000) {
+                zWidth = 30;
+            }
+            if (i == 2000) {
+                zWidth = 50;
+            }
+            var cubeMesh = addcube(jsonData.Data[i][0] - 400, jsonData.Data[i][1] - 500, jsonData.Data[i][2] - 3010, zWidth);
             cubeMesh.updateMatrix();
             geometry.merge(cubeMesh.geometry, cubeMesh.matrix);
         }
 
-//        for (var i = 0, l = vertices.length / 3; i < l; i++) {
-//            var cubeMesh = addcube(vertices[i * 3 + 0] - 400, vertices[i * 3 + 1] - 500, vertices[i * 3 + 2] - 3010, 10);
-//            cubeMesh.updateMatrix();
-//            geometry.merge(cubeMesh.geometry, cubeMesh.matrix);
-//        }
         function addcube(x, y, z, zw) {
             var cubeSize = 10.0;
             var cubeGeometry = new THREE.BoxGeometry(cubeSize, cubeSize, zw);

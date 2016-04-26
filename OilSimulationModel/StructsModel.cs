@@ -55,8 +55,9 @@ namespace OilSimulationModel
     /// </summary>
     public struct ModeData
     {
+        public int lev;
         public float[] mm;
-        public float[] xyz;
+        public List<float[]> xyz;
         public List<float[]> Data;
     }
 
