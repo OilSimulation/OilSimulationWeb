@@ -12,13 +12,13 @@ THREE.MyLoader.prototype = {
 
     constructor: THREE.MyLoader,
 
-    load: function (url, onLoad, onProgress, onError) {
+    load: function (url, pData, onLoad, onProgress, onError) {
 
         var scope = this;
 
         var loader = new THREE.XHRLoader(scope.manager);
         loader.setCrossOrigin(this.crossOrigin);
-        loader.load(url, function (text) {
+        loader.load(url, pData, function (text) {
 
             onLoad(scope.parse(text));
 

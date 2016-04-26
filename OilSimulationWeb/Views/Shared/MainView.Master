@@ -8,6 +8,8 @@
     <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
     <link href="<%=Url.Content("~/Content/cubes.css")%>" rel="stylesheet" type="text/css" />
     <link href="<%=Url.Content("~/Content/jquery-ui-1.10.2.custom.css")%>" rel="stylesheet" type="text/css" />
+    
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/jquery-1.4.1.min.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/three.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/stats.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/dat.gui.js")%>"></script>
@@ -173,7 +175,7 @@
 
             if (reload) {
                 reload = false; 
-                loader.load(<%:Url.Action("GetData?s=1&p=SOIL","Bussiness") %>, function (loadedMesh) {
+                loader.load("<%:Url.Action("GetData","Business") %>", {"s":"100"} ,function (loadedMesh) {
                     // loadedMesh is a group of meshes. For
                     // each mesh set the material, and compute the information
                     // three.js needs for rendering.

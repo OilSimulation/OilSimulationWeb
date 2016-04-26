@@ -11479,7 +11479,7 @@ THREE.XHRLoader.prototype = {
 
 	constructor: THREE.XHRLoader,
 
-	load: function ( url, onLoad, onProgress, onError ) {
+	load: function ( url, pData ,onLoad, onProgress, onError ) {
 
 		var scope = this;
 
@@ -11493,7 +11493,7 @@ THREE.XHRLoader.prototype = {
 		}
 
 		var request = new XMLHttpRequest();
-		request.open( 'GET', url, true );
+		request.open( 'POST', url, true );
 
 		request.addEventListener( 'load', function ( event ) {
 
@@ -11528,7 +11528,7 @@ THREE.XHRLoader.prototype = {
 		if ( this.crossOrigin !== undefined ) request.crossOrigin = this.crossOrigin;
 		if ( this.responseType !== undefined ) request.responseType = this.responseType;
 
-		request.send( null );
+		request.send( pData );
 
 		scope.manager.itemStart( url );
 
