@@ -14,6 +14,7 @@
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/stats.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/dat.gui.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/TrackballControls.js")%>"></script>
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/Common.js")%>"></script> 
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Loader.js")%>"></script> 
      
       
@@ -88,6 +89,7 @@
     var webGLRenderer;
     var camera;
     var scene; 
+    var geometry;
     // once everything is loaded, we run our Three.js stuff.
     function init() {
 
@@ -157,7 +159,7 @@
 
         // call the render function
         var step = 0;
-        var clock = new THREE.Clock();
+        var clock = new THREE.Clock(); 
 
         /*
         function setCamControls() {

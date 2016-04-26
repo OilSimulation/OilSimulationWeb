@@ -627,7 +627,7 @@ namespace OilSimulationController
         private float[] CaculateMaxMinValue(string szProName, int iStepAll,string egridFilePath)
         {
             //List<float[]> lst = new List<float[]>();
-            float fMinValue = 0.0f;
+            float fMinValue = 1000.0f;
             float fMaxValue = 0.0f;
             for (int i = 0; i < iStepAll; ++i)
             {

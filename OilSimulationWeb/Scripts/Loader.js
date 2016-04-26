@@ -19,14 +19,20 @@ THREE.MyLoader.prototype = {
         var loader = new THREE.XHRLoader(scope.manager);
         loader.setCrossOrigin(this.crossOrigin);
         loader.load(url, pData, function (text) {
-
-            onLoad(scope.parse(text));
+            if(geometry == undefined )
+                onLoad(scope.LoadMode(text));
+            else
+                onLoad(scope.ChangeColor(text));    
 
         }, onProgress, onError);
 
     },
 
-    parse: function (text) {
+    ChangeColor: function (text) {
+         
+    },
+
+    LoadMode: function (text) {
 
         console.time('MyLoader');
 
@@ -36,9 +42,11 @@ THREE.MyLoader.prototype = {
 
         var container = new THREE.Object3D();
 
-        var geometry = new THREE.Geometry();
-        var cubeMaterial = new THREE.MeshNormalMaterial({ color: 0x0f00f1, transparent: true, opacity: 0.5 });
+        geometry = new THREE.Geometry();
 
+        var THREEColor = new THREE.Color();
+
+        var cubeMaterial = new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors });
 
         for (var i = 0; i < jsonData.Data.length; i++) {
 
@@ -46,21 +54,31 @@ THREE.MyLoader.prototype = {
             xw = jsonData.xyz[parseInt(i / (jsonData.Data.length / 3))][0];
             yw = jsonData.xyz[parseInt(i / (jsonData.Data.length / 3))][1];
             zw = jsonData.xyz[parseInt(i / (jsonData.Data.length / 3))][2];
-            var cubeMesh = addcube(jsonData.Data[i][0] - 400, jsonData.Data[i][1] - 500, jsonData.Data[i][2] - 3010, xw, yw, zw);
+            var info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][3], jsonData.mm[1], jsonData.mm[0]);
+            var color;
+            if (info) {
+                color = (info["R"] << 16) | (info["G"] << 8) | info["B"];
+            }
+            var cubeMesh = addcube(jsonData.Data[i][0] - 400, jsonData.Data[i][1] - 500, jsonData.Data[i][2] - 3010, xw, yw, zw, color);
             cubeMesh.updateMatrix();
             geometry.merge(cubeMesh.geometry, cubeMesh.matrix);
         }
 
-        function addcube(x, y, z, xw, yw, zw) {
+        //修改颜色 
+        //setFacesVertexColors(geometry, colors);
+
+        function addcube(x, y, z, xw, yw, zw, color) {
             var cubeGeometry = new THREE.BoxGeometry(xw, yw, zw);
 
-            var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+            var cube = new THREE.Mesh(cubeGeometry, new THREE.MeshBasicMaterial({ vertexColors: THREE.VertexColors }));
             cube.castShadow = true;
 
             // position the cube randomly in the scene
             cube.position.x = x;
             cube.position.y = y;
             cube.position.z = z;
+
+            applyVertexColors(cubeGeometry, THREEColor.setHex(color)); //设置面颜色
 
             // add the cube to the scene
             return cube;
