@@ -6,11 +6,11 @@
 <head runat="server">
     <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
         <script src="<%=Url.Content("~/Scripts/jquery-1.4.1.js")%>"></script>
-        <script src="<%=Url.Content("~/Scripts/three.js")%>"></script> 
         <script src="<%=Url.Content("~/Scripts/renderers/CanvasRenderer.js")%>"></script> 
         <script src="<%=Url.Content("~/Scripts/renderers/Projector.js")%>"></script> 
         <script src="<%=Url.Content("~/Scripts/controls/OrbitControls.js")%>"></script> 
         <script src="<%=Url.Content("~/Scripts/controls/TrackballControls.js")%>"></script> 
+        <script src="<%=Url.Content("~/Scripts/libs/three.js")%>"></script> 
         <script src="<%=Url.Content("~/Scripts/libs/stats.min.js")%>"></script> 
 </head>
 <body onload="threeStart()">
