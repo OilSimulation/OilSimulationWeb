@@ -74,6 +74,7 @@
 		    {
 			    display:none;
 			    position:absolute;
+			    z-index:99999;
 			    width:260px;
 			    right:0px;
 			    bottom:10px;
@@ -238,7 +239,7 @@
 </script>
 </head>
 <body>
-    <div id="controls_container_r" style="display: inline-block; z-index:99999; ">
+    <div id="controls_container_r" style="display: inline-block; ">
 		<div id="controls_innercontainer">  
 			<div class="controls">
 				<legend>操作面板</legend>
@@ -295,7 +296,7 @@
     <div id="Stats-output">
     </div>
     <!-- Div which will hold the Output -->
-    <div id="WebGL-output" style=" z-index:100;">
+    <div id="WebGL-output">
     </div>
     <div>
         <asp:ContentPlaceHolder ID="MainContent" runat="server">
