@@ -303,7 +303,7 @@
 			select {
 				font-family:"Helvetica", sans-serif;
 				border-color:#888;
-				color:#ddd;
+				color:#ddd; 
 				background-color:#222;
 			}
 			input {

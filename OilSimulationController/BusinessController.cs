@@ -864,7 +864,8 @@ namespace OilSimulationController
                 szPara = inputData.Para;
                 iStep = inputData.Step;
             }  
-            string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
+            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
+            string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/封闭边界/MODEL2D_E100.EGRID"); 
             EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
               
             ModeData stModeData = new ModeData();

@@ -13,6 +13,7 @@
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/three.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/stats.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/dat.gui.js")%>"></script>
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/OrbitControls.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/TrackballControls.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Common.js")%>"></script> 
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Loader.js")%>"></script> 
@@ -119,15 +120,16 @@
         //scene.add(camera);
 
         // 添加轨迹球，控制相机
-        var trackballControls = new THREE.TrackballControls(camera);
-
-        trackballControls.rotateSpeed = 1.0;
-        trackballControls.zoomSpeed = 1.0;
-        trackballControls.panSpeed = 1.0;
-        //trackballControls.noZoom=false;
-        //trackballControls.noPan=false;
-        trackballControls.staticMoving = true;
-        //trackballControls.dynamicDampingFactor=0.3;
+        //var trackballControls = new THREE.TrackballControls(camera); 
+        //trackballControls.rotateSpeed = 1.0;
+        //trackballControls.zoomSpeed = 1.0;
+        //trackballControls.panSpeed = 1.0;
+        //trackballControls.staticMoving = true;
+         
+        //TrackballControls,OrbitControls
+        var controls = new THREE.OrbitControls(camera, webGLRenderer.domElement);
+        //controls = new THREE.TrackballControls(camera);
+        //controls.target.set(0, 0, 0); 
 
         var stats = initStats();
 
@@ -147,27 +149,11 @@
 
         // add the output of the renderer to the html element
         document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
-
-        // setup the control gui
-        var controls = new function () {
-            //
-
-        };
-
-        //var gui = new dat.GUI();
-        //
-        //gui.add(controls, 'color', 0x000000, 0xfffffff);
-
+         
         // call the render function
         var step = 0;
         var clock = new THREE.Clock(); 
-
-        /*
-        function setCamControls() {
-
-        }
-        */
-
+         
         render();
 
         var reload = true;
@@ -179,7 +165,7 @@
             if (reload) {
                 reload = false; 
                 var sUrl = "<%:Url.Action("GetData","Business") %>";
-                loader.load(sUrl, JSON.stringify({Para:"SOIL",Mode:1,Step:50}) ,function (loadedMesh) {
+                loader.load(sUrl, JSON.stringify({Para:"PRESSURE",Mode:1,Step:50}) ,function (loadedMesh) {
                     // loadedMesh is a group of meshes. For
                     // each mesh set the material, and compute the information
                     // three.js needs for rendering.
@@ -198,8 +184,9 @@
                     scene.add(mesh);
                 });
             }
-
-            trackballControls.update(delta);
+            
+            controls.update();
+            //trackballControls.update(delta);
             // render using requestAnimationFrame
             camera.lookAt(new THREE.Vector3(0, 0, 0));
 

@@ -51,15 +51,15 @@ THREE.MyLoader.prototype = {
         for (var i = 0; i < jsonData.Data.length; i++) {
 
             var xw, yw, zw;
-            xw = jsonData.xyz[parseInt(i / (jsonData.Data.length / 3))][0];
-            yw = jsonData.xyz[parseInt(i / (jsonData.Data.length / 3))][1];
-            zw = jsonData.xyz[parseInt(i / (jsonData.Data.length / 3))][2];
+            xw = jsonData.xyz[parseInt(i / (jsonData.Data.length / jsonData.lev))][0];
+            yw = jsonData.xyz[parseInt(i / (jsonData.Data.length / jsonData.lev))][1];
+            zw = jsonData.xyz[parseInt(i / (jsonData.Data.length / jsonData.lev))][2];
             var info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][3], jsonData.mm[1], jsonData.mm[0]);
             var color;
             if (info) {
                 color = (info["R"] << 16) | (info["G"] << 8) | info["B"];
             }
-            var cubeMesh = addcube(jsonData.Data[i][0] - 400, jsonData.Data[i][1] - 500, jsonData.Data[i][2] - 3010, xw, yw, zw, color);
+            var cubeMesh = addcube(jsonData.Data[i][0] - 400, jsonData.Data[i][1] - 500, jsonData.Data[i][2] - 1010, xw, yw, zw, color);
             cubeMesh.updateMatrix();
             geometry.merge(cubeMesh.geometry, cubeMesh.matrix);
         }
