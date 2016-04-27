@@ -22,8 +22,9 @@ namespace OilSimulationController
         public ActionResult BaseModeOne()
         {
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
-            string szGridFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
+            //string szGridFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
 
+            string szGridFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/气藏开发/均质/QICANG/123-1_E100.EGRID");
             PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
 
             ViewData["DynamicProps"] = stPageParams.dynamicProps; 

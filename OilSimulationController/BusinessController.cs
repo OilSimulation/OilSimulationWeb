@@ -425,7 +425,7 @@ namespace OilSimulationController
             float coordinateZ = 0.0f;
 
             int iLevel = (int)(model.nz / 2.0 + 0.5);
-            Pillar p = model.GetGridAtIJK(model.nx / 2, model.ny / 2, iLevel);
+            Pillar p = model.GetGridAtIJK(model.nx / 2, model.ny / 2, iLevel-1);
             coordinateX = p.Center.x;
             coordinateY = p.Center.y;
             coordinateZ = p.Center.z;
@@ -902,8 +902,8 @@ namespace OilSimulationController
                 iLoadFirst = inputData.iLoadFirst;
             }  
             //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
-            string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/气藏开发/均质/QICANG/123_E100.EGRID");
-            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/封闭边界/MODEL2D_E100.EGRID"); 
+            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/气藏开发/均质/QICANG/123-1_E100.EGRID");
+            string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/封闭边界/MODEL2D_E100.EGRID"); 
             EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
 
             int countXFiles = EclipseParser.CountXFiles(eGridFile); 
