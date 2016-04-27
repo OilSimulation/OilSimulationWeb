@@ -59,7 +59,7 @@ THREE.MyLoader.prototype = {
             if (info) {
                 color = (info["R"] << 16) | (info["G"] << 8) | info["B"];
             }
-            var cubeMesh = addcube(jsonData.Data[i][0] - 400, jsonData.Data[i][1] - 500, jsonData.Data[i][2] - 1010, xw, yw, zw, color);
+            var cubeMesh = addcube(jsonData.Data[i][0] - jsonData.ct[0], jsonData.Data[i][1] - jsonData.ct[1], jsonData.Data[i][2] - jsonData.ct[2], xw, yw, zw, color);
             cubeMesh.updateMatrix();
             geometry.merge(cubeMesh.geometry, cubeMesh.matrix);
         }

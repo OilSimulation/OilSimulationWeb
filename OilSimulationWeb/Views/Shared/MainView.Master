@@ -79,7 +79,6 @@
             document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
          
             // call the render function
-            var step = 0; 
             reload = true; 
             render(); 
 
@@ -96,7 +95,7 @@
             // render using requestAnimationFrame
             camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-            //requestAnimationFrame(render);
+            requestAnimationFrame(render);
 
             webGLRenderer.render(scene, camera); 
         }
