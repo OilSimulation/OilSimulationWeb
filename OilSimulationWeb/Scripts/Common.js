@@ -1,4 +1,4 @@
-﻿
+﻿ 
 //计算当前方格颜色.
 //selMaxColor用户选的颜色最大值,
 function CaculateColor(selMaxColorR, selMaxColorG, selMaxColorB, selMinColorR, selMinColorG, selMinColorB, curColor, maxColor, minColor) {
@@ -34,6 +34,7 @@ function CaculateColor(selMaxColorR, selMaxColorG, selMaxColorB, selMinColorR, s
     }
 };
 
+//////////////////////////////////////////////////////////////////////////
 //返回 R:VALUE,G:VALUE,B:VALUE
 function HSL2RGB(h, sl, l) {
     var v;
@@ -93,6 +94,7 @@ function HSL2RGB(h, sl, l) {
     return info;
 };
 
+//////////////////////////////////////////////////////////////////////////
 //返回H:VALUE,S:VALUE,L:VALUE
 function RGB2HSL(ColorR, ColorG, ColorB) {
     var r = ColorR / 255.0;
@@ -138,6 +140,7 @@ function RGB2HSL(ColorR, ColorG, ColorB) {
     return info;
 };
 
+//////////////////////////////////////////////////////////////////////////
 //设置颜色 g:geometry对象，c:颜色(0xff0000)
 function applyVertexColors(g, c) {
 
@@ -156,6 +159,7 @@ function applyVertexColors(g, c) {
     });
 };
 
+//////////////////////////////////////////////////////////////////////////
 //设置 面颜色 g:geometry对象，c:颜色json列表
 function setFacesVertexColors(g, c) {
     //每十二个面表示一个立方体。
@@ -184,5 +188,4 @@ function setFacesVertexColors(g, c) {
         }
     }
     g.colorsNeedUpdate = true;
-};
-
+}; 

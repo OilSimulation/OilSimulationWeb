@@ -696,10 +696,7 @@ namespace OilSimulationController
             return lst;
 
         }
-
-        
-
-
+          
         private List<View3DPoint> Get3DAllPoint(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
         {
             List<View3DPoint> lst = new List<View3DPoint>();
@@ -896,11 +893,13 @@ namespace OilSimulationController
             int iModel = 0;
             string szPara = "";
             int iStep = 0;
+            int iLoadFirst = -1;
             if (ModelState.IsValid)
             {
                 iModel = inputData.Mode;
                 szPara = inputData.Para;
                 iStep = inputData.Step;
+                iLoadFirst = inputData.iLoadFirst;
             }  
             //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
             string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/气藏开发/均质/QICANG/123_E100.EGRID");
@@ -912,7 +911,7 @@ namespace OilSimulationController
             ModeData stModeData = new ModeData();
             //获取最大最小值 
             stModeData.mm = CaculateMaxMinValue(szPara, countXFiles, eGridFile);
-            if (iStep == 0)
+            if (iLoadFirst == 0)
             {
                 //获取中心点坐标
                 stModeData.ct = GetCenterCoordinates(gridModel);
@@ -943,8 +942,7 @@ namespace OilSimulationController
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return res;
         }
-
-
+         
 
         [HttpPost]
         public ActionResult GetModelData(int step)

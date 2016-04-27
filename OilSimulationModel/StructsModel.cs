@@ -90,7 +90,8 @@ namespace OilSimulationModel
     {
         public string Para { set; get; }
         public int Mode { set; get; }
-        public int Step { set; get; } 
+        public int Step { set; get; }
+        public int iLoadFirst { set; get; } 
     }
 
     /// <summary>
