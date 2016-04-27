@@ -165,7 +165,7 @@
             if (reload) {
                 reload = false; 
                 var sUrl = "<%:Url.Action("GetData","Business") %>";
-                loader.load(sUrl, JSON.stringify({Para:"PRESSURE",Mode:1,Step:50}) ,function (loadedMesh) {
+                loader.load(sUrl, JSON.stringify({Para:"PRESSURE",Mode:1,Step:7}) ,function (loadedMesh) {
                     // loadedMesh is a group of meshes. For
                     // each mesh set the material, and compute the information
                     // three.js needs for rendering.
