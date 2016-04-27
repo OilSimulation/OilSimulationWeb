@@ -19,89 +19,18 @@
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Loader.js")%>"></script> 
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/UserDefine.js")%>"></script>  
     
-     
-      
-    <style type="text/css">
-	
-		    body {
-				    background-color: #666;
-				    margin: 0px;
-				    overflow: hidden;
-				    font-family: "Helvetica", sans-serif;
-				    font-size:10pt;
-				    color:#bbb;
-			    }
-
-		    #script_loader {
-			    font-family:"Helvetica", sans-serif;
-			    width:300px;
-			    height:200px;
-			    position:absolute;
-			    left:50%;
-			    top:50%;
-			    margin:-100px 0 0 -150px;
-			    font-weight:bold;
-			    text-align:center;
-			    font-size:2em;
-			    background-color:#222;
-			    padding:10px;
-		    }
-
-
-		    #edit_dialog {
-			    width:720px;
-			    height:550px;
-			    display:none;
-			    overflow:hidden;
-		    }
-
-
-		    #loading_dialog {
-			    display:none;
-		    }
-
-		    #snapshot_dialog {
-			    display:none;
-		    }
-		
-		    #controls_container_l
-		    {
-			    display:none;
-			    position:absolute;
-			    width:260px;
-			    left:0px;
-			    bottom:10px;
-		    }
-
-		    #controls_container_r
-		    {
-			    display:none;
-			    position:absolute;
-			    z-index:99999;
-			    width:260px;
-			    right:0px;
-			    bottom:10px;
-		    }
-
-		
-    </style>
-
+    <script type="text/javascript">
     
-<!-- Javascript code that runs our Three.js examples -->
-<script type="text/javascript">
+        var webGLRenderer;
+        var camera;
+        var scene; 
+        var geometry; 
 
-    var webGLRenderer;
-    var camera;
-    var scene; 
-    var geometry;
-   
-  
+        window.onload = init;  
+        // listen to the resize events
+        window.addEventListener('resize', onResize, false);
 
-    window.onload = init;  
-    // listen to the resize events
-    window.addEventListener('resize', onResize, false);
-
-</script>
+    </script>
 </head>
 <body>
     <div id="controls_container_r" style="display: inline-block; ">
