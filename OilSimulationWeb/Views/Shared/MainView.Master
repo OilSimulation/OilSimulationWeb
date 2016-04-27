@@ -95,7 +95,7 @@
 
         // 创建和设置渲染器
         webGLRenderer = new THREE.WebGLRenderer({ antialias: true });  //抗锯齿
-        //webGLRenderer.setClearColor(new THREE.Color(0xaaaaff, 1.0));
+        webGLRenderer.setClearColor(new THREE.Color(0x666666, 1.0));
         webGLRenderer.setSize(window.innerWidth, window.innerHeight);
         webGLRenderer.shadowMapEnabled = true;
 
@@ -238,17 +238,7 @@
 </script>
 </head>
 <body>
-    <div id="Stats-output">
-    </div>
-    <!-- Div which will hold the Output -->
-    <div id="WebGL-output" border:1px solid #F00; width:200px; height:100px>
-    </div>
-    <div>
-        <asp:ContentPlaceHolder ID="MainContent" runat="server">
-        
-        </asp:ContentPlaceHolder>
-    </div>
-    <div id="controls_container_r" style="display: inline-block;">
+    <div id="controls_container_r" style="display: inline-block; z-index:99999; ">
 		<div id="controls_innercontainer">  
 			<div class="controls">
 				<legend>操作面板</legend>
@@ -301,5 +291,16 @@
 			</div> 
 		</div>
 	</div> 
+    
+    <div id="Stats-output">
+    </div>
+    <!-- Div which will hold the Output -->
+    <div id="WebGL-output" style=" z-index:100;">
+    </div>
+    <div>
+        <asp:ContentPlaceHolder ID="MainContent" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
 </body>
 </html>
