@@ -14,14 +14,7 @@ namespace OilSimulationController
 {
     [HandleError]
     public class BaseController : Controller
-    {
-        public ActionResult ViewPageFunc1()
-        {
-            //Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
-             
-            return View();
-        }
-
+    {  
         /// <summary>
         /// 演示活塞式水驱油过程
         /// </summary>
