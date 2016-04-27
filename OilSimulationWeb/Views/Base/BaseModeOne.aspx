@@ -6,6 +6,6 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server"> 
     <script type="text/javascript">
-        var modeIndex = 1;
+        var modeIndex = 2;
     </script>
 </asp:Content>

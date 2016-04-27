@@ -24,12 +24,8 @@
         var camera;
         var scene; 
         var geometry; 
-        var myLoader;
-        var stats;
-        var controls;
+        var myLoader; 
         var mesh;
-        var reload; 
-         
         // once everything is loaded, we run our Three.js stuff.
         function init() {
 
@@ -58,10 +54,11 @@
             //scene.add(camera);
      
             //OrbitControls
-            controls = new THREE.OrbitControls(camera, webGLRenderer.domElement);
+            var controls = new THREE.OrbitControls(camera, webGLRenderer.domElement);
             //controls.target.set(0, 0, 0); 
 
-            stats = initStats();
+            
+            var stats = initStats();
 
             // 设置环境光源
             var ambi = new THREE.AmbientLight(0x33ccff);
@@ -78,43 +75,47 @@
             // add the output of the renderer to the html element
             document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
          
-            // call the render function
-            reload = true; 
+            // call the render function 
+            var reload = true; 
             render(); 
-
-        }
-        function render() {
-
-            stats.update(); 
-            if (reload) {
-                reload = false;
-                LoadWebGLData(0); ;
-            }
             
-            controls.update(); 
-            // render using requestAnimationFrame
-            camera.lookAt(new THREE.Vector3(0, 0, 0));
+            //渲染
+            function render() {
 
-            requestAnimationFrame(render);
+                stats.update(); 
+                if (reload) {
+                    reload = false;
+                    LoadWebGLData(0); ;
+                }
+            
+                controls.update(); 
+                // render using requestAnimationFrame
+                camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-            webGLRenderer.render(scene, camera); 
+                requestAnimationFrame(render);
+
+                webGLRenderer.render(scene, camera); 
+            }
+
+            function initStats() {
+
+                var stats = new Stats();
+
+                stats.setMode(0); // 0: fps, 1: ms
+
+                // Align top-left
+                stats.domElement.style.position = 'absolute';
+                stats.domElement.style.left = '0px';
+                stats.domElement.style.top = '0px';
+
+                document.getElementById("Stats-output").appendChild(stats.domElement);
+
+                return stats;
+            }
+
         }
 
-        function initStats() {
-
-            var stats = new Stats();
-
-            stats.setMode(0); // 0: fps, 1: ms
-
-            // Align top-left
-            stats.domElement.style.position = 'absolute';
-            stats.domElement.style.left = '0px';
-            stats.domElement.style.top = '0px';
-
-            document.getElementById("Stats-output").appendChild(stats.domElement);
-
-            return stats;
-        }
+        
 
         function LoadWebGLData(isFirstLoad) { 
             var paramValue = $("#paramSelect option:selected").text();
