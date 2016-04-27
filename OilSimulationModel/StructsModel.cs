@@ -71,6 +71,20 @@ namespace OilSimulationModel
         public List<float> Data;
     }
 
+    /// <summary>
+    /// 通用页面参数
+    /// </summary>
+    public struct PageParams
+    {
+        public List<string> dynamicProps;
+        public string[] timeSteps;
+        public int iTotalGrid;
+
+    }
+
+    /// <summary>
+    /// AJAX POST数据结构
+    /// </summary>
     public class PostData
     {
         public string Para { set; get; }
