@@ -91,3 +91,12 @@ THREE.MyLoader.prototype = {
     }
 
 };
+
+//
+function LoadData() {
+
+    
+    
+};
+
+ 

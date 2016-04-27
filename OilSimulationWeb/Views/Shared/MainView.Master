@@ -24,6 +24,7 @@
         var camera;
         var scene; 
         var geometry; 
+        var myLoader;
 
         
         // once everything is loaded, we run our Three.js stuff.
@@ -72,7 +73,7 @@
             // 导入模型并添加到scene中
             var mesh;
 
-            var loader = new THREE.MyLoader();
+            myLoader = new THREE.MyLoader();
 
             // add the output of the renderer to the html element
             document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
@@ -92,7 +93,7 @@
                 if (reload) {
                     reload = false; 
                     var sUrl = "<%:Url.Action("GetData","Business") %>";
-                    loader.load(sUrl, JSON.stringify({Para:"PRESSURE",Mode:1,Step:7}) ,function (loadedMesh) {
+                    myLoader.load(sUrl, JSON.stringify({Para:"PRESSURE",Mode:1,Step:7}) ,function (loadedMesh) {
                         // loadedMesh is a group of meshes. For
                         // each mesh set the material, and compute the information
                         // three.js needs for rendering.
@@ -105,7 +106,6 @@
                         mesh = loadedMesh;
 
                         var scale = 0.1;
-                        console.log("scale =", scale);
                         loadedMesh.scale.set(scale, scale, scale);
                         //loadedMesh.rotation.x = -0.3;
                         scene.add(mesh);
