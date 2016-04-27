@@ -32,7 +32,7 @@ function CaculateColor(selMaxColorR, selMaxColorG, selMaxColorB, selMinColorR, s
         return HSL2RGB(fStep, s, l);
 
     }
-}
+};
 
 //返回 R:VALUE,G:VALUE,B:VALUE
 function HSL2RGB(h, sl, l) {
@@ -91,7 +91,7 @@ function HSL2RGB(h, sl, l) {
     }
     var info = { "R": parseInt(r * 255), "G": parseInt(g * 255), "B": parseInt(b * 255) };
     return info;
-}
+};
 
 //返回H:VALUE,S:VALUE,L:VALUE
 function RGB2HSL(ColorR, ColorG, ColorB) {
@@ -136,7 +136,7 @@ function RGB2HSL(ColorR, ColorG, ColorB) {
     h /= 6.0;
     var info = { "H": h, "S": s, "L": l };
     return info;
-} 
+};
 
 //设置颜色 g:geometry对象，c:颜色(0xff0000)
 function applyVertexColors(g, c) {
@@ -154,7 +154,7 @@ function applyVertexColors(g, c) {
             }
         }
     });
-}
+};
 
 //设置 面颜色 g:geometry对象，c:颜色json列表
 function setFacesVertexColors(g, c) {
@@ -184,4 +184,5 @@ function setFacesVertexColors(g, c) {
         }
     }
     g.colorsNeedUpdate = true;
-}
+};
+

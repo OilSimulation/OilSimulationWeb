@@ -57,6 +57,7 @@ namespace OilSimulationModel
     {
         public int lev;
         public float[] mm;
+        public float[] ct;
         public List<float[]> xyz;
         public List<float[]> Data;
     }
@@ -89,7 +90,7 @@ namespace OilSimulationModel
     {
         public string Para { set; get; }
         public int Mode { set; get; }
-        public int Step { set; get; }
+        public int Step { set; get; } 
     }
 
     /// <summary>

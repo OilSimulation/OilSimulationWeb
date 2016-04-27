@@ -79,16 +79,14 @@
             document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
          
             // call the render function
-            var step = 0;
-            var clock = new THREE.Clock(); 
+            var step = 0; 
          
             render();
 
             var reload = true;
 
             function render() {
-                stats.update();
-                var delta = clock.getDelta();
+                stats.update(); 
 
                 if (reload) {
                     reload = false; 
@@ -112,12 +110,12 @@
                     });
                 }
             
-                controls.update();
-                //trackballControls.update(delta);
+                controls.update(); 
                 // render using requestAnimationFrame
                 camera.lookAt(new THREE.Vector3(0, 0, 0));
 
                 requestAnimationFrame(render);
+
                 webGLRenderer.render(scene, camera);
 
             }

@@ -354,6 +354,86 @@ namespace OilSimulationController
         }
 
         /// <summary>
+        /// 获取X000扩展文件
+        /// </summary>
+        /// <param name="iStep"></param>
+        /// <returns></returns>
+        private string GetStepFileExt(int iStep)
+        {
+            string szRetValue = iStep.ToString();
+            ///左边补0
+            szRetValue = szRetValue.PadLeft(4, '0');   
+            ///.X
+            szRetValue = ".X" + szRetValue;
+            //返回字符串
+            return szRetValue;
+        }
+
+        /// <summary>
+        /// 计算模型数据最大最小值
+        /// </summary>
+        /// <param name="szProName"></param>
+        /// <param name="iStepAll"></param>
+        /// <param name="egridFilePath"></param>
+        /// <returns></returns>
+        private float[] CaculateMaxMinValue(string szProName, int iStepAll, string egridFilePath)
+        {
+            //List<float[]> lst = new List<float[]>();
+            float fMinValue = 1000.0f;
+            float fMaxValue = 0.0f;
+            for (int i = 0; i < iStepAll; ++i)
+            {
+                string initFilename = Path.ChangeExtension(egridFilePath, GetStepFileExt(i));
+
+                using (EclipseParser initParser = new EclipseParser(initFilename))
+                {
+                    float[] propValues;
+                    if (szProName == "SOIL")
+                    {
+                        propValues = initParser.ParseEclipsePropertyFromInit("SWAT");
+                        for (int z = 0; z < propValues.Length; ++z)
+                        {
+                            propValues[z] = 1 - propValues[z];
+                        }
+                    }
+                    else
+                    {
+                        propValues = initParser.ParseEclipsePropertyFromInit(szProName);
+                    }
+                    if (propValues.Min() < fMinValue)
+                    {
+                        fMinValue = propValues.Min();
+                    }
+                    if (propValues.Max() > fMaxValue)
+                    {
+                        fMaxValue = propValues.Max();
+                    }
+                }
+            }
+            return new float[2] { fMinValue, fMaxValue };
+        }
+
+        /// <summary>
+        /// 获取模型中心点坐标
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        private float[] GetCenterCoordinates(EclipseModel model)
+        {
+            float coordinateX = 0.0f;
+            float coordinateY = 0.0f;
+            float coordinateZ = 0.0f;
+
+            int iLevel = (int)(model.nz / 2.0 + 0.5);
+            Pillar p = model.GetGridAtIJK(model.nx / 2, model.ny / 2, iLevel);
+            coordinateX = p.Center.x;
+            coordinateY = p.Center.y;
+            coordinateZ = p.Center.z;
+
+            return new float[3] { coordinateX, coordinateY, coordinateZ }; 
+        }
+
+        /// <summary>
         /// 获取指定帧，指定层数据
         /// </summary>
         /// <param name="model"></param>
@@ -370,7 +450,7 @@ namespace OilSimulationController
             if ( lstDynamicPara.IndexOf(szProName) != -1 )
             {
                 //
-                string initFilename = Path.ChangeExtension(egridFilePath, StepFileExt[iStep]);
+                string initFilename = Path.ChangeExtension(egridFilePath, GetStepFileExt(iStep));
 
                 using (EclipseParser initParser = new EclipseParser(initFilename))
                 {
@@ -514,9 +594,9 @@ namespace OilSimulationController
        /// <param name="k"></param>
        /// <param name="egridFilePath"></param>
        /// <returns></returns>
-        private List<float> GetCenterPointColor(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
+        private List<float[]> GetCenterPointColor(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
         {
-            List<float> lst = new List<float>();
+            List<float[]> lst = new List<float[]>();
             if (lstDynamicPara.IndexOf(szProName) != -1)
             {
                 //
@@ -546,8 +626,8 @@ namespace OilSimulationController
                                 //这里面的所有网格都输出 
                                 int pos = k * model.nx * model.ny + j * model.nx + i;
                                 ///!!!! 这里的v才是网格(i,j,k)上的属性值
-                                float v = propValues[pos]; 
-                                lst.Add(v);
+                                float v = propValues[pos];
+                                lst.Add(new float[] { v });
                             }
                     }
                     else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
@@ -564,7 +644,7 @@ namespace OilSimulationController
                                     ///!!!! 这里的v才是网格(i,j,k)上的属性值
                                     float v = propValues[pos]; 
                                     //listColors.Add(v);
-                                    lst.Add(v);
+                                    lst.Add(new float[] { v });
                                 }
                             }
                     }
@@ -589,8 +669,8 @@ namespace OilSimulationController
                                 //这里面的所有网格都输出 
                                 int pos = k * model.nx * model.ny + j * model.nx + i;
                                 ///!!!! 这里的v才是网格(i,j,k)上的属性值
-                                float v = propValues[pos]; 
-                                lst.Add(v);
+                                float v = propValues[pos];
+                                lst.Add(new float[] { v });
                             }
                     }
                     else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
@@ -605,8 +685,8 @@ namespace OilSimulationController
                                     int indexPos = k * model.nx * model.ny + j * model.nx + i;
                                     int pos = model.IndexNode[indexPos];
                                     ///!!!! 这里的v才是网格(i,j,k)上的属性值
-                                    float v = propValues[pos];  
-                                    lst.Add(v);
+                                    float v = propValues[pos];
+                                    lst.Add(new float[] { v });
                                 }
                             }
                     }
@@ -617,49 +697,7 @@ namespace OilSimulationController
 
         }
 
-        /// <summary>
-        /// 计算模型数据最大最小值
-        /// </summary>
-        /// <param name="szProName"></param>
-        /// <param name="iStepAll"></param>
-        /// <param name="egridFilePath"></param>
-        /// <returns></returns>
-        private float[] CaculateMaxMinValue(string szProName, int iStepAll,string egridFilePath)
-        {
-            //List<float[]> lst = new List<float[]>();
-            float fMinValue = 1000.0f;
-            float fMaxValue = 0.0f;
-            for (int i = 0; i < iStepAll; ++i)
-            {
-                string initFilename = Path.ChangeExtension(egridFilePath, StepFileExt[i]);
-
-                using (EclipseParser initParser = new EclipseParser(initFilename))
-                {
-                    float[] propValues;
-                    if (szProName == "SOIL")
-                    {
-                        propValues = initParser.ParseEclipsePropertyFromInit("SWAT");
-                        for (int z = 0; z < propValues.Length; ++z)
-                        {
-                            propValues[z] = 1 - propValues[z];
-                        }
-                    }
-                    else
-                    {
-                        propValues = initParser.ParseEclipsePropertyFromInit(szProName);
-                    }
-                    if (propValues.Min() < fMinValue)
-                    {
-                        fMinValue = propValues.Min();
-                    }
-                    if (propValues.Max() > fMaxValue)
-                    {
-                        fMaxValue = propValues.Max();
-                    }
-                }
-            }
-            return new float[2] { fMinValue, fMaxValue };
-        }
+        
 
 
         private List<View3DPoint> Get3DAllPoint(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
@@ -865,24 +903,40 @@ namespace OilSimulationController
                 iStep = inputData.Step;
             }  
             //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
-            string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/封闭边界/MODEL2D_E100.EGRID"); 
+            string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/气藏开发/均质/QICANG/123_E100.EGRID");
+            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/封闭边界/MODEL2D_E100.EGRID"); 
             EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
+
+            int countXFiles = EclipseParser.CountXFiles(eGridFile); 
               
             ModeData stModeData = new ModeData();
             //获取最大最小值 
-            stModeData.mm = CaculateMaxMinValue(szPara, 100, eGridFile); 
-            //获取数据
-            stModeData.Data = new List<float[]>();
-            stModeData.xyz = new List<float[]>();
-            for (int i = 0; i < gridModel.nz; i++)
+            stModeData.mm = CaculateMaxMinValue(szPara, countXFiles, eGridFile);
+            if (iStep == 0)
             {
-                stModeData.Data.AddRange(GetCenterPointData(gridModel, szPara, iStep, i, eGridFile));
-
-                //计算XYZ的距离
-                Pillar p = gridModel.GetGridAtIJK(0, 0, i);
-                stModeData.xyz.Add(new float[] { (p.Center.x - p.a.x) * 2, (p.Center.y - p.a.y) * 2, (p.Center.z - p.a.z) * 2 });
+                //获取中心点坐标
+                stModeData.ct = GetCenterCoordinates(gridModel);
+                //获取数据
+                stModeData.Data = new List<float[]>();
+                stModeData.xyz = new List<float[]>();
+                for (int i = 0; i < gridModel.nz; i++)
+                {
+                    stModeData.Data.AddRange(GetCenterPointData(gridModel, szPara, iStep, i, eGridFile)); 
+                    //计算XYZ的距离
+                    Pillar p = gridModel.GetGridAtIJK(0, 0, i);
+                    stModeData.xyz.Add(new float[] { (p.Center.x - p.a.x) * 2, (p.Center.y - p.a.y) * 2, (p.Center.z - p.a.z) * 2 }); 
+                }
+            }
+            else
+            {
+                stModeData.Data = new List<float[]>();
+                for (int i = 0; i < gridModel.nz; i++)
+                {
+                    stModeData.Data.AddRange(GetCenterPointColor(gridModel, szPara, iStep, i, eGridFile));  
+                }
 
             }
+            
             stModeData.lev = gridModel.nz;
             var res = new ConfigurableJsonResult();
             res.Data = stModeData; 
