@@ -26,6 +26,10 @@
         var geometry; 
         var myLoader; 
         var mesh;
+        //播放速度 
+        var interval = 500; 
+        var action;
+
         // once everything is loaded, we run our Three.js stuff.
         function init() {
 
@@ -113,10 +117,78 @@
                 return stats;
             }
 
-        }
+            //参数选择
+            $("#paramSelect").change(function () 
+            {
+                var curIndex = $("#paramSelect option:selected").val();
+                if (parseInt(curIndex) > 4) 
+                {
+                    $(".ui-button").attr("disabled", "disabled");
+                } 
+                else 
+                {
+                    $(".ui-button").removeAttr("disabled");
+                }
+            })
+            //步数选择
+            $("#timeSelect").change(function () {
+                var curIndex = $("#timeSelect option:selected").val();
+                //下一步失效
+                if (curIndex == $("#timeSelect >option").length - 1) 
+                {
+                    $("#button_play").attr("disabled", "disabled");
+                    $("#button_forward").attr("disabled", "disabled");
+                } 
+                else 
+                {
+                    $("#button_play").removeAttr("disabled");
+                    $("#button_forward").removeAttr("disabled"); 
+                }
+                //上一步失效
+                if (parseInt(curIndex) == 0) 
+                {
+                    $("#button_backward").attr("disabled", "disabled");
+                } 
+                else 
+                {
+                    $("#button_backward").removeAttr("disabled");
+                }
+            });
+            //
+            $(".select").change(function () { LoadWebGLData(1); });
 
-        
+            //播放按钮
+            $("#button_play").click(function (){
+                if (action) {
+                    window.clearInterval(action);
+                }
 
+                action = setInterval(function () {
+                    var curIndex = $("#timeSelect option:selected").val();
+                    var nextIndex = parseInt(curIndex) + 1;
+                    if (nextIndex < $("#timeSelect > option").length) 
+                    {
+                        $("#timeSelect").val((nextIndex).toString()).change();
+                        curIndex = nextIndex;
+                    }
+                    else 
+                    {
+                        if (action) 
+                        {
+                            window.clearInterval(action);
+                        }
+                    }
+                }, interval);
+                  
+            });
+
+            $("#button_reset").click(function(){
+                $("#timeSelect").val("0").change();   
+            });
+
+        } 
+
+        //加载数据
         function LoadWebGLData(isFirstLoad) { 
             var paramValue = $("#paramSelect option:selected").text();
             var timeValue = $("#timeSelect option:selected").val();
@@ -126,21 +198,14 @@
             var jsonData = {Para:paramValue,Mode:modeIndex,Step:timeValue,iLoadFirst:isFirstLoad}; 
 
             myLoader.load(sUrl, JSON.stringify(jsonData) ,function (loadedMesh) {
-                // loadedMesh is a group of meshes. For
-                // each mesh set the material, and compute the information
-                // three.js needs for rendering.
-                loadedMesh.children.forEach(function (child) {
-                    //child.material = material;
-                    //child.geometry.computeFaceNormals();
-                    //child.geometry.computeVertexNormals();
-                });
-
-                mesh = loadedMesh;
-
-                var scale = 0.1;
-                loadedMesh.scale.set(scale, scale, scale);
-                //loadedMesh.rotation.x = -0.3;
-                scene.add(mesh);
+                if (isFirstLoad==0) { 
+                    loadedMesh.children.forEach(function (child) { }); 
+                    mesh = loadedMesh; 
+                    var scale = 0.1;
+                    loadedMesh.scale.set(scale, scale, scale);
+                    //loadedMesh.rotation.x = -0.3;
+                    scene.add(mesh);
+                }
             });
         }
 
@@ -152,10 +217,9 @@
 
 
         window.onload = init;
-        //$(document).ready(init);  
         // listen to the resize events
         window.addEventListener('resize', onResize, false);
-
+         
     </script>
 </head>
 <body>
@@ -183,7 +247,7 @@
 					<li>
 						<div class="label">参数选择:</div>
 						<div class="control">
-							<select id="paramSelect"> 
+							<select id="paramSelect" class="select"> 
                             <% List<String> opts= (List<String>)ViewData["DynamicProps"];
                                 for (int i = 0; i <opts.Count; i++)
                                 { %>
@@ -196,7 +260,7 @@
 					<li>
 						<div class="label">当前时间步:</div>
 						<div class="control">
-							<select id="timeSelect">
+							<select id="timeSelect" class="select">
 								<% String[] timeOpts = (String[])ViewData["TimeStep"];
                                 for (int i = 0; i < timeOpts.Length; i++)
                                 { %>

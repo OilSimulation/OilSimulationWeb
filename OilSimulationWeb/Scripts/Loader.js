@@ -19,20 +19,36 @@ THREE.MyLoader.prototype = {
         var loader = new THREE.XHRLoader(scope.manager);
         loader.setCrossOrigin(this.crossOrigin);
         loader.load(url, pData, function (text) {
-            if(geometry == undefined )
+            if (geometry == undefined)
                 onLoad(scope.LoadMode(text));
             else
-                onLoad(scope.ChangeColor(text));    
+                onLoad(scope.ChangeColor(text));
 
         }, onProgress, onError);
 
     },
 
-    ChangeColor: function (text) {
-         
+    ChangeColor: function (text) 
+    {
+        var jsonData = JSON.parse(text);
+
+        var info, color;
+        var colors = [];
+        for (var i = 0; i < jsonData.Data.length; i++) 
+        {
+            info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][0], jsonData.mm[1], jsonData.mm[0]);
+            if (info) 
+            {
+                color = (info["R"] << 16) | (info["G"] << 8) | info["B"];
+                colors[i] = color;
+            } 
+        }
+        //修改颜色 
+        setFacesVertexColors(geometry, colors);
     },
 
-    LoadMode: function (text) {
+    LoadMode: function (text) 
+    {
 
         console.time('MyLoader');
 
