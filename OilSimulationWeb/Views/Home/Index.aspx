@@ -38,14 +38,14 @@
                 <div id="LeftPanel"> 
                     <div class="zbar">
                         <div class="zbar-title">采油模块</div> 
-		                     <ul> 
-		                     <li class="select" id = "sel1"><a href="javascript:void(0);ShowMode1();" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
-		                     <li class="" id = "sel2"><a href="javascript:void(0);ShowMode2();" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
-		                     <li class="" id = "sel3"><a href="javascript:void(0);ShowMode3();" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
-		                     <li class="q-cnclast"><a href="javascript:void(0);ShowMode4();" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
-		                     </ul>
-	                    </div> 
-                    </div>
+		                <ul> 
+		                    <li class="select" id = "sel1"><a href="javascript:void(0);ShowMode1();" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
+		                    <li class="" id = "sel2"><a href="javascript:void(0);ShowMode2();" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
+		                    <li class="" id = "sel3"><a href="javascript:void(0);ShowMode3();" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
+		                    <li class="q-cnclast"><a href="javascript:void(0);ShowMode4();" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
+		                </ul>
+	                </div> 
+                </div>
                 <div id="RightPanl" >
                     <iframe id="iframe1Id" name="I1" scrolling="no" style="height: 600px; width: 100%; border:0;" src="<%=Url.Content("~/Base/BaseModeTwo")%>" ></iframe>  
                 </div>
