@@ -27,7 +27,7 @@
         var myLoader; 
         var mesh;
         //播放速度 
-        var interval = 500; 
+        var interval = 2000; 
         var action;
 
         // once everything is loaded, we run our Three.js stuff.
@@ -35,7 +35,7 @@
 
             // 创建和设置渲染器
             webGLRenderer = new THREE.WebGLRenderer({ antialias: true });  //抗锯齿
-            webGLRenderer.setClearColor(new THREE.Color(0x666666, 1.0));
+            //webGLRenderer.setClearColor(new THREE.Color(0x666666, 1.0));
             webGLRenderer.setSize(window.innerWidth, window.innerHeight);
             webGLRenderer.shadowMapEnabled = true;
 
