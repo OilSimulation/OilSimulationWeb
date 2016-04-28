@@ -5,7 +5,20 @@
 </asp:Content>
 
 <asp:Content ID="Index" ContentPlaceHolderID="MainContent" runat="server">
-    
+    <script type="text/javascript">
+        function ShowMode1() {
+            $("#iframe1Id").attr("src","<%=Url.Content("~/Base/BaseModeOne")%>");
+        }
+        function ShowMode2() {
+            $("#iframe1Id").attr("src", "<%=Url.Content("~/Base/BaseModeTwo")%>");
+        }
+        function ShowMode3() {
+            $("#iframe1Id").attr("src", "<%=Url.Content("~/Base/BaseModeThree")%>");
+        }
+        function ShowMode4() {
+            $("#iframe1Id").attr("src", "<%=Url.Content("~/Base/BaseModeFour")%>");
+        } 
+    </script>
 
     <div id="TopPanel">
         <div class="top-main">
@@ -26,10 +39,10 @@
                     <div class="zbar">
                         <div class="zbar-title">采油模块</div> 
 		                     <ul> 
-		                     <li class="select" id = "sel1"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
-		                     <li class="" id = "sel2"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
-		                     <li class="" id = "sel3"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
-		                     <li class="q-cnclast"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
+		                     <li class="select" id = "sel1"><a href="javascript:void(0);ShowMode1();" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
+		                     <li class="" id = "sel2"><a href="javascript:void(0);ShowMode2();" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
+		                     <li class="" id = "sel3"><a href="javascript:void(0);ShowMode3();" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
+		                     <li class="q-cnclast"><a href="javascript:void(0);ShowMode4();" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
 		                     </ul>
 	                    </div> 
                     </div>
