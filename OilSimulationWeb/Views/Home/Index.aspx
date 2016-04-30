@@ -36,17 +36,13 @@
 		                </ul>
                         <div class="zbar-title">仿真实训</div> 
 		                <ul style="display: none"> 
-		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
-		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
-		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
-		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
+		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">井网井距方案开发设计</span></a></li>
+		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">注采系统方案开发设计</span></a></li> 
 		                </ul>
                         <div class="zbar-title">创新实践</div> 
 		                <ul style="display: none"> 
-		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
-		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
-		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
-		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
+		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">油藏开发方案实践</span></a></li>
+		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">气藏开发方案实践</span></a></li> 
 		                </ul>
 	                </div> 
                 </div>
