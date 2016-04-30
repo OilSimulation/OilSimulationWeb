@@ -50,9 +50,29 @@ html {
 
 #divControl   
 {
-    height:24px; 
-    padding-top:18px; 
+    height:28px;  
     margin:0 auto; 
+    padding-left:10px;
+    color:#bbb;
+    font-weight: bold;
     border-bottom:#6C6B6B solid 2px;
+    background-color:Black;
     z-index:1;
+ }
+ .navControl
+ {
+     margin: 0 auto;
+     line-height:28px; 
+ }
+ .DropDownList
+ {
+    font-family:"Helvetica", sans-serif;
+	height:24px;
+	border-color:#888;
+	color:#ddd;
+	background-color:#222; 
+ }
+ .btnOK
+ {
+    width:80px;margin-left:5px;background-color:Gray;border:0px;    
  }

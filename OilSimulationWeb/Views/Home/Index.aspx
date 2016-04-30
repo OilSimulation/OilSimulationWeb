@@ -47,8 +47,12 @@
 	                </div> 
                 </div>
                 <div id="RightPanl"> 
-                    <div id="divControl" class="zt">选择栏</div>
-                    <div><iframe id="iframeId" name="I1" scrolling="no" style="height: 600px; width: 100%; border:0;" src="" ></iframe></div> 
+                    <div id="divControl">
+                        <div id="BaseOne" class="navControl">请选择：<select class="DropDownList"><option value="1">活塞式水驱油</option><option value="2">非活塞式水驱油</option></select><button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button></div>
+                        <div id="BaseTwo" class="navControl">请选择：<select class="DropDownList"><option value="3">单向渗流</option><option value="4">平面径向渗流</option><option value="5">球面向心流</option></select><button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button></div>
+                        <div id="BaseThree" class="navControl">请选择：<select class="DropDownList"><option value="6">稳定水压弹性驱油</option><option value="7">封闭弹性驱油</option></select><button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button></div>
+                    </div>
+                    <div><iframe id="iframeId" scrolling="no" style="height: 600px; width: 100%; border:0;" src="/Base/BaseModeOne" ></iframe></div> 
                 </div>
                 <div class="clear"></div>
             </div> 
