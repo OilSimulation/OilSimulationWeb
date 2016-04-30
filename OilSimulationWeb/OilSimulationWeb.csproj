@@ -84,6 +84,7 @@
     <Content Include="bin\Microsoft.Web.Mvc.dll" />
     <Content Include="Content\cubes.css" />
     <Content Include="Content\jquery-ui-1.10.2.custom.css" />
+    <Content Include="Content\Loading.css" />
     <Content Include="Content\UserDefine.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -242,6 +243,7 @@
     <Content Include="Scripts\libs\VTKLoader.js" />
     <Content Include="Scripts\libs\WebGLDeferredRenderer.js" />
     <Content Include="Scripts\Loader.js" />
+    <Content Include="Scripts\loading-overlay.min.js" />
     <Content Include="Scripts\renderers\CanvasRenderer.js" />
     <Content Include="Scripts\renderers\CSS2DRenderer.js" />
     <Content Include="Scripts\renderers\CSS3DRenderer.js" />

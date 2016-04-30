@@ -8,6 +8,7 @@
     <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
     <link href="<%=Url.Content("~/Content/Site.css")%>" rel="stylesheet" type="text/css" />
     <link href="<%=Url.Content("~/Content/UserDefine.css")%>" rel="stylesheet" type="text/css" /> 
+    <link href="<%=Url.Content("~/Content/UserDefine.css")%>" rel="stylesheet" type="text/css" /> 
     <link href="<%=Url.Content("~/Content/jquery-ui-1.10.2.custom.css")%>" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/jquery-1.4.1.min.js")%>"></script>
     <script type="text/javascript">
@@ -39,12 +40,24 @@
                 $("#divControl").children().each(function () { $(this).css("display", "none"); });
 
             });
+            //基础认知选择下拉框事件
+            $(".DropDownList.BaseMode").change(function () {
+                $("#ModeIndex").val($(this).val());
+            });
         });
-        ///
+        //导航点击对应控制栏的显示
         function ShowMode(modeCtrlId) {
             $(modeCtrlId).css("display", "block");
             $(modeCtrlId).find("button").click();
         }
+        //判断IFRAME加载书否完成
+         $("#button").click(function(){  
+                $("#iframeId").attr("src","http://www.baidu.com"); 
+            }); 
+ 
+            $("#iframeId").load(function(){  
+                alert("加载完成！");
+            }); 
     </script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/jquery-1.4.1.min.js")%>"></script>
 </head>
@@ -53,6 +66,14 @@
         <asp:ContentPlaceHolder ID="MainContent" runat="server">
         
         </asp:ContentPlaceHolder>
+    </div>
+    <div id="target" class="loading">
+	    <div class="loading-overlay">
+	    <p class="loading-spinner">
+		    <span class="loading-icon"></span>
+		    <span class="loading-text">loading</span>
+	    </p>
+	    </div>
     </div>
 </body>
 </html>
