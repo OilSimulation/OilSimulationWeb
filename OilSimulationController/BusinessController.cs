@@ -900,10 +900,32 @@ namespace OilSimulationController
                 szPara = inputData.Para;
                 iStep = inputData.Step;
                 iLoadFirst = inputData.iLoadFirst;
-            }  
-            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
-            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/气藏开发/均质/QICANG/123-1_E100.EGRID");
-            string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID"); 
+            } 
+            string eGridFile = ""; 
+            switch (iModel)
+            {
+                case 11:
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID"); 
+                    break;
+                case 12:
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/非活塞式驱油/MODEL1D_E100.EGRID"); 
+                    break;
+                case 13:
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/单向流/MODEL1D_E100.EGRID"); 
+                    break;
+                case 14:
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID"); 
+                    break;
+                case 15:
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID"); 
+                    break;
+                case 16:
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID"); 
+                    break;
+                case 17:
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID"); 
+                    break;
+            }
             EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
 
             int countXFiles = EclipseParser.CountXFiles(eGridFile); 
