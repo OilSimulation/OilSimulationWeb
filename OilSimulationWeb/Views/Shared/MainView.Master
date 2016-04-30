@@ -48,7 +48,7 @@
             // 创建和设置相机
             camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 50000);
             // position and point the camera to the center of the scene
-            camera.position.set(200, 0, 0);
+            camera.position.set(0, 0, 200);
             // 相机的上方向设置为(0,1,0)即y轴方向;
             camera.up.set(0, 1, 0);
             // 相机的视野中心坐标
@@ -89,7 +89,8 @@
                 stats.update(); 
                 if (reload) {
                     reload = false;
-                    LoadWebGLData(0); ;
+                    LoadWebGLData(0); 
+                    //LoadWellData();
                 }
             
                 controls.update(); 
@@ -188,6 +189,16 @@
 
         } 
 
+        function LoadWellData() {
+            
+            var sUrl = "<%:Url.Action("GetWellPoint","Business") %>"; 
+            var jsonData = {Mode:modeIndex}; 
+            myLoader.LoadWell(sUrl,JSON.stringify(jsonData),scene);
+
+
+        }
+
+
         //加载数据
         function LoadWebGLData(isFirstLoad) { 
             var paramValue = $("#paramSelect option:selected").text();
@@ -197,7 +208,7 @@
             var mIndex = $("#ModeIndex",parent.document).val(); 
             //组装JSON数据
             var jsonData = {Para:paramValue,Mode:mIndex,Step:timeValue,iLoadFirst:isFirstLoad}; 
-
+            debugger
             myLoader.load(sUrl, JSON.stringify(jsonData) ,function (loadedMesh) {
                 if (isFirstLoad==0) { 
                     loadedMesh.children.forEach(function (child) { }); 
@@ -208,6 +219,8 @@
                     scene.add(mesh);
                 }
             });
+
+            //scene.add(myLoader.AddWell(0,0,0,10));
         }
 
         function onResize() {
@@ -278,6 +291,7 @@
 		</div>
 	</div> 
     
+
     <div id="Stats-output">
     </div>
     <!-- Div which will hold the Output -->

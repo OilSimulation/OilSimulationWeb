@@ -7,7 +7,7 @@ THREE.MyLoader = function ( manager ) {
 	this.manager = ( manager !== undefined ) ? manager : THREE.DefaultLoadingManager;
 
 };
-
+var modelJsonData;
 THREE.MyLoader.prototype = {
 
     constructor: THREE.MyLoader,
@@ -28,27 +28,69 @@ THREE.MyLoader.prototype = {
 
     },
 
-    ChangeColor: function (text) 
-    {
-        var jsonData = JSON.parse(text);
+    //url:访问地址,pdata:json参数,scene三维场景
+    LoadWell: function (url, pData, scene) {
+        var scope = this;
+        var loader = new THREE.XHRLoader(scope.manager);
+        //loader.setCrossOrigin(this.crossOrigin);
+        loader.load(url, pData, function (text) {
 
+            var jsonData = JSON.parse(text);
+            for (var i = 0; i < jsonData.length; i++) {
+                scene.add(scope.AddWell(jsonData[i].x, jsonData[i].y, jsonData[i].z, 10));
+            }
+
+        });
+    },
+
+
+
+    ChangeColor: function (text) {
+        var jsonData = JSON.parse(text);
+        modelJsonData = jsonData;
         var info, color;
         var colors = [];
-        for (var i = 0; i < jsonData.Data.length; i++) 
-        {
+        for (var i = 0; i < jsonData.Data.length; i++) {
             info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][0], jsonData.mm[1], jsonData.mm[0]);
-            if (info) 
-            {
+            if (info) {
                 color = (info["R"] << 16) | (info["G"] << 8) | info["B"];
                 colors[i] = color;
-            } 
+            }
         }
         //修改颜色 
         setFacesVertexColors(geometry, colors);
     },
 
-    LoadMode: function (text) 
-    {
+    //增加井xyz坐标,h 高度,返回 mesh,n:井名称
+    AddWell: function (x, y, z, h, n) {
+        var wellMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, vertexColors: THREE.NoColors });
+        var geometry = new THREE.CylinderGeometry(0.5, 0.5, h, 30); //0.5 圆柱上、下圆半径,h长度,30分割数越大圆柱越圆
+        var wellMesh = new THREE.Mesh(geometry, wellMaterial);
+        wellMesh.position.x = x;
+        wellMesh.position.y = y;
+        wellMesh.position.z = z;
+        return wellMesh;
+    },
+
+    AddWellName: function (x, y, z, h, n) {
+        var textGeo = new THREE.TextGeometry(n, {
+
+            size: 70,
+            height: h,
+            font: "optimer",
+            weight:"bold",//normal
+            style: "normal"
+
+        });
+        var wellNameMesh = new THREE.Mesh(textGeo, wellMaterial);
+        wellNameMesh.position.x = x;
+        wellNameMesh.position.y = y;
+        wellNameMesh.position.z = z;
+        return wellNameMesh;
+    },
+
+
+    LoadMode: function (text) {
 
         console.time('MyLoader');
 
@@ -80,6 +122,10 @@ THREE.MyLoader.prototype = {
             geometry.merge(cubeMesh.geometry, cubeMesh.matrix);
         }
 
+
+
+
+        //container.rotateY(-90-10);
         //修改颜色 
         //setFacesVertexColors(geometry, colors);
 
@@ -100,6 +146,12 @@ THREE.MyLoader.prototype = {
             return cube;
         }
         container.add(new THREE.Mesh(geometry, cubeMaterial));
+        //增加油井
+        for (var i = 0; i < jsonData.WellPoint.length; i++) {
+            //container.add(this.AddWell(jsonData.WellPoint[i].x - jsonData.ct[0], -jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z, jsonData.xyz[1]));
+            container.add(this.AddWell(jsonData.WellPoint[i].x - jsonData.ct[0], jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z - jsonData.ct[2], 1000, jsonData.WellPoint[i].name));
+            //container.add(this.AddWellName(jsonData.WellPoint[i].x - jsonData.ct[0], jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z - jsonData.ct[2], 1000, jsonData.WellPoint[i].name));
+        }
 
         console.timeEnd('MyLoader');
 

@@ -46,6 +46,7 @@
 		                </ul>
 	                </div> 
                 </div>
+
                 <div id="RightPanl"> 
                     <div id="divControl">
                         <div id="BaseOne" class="navControl" style="display:block;">请选择：<select class="DropDownList"><option value="11">活塞式水驱油</option><option value="12">非活塞式水驱油</option></select><button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button></div>
@@ -58,6 +59,7 @@
                             
                         </iframe>
                     </div> 
+
                 </div>
                 <div class="clear"></div>
             </div> 

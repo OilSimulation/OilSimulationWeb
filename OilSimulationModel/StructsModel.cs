@@ -60,6 +60,37 @@ namespace OilSimulationModel
         public float[] ct;
         public List<float[]> xyz;
         public List<float[]> Data;
+        /// <summary>
+        /// 井列表坐标
+        /// </summary>
+        public List<WellData> WellPoint;
+    }
+
+    /// <summary>
+    /// 油井数据
+    /// </summary>
+    public struct WellData
+    {
+        /// <summary>
+        /// 油井名称
+        /// </summary>
+        public string name;
+        /// <summary>
+        /// 油井X坐标
+        /// </summary>
+        public float x;
+        /// <summary>
+        /// 油井Y坐标
+        /// </summary>
+        public float y;
+        /// <summary>
+        /// 油井Z坐标
+        /// </summary>
+        public float z;
+        /// <summary>
+        /// 油井类型(OIL生成井,WATER注水井)
+        /// </summary>
+        public string type;
     }
 
     /// <summary>

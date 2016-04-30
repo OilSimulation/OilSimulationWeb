@@ -900,32 +900,51 @@ namespace OilSimulationController
                 szPara = inputData.Para;
                 iStep = inputData.Step;
                 iLoadFirst = inputData.iLoadFirst;
-            } 
+            }  
+            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
+            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/气藏开发/均质/QICANG/123-1_E100.EGRID");
+            
+            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/200/JINGJU200_E100.EGRID");
+
+            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/非活塞式驱油/MODEL1D_E100.EGRID");
+            //string strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/非活塞式驱油/Model1D_sch.INC");
+            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/采收率实验/不同残余油/sor0/CANYUYOU_E100.EGRID");
+           // string strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/采收率实验/不同残余油/sor0/CANYUYOU_SCH.INC");
+
             string eGridFile = ""; 
+            string strWellFilePath="";//油井文件
             switch (iModel)
             {
                 case 11:
                     eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID"); 
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
                     break;
                 case 12:
                     eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/非活塞式驱油/MODEL1D_E100.EGRID"); 
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/非活塞式驱油/MODEL1D_sch.INC"); 
                     break;
                 case 13:
                     eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/单向流/MODEL1D_E100.EGRID"); 
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
                     break;
                 case 14:
                     eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID"); 
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
                     break;
                 case 15:
                     eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID"); 
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
                     break;
                 case 16:
                     eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID"); 
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
                     break;
                 case 17:
                     eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID"); 
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
                     break;
             }
+
             EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
 
             int countXFiles = EclipseParser.CountXFiles(eGridFile); 
@@ -957,6 +976,10 @@ namespace OilSimulationController
                 }
 
             }
+
+
+            stModeData.WellPoint = GetWellPoint(gridModel,strWellFilePath);
+
             
             stModeData.lev = gridModel.nz;
             var res = new ConfigurableJsonResult();
@@ -964,7 +987,92 @@ namespace OilSimulationController
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return res;
         }
-         
+
+
+        /// <summary>
+        /// 获取油井坐标
+        /// </summary>
+        /// <param name="inputData"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetWellPoint(PostData inputData)
+        {
+            int iModel = 0;
+            string szPara = "";
+            int iStep = 0;
+            int iLoadFirst = -1;
+            if (ModelState.IsValid)
+            {
+                iModel = inputData.Mode;
+                //szPara = inputData.Para;
+                //iStep = inputData.Step;
+                //iLoadFirst = inputData.iLoadFirst;
+            }
+
+            List<WellData> listWellData = new List<WellData>();
+            //string strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/非活塞式驱油/Model1D_sch.INC");
+            //List<string> listData = CommonModel.ReadInfoFromFile(strWellFilePath);//获取井坐标文件数据
+            //int wallIndex = listData.IndexOf("WELSPECS");//找到出现 WELSPECS 油井标识的行
+            //while (wallIndex >= 0)
+            //{
+
+            //    listWellData.Add(ParseStrToWell(listData[wallIndex + 1]));
+            //    wallIndex = listData.IndexOf("WELSPECS", wallIndex+1);
+
+            //}
+
+            var res = new ConfigurableJsonResult();
+            res.Data = listWellData;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+
+        }
+
+        private List<WellData> GetWellPoint(EclipseModel eModel,string filePath)
+        {
+            List<WellData> listWellData = new List<WellData>();
+            List<string> listData = CommonModel.ReadInfoFromFile(filePath);//获取井坐标文件数据
+            int wallIndex = listData.IndexOf("WELSPECS");//找到出现 WELSPECS 油井标识的行
+            while (wallIndex >= 0)
+            {
+
+                listWellData.Add(ParseStrToWell(eModel,listData[wallIndex + 1]));
+                wallIndex = listData.IndexOf("WELSPECS", wallIndex + 1);
+
+            }
+
+            return listWellData;
+
+        }
+
+        /// <summary>
+        /// 解析字符串('PRO2' 'P' 35 65 1* 'OIL' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /)
+        /// 井坐标文件中 记录是的网格位置，通过EclipseModel换算也 井坐标
+        /// </summary>
+        /// <param name="strData"></param>
+        /// <returns></returns>
+        private WellData ParseStrToWell(EclipseModel eModel,string strData)
+        {
+            WellData data = new WellData();
+            int x, y, z;
+            string[] listData = strData.Split(' ');
+            List<string> listd = listData.Where(s => s.Trim() != string.Empty).ToList();
+            data.name = listd[0].Replace('\'', ' ').Trim();
+            int.TryParse(listd[2], out x);
+            int.TryParse(listd[3], out y);
+            int.TryParse(listd[4].Substring(0, 1), out z);
+
+            PillarPoint pPoint = eModel.GetGridAtIJK(x, y, 0).Center;
+
+            data.x = pPoint.x;
+            data.y = pPoint.y;
+            data.z = pPoint.z;
+            data.type = listd[5].Replace('\'', ' ').Trim();
+
+
+            return data;
+        }
 
         [HttpPost]
         public ActionResult GetModelData(int step)

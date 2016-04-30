@@ -46,6 +46,7 @@
             $(modeCtrlId).find("button").click();
         }
     </script>
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/jquery-1.4.1.min.js")%>"></script>
 </head>
 <body>
     <div id="Index">

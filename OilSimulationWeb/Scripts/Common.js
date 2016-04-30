@@ -189,3 +189,7 @@ function setFacesVertexColors(g, c) {
     }
     g.colorsNeedUpdate = true;
 }; 
+//改变井距离
+function changeWellDistance(distance) {
+    
+}

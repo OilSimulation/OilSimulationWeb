@@ -324,6 +324,97 @@ namespace OilSimulationModel
 
             return stPageParams;
         }
+
+
+        public static List<string> ReadInfoFromFile(string filePath)
+        {
+            List<string> list = new List<string>();
+
+            if (File.Exists(filePath))
+            {
+                using (StreamReader sr = new StreamReader(filePath, Encoding.GetEncoding("GBK")))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        string sTemp = sr.ReadLine();
+                        //string[] strArray = sTemp.Split(new char[] { '\t', ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        list.Add(sTemp);
+                    }
+                }
+
+                return list;
+            }
+            return list;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="list"></param>
+        public static void WriteInfoToFile(string filePath, List<string> list)
+        {
+            using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.GetEncoding("GBK")))
+            {
+                foreach (string strArray in list)
+                {
+                    sw.WriteLine(strArray);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 获取数据中 单引号之前的值
+        /// </summary>
+        /// <param name="strData"></param>
+        /// <returns></returns>
+        public static List<string> GetSingleQuoteMarkValue(string strData)
+        {
+            int startIndex = 0, singleIndex = 0;
+            int endIndex = 0;
+            List<string> listData = new List<string>();
+
+            startIndex = strData.IndexOf('\'');
+            while (startIndex >= 0)
+            {
+                singleIndex++;
+                endIndex = strData.IndexOf('\'', startIndex);
+                if ((singleIndex % 2) == 0)
+                {
+                    listData.Add(strData.Substring(startIndex + 1, endIndex - startIndex - 1));
+                }
+
+                startIndex = endIndex;
+            }
+            //string str = "";
+            //List<string> listData = new List<string>();
+            //for (int i = 0; i < strData.Length;i++ )
+            //{
+            //    if (strData[i] == '\'')
+            //    {
+            //        singleIndex++;
+            //        if ((singleIndex % 2) == 0)
+            //        {
+            //            str = "";
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if ((singleIndex % 2) == 0)
+            //        {
+            //            str += strData[i];
+            //        }
+            //        else
+            //        {
+            //            listData.Add(str);
+            //        }
+            //    }
+            //}
+
+            return listData;
+        }
+
         
     }
+
 }

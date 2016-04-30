@@ -58,6 +58,16 @@ body {
 	right:0px;
 	bottom:10px;
 }		
+#controls_container_top
+{
+    display:none;
+    position:absolute;
+    z-index:99999;
+    width:500px;
+    left:0px;
+    top:10px;
+
+}
 			
 #bigblueboo a {
 	color:#d8dfff;
