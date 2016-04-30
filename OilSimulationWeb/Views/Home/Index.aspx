@@ -18,6 +18,30 @@
         function ShowMode4() {
             $("#iframeId").attr("src", "<%=Url.Content("~/Base/BaseModeFour")%>");
         } 
+        ///控制导航菜单显示隐藏
+        $(document).ready(function() {
+	        $('.inactive').click(function(){
+		        if($(this).siblings('ul').css('display')=='none'){
+			        $(this).parent('li').siblings('li').removeClass('inactives');
+			        $(this).addClass('inactives');
+			        $(this).siblings('ul').slideDown(100).children('li');
+			        if($(this).parents('li').siblings('li').children('ul').css('display')=='block'){
+				        $(this).parents('li').siblings('li').children('ul').parent('li').children('a').removeClass('inactives');
+				        $(this).parents('li').siblings('li').children('ul').slideUp(100);
+
+			        }
+		        }else{
+			        //控制自身变成+号
+			        $(this).removeClass('inactives');
+			        //控制自身菜单下子菜单隐藏
+			        $(this).siblings('ul').slideUp(100);
+			        //控制自身子菜单变成+号
+			        $(this).siblings('ul').children('li').children('ul').parent('li').children('a').addClass('inactives');
+			        //控制自身菜单下子菜单隐藏
+			        $(this).siblings('ul').children('li').children('ul').slideUp(100); 
+		        }
+	        })
+        });
     </script>
 
     <div id="TopPanel">
@@ -38,38 +62,36 @@
                 <div id="LeftPanel"> 
                     <div class="zbar">
                         <div class="zbar-title">基础认知</div> 
-		                <ul> 
-		                    <li class="select" id = "sel1"><a href="javascript:void(0);ShowMode1();" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
-		                    <li class="" id = "sel2"><a href="javascript:void(0);ShowMode2();" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
-		                    <li class="" id = "sel3"><a href="javascript:void(0);ShowMode3();" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
-		                    <li class="q-cnclast"><a href="javascript:void(0);ShowMode4();" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
+		                <ul style="display: block;"> 
+		                    <li class="" id = "sel1"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油模拟</span></a></li>
+		                    <li class="" id = "sel2"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">渗流方式模拟</span></a></li> 
+		                    <li class=""><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">弹性不稳定渗流</span></a></li>
 		                </ul>
                         <div class="zbar-title">虚拟实验</div> 
-		                <ul> 
-		                    <li class="select" id = "Li1"><a href="javascript:void(0);ShowMode1();" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
-		                    <li class="" id = "Li2"><a href="javascript:void(0);ShowMode2();" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
-		                    <li class="" id = "Li3"><a href="javascript:void(0);ShowMode3();" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
-		                    <li class="q-cnclast"><a href="javascript:void(0);ShowMode4();" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
+		                <ul style="display: none"> 
+		                    <li class="" id = "Li1"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">非活塞式水驱油影响因素</span></a></li>
+		                    <li class="" id = "Li2"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油效率实验</span></a></li> 
+		                    <li class=""><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">采收率实验</span></a></li>
 		                </ul>
                         <div class="zbar-title">仿真实训</div> 
-		                <ul> 
-		                    <li class="select" id = "Li4"><a href="javascript:void(0);ShowMode1();" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
-		                    <li class="" id = "Li5"><a href="javascript:void(0);ShowMode2();" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
-		                    <li class="" id = "Li6"><a href="javascript:void(0);ShowMode3();" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
-		                    <li class="q-cnclast"><a href="javascript:void(0);ShowMode4();" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
+		                <ul style="display: none"> 
+		                    <li class="" id = "Li4"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
+		                    <li class="" id = "Li5"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
+		                    <li class="" id = "Li6"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
+		                    <li class=""><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
 		                </ul>
                         <div class="zbar-title">创新实践</div> 
-		                <ul> 
-		                    <li class="select" id = "Li7"><a href="javascript:void(0);ShowMode1();" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
-		                    <li class="" id = "Li8"><a href="javascript:void(0);ShowMode2();" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
-		                    <li class="" id = "Li9"><a href="javascript:void(0);ShowMode3();" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
-		                    <li class="q-cnclast"><a href="javascript:void(0);ShowMode4();" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
+		                <ul style="display: none"> 
+		                    <li class="" id = "Li7"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
+		                    <li class="" id = "Li8"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
+		                    <li class="" id = "Li9"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
+		                    <li class=""><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
 		                </ul>
 	                </div> 
                 </div>
                 <div id="RightPanl"> 
                     <div id="divControl" class="zt">选择栏</div>
-                    <div><iframe id="iframeId" name="I1" scrolling="no" style="height: 600px; width: 100%; border:0;" src="<%=Url.Content("~/Base/BaseModeTwo")%>" ></iframe></div> 
+                    <div><iframe id="iframeId" name="I1" scrolling="no" style="height: 600px; width: 100%; border:0;" src="" ></iframe></div> 
                 </div>
                 <div class="clear"></div>
             </div> 

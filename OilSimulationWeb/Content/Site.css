@@ -52,8 +52,7 @@ html {
 {
     height:24px; 
     padding-top:18px; 
-    margin:0 auto;
-    border-top:#6C6B6B solid 2px;
+    margin:0 auto; 
     border-bottom:#6C6B6B solid 2px;
     z-index:1;
  }

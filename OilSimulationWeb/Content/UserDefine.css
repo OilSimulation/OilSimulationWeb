@@ -9,22 +9,34 @@
 }
 #TopPanel .top-main { margin: 0 auto;  width:960px;height:85px; } 
 #TopPanel .top-logo{float:left; width:235px; height:85px;}
-.greybg { padding-bottom: 60px; padding-top: 30px;}
-.main { margin: 0 auto;  width:960px; }
-.main .zt { height:24px; padding-top:18px; border-bottom:#FFF solid 2px;}
+.greybg { padding-bottom: 60px; padding-top: 10px;}
+.main { margin: 0 auto;  width:980px; }
+.main .zt { height:24px; padding-top:5px; border-bottom:#FFF solid 2px;}
 .main .zt-tu { float:left; margin-right:6px; padding-top:5px;}
 .main .zt-zi {font-family: "Microsoft YaHei", "微软雅黑", Arial; font-size:14px;color:#ffffff; line-height:20px; }
 
 #LeftPanel { float:left;}
 #LeftPanel .zbar { float:left; width:184px; background:url(../Images/zbar-bg.png) repeat-y; padding-bottom:20px;}
-#LeftPanel .zbar .zbar-title { background:url(../Images/zbar-titbg.png) no-repeat; width:184px; height:54px; line-height:54px;font-family: "Microsoft YaHei", "微软雅黑", Arial; font-size:18px;color:#fefefe; text-align:center; font-weight:bold;}
+#LeftPanel .zbar .zbar-title  
+{
+    background:url(../Images/zbar-titbg.png) no-repeat; 
+    width:184px;
+     height:54px; 
+    line-height:54px;
+    font-family: "Microsoft YaHei", "微软雅黑", Arial; 
+    font-size:18px;
+    color:#fefefe; 
+    text-align:center; 
+    font-weight:bold;
+    cursor:pointer;
+}
 
 #LeftPanel .zbar ul li { background:url(../Images/zbar-libg.png) no-repeat bottom; line-height:55px; list-style: none;} 
 #LeftPanel .zbar ul li:hover ,#LeftPanel .zbar ul li .select { background:url(../Images/zbar-libgh.png) no-repeat; color:#fcff00;}
 #LeftPanel .zbar ul li a {color:#ffffff;text-decoration:none;width:184px;height:54px; display:block; text-align:center; font-size:14px;}
 #LeftPanel .zbar ul li:hover a,#LeftPanel .zbar ul li.select a {color:#fcff00;text-decoration:none;}
 
-#RightPanl { float:right;width:776px; }
+#RightPanl { float:right;width:791px; border:2px solid #6C6B6B;}
 
 .clear { clear:both;}
 
