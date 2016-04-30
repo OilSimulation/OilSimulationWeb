@@ -24,7 +24,7 @@
 #LeftPanel .zbar ul li a {color:#ffffff;text-decoration:none;width:184px;height:54px; display:block; text-align:center; font-size:14px;}
 #LeftPanel .zbar ul li:hover a,#LeftPanel .zbar ul li.select a {color:#fcff00;text-decoration:none;}
 
-#RightPanl { float:right; background-color: #fff;width:776px; }
+#RightPanl { float:right;width:776px; }
 
 .clear { clear:both;}
 
