@@ -4,46 +4,7 @@
 	重庆科技学院油藏仿真实验室
 </asp:Content>
 
-<asp:Content ID="Index" ContentPlaceHolderID="MainContent" runat="server">
-    <script type="text/javascript">
-        function ShowMode1() {
-            $("#iframeId").attr("src","<%=Url.Content("~/Base/BaseModeOne")%>");
-        }
-        function ShowMode2() {
-            $("#iframeId").attr("src", "<%=Url.Content("~/Base/BaseModeTwo")%>");
-        }
-        function ShowMode3() {
-            $("#iframeId").attr("src", "<%=Url.Content("~/Base/BaseModeThree")%>");
-        }
-        function ShowMode4() {
-            $("#iframeId").attr("src", "<%=Url.Content("~/Base/BaseModeFour")%>");
-        } 
-        ///控制导航菜单显示隐藏
-        $(document).ready(function() {
-	        $('.inactive').click(function(){
-		        if($(this).siblings('ul').css('display')=='none'){
-			        $(this).parent('li').siblings('li').removeClass('inactives');
-			        $(this).addClass('inactives');
-			        $(this).siblings('ul').slideDown(100).children('li');
-			        if($(this).parents('li').siblings('li').children('ul').css('display')=='block'){
-				        $(this).parents('li').siblings('li').children('ul').parent('li').children('a').removeClass('inactives');
-				        $(this).parents('li').siblings('li').children('ul').slideUp(100);
-
-			        }
-		        }else{
-			        //控制自身变成+号
-			        $(this).removeClass('inactives');
-			        //控制自身菜单下子菜单隐藏
-			        $(this).siblings('ul').slideUp(100);
-			        //控制自身子菜单变成+号
-			        $(this).siblings('ul').children('li').children('ul').parent('li').children('a').addClass('inactives');
-			        //控制自身菜单下子菜单隐藏
-			        $(this).siblings('ul').children('li').children('ul').slideUp(100); 
-		        }
-	        })
-        });
-    </script>
-
+<asp:Content ID="Index" ContentPlaceHolderID="MainContent" runat="server"> 
     <div id="TopPanel">
         <div class="top-main">
             <div class="top-logo"> 
