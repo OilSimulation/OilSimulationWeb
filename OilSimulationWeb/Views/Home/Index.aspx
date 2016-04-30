@@ -24,9 +24,9 @@
                     <div class="zbar">
                         <div class="zbar-title">基础认知</div> 
 		                <ul style="display: block;"> 
-		                    <li class="liNav select"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油模拟</span></a></li>
-		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">渗流方式模拟</span></a></li> 
-		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">弹性不稳定渗流</span></a></li>
+		                    <li class="liNav select"><a href="javascript:void(0);ShowMode('#BaseOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油模拟</span></a></li>
+		                    <li class="liNav"><a href="javascript:void(0);ShowMode('#BaseTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">渗流方式模拟</span></a></li> 
+		                    <li class="liNav"><a href="javascript:void(0);ShowMode('#BaseThree');" class="oneline"><span class="lmenu-ico"></span><span class="zh">弹性不稳定渗流</span></a></li>
 		                </ul>
                         <div class="zbar-title">虚拟实验</div> 
 		                <ul style="display: none"> 
@@ -48,11 +48,16 @@
                 </div>
                 <div id="RightPanl"> 
                     <div id="divControl">
-                        <div id="BaseOne" class="navControl">请选择：<select class="DropDownList"><option value="1">活塞式水驱油</option><option value="2">非活塞式水驱油</option></select><button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button></div>
-                        <div id="BaseTwo" class="navControl">请选择：<select class="DropDownList"><option value="3">单向渗流</option><option value="4">平面径向渗流</option><option value="5">球面向心流</option></select><button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button></div>
-                        <div id="BaseThree" class="navControl">请选择：<select class="DropDownList"><option value="6">稳定水压弹性驱油</option><option value="7">封闭弹性驱油</option></select><button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button></div>
+                        <div id="BaseOne" class="navControl" style="display:block;">请选择：<select class="DropDownList"><option value="1">活塞式水驱油</option><option value="2">非活塞式水驱油</option></select><button class="ui-corner-all btnOK" onclick="javascript:alert(1);"><span class="ui-button-text">确 定</span></button></div>
+                        <div id="BaseTwo" class="navControl" style="display:none;">请选择：<select class="DropDownList"><option value="3">单向渗流</option><option value="4">平面径向渗流</option><option value="5">球面向心流</option></select><button class="ui-corner-all btnOK" onclick="javascript:alert(2);"><span class="ui-button-text">确 定</span></button></div>
+                        <div id="BaseThree" class="navControl" style="display:none;">请选择：<select class="DropDownList"><option value="6">稳定水压弹性驱油</option><option value="7">封闭弹性驱油</option></select><button class="ui-corner-all btnOK" onclick="javascript:alert(3);"><span class="ui-button-text">确 定</span></button></div>
                     </div>
-                    <div><iframe id="iframeId" scrolling="no" style="height: 600px; width: 100%; border:0;" src="/Base/BaseModeOne" ></iframe></div> 
+                    <div>
+                        <input id="ModeIndex" type="hidden" value="1" />
+                        <iframe id="iframeId" scrolling="no" style="height: 600px; width: 100%; border:0;" src="/Base/BaseModeOne" >
+                            
+                        </iframe>
+                    </div> 
                 </div>
                 <div class="clear"></div>
             </div> 
