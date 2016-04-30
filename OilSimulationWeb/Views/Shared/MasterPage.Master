@@ -10,10 +10,10 @@
     <link href="<%=Url.Content("~/Content/UserDefine.css")%>" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/jquery-1.4.1.min.js")%>"></script>
     <script type="text/javascript">
-        ///控制导航菜单显示隐藏
         $(document).ready(function () {
+            ///控制导航菜单显示隐藏
             $(".zbar-title").click(function () {
-                if ($(this).next().css("display") == "none") { 
+                if ($(this).next().css("display") == "none") {
                     $(this).siblings("ul").css("display", "none");
                     $(this).next().css("display", "block");
                     $(this).siblings("ul").children("li").css("display", "none");
@@ -21,11 +21,22 @@
                 }
                 else {
                     //控制自身菜单下子菜单隐藏 
-                    $(this).next().children("li").slideUp(500);
+                    $(this).next().children("li").slideUp(100);
                     $(this).siblings("ul").css("display", "none");
                 }
             });
-        }); 
+
+            ///设置导航栏显示
+            $(".liNav").click(function () {
+                $(".liNav").each(function () { $(this).removeClass("select"); });
+                $(this).addClass("select");
+
+                $("#curMode").text($(this).parent().prev().text());
+                $("#curitem").text($(this).children().text());
+
+            });
+        });
+
     </script>
 </head>
 <body>

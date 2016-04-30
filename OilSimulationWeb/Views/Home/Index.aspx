@@ -16,7 +16,7 @@
     <div  class="main"> 
         <div class="zt">
             <div class="zt-tu"><img alt="" src="<%=Url.Content("~/Images/zt-tu.png")%>" width="12" height="12" /></div>
-            <div class="zt-zi"> 在线虚拟实验  &gt; <span id="curitem">采油模块</span>  &gt; <%= ViewData["szMac"] %>  </div>
+            <div class="zt-zi"> 在线虚拟实验  &gt; <span id="curMode">基础认知</span>  &gt; <span id="curitem">水驱油模拟</span>  </div>
         </div>
         <div class="greybg">
             <div class="main"> 
@@ -24,29 +24,29 @@
                     <div class="zbar">
                         <div class="zbar-title">基础认知</div> 
 		                <ul style="display: block;"> 
-		                    <li class="" id = "sel1"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油模拟</span></a></li>
-		                    <li class="" id = "sel2"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">渗流方式模拟</span></a></li> 
-		                    <li class=""><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">弹性不稳定渗流</span></a></li>
+		                    <li class="liNav select" id = "sel1"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油模拟</span></a></li>
+		                    <li class="liNav" id = "sel2"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">渗流方式模拟</span></a></li> 
+		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">弹性不稳定渗流</span></a></li>
 		                </ul>
                         <div class="zbar-title">虚拟实验</div> 
 		                <ul style="display: none"> 
-		                    <li class="" id = "Li1"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">非活塞式水驱油影响因素</span></a></li>
-		                    <li class="" id = "Li2"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油效率实验</span></a></li> 
-		                    <li class=""><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">采收率实验</span></a></li>
+		                    <li class="liNav" id = "Li1"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">非活塞式水驱油影响因素</span></a></li>
+		                    <li class="liNav" id = "Li2"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油效率实验</span></a></li> 
+		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">采收率实验</span></a></li>
 		                </ul>
                         <div class="zbar-title">仿真实训</div> 
 		                <ul style="display: none"> 
-		                    <li class="" id = "Li4"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
-		                    <li class="" id = "Li5"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
-		                    <li class="" id = "Li6"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
-		                    <li class=""><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
+		                    <li class="liNav" id = "Li4"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
+		                    <li class="liNav" id = "Li5"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
+		                    <li class="liNav" id = "Li6"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
+		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
 		                </ul>
                         <div class="zbar-title">创新实践</div> 
 		                <ul style="display: none"> 
-		                    <li class="" id = "Li7"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
-		                    <li class="" id = "Li8"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
-		                    <li class="" id = "Li9"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
-		                    <li class=""><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
+		                    <li class="liNav" id = "Li7"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">基础认知</span></a></li>
+		                    <li class="liNav" id = "Li8"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">虚拟实验</span></a></li>
+		                    <li class="liNav" id = "Li9"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">仿真实训</span></a></li>
+		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">创新实践</span></a></li>
 		                </ul>
 	                </div> 
                 </div>
