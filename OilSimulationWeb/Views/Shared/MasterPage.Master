@@ -35,9 +35,16 @@
                 $("#curMode").text($(this).parent().prev().text());
                 $("#curitem").text($(this).children().text());
 
+                //隐藏所有控制栏
+                $("#divControl").children().each(function () { $(this).css("display", "none"); });
+
             });
         });
-
+        ///
+        function ShowMode(modeCtrlId) {
+            $(modeCtrlId).css("display", "block");
+            $(modeCtrlId).find("button").click();
+        }
     </script>
 </head>
 <body>

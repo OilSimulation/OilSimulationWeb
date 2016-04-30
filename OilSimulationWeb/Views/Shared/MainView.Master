@@ -194,6 +194,7 @@
             var timeValue = $("#timeSelect option:selected").val();
             //固定获取DATA的URL
             var sUrl = "<%:Url.Action("GetData","Business") %>";
+            var modeIndex = $("#ModeIndex",parent.document).val();
             //组装JSON数据
             var jsonData = {Para:paramValue,Mode:modeIndex,Step:timeValue,iLoadFirst:isFirstLoad}; 
 
