@@ -175,16 +175,19 @@ function setFacesVertexColors(g, c) {
             colorIndex = i / 12;
         }
         for (var j = 0; j < 12; j++) {
-            if (g.faces[i + j].vertexColors.length <= 0) {
-                g.faces[i + j].vertexColors[0] = faceColor.setHex(c[colorIndex]);
-                g.faces[i + j].vertexColors[1] = faceColor.setHex(c[colorIndex]);
-                g.faces[i + j].vertexColors[2] = faceColor.setHex(c[colorIndex]);
-            }
-            else {
-                g.faces[i + j].vertexColors[0].setHex(c[colorIndex]);
-                g.faces[i + j].vertexColors[1].setHex(c[colorIndex]);
-                g.faces[i + j].vertexColors[2].setHex(c[colorIndex]);
-            }
+            //if (j >= 8&&j<=9) {
+            
+                if (g.faces[i + j].vertexColors.length <= 0) {
+                    g.faces[i + j].vertexColors[0] = faceColor.setHex(c[colorIndex]);
+                    g.faces[i + j].vertexColors[1] = faceColor.setHex(c[colorIndex]);
+                    g.faces[i + j].vertexColors[2] = faceColor.setHex(c[colorIndex]);
+                }
+                else {
+                    g.faces[i + j].vertexColors[0].setHex(c[colorIndex]);
+                    g.faces[i + j].vertexColors[1].setHex(c[colorIndex]);
+                    g.faces[i + j].vertexColors[2].setHex(c[colorIndex]);
+                }
+            //}
         }
     }
     g.colorsNeedUpdate = true;

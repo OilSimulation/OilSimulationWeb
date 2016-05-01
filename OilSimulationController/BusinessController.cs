@@ -917,9 +917,12 @@ namespace OilSimulationController
             switch (iModel)
             {
                 case 11:
-                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
-                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
-                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
+                    //eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
+                    //strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
+                    //eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
+                    //strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_sch.INC"); 
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/300/JINGJU300_E100.EGRID");
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/300/JINGJU300_SCH.INC"); 
                     break;
                 case 12:
                     eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/非活塞式驱油/MODEL1D_E100.EGRID"); 
@@ -986,6 +989,118 @@ namespace OilSimulationController
             stModeData.lev = gridModel.nz;
             var res = new ConfigurableJsonResult();
             res.Data = stModeData; 
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+
+
+
+        /// <summary>
+        /// 获取风格数据
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetNetPointData(PostData inputData)
+        {
+            int iModel = 0;
+            string szPara = "";
+            int iStep = 0;
+            int iLoadFirst = -1;
+            if (ModelState.IsValid)
+            {
+                iModel = inputData.Mode;
+                szPara = inputData.Para;
+                iStep = inputData.Step;
+                iLoadFirst = inputData.iLoadFirst;
+            }
+            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
+            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/气藏开发/均质/QICANG/123-1_E100.EGRID");
+
+            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/200/JINGJU200_E100.EGRID");
+
+            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/非活塞式驱油/MODEL1D_E100.EGRID");
+            //string strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/非活塞式驱油/Model1D_sch.INC");
+            //string eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/采收率实验/不同残余油/sor0/CANYUYOU_E100.EGRID");
+            // string strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/采收率实验/不同残余油/sor0/CANYUYOU_SCH.INC");
+
+            string eGridFile = "";
+            string strWellFilePath = "";//油井文件
+            switch (iModel)
+            {
+                case 11:
+                    //eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
+                    //strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
+                    //eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
+                    //strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_sch.INC"); 
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/300/JINGJU300_E100.EGRID");
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/300/JINGJU300_SCH.INC");
+                    break;
+                case 12:
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/非活塞式驱油/MODEL1D_E100.EGRID");
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/非活塞式驱油/MODEL1D_sch.INC");
+                    break;
+                case 13:
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/单向流/MODEL1D_E100.EGRID");
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC");
+                    break;
+                case 14:
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC");
+                    break;
+                case 15:
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC");
+                    break;
+                case 16:
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC");
+                    break;
+                case 17:
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC");
+                    break;
+            }
+
+            EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
+
+            int countXFiles = EclipseParser.CountXFiles(eGridFile);
+
+            ModeData stModeData = new ModeData();
+            //获取最大最小值 
+            stModeData.mm = CaculateMaxMinValue(szPara, countXFiles, eGridFile);
+            if (iLoadFirst == 0)
+            {
+                //获取中心点坐标
+                stModeData.ct = GetCenterCoordinates(gridModel);
+                //获取数据
+                stModeData.Data = new List<float[]>();
+                stModeData.xyz = new List<float[]>();
+                for (int i = 0; i < gridModel.nz; i++)
+                {
+                    stModeData.Data.AddRange(GetCenterPointData(gridModel, szPara, iStep, i, eGridFile));
+                    //计算XYZ的距离
+                    Pillar p = gridModel.GetGridAtIJK(0, 0, i);
+                    stModeData.xyz.Add(new float[] { (p.Center.x - p.a.x) * 2, (p.Center.y - p.a.y) * 2, (p.Center.z - p.a.z) * 2 });
+                }
+            }
+            else
+            {
+                stModeData.Data = new List<float[]>();
+                for (int i = 0; i < gridModel.nz; i++)
+                {
+                    stModeData.Data.AddRange(GetCenterPointColor(gridModel, szPara, iStep, i, eGridFile));
+                }
+
+            }
+
+
+            stModeData.WellPoint = GetWellPoint(gridModel, strWellFilePath);
+
+
+            stModeData.lev = gridModel.nz;
+            var res = new ConfigurableJsonResult();
+            res.Data = stModeData;
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return res;
         }

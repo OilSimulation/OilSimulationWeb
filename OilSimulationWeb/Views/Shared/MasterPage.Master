@@ -105,14 +105,15 @@
             var pos = strFullPath.indexOf(strPath);
             var prePath = strFullPath.substring(0, pos);
             var postPath;
-            if (strPath.substr(1).indexOf('/Home/Index') == -1) {
+            debugger
+            if (strPath.indexOf('/Home/Index') == -1) {
                 if (strPath.substr(1).indexOf('/') == -1) 
                     postPath = strPath; 
                 else
                     postPath = strPath.substring(0, strPath.substr(1).indexOf('/') + 1);
             }
             else {
-                postPath = strPath.substring(0, strPath.substr(1).indexOf('/Home/Index') + 1);
+                postPath = strPath.substring(0, strPath.indexOf('/Home/Index'));
             }
             curWebRootUrl = (prePath + postPath); 
         }
