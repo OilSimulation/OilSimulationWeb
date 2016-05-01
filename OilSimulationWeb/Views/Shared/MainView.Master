@@ -207,8 +207,7 @@
             //下一步按钮事件
             $("#button_forward").click(function(){
                 $("#timeSelect").val( parseInt($("#timeSelect option:selected").val())+1 ).change();   
-            });
-
+            }); 
         } 
 
         function LoadWellData() {
