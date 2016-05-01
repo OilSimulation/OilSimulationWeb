@@ -101,12 +101,20 @@
         //
         function GetRootPath() {
             var strFullPath = window.document.location.href;
-            var strPath = window.document.location.pathname;
+            var strPath = window.document.location.pathname; 
             var pos = strFullPath.indexOf(strPath);
             var prePath = strFullPath.substring(0, pos);
-            var postPath = strPath.substring(0, strPath.substr(1).indexOf('/Home/Index') + 1); 
-            curWebRootUrl = (prePath + postPath);
-            
+            var postPath;
+            if (strPath.substr(1).indexOf('/Home/Index') == -1) {
+                if (strPath.substr(1).indexOf('/') == -1) 
+                    postPath = strPath; 
+                else
+                    postPath = strPath.substring(0, strPath.substr(1).indexOf('/') + 1);
+            }
+            else {
+                postPath = strPath.substring(0, strPath.substr(1).indexOf('/Home/Index') + 1);
+            }
+            curWebRootUrl = (prePath + postPath); 
         }
         //加载新URL路径
         function LoadUrl(inUrl) {
@@ -115,8 +123,8 @@
                 sUrl = "http://127.0.0.1/OilSimWebApp" + inUrl;
             }
             else {
-                 
-                sUrl = inUrl; 
+
+                sUrl = curWebRootUrl + inUrl; 
             }
             ShowLoading(); 
             $("#iframeId").attr("src", sUrl);
