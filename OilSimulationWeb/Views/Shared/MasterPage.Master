@@ -15,8 +15,13 @@
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/loading-overlay.min.js")%>"></script>
     <script type="text/javascript">
         var isLocalValid;
+        var curWebRootUrl;
         $(document).ready(function () {
+            //判断本地是否可用
             IsLocalValid();
+            //获取根目录
+            GetRootPath();
+            //加载默认页
             LoadUrl("/Base/BaseModeOne");
             ///控制导航菜单显示隐藏
             $(".zbar-title").click(function () {
@@ -92,15 +97,25 @@
                     isLocalValid = false; 
                 }
             });
-        } 
+        }
+        //
+        function GetRootPath() {
+            var strFullPath = window.document.location.href;
+            var strPath = window.document.location.pathname;
+            var pos = strFullPath.indexOf(strPath);
+            var prePath = strFullPath.substring(0, pos);
+            var postPath = strPath.substring(0, strPath.substr(1).indexOf('/Home/Index') + 1); 
+            curWebRootUrl = (prePath + postPath);
+            
+        }
         //加载新URL路径
         function LoadUrl(inUrl) {
             var sUrl;
             if (true == isLocalValid) {
                 sUrl = "http://127.0.0.1/OilSimWebApp" + inUrl;
             }
-            else
-            {
+            else {
+                 
                 sUrl = inUrl; 
             }
             ShowLoading(); 
