@@ -15,6 +15,9 @@
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/loading-overlay.min.js")%>"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            ShowLoading();
+            $("#iframeId").attr("src", "/Base/BaseModeOne");
+
             ///控制导航菜单显示隐藏
             $(".zbar-title").click(function () {
                 if ($(this).next().css("display") == "none") {
@@ -46,6 +49,11 @@
             $(".DropDownList.BaseMode").change(function () {
                 $("#ModeIndex").val($(this).val());
             });
+
+            //加载完成
+            $("#iframeId").load(function () {
+                //HideLoading();
+            });
         });
         //导航点击对应控制栏的显示
         function ShowMode(modeCtrlId) {
@@ -54,27 +62,19 @@
             ShowLoding();
         }
         //显示加载动画
-        function ShowLoding() {
+        function ShowLoading() {
             $("body").css({ overflow: "hidden" });
             var target = $("#Index");
             target.loadingOverlay();
         }
         //隐藏加载动画
-        function HideLoding() {
+        function HideLoading() {
             var target = $('#Index');
             if (target.hasClass('loading')) {
                 target.loadingOverlay('remove');
                 $("body").css({ overflow: "scroll" });
             }
         }
-        //判断IFRAME加载书否完成
-        $("#button").click(function () {
-            $("#iframeId").attr("src","http://www.baidu.com"); 
-         });
-        //加载完成
-         $("#iframeId").load(function () {
-             HideLoding();
-         });
     </script>
 </head>
 <body>

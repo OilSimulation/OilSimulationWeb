@@ -19,12 +19,18 @@ THREE.MyLoader.prototype = {
         var loader = new THREE.XHRLoader(scope.manager);
         loader.setCrossOrigin(this.crossOrigin);
         loader.load(url, pData, function (text) {
-            if (geometry == undefined)
+            if (geometry == undefined) {
                 onLoad(scope.LoadMode(text));
+                parent.HideLoading();
+            }
             else
                 onLoad(scope.ChangeColor(text));
 
-        }, onProgress, onError);
+        }, function () {
+            onProgress;
+            //if (geometry == undefined)
+                //parent.ShowLoading();
+        }, onError);
 
     },
 
