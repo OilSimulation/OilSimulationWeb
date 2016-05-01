@@ -98,7 +98,7 @@
                 }
             });
         }
-        //
+        //获取网站根目录或者二级目录
         function GetRootPath() {
             var strFullPath = window.document.location.href;
             var strPath = window.document.location.pathname; 
