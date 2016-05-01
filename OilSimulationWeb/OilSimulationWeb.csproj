@@ -134,12 +134,14 @@
     <Content Include="Scripts\libs\EffectComposer.js" />
     <Content Include="Scripts\libs\FirstPersonControls.js" />
     <Content Include="Scripts\libs\FlyControls.js" />
+    <Content Include="Scripts\libs\FontUtils.js" />
     <Content Include="Scripts\libs\FXAAShader.js" />
     <Content Include="Scripts\libs\GeometryExporter.js" />
     <Content Include="Scripts\libs\glTF-parser.js" />
     <Content Include="Scripts\libs\glTFAnimation.js" />
     <Content Include="Scripts\libs\glTFLoader.js" />
     <Content Include="Scripts\libs\glTFLoaderUtils.js" />
+    <Content Include="Scripts\libs\helvetiker_regular.typeface.js" />
     <Content Include="Scripts\libs\jquery-1.9.0.js" />
     <Content Include="Scripts\libs\JSONLoader.js" />
     <Content Include="Scripts\libs\JSONLoader_old.js" />
@@ -234,8 +236,10 @@
     <Content Include="Scripts\libs\stats.min.js" />
     <Content Include="Scripts\libs\STLLoader.js" />
     <Content Include="Scripts\libs\system.min.js" />
+    <Content Include="Scripts\libs\TextGeometry.js" />
     <Content Include="Scripts\libs\TGALoader.js" />
     <Content Include="Scripts\libs\three.js" />
+    <Content Include="Scripts\libs\three11.js" />
     <Content Include="Scripts\libs\ThreeBSP.js" />
     <Content Include="Scripts\libs\TrackballControls.js" />
     <Content Include="Scripts\libs\tween.min.js" />

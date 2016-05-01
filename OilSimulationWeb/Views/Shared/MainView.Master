@@ -17,6 +17,10 @@
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/TrackballControls.js")%>"></script> 
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Common.js")%>"></script>  
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Loader.js")%>"></script>   
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/TextGeometry.js")%>"></script>
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/FontUtils.js")%>"></script>
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/helvetiker_regular.typeface.js")%>"></script> 
+
     
     <script type="text/javascript">
     
@@ -208,7 +212,7 @@
             var mIndex = $("#ModeIndex",parent.document).val(); 
             //组装JSON数据
             var jsonData = {Para:paramValue,Mode:mIndex,Step:timeValue,iLoadFirst:isFirstLoad}; 
-            debugger
+            
             myLoader.load(sUrl, JSON.stringify(jsonData) ,function (loadedMesh) {
                 if (isFirstLoad==0) { 
                     loadedMesh.children.forEach(function (child) { }); 

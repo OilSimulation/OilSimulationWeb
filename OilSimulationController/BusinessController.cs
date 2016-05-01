@@ -1063,7 +1063,7 @@ namespace OilSimulationController
             int.TryParse(listd[3], out y);
             int.TryParse(listd[4].Substring(0, 1), out z);
 
-            PillarPoint pPoint = eModel.GetGridAtIJK(x, y, 0).Center;
+            PillarPoint pPoint = eModel.GetGridAtIJK(x-1, y-1, 0).Center;
 
             data.x = pPoint.x;
             data.y = pPoint.y;

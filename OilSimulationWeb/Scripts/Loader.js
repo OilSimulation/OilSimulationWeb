@@ -63,29 +63,34 @@ THREE.MyLoader.prototype = {
 
     //增加井xyz坐标,h 高度,返回 mesh,n:井名称
     AddWell: function (x, y, z, h, n) {
+        var obj3D = new THREE.Object3D;
         var wellMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, vertexColors: THREE.NoColors });
         var geometry = new THREE.CylinderGeometry(0.5, 0.5, h, 30); //0.5 圆柱上、下圆半径,h长度,30分割数越大圆柱越圆
         var wellMesh = new THREE.Mesh(geometry, wellMaterial);
         wellMesh.position.x = x;
         wellMesh.position.y = y;
         wellMesh.position.z = z;
-        return wellMesh;
+        obj3D.add(wellMesh);
+        obj3D.rotateX(90);
+        return obj3D;
     },
 
     AddWellName: function (x, y, z, h, n) {
         var textGeo = new THREE.TextGeometry(n, {
 
-            size: 70,
-            height: h,
-            font: "optimer",
-            weight:"bold",//normal
+            size: 10,
+            height: 1,
+            font: "helvetiker",
+            //weight:"bold",//normal
             style: "normal"
 
         });
+        var wellMaterial = new THREE.MeshBasicMaterial({ color: 0x00ffff, vertexColors: THREE.VertexColors });
+
         var wellNameMesh = new THREE.Mesh(textGeo, wellMaterial);
         wellNameMesh.position.x = x;
         wellNameMesh.position.y = y;
-        wellNameMesh.position.z = z;
+        wellNameMesh.position.z = z + h;
         return wellNameMesh;
     },
 
@@ -149,8 +154,8 @@ THREE.MyLoader.prototype = {
         //增加油井
         for (var i = 0; i < jsonData.WellPoint.length; i++) {
             //container.add(this.AddWell(jsonData.WellPoint[i].x - jsonData.ct[0], -jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z, jsonData.xyz[1]));
-            container.add(this.AddWell(jsonData.WellPoint[i].x - jsonData.ct[0], jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z - jsonData.ct[2], 1000, jsonData.WellPoint[i].name));
-            //container.add(this.AddWellName(jsonData.WellPoint[i].x - jsonData.ct[0], jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z - jsonData.ct[2], 1000, jsonData.WellPoint[i].name));
+            container.add(this.AddWell(jsonData.WellPoint[i].x - jsonData.ct[0], jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z - jsonData.ct[2], jsonData.xyz[0][2], jsonData.WellPoint[i].name));
+            container.add(this.AddWellName(jsonData.WellPoint[i].x - jsonData.ct[0], jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z - jsonData.ct[2], jsonData.xyz[0][2], jsonData.WellPoint[i].name));
         }
 
         console.timeEnd('MyLoader');
