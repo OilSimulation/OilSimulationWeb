@@ -13,7 +13,7 @@
         </div>
     </div>
     
-    <div  class="main"> 
+    <div class="main"> 
         <div class="zt">
             <div class="zt-tu"><img alt="" src="<%=Url.Content("~/Images/zt-tu.png")%>" width="12" height="12" /></div>
             <div class="zt-zi"> 在线虚拟实验  &gt; <span id="curMode">基础认知</span>  &gt; <span id="curitem">水驱油模拟</span>  </div>
@@ -122,7 +122,7 @@
                         <!-- 仿真实训 -->
                     </div>
                     <div>
-                        <iframe id="iframeId" name="iframeId" scrolling="no" style="height: 600px; width: 100%; border:0;" src="" />
+                        <iframe id="iframeId" name="iframeId" scrolling="no" style="height: 600px; width: 100%; border:0;" src=""></iframe>
                     </div> 
 
                 </div>

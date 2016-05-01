@@ -37,8 +37,9 @@ namespace OilSimulationController
         /// </summary>
         /// <returns></returns>
         public ActionResult IsLocal()
-        {  
-            string strData = "本地可用"; 
+        {
+            string strData = "本地可用";
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return Json(strData, JsonRequestBehavior.AllowGet); 
         }
 

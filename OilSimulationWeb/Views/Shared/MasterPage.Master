@@ -14,12 +14,10 @@
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/jquery-1.4.1.min.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/loading-overlay.min.js")%>"></script>
     <script type="text/javascript">
+        var isLocalValid;
         $(document).ready(function () {
-            ShowLoading();
-            var sUrl = "http://127.0.0.1/OilSimWebApp/Base/BaseModeOne";
-            //var sUrl = "<%=Url.Content("~/Base/BaseModeOne")%>";
-            $("#iframeId").attr("src", sUrl);
-
+            IsLocalValid();
+            LoadUrl("/Base/BaseModeOne");
             ///控制导航菜单显示隐藏
             $(".zbar-title").click(function () {
                 if ($(this).next().css("display") == "none") {
@@ -75,6 +73,39 @@
                 $("body").css({ overflow: "scroll" });
             }
         }
+
+        //判断本地是否部署有环境
+        function IsLocalValid() {
+            $.ajax({
+                type: "GET",
+                cache: false,
+                url: "http://127.0.0.1/OilSimWebApp/Business/IsLocal",
+                data: "",
+                async: false,
+                success: function (data) {
+                    if (data=="本地可用")
+                        isLocalValid = true;
+                    else
+                       isLocalValid = false;  
+                },
+                error: function () {
+                    isLocalValid = false; 
+                }
+            });
+        } 
+        //加载新URL路径
+        function LoadUrl(inUrl) {
+            var sUrl;
+            if (true == isLocalValid) {
+                sUrl = "http://127.0.0.1/OilSimWebApp" + inUrl;
+            }
+            else
+            {
+                sUrl = inUrl; 
+            }
+            ShowLoading(); 
+            $("#iframeId").attr("src", sUrl);
+        } 
     </script>
 </head>
 <body>
