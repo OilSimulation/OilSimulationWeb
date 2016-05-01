@@ -52,13 +52,18 @@
             $(modeCtrlId).find("button").click();
         }
         //判断IFRAME加载书否完成
-         $("#button").click(function(){  
-                $("#iframeId").attr("src","http://www.baidu.com"); 
-            }); 
- 
-            $("#iframeId").load(function(){  
-                alert("加载完成！");
-            }); 
+        $("#button").click(function () {
+            var target = $('#Index');
+            target.loadingOverlay();
+            $("#iframeId").attr("src","http://www.baidu.com"); 
+         });
+        //加载完成
+        $("#iframeId").load(function () {
+            var target = $('#Index'); 
+            if (target.hasClass('loading')) {
+                target.loadingOverlay('remove');
+            } 
+        }); 
     </script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/jquery-1.4.1.min.js")%>"></script>
 </head>

@@ -1,7 +1,7 @@
 /* Loading-overlay styles */
 @font-face {
   font-family: "demo";
-  src: url('../fonts/icons.woff') format("woff"), url('../fonts/icons.ttf') format("truetype");
+  src: url('icons.woff') format("woff"), url('icons.ttf') format("truetype");
 }
 
 @-moz-keyframes loadingStart {
