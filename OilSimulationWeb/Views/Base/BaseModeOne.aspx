@@ -5,9 +5,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server"> 
-    <script type="text/javascript">
-        var modeIndex = 1;
-    </script>
+    <input id="ModeIndex" type="hidden" value="11" />
     <div id="controls_container_top"  style="display: inline-block; ">
 				<ul> 
 	<%--				<li>

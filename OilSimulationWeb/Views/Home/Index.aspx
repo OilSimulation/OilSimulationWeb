@@ -54,7 +54,6 @@
                         <div id="BaseThree" class="navControl" style="display:none;">请选择：<select class="DropDownList BaseMode"><option value="16">稳定水压弹性驱油</option><option value="17">封闭弹性驱油</option></select><button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button></div>
                     </div>
                     <div>
-                        <input id="ModeIndex" type="hidden" value="11" />
                         <iframe id="iframeId" scrolling="no" style="height: 600px; width: 100%; border:0;" src="" >
                             
                         </iframe>

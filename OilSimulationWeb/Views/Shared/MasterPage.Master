@@ -16,7 +16,9 @@
     <script type="text/javascript">
         $(document).ready(function () {
             ShowLoading();
-            $("#iframeId").attr("src", "<%=Url.Content("~/Base/BaseModeOne")%>");
+            var sUrl = "http://127.0.0.1/OilSimWebApp/Base/BaseModeOne";
+            //var sUrl = "<%=Url.Content("~/Base/BaseModeOne")%>";
+            $("#iframeId").attr("src", sUrl);
 
             ///控制导航菜单显示隐藏
             $(".zbar-title").click(function () {
@@ -47,13 +49,12 @@
             });
             //基础认知选择下拉框事件
             $(".DropDownList.BaseMode").change(function () {
-                $("#ModeIndex").val($(this).val());
+                var value = $(this).val();
+                //加载完成 
+                window.frames["iframeId"].contentWindow.postMessage("$('#ModeIndex').val(" + value + ");", "*");
             });
-
-            //加载完成
-            $("#iframeId").load(function () {
-                //HideLoading();
-            });
+            //解决跨域HideLoading();
+            window.addEventListener("message", function (event) { eval(event.data); });
         });
         //导航点击对应控制栏的显示
         function ShowMode(modeCtrlId) {

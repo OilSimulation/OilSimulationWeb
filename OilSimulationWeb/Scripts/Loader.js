@@ -21,7 +21,8 @@ THREE.MyLoader.prototype = {
         loader.load(url, pData, function (text) {
             if (geometry == undefined) {
                 onLoad(scope.LoadMode(text));
-                parent.HideLoading();
+                //parent.HideLoading();
+                parent.postMessage("HideLoading()", "*");
             }
             else
                 onLoad(scope.ChangeColor(text));
