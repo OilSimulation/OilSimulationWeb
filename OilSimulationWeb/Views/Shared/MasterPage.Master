@@ -59,7 +59,6 @@
         function ShowMode(modeCtrlId) {
             $(modeCtrlId).css("display", "block");
             $(modeCtrlId).find("button").click();
-            ShowLoding();
         }
         //显示加载动画
         function ShowLoading() {
