@@ -49,14 +49,80 @@
 
                 <div id="RightPanl"> 
                     <div id="divControl">
-                        <div id="BaseOne" class="navControl" style="display:block;">请选择：<select class="DropDownList BaseMode"><option value="11">活塞式水驱油</option><option value="12">非活塞式水驱油</option></select><button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button></div>
-                        <div id="BaseTwo" class="navControl" style="display:none;">请选择：<select class="DropDownList BaseMode"><option value="13">单向渗流</option><option value="14">平面径向渗流</option><option value="15">球面向心流</option></select><button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button></div>
-                        <div id="BaseThree" class="navControl" style="display:none;">请选择：<select class="DropDownList BaseMode"><option value="16">稳定水压弹性驱油</option><option value="17">封闭弹性驱油</option></select><button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button></div>
+                        <!-- 基础认知 -->
+                        <div id="BaseOne" class="navControl" style="display:block;">
+                            请选择：
+                            <select class="DropDownList BaseMode">
+                            <option value="11">活塞式水驱油</option>
+                            <option value="12">非活塞式水驱油</option>
+                            </select>
+                            <button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button>
+                        </div>
+                        <div id="BaseTwo" class="navControl" style="display:none;">
+                            请选择：
+                            <select class="DropDownList BaseMode">
+                            <option value="13">单向渗流</option>
+                            <option value="14">平面径向渗流</option>
+                            <option value="15">球面向心流</option>
+                            </select>
+                            <button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button>
+                         </div>
+                        <div id="BaseThree" class="navControl" style="display:none;">
+                            请选择：
+                            <select class="DropDownList BaseMode">
+                            <option value="16">稳定水压弹性驱油</option>
+                            <option value="17">封闭弹性驱油</option>
+                            </select>
+                            <button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button>
+                        </div>
+                        <!-- 虚拟实验 -->
+                        <div id="VirtualOne" class="navControl" style="display:none;">
+                            请选择：
+                            <select class="DropDownList BaseMode">
+                            <option value="211">默认参数非活塞驱油</option>
+                            <option value="212">改变毛细管压力</option>
+                            <option value="213">改变油水比重</option>
+                            <option value="214">改变油水粘度</option>
+                            </select>
+                            <button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button>
+                        </div> 
+                        <div id="VirtualTwo" class="navControl" style="display:none;">
+                            请选择：
+                            <select class="DropDownList">
+                            <option value="221">毛细管压力</option>
+                            <option value="222">原油粘度级别</option>
+                            <option value="223">原油密度级别</option>
+                            </select>
+                            <select class="DropDownList">
+                            <option value="2211">无毛管</option>
+                            <option value="2212">低毛管</option>
+                            <option value="2213">高毛管</option>
+                            </select>
+                            <select class="DropDownList" style="display:none;">
+                            <option value="2221">低粘度0.5</option>
+                            <option value="2222">中粘度5</option>
+                            <option value="2223">高粘度50</option>
+                            </select>
+                            <select class="DropDownList" style="display:none;">
+                            <option value="2231">低密度0.7</option>
+                            <option value="2232">中密度0.9</option>
+                            <option value="2233">高密度1.15</option>
+                            </select>
+                            <button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button>
+                        </div> 
+                        <div id="VirtualThree" class="navControl" style="display:none;">
+                            请选择：
+                            <select class="DropDownList">
+                            <option value="231">束缚水饱和度</option>
+                            <option value="232">残余油饱和度</option>
+                            <option value="233">油水相渗曲线</option>
+                            </select>
+                            <button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button>
+                        </div>
+                        <!-- 仿真实训 -->
                     </div>
                     <div>
-                        <iframe id="iframeId" scrolling="no" style="height: 600px; width: 100%; border:0;" src="" >
-                            
-                        </iframe>
+                        <iframe id="iframeId" name="iframeId" scrolling="no" style="height: 600px; width: 100%; border:0;" src="" />
                     </div> 
 
                 </div>
