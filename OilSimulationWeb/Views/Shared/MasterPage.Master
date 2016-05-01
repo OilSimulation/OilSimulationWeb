@@ -16,7 +16,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             ShowLoading();
-            $("#iframeId").attr("src", "/Base/BaseModeOne");
+            $("#iframeId").attr("src", "~/Base/BaseModeOne");
 
             ///控制导航菜单显示隐藏
             $(".zbar-title").click(function () {
