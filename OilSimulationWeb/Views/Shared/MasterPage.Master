@@ -99,7 +99,7 @@
             var pos = strFullPath.indexOf(strPath);
             var prePath = strFullPath.substring(0, pos);
             var postPath;
-            debugger
+            
             if (strPath.indexOf('/Home/Index') == -1) {
                 if (strPath.substr(1).indexOf('/') == -1) 
                     postPath = strPath; 

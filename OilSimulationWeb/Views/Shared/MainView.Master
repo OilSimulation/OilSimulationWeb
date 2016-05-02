@@ -39,7 +39,7 @@
 
             // 创建和设置渲染器
             webGLRenderer = new THREE.WebGLRenderer({ antialias: true });  //抗锯齿
-            //webGLRenderer.setClearColor(new THREE.Color(0x666666, 1.0));
+            webGLRenderer.setClearColor(new THREE.Color(0x666666, 1.0));
             webGLRenderer.setSize(window.innerWidth, window.innerHeight);
             webGLRenderer.shadowMapEnabled = true;
 
