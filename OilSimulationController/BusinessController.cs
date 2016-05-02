@@ -903,7 +903,7 @@ namespace OilSimulationController
                 iLoadFirst = inputData.iLoadFirst;
             } 
             //Grid文件
-            string eGridFile = CommonModel.GetModeUriPath(iModel); ; 
+            string eGridFile = CommonModel.GetModeUriPath(iModel); 
             //油井文件
             string strWellFilePath = eGridFile.Substring(0, eGridFile.IndexOf("_E")) + "_sch.INC";
              
