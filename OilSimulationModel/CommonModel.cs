@@ -68,6 +68,10 @@ namespace OilSimulationModel
                 case 17:
                     szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/封闭边界/MODEL2D_E100.EGRID");
                     break;
+                //
+                default:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/非活塞式驱油/MODEL1D_E100.EGRID");
+                    break;
             }
             return szUriPath;
         }
