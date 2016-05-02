@@ -8,7 +8,7 @@
     <div id="TopPanel">
         <div class="top-main">
             <div class="top-logo"> 
-                <img alt="重庆科技学院油藏仿真" src="<%=Url.Content("~/Images/zx-logo.jpg")%>" width="235" height="85" border="0" /> 
+                <img alt="重庆科技学院油藏仿真" src="<%=Url.Content("~/Images/zx-logo.jpg")%>" width="382" height="85" border="0" /> 
             </div>
         </div>
     </div>

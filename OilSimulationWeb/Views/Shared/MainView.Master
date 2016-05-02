@@ -43,16 +43,36 @@
             webGLRenderer.setSize(window.innerWidth, window.innerHeight);
             webGLRenderer.shadowMapEnabled = true;
 
+
             // 创建场景, that will hold all our elements such as objects, cameras and lights.
             scene = new THREE.Scene();
 
-            var axes = new THREE.AxisHelper(5);
+            //var axes = new THREE.AxisHelper(5);
             //scene.add(axes);
 
             // 创建和设置相机
             camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 50000);
+
+
+            var modelIndex =$("#ModeIndex").val();
             // position and point the camera to the center of the scene
-            camera.position.set(0, 0, 200);
+            if(modelIndex==421)
+            {
+                camera.position.set(0, 0, 1200);
+            }
+            else if(modelIndex==212)
+            {
+                camera.position.set(0, 0, 50);
+            }
+            else if(modelIndex==11||modelIndex==12||modelIndex==13||modelIndex==211||modelIndex==213||modelIndex==214)
+            {
+                camera.position.set(0, 0, 100);
+            }
+            else 
+            {
+                camera.position.set(0, 0, 200);
+            }
+
             // 相机的上方向设置为(0,1,0)即y轴方向;
             camera.up.set(0, 1, 0);
             // 相机的视野中心坐标

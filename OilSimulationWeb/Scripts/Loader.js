@@ -27,7 +27,7 @@ THREE.MyLoader.prototype = {
             }
             else
                 //onLoad(scope.ChangeBufferGeometryColor(text));
-                onLoad(scope.ChangeColor(text));
+                onLoad(scope.ChangeColor(pData,text));
         }, function () {
             onProgress;
             //if (geometry == undefined)
@@ -53,7 +53,7 @@ THREE.MyLoader.prototype = {
 
 
 
-    ChangeColor: function (text) {
+    ChangeColor: function (data,text) {
         var jsonData = JSON.parse(text);
         modelJsonData = jsonData;
         var info, color;
@@ -468,8 +468,8 @@ THREE.MyLoader.prototype = {
         //增加油井
         for (var i = 0; i < jsonData.WellPoint.length; i++) {
             //container.add(this.AddWell(jsonData.WellPoint[i].x - jsonData.ct[0], -jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z, jsonData.xyz[1]));
-            container.add(this.AddWell(jsonData.WellPoint[i].x - jsonData.ct[0] - jsonData.xyz[0][0] / 2, jsonData.WellPoint[i].y - jsonData.ct[1] - jsonData.xyz[0][1] / 2, jsonData.WellPoint[i].z - jsonData.ct[2], zTW / 2 + 5, jsonData.xyz[0][2], jsonData.WellPoint[i].name));
-            container.add(this.AddWellName(jsonData.WellPoint[i].x - jsonData.ct[0], jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z - jsonData.ct[2] + zTW / 2 + 10, jsonData.xyz[0][2], jsonData.WellPoint[i].name));
+            container.add(this.AddWell(jsonData.WellPoint[i].x - jsonData.ct[0] - jsonData.xyz[0][0] / 2, jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z - jsonData.ct[2], zTW / 2 + 50, jsonData.xyz[0][2], jsonData.WellPoint[i].name));
+            container.add(this.AddWellName(jsonData.WellPoint[i].x - jsonData.ct[0], jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z - jsonData.ct[2] + zTW / 2 + 60, jsonData.xyz[0][2], jsonData.WellPoint[i].name));
         }
 
         console.timeEnd('MyLoader');
