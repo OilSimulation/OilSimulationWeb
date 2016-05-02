@@ -138,6 +138,62 @@ namespace OilSimulationModel
                     szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/采收率实验/不同相渗曲线/xxing/XIANGSHEN_E100.EGRID");
                     break;
                 //仿真实训
+                case 3111:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/200/JINGJU200_E100.EGRID");
+                    break;
+                case 3112:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/300/JINGJU300_E100.EGRID");
+                    break;
+                case 3113:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/500/JINGJU500_E100.EGRID");
+                    break;
+                case 3121:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井网/五点/WUDIAN_E100.EGRID");
+                    break;
+                case 3122:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井网/七点/QIDIAN1_E100.EGRID");
+                    break;
+                case 3123:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井网/九点/JIUDIAN_E100.EGRID");
+                    break;
+                //--注采系统方案设计与开发效果预测
+                case 3211:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同注水时机/早期（同采同注）/ZAOZHU_E100.EGRID");
+                    break;
+                case 3212:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同注水时机/中期开发后半年/ZHONG_E100.EGRID");
+                    break;
+                case 3213:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同注水时机/晚期开发后两年/WAN_E100.EGRID");
+                    break;
+                case 3221:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同注采比/0.8/ZHUCAIBI_E100.EGRID");
+                    break;
+                case 3222:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同注采比/1/ZHUCAIBI1_E100.EGRID");
+                    break;
+                case 3223:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同注采比/1.2/ZHUCAIBI1_E100.EGRID");
+                    break;
+                case 3231:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同最大井底注入压力/35MPA/ZHURUYALI35_E100.EGRID");
+                    break;
+                case 3232:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同最大井底注入压力/40MPA/ZHURUYALI40_E100.EGRID");
+                    break;
+                case 3233:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同最大井底注入压力/50MPA/ZHURUYALI50_E100.EGRID");
+                    break;
+                case 3241:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同最小井底流压/1MPA/PWF1_E100.EGRID");
+                    break;
+                case 3242:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同最小井底流压/5MPA/PWF5_E100.EGRID");
+                    break;
+                case 3243:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同最小井底流压/10MPA/PWF10_E100.EGRID");
+                    break;
+
                 //创新实践
                 case 411:
                 case 412:
