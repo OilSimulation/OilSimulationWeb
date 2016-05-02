@@ -35,7 +35,43 @@ namespace OilSimulationModel
              } 
             return macAdress;
         }
-        
+
+        /// <summary>
+        /// 获取模型数据的URI路径
+        /// </summary>
+        /// <param name="iModeIndex"></param>
+        /// <returns></returns>
+        public static string GetModeUriPath(int iModeIndex)
+        {
+            string szUriPath = "";
+            switch (iModeIndex)
+            {
+                //基础认知
+                case 11:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
+                    break;
+                case 12:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/非活塞式驱油/MODEL1D_E100.EGRID");
+                    break;
+                case 13:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/单向流/MODEL1D_E100.EGRID");
+                    break;
+                case 14:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/平面径向流/PINGMIAN_E100.EGRID");
+                    break;
+                case 15:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/稳定水压恒压边界/MODEL2D_E100.EGRID");
+                    break;
+                case 16:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/稳定水压恒压边界/MODEL2D_E100.EGRID");
+                    break;
+                case 17:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/封闭边界/MODEL2D_E100.EGRID");
+                    break;
+            }
+            return szUriPath;
+        }
+
         /// <summary>
         /// HSL TO RGB
         /// </summary>
