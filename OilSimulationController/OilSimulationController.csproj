@@ -54,6 +54,7 @@
     <Compile Include="InnovateController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimulationController.cs" />
+    <Compile Include="VirExperimentController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OilSimulationModel\OilSimulationModel.csproj">
