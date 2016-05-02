@@ -69,8 +69,85 @@ namespace OilSimulationModel
                     szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/封闭边界/MODEL2D_E100.EGRID");
                     break;
                 //虚拟实验
+                case 211:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/MODEL1D_E100.EGRID");
+                    break;
+                case 212:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/3-1变密度/MODEL1D_E100.EGRID");
+                    break;
+                case 213:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/3-2变粘度/MODEL1D_E100.EGRID");
+                    break;
+                case 214:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/3-3变毛管压力/MODEL1D_E100.EGRID");
+                    break;
+                //--水驱油效率实验
+                case 2211:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/三种类型毛管力/wumaoguan/MAOGUANLI_E100.EGRID");
+                    break;
+                case 2212:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/三种类型毛管力/dimaoguan/MAOGUANLI_E100.EGRID");
+                    break;
+                case 2213:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/三种类型毛管力/gaomaoguan/MAOGUANLI_E100.EGRID");
+                    break;
+                case 2221:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油粘度/dinian-0.5/DINIAN_E100.EGRID");
+                    break;
+                case 2222:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油粘度/zhongnian-5/ZHONGNIAN_E100.EGRID");
+                    break;
+                case 2223:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油粘度/gaonian-50/MOXING_E100.EGRID");
+                    break;
+                case 2231:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/dimidu0.7/DIMI_E100.EGRID");
+                    break;
+                case 2232:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/zhong0.9/ZHONGMI_E100.EGRID");
+                    break;
+                case 2233:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
+                    break;
+                //--采收率实验
+                case 2311:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/采收率实验/不同束缚水/0/SHUFUSHUI_E100.EGRID");
+                    break;
+                case 2312:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/采收率实验/不同束缚水/0.3/SHUFUSHUI_E100.EGRID");
+                    break;
+                case 2313:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/采收率实验/不同束缚水/0.5/SHUFUSHUI_E100.EGRID");
+                    break;
+                case 2321:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/采收率实验/不同残余油/sor0/CANYUYOU_E100.EGRID");
+                    break;
+                case 2322:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/采收率实验/不同残余油/sor0.3/CANYUYOU_E100.EGRID");
+                    break;
+                case 2323:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/采收率实验/不同残余油/sor0.5/CANYUYOU_E100.EGRID");
+                    break;
+                case 2331:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/采收率实验/不同相渗曲线/changgui/XIANGSHEN_E100.EGRID");
+                    break;
+                case 2332:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/采收率实验/不同相渗曲线/lixing/XIANGSHEN_E100.EGRID");
+                    break;
+                case 2333:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/采收率实验/不同相渗曲线/xxing/XIANGSHEN_E100.EGRID");
+                    break;
                 //仿真实训
                 //创新实践
+                case 411:
+                case 412:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/气藏开发/均质/JUNZHI_E100.EGRID");
+                    break;
+                case 421:
+                case 422:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/油藏开发/均质/QICANG/1234_E100.EGRID");
+                    break;
+                //默认基础认知非活塞驱油
                 default:
                     szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/非活塞式驱油/MODEL1D_E100.EGRID");
                     break;
