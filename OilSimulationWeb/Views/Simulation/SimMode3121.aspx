@@ -5,7 +5,5 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
-    <h2>SimMode3121</h2>
-
+    <input id="ModeIndex" type="hidden" value="3121" />
 </asp:Content>
