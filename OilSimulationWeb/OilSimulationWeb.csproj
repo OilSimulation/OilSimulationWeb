@@ -276,6 +276,24 @@
     <Content Include="Views\VirExperiment\VirtualMode212.aspx" />
     <Content Include="Views\VirExperiment\VirtualMode213.aspx" />
     <Content Include="Views\VirExperiment\VirtualMode214.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2211.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2212.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2213.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2221.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2222.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2223.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2231.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2232.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2233.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2311.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2312.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2313.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2321.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2322.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2323.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2331.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2332.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode2333.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
