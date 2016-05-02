@@ -19,7 +19,7 @@ namespace OilSimulationController
         /// 均质油藏
         /// </summary>
         /// <returns></returns>
-        public ActionResult InnovateModeOne()
+        public ActionResult InnModeOne()
         {
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
             string szGridFilePath = CommonModel.GetModeUriPath(411);
@@ -35,7 +35,7 @@ namespace OilSimulationController
         /// 实际油藏
         /// </summary>
         /// <returns></returns>
-        public ActionResult InnovateModeTwo()
+        public ActionResult InnModeTwo()
         {
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
             string szGridFilePath = CommonModel.GetModeUriPath(412);
@@ -51,7 +51,7 @@ namespace OilSimulationController
         /// 均质气藏
         /// </summary>
         /// <returns></returns>
-        public ActionResult InnovateModeThree()
+        public ActionResult InnModeThree()
         {
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
             string szGridFilePath = CommonModel.GetModeUriPath(421);
@@ -67,7 +67,7 @@ namespace OilSimulationController
         /// 实际气藏
         /// </summary>
         /// <returns></returns>
-        public ActionResult InnovateModeFour()
+        public ActionResult InnModeFour()
         {
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
             string szGridFilePath = CommonModel.GetModeUriPath(422);
