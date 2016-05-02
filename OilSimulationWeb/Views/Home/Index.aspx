@@ -479,16 +479,16 @@
                         <div id="InnovateOne" class="navControl" style="display:none;">
                             请选择：
                             <select class="DropDownList" id="i1Main">
-                            <option value="411">均质气藏</option>
-                            <option value="412">实际气藏</option> 
+                            <option value="411">均质油藏</option>
+                            <option value="412">实际油藏</option> 
                             </select> 
                             <button id="i1Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                         </div>
                         <div id="InnovateTwo" class="navControl" style="display:none;">
                             请选择：
                             <select class="DropDownList" id="i2Main">
-                            <option value="421">均质油藏</option>
-                            <option value="422">实际油藏</option> 
+                            <option value="421">均质气藏</option>
+                            <option value="422">实际气藏</option> 
                             </select>
                             <button id="i2Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                         </div>
