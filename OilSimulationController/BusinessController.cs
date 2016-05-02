@@ -917,12 +917,12 @@ namespace OilSimulationController
             switch (iModel)
             {
                 case 11:
-                    //eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
-                    //strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID");
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
                     //eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_E100.EGRID");
                     //strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/不同原油密度/gao1.15/GAOMI_sch.INC"); 
-                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/300/JINGJU300_E100.EGRID");
-                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/300/JINGJU300_SCH.INC"); 
+                    //eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/300/JINGJU300_E100.EGRID");
+                    //strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/300/JINGJU300_SCH.INC"); 
                     break;
                 case 12:
                     eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/非活塞式驱油/MODEL1D_E100.EGRID"); 
@@ -933,20 +933,20 @@ namespace OilSimulationController
                     strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
                     break;
                 case 14:
-                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID"); 
-                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/平面径向流/PINGMIAN_E100.EGRID");
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/平面径向流/PINGMIAN_sch.INC"); 
                     break;
                 case 15:
                     eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID"); 
                     strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
                     break;
                 case 16:
-                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID"); 
-                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/稳定水压恒压边界/MODEL2D_E100.EGRID");
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/稳定水压恒压边界/MODEL2D_sch.INC"); 
                     break;
                 case 17:
-                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_E100.EGRID"); 
-                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/活塞式驱油/MODEL1D_sch.INC"); 
+                    eGridFile = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/封闭边界/MODEL2D_E100.EGRID");
+                    strWellFilePath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/封闭边界/MODEL2D_sch.INC"); 
                     break;
             }
 
