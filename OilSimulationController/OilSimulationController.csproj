@@ -51,6 +51,7 @@
     <Compile Include="BusinessController.cs" />
     <Compile Include="BaseController.cs" />
     <Compile Include="HomeController.cs" />
+    <Compile Include="InnovateController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
