@@ -130,16 +130,16 @@
                                     var curIndex = parseInt($(".v1Mode").val());
                                     switch (curIndex) {
                                         case 211:
-                                            LoadUrl("/Base/BaseModeOne");
+                                            LoadUrl("/VirExperiment/VirtualMode211");
                                             break;
                                         case 212:
-                                            LoadUrl("/Base/BaseModeOne");
+                                            LoadUrl("/VirExperiment/VirtualMode212");
                                             break;
                                         case 213:
-                                            LoadUrl("/Base/BaseModeOne");
+                                            LoadUrl("/VirExperiment/VirtualMode213");
                                             break;
                                         case 214:
-                                            LoadUrl("/Base/BaseModeOne");
+                                            LoadUrl("/VirExperiment/VirtualMode213");
                                             break;
                                     }
                                 });
@@ -173,31 +173,31 @@
                                     var curIndex = parseInt($(".v2Mode:visible").val());
                                     switch (curIndex) {
                                         case 2211:
-                                            LoadUrl("/Base/BaseModeOne");
+                                            LoadUrl("/VirExperiment/BaseModeOne");
                                             break;
                                         case 2212:
-                                            LoadUrl("/Base/BaseModeOne");
+                                            LoadUrl("/VirExperiment/BaseModeOne");
                                             break;
                                         case 2213:
-                                            LoadUrl("/Base/BaseModeOne");
+                                            LoadUrl("/VirExperiment/BaseModeOne");
                                             break;
                                         case 2221:
-                                            LoadUrl("/Base/BaseModeOne");
+                                            LoadUrl("/VirExperiment/BaseModeOne");
                                             break;
                                         case 2222:
-                                            LoadUrl("/Base/BaseModeOne");
+                                            LoadUrl("/VirExperiment/BaseModeOne");
                                             break;
                                         case 2223:
-                                            LoadUrl("/Base/BaseModeOne");
+                                            LoadUrl("/VirExperiment/BaseModeOne");
                                             break;
                                         case 2231:
-                                            LoadUrl("/Base/BaseModeOne");
+                                            LoadUrl("/VirExperiment/BaseModeOne");
                                             break;
                                         case 2232:
-                                            LoadUrl("/Base/BaseModeOne");
+                                            LoadUrl("/VirExperiment/BaseModeOne");
                                             break;
                                         case 2233:
-                                            LoadUrl("/Base/BaseModeOne");
+                                            LoadUrl("/VirExperiment/BaseModeOne");
                                             break;
                                     }
                                 });

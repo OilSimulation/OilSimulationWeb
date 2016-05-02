@@ -272,6 +272,10 @@
     <Content Include="Views\Innovate\InnModeOne.aspx" />
     <Content Include="Views\Innovate\InnModeThree.aspx" />
     <Content Include="Views\Innovate\InnModeTwo.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode211.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode212.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode213.aspx" />
+    <Content Include="Views\VirExperiment\VirtualMode214.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -318,7 +322,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Simulation\" />
-    <Folder Include="Views\VirExperiment\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
