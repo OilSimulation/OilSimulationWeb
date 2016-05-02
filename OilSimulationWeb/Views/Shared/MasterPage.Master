@@ -50,12 +50,6 @@
                 $("#divControl").children().each(function () { $(this).css("display", "none"); });
 
             });
-            //基础认知选择下拉框事件
-            $(".DropDownList.BaseMode").change(function () {
-                var value = $(this).val();
-                //加载完成 
-                window.frames["iframeId"].contentWindow.postMessage("$('#ModeIndex').val(" + value + ");", "*");
-            });
             //解决跨域HideLoading();
             window.addEventListener("message", function (event) { eval(event.data); });
         });

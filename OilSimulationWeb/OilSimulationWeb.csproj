@@ -313,6 +313,8 @@
     <None Include="Content\icons.woff" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\Innovate\" />
+    <Folder Include="Views\Simulation\" />
     <Folder Include="Views\Virtual\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
