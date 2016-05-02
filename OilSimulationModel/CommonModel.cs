@@ -197,11 +197,11 @@ namespace OilSimulationModel
                 //创新实践
                 case 411:
                 case 412:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/气藏开发/均质/JUNZHI_E100.EGRID");
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/油藏开发/均质/JUNZHI_E100.EGRID");
                     break;
                 case 421:
                 case 422:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/油藏开发/均质/QICANG/1234_E100.EGRID");
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/创新实践/气藏开发/均质/QICANG/1234_E100.EGRID");
                     break;
                 //默认基础认知非活塞驱油
                 default:
