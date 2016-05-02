@@ -272,6 +272,24 @@
     <Content Include="Views\Innovate\InnModeOne.aspx" />
     <Content Include="Views\Innovate\InnModeThree.aspx" />
     <Content Include="Views\Innovate\InnModeTwo.aspx" />
+    <Content Include="Views\Simulation\SimMode3111.aspx" />
+    <Content Include="Views\Simulation\SimMode3112.aspx" />
+    <Content Include="Views\Simulation\SimMode3113.aspx" />
+    <Content Include="Views\Simulation\SimMode3121.aspx" />
+    <Content Include="Views\Simulation\SimMode3122.aspx" />
+    <Content Include="Views\Simulation\SimMode3123.aspx" />
+    <Content Include="Views\Simulation\SimMode3211.aspx" />
+    <Content Include="Views\Simulation\SimMode3212.aspx" />
+    <Content Include="Views\Simulation\SimMode3213.aspx" />
+    <Content Include="Views\Simulation\SimMode3221.aspx" />
+    <Content Include="Views\Simulation\SimMode3222.aspx" />
+    <Content Include="Views\Simulation\SimMode3223.aspx" />
+    <Content Include="Views\Simulation\SimMode3231.aspx" />
+    <Content Include="Views\Simulation\SimMode3232.aspx" />
+    <Content Include="Views\Simulation\SimMode3233.aspx" />
+    <Content Include="Views\Simulation\SimMode3241.aspx" />
+    <Content Include="Views\Simulation\SimMode3242.aspx" />
+    <Content Include="Views\Simulation\SimMode3243.aspx" />
     <Content Include="Views\VirExperiment\VirtualMode211.aspx" />
     <Content Include="Views\VirExperiment\VirtualMode212.aspx" />
     <Content Include="Views\VirExperiment\VirtualMode213.aspx" />
@@ -338,9 +356,7 @@
     <None Include="Content\icons.ttf" />
     <None Include="Content\icons.woff" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Simulation\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -318,22 +318,22 @@
                                     var curIndex = parseInt($(".s1Mode:visible").val());
                                     switch (curIndex) {
                                         case 3111:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3111");
                                             break;
                                         case 3112:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3112");
                                             break;
                                         case 3113:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3113");
                                             break;
                                         case 3121:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3121");
                                             break;
                                         case 3122:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3122");
                                             break;
                                         case 3123:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3123");
                                             break;
                                     }
                                 });
@@ -379,40 +379,40 @@
                                     var curIndex = parseInt($(".s2Mode:visible").val());
                                     switch (curIndex) {
                                         case 3211:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3211");
                                             break;
                                         case 3212:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3212");
                                             break;
                                         case 3213:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3213");
                                             break;
                                         case 3221:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3221");
                                             break;
                                         case 3222:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3222");
                                             break;
                                         case 3223:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3223");
                                             break;
                                         case 3231:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3231");
                                             break;
                                         case 3232:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3232");
                                             break;
                                         case 3233:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3233");
                                             break;
                                         case 3241:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3241");
                                             break;
                                         case 3242:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3242");
                                             break;
                                         case 3243:
-                                            LoadUrl("/Simulation/BaseModeOne");
+                                            LoadUrl("/Simulation/SimMode3243");
                                             break;
                                     }
                                 });
