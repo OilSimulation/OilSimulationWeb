@@ -464,7 +464,7 @@
                                     }
                                 });
                                 $("#i2Btn").click(function () {
-                                    var curIndex = parseInt($(".b3Mode").val());
+                                    var curIndex = parseInt($("#i2Main").val());
                                     switch (curIndex) {
                                         case 421:
                                             LoadUrl("/Innovate/InnModeThree");
