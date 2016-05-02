@@ -261,7 +261,7 @@
     <Content Include="Views\Base\BaseModeFour.aspx" />
     <Content Include="Views\Base\BaseModeOne.aspx" />
     <Content Include="Views\Base\BaseModeSeven.aspx" />
-    <Content Include="Views\Base\BaseModeSex.aspx" />
+    <Content Include="Views\Base\BaseModeSix.aspx" />
     <Content Include="Views\Base\BaseModeThree.aspx" />
     <Content Include="Views\Base\BaseModeTwo.aspx" />
     <Content Include="Views\Home\Index.aspx" />

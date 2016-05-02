@@ -30,9 +30,9 @@
 		                </ul>
                         <div class="zbar-title">虚拟实验</div> 
 		                <ul style="display: none"> 
-		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">非活塞式水驱油影响因素</span></a></li>
-		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油效率实验</span></a></li> 
-		                    <li class="liNav"><a href="javascript:void(0);" class="oneline"><span class="lmenu-ico"></span><span class="zh">采收率实验</span></a></li>
+		                    <li class="liNav"><a href="javascript:void(0);ShowMode('#VirtualOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">非活塞式水驱油影响因素</span></a></li>
+		                    <li class="liNav"><a href="javascript:void(0);ShowMode('#VirtualTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油效率实验</span></a></li> 
+		                    <li class="liNav"><a href="javascript:void(0);ShowMode('#VirtualThree');" class="oneline"><span class="lmenu-ico"></span><span class="zh">采收率实验</span></a></li>
 		                </ul>
                         <div class="zbar-title">仿真实训</div> 
 		                <ul style="display: none"> 
@@ -50,74 +50,209 @@
                 <div id="RightPanl"> 
                     <div id="divControl">
                         <!-- 基础认知 -->
-                        <div id="BaseOne" class="navControl" style="display:block;">
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $("#b1Btn").click(function () {
+                                    var curIndex = parseInt($(".b1Mode").val());
+                                    switch (curIndex) {
+                                        case 11:
+                                            LoadUrl("/Base/BaseModeOne");
+                                            break;
+                                        case 12:
+                                            LoadUrl("/Base/BaseModeTwo");
+                                            break; 
+                                    }
+                                });
+                            });
+                        </script>
+                        <div id="BaseOne" class="navControl" style="display:inline;">
                             请选择：
-                            <select class="DropDownList BaseMode">
+                            <select class="DropDownList b1Mode">
                             <option value="11">活塞式水驱油</option>
                             <option value="12">非活塞式水驱油</option>
                             </select>
-                            <button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button>
+                            <button id="b1Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                         </div>
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $("#b2Btn").click(function () {
+                                    var curIndex = parseInt($(".b2Mode").val());
+                                    switch (curIndex) {
+                                        case 13:
+                                            LoadUrl("/Base/BaseModeThree");
+                                            break;
+                                        case 14:
+                                            LoadUrl("/Base/BaseModeFour");
+                                            break;
+                                        case 15:
+                                            LoadUrl("/Base/BaseModeFive");
+                                            break;
+                                    }
+                                });
+                            });
+                        </script>
                         <div id="BaseTwo" class="navControl" style="display:none;">
                             请选择：
-                            <select class="DropDownList BaseMode">
+                            <select class="DropDownList b2Mode">
                             <option value="13">单向渗流</option>
                             <option value="14">平面径向渗流</option>
                             <option value="15">球面向心流</option>
                             </select>
-                            <button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button>
+                            <button id="b2Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                          </div>
+                         <script type="text/javascript">
+                             $(document).ready(function () {
+                                 $("#b3Btn").click(function () {
+                                     var curIndex = parseInt($(".b3Mode").val());
+                                     switch (curIndex) {
+                                         case 16:
+                                             LoadUrl("/Base/BaseModeSix");
+                                             break;
+                                         case 17:
+                                             LoadUrl("/Base/BaseModeSeven");
+                                             break;
+                                     }
+                                 });
+                             });
+                        </script>
                         <div id="BaseThree" class="navControl" style="display:none;">
                             请选择：
-                            <select class="DropDownList BaseMode">
+                            <select class="DropDownList b3Mode">
                             <option value="16">稳定水压弹性驱油</option>
                             <option value="17">封闭弹性驱油</option>
                             </select>
-                            <button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button>
+                            <button id="b3Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                         </div>
                         <!-- 虚拟实验 -->
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $("#v1Btn").click(function () {
+                                    var curIndex = parseInt($(".v1Mode").val());
+                                    switch (curIndex) {
+                                        case 211:
+                                            LoadUrl("/Base/BaseModeOne");
+                                            break;
+                                        case 212:
+                                            LoadUrl("/Base/BaseModeOne");
+                                            break;
+                                        case 213:
+                                            LoadUrl("/Base/BaseModeOne");
+                                            break;
+                                        case 214:
+                                            LoadUrl("/Base/BaseModeOne");
+                                            break;
+                                    }
+                                });
+                            });
+                        </script>
                         <div id="VirtualOne" class="navControl" style="display:none;">
                             请选择：
-                            <select class="DropDownList BaseMode">
+                            <select class="DropDownList v1Mode">
                             <option value="211">默认参数非活塞驱油</option>
                             <option value="212">改变毛细管压力</option>
                             <option value="213">改变油水比重</option>
                             <option value="214">改变油水粘度</option>
                             </select>
-                            <button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button>
+                            <button id="v1Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                         </div> 
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $("#v2Main").change(function () {
+                                    $(".v2Mode").each(function (intdex, item) { $(item).css("display", "none"); });
+                                    if ($(this).val() == "221") {
+                                        $(".DropDownList.v2Mode").eq(0).css("display", "inline");
+                                    }
+                                    if ($(this).val() == "222") {
+                                        $(".DropDownList.v2Mode").eq(1).css("display", "inline");
+                                    }
+                                    if ($(this).val() == "223") {
+                                        $(".DropDownList.v2Mode").eq(2).css("display", "inline");
+                                    }
+                                });
+                                $("#v2Btn").click(function () {
+                                    var curIndex = parseInt($(".v2Mode:visible").val());
+                                    switch (curIndex) {
+                                        case 2211:
+                                            LoadUrl("/Base/BaseModeOne");
+                                            break;
+                                            LoadUrl("/Base/BaseModeOne");
+                                        case 2212:
+                                            LoadUrl("/Base/BaseModeOne");
+                                            break;
+                                        case 2213:
+                                            LoadUrl("/Base/BaseModeOne");
+                                            break;
+                                        case 2221:
+                                            LoadUrl("/Base/BaseModeOne");
+                                            break;
+                                        case 2222:
+                                            LoadUrl("/Base/BaseModeOne");
+                                            break;
+                                        case 2223:
+                                            LoadUrl("/Base/BaseModeOne");
+                                            break;
+                                        case 2231:
+                                            LoadUrl("/Base/BaseModeOne");
+                                            break;
+                                        case 2232:
+                                            LoadUrl("/Base/BaseModeOne");
+                                            break;
+                                        case 2233:
+                                            LoadUrl("/Base/BaseModeOne");
+                                            break;
+                                    }
+                                });
+                            });
+                            
+                        </script>
                         <div id="VirtualTwo" class="navControl" style="display:none;">
                             请选择：
-                            <select class="DropDownList">
+                            <select class="DropDownList" id="v2Main" style="display:inline;">
                             <option value="221">毛细管压力</option>
                             <option value="222">原油粘度级别</option>
                             <option value="223">原油密度级别</option>
                             </select>
-                            <select class="DropDownList">
+                            <select class="DropDownList v2Mode" style="display:inline;">
                             <option value="2211">无毛管</option>
                             <option value="2212">低毛管</option>
                             <option value="2213">高毛管</option>
                             </select>
-                            <select class="DropDownList" style="display:none;">
+                            <select class="DropDownList v2Mode" style="display:none;">
                             <option value="2221">低粘度0.5</option>
                             <option value="2222">中粘度5</option>
                             <option value="2223">高粘度50</option>
                             </select>
-                            <select class="DropDownList" style="display:none;">
+                            <select class="DropDownList v2Mode" style="display:none;">
                             <option value="2231">低密度0.7</option>
                             <option value="2232">中密度0.9</option>
                             <option value="2233">高密度1.15</option>
                             </select>
-                            <button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button>
+                            <button id="v2Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                         </div> 
+                        <script type="text/javascript">
+                            $(document).ready(function () {
+                                $("#v3Main").change(function () {
+                                    $(".v3Mode").each(function (intdex, item) { $(item).css("display", "none"); });
+                                    if ($(this).val() == "231") {
+                                        $(".DropDownList.v2Mode").eq(0).css("display", "inline");
+                                    }
+                                    if ($(this).val() == "232") {
+                                        $(".DropDownList.v2Mode").eq(1).css("display", "inline");
+                                    }
+                                    if ($(this).val() == "233") {
+                                        $(".DropDownList.v2Mode").eq(2).css("display", "inline");
+                                    }
+                                });
+                            });
+                        </script>
                         <div id="VirtualThree" class="navControl" style="display:none;">
                             请选择：
-                            <select class="DropDownList">
+                            <select class="DropDownList" id="v3Main">
                             <option value="231">束缚水饱和度</option>
                             <option value="232">残余油饱和度</option>
                             <option value="233">油水相渗曲线</option>
                             </select>
-                            <button class="ui-corner-all btnOK"><span class="ui-button-text">确 定</span></button>
+                            <button class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                         </div>
                         <!-- 仿真实训 -->
                     </div>
