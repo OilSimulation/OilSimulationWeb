@@ -41,7 +41,7 @@
 		                </ul>
                         <div class="zbar-title">创新实践</div> 
 		                <ul style="display: none"> 
-		                    <li class="liNav"><a href="javascript:void(0);ShowMode('#InnovateTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">油藏开发方案实践</span></a></li>
+		                    <li class="liNav"><a href="javascript:void(0);ShowMode('#InnovateOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">油藏开发方案实践</span></a></li>
 		                    <li class="liNav"><a href="javascript:void(0);ShowMode('#InnovateTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">气藏开发方案实践</span></a></li> 
 		                </ul>
 	                </div> 
