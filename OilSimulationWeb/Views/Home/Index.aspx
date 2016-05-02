@@ -149,9 +149,9 @@
                             请选择：
                             <select class="DropDownList v1Mode">
                             <option value="211">默认参数非活塞驱油</option>
-                            <option value="212">改变毛细管压力</option>
-                            <option value="213">改变油水比重</option>
-                            <option value="214">改变油水粘度</option>
+                            <option value="212">改变油水比重</option>
+                            <option value="213">改变油水粘度</option>
+                            <option value="214">改变毛细管压力</option>
                             </select>
                             <button id="v1Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                         </div> 
