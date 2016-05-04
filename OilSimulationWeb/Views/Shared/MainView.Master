@@ -31,7 +31,7 @@
         var myLoader; 
         var mesh;
         //播放速度 
-        var interval = 2000; 
+        var interval = 200; 
         var action;
 
         // once everything is loaded, we run our Three.js stuff.
@@ -102,6 +102,9 @@
 
             // add the output of the renderer to the html element
             document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
+
+            document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+
          
             // call the render function 
             var reload = true; 
@@ -269,6 +272,32 @@
             camera.updateProjectionMatrix();
             webGLRenderer.setSize(window.innerWidth, window.innerHeight);
         }
+
+        function onDocumentMouseDown( event ) {
+
+            return;
+	        event.preventDefault();
+
+	        mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+	        mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+
+	        raycaster.setFromCamera( mouse, camera );
+
+	        var intersects = raycaster.intersectObjects( objects );
+
+	        if ( intersects.length > 0 ) {
+
+		        intersects[ 0 ].object.material.color.setHex( Math.random() * 0xffffff );
+
+		        var particle = new THREE.Sprite( particleMaterial );
+		        particle.position.copy( intersects[ 0 ].point );
+		        particle.scale.x = particle.scale.y = 16;
+		        scene.add( particle );
+
+	        }
+
+        }
+
 
 
         window.onload = init;
