@@ -21,7 +21,7 @@
 {
     background:url(../Images/zbar-titbg.png) no-repeat; 
     width:184px;
-     height:54px; 
+    height:54px; 
     line-height:54px;
     font-family: "Microsoft YaHei", "微软雅黑", Arial; 
     font-size:18px;
@@ -37,6 +37,10 @@
 #LeftPanel .zbar ul li:hover a,#LeftPanel .zbar ul li.select a {color:#fcff00;text-decoration:none;}
 
 #RightPanl { float:right;width:791px; border:2px solid #6C6B6B; background-color:Black;}
+
+.ScreenNomal{ height: 600px; width: 100%; border:0;}
+
+.ScreenMax{ top:0; left: 0; border:0; position:absolute;}
 
 .clear { clear:both;}
 
