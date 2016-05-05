@@ -231,6 +231,19 @@
             $("#button_forward").click(function(){
                 $("#timeSelect").val( parseInt($("#timeSelect option:selected").val())+1 ).change();   
             }); 
+
+            $("#fullscreen").click(function (){
+                if($("#fullText").text()=="全屏显示")
+                {
+                    $("#fullText").text("退出全屏"); 
+                    parent.postMessage("ScreenMax()", "*");
+                }
+                else
+                {
+                    $("#fullText").text("全屏显示");
+                    parent.postMessage("ScreenNomal()", "*");
+                }
+            });
         } 
 
         function LoadWellData() {
@@ -361,7 +374,12 @@
 			</div> 
 		</div>
 	</div> 
-    
+
+    <span class="right color-gray">
+		<a id="fullscreen" href="javascript:void(0);">
+			<span id="fullText">全屏模式</span>
+		</a>
+	</span> 
 
     <div id="Stats-output">
     </div>

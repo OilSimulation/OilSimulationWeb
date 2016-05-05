@@ -494,7 +494,7 @@
                         </div>
                     </div>
                     <div>
-                        <iframe id="iframeId" name="iframeId" scrolling="no" style="height: 600px; width: 100%; border:0;" src=""></iframe>
+                        <iframe id="iframeId" name="iframeId" scrolling="no" class="ScreenNomal"  src=""></iframe>
                     </div> 
 
                 </div>

@@ -16,7 +16,10 @@
     <script type="text/javascript">
         var isLocalValid;
         var curWebRootUrl;
+        var isIframeMax;
         $(document).ready(function () {
+            //初始化Iframe窗口正常
+            isIframeMax = false;
             //判断本地是否可用
             IsLocalValid();
             //获取根目录
@@ -50,8 +53,14 @@
                 $("#divControl").children().each(function () { $(this).css("display", "none"); });
 
             });
+            //窗口大小变化
+            function onResize() {
+                if (isIframeMax == true) ScreenMax();
+            }
             //解决跨域HideLoading();
             window.addEventListener("message", function (event) { eval(event.data); });
+            // listen to the resize events
+            window.addEventListener('resize', onResize, false);
         });
         //导航点击对应控制栏的显示
         function ShowMode(modeCtrlId) {
@@ -60,7 +69,7 @@
         }
         //显示加载动画
         function ShowLoading() {
-            $("body").css({ overflow: "hidden" });
+            $("body").css({ "overflow": "hidden" });
             var target = $("#Index");
             target.loadingOverlay();
         }
@@ -69,8 +78,31 @@
             var target = $('#Index');
             if (target.hasClass('loading')) {
                 target.loadingOverlay('remove');
-                $("body").css({ overflow: "scroll" });
+                $("body").css({ "overflow": "auto" }); 
             }
+        }
+
+        //全屏
+        function ScreenMax() {
+            var scrInfo = getViewSizeWithScrollbar();
+            var scr_width = scrInfo.width;
+            var scr_height = scrInfo.height; 
+            $("#iframeId").removeClass("ScreenNomal");
+            $("#iframeId").addClass("ScreenMax");
+            $("#iframeId")[0].style.height = scr_height + "px";
+            $("#iframeId")[0].style.width = scr_width + "px";
+            $("body").css({ "overflow": "hidden" });
+           
+            isIframeMax = true; 
+        }
+
+        //退出全屏
+        function ScreenNomal() {
+            $("#iframeId").removeClass("ScreenMax");
+            $("#iframeId").css("height", "600px");
+            $("#iframeId").css("width", "100%");
+            isIframeMax = false;
+            $("body").css({ "overflow": "auto" }); 
         }
 
         //判断本地是否部署有环境
@@ -123,7 +155,26 @@
             }
             ShowLoading(); 
             $("#iframeId").attr("src", sUrl);
-        } 
+        }
+
+        function getViewSizeWithScrollbar() {//包含滚动条 
+            if (window.innerWidth) {
+                return {
+                    width: window.innerWidth,
+                    height: window.innerHeight
+                }
+            } else if (document.documentElement.offsetWidth == document.documentElement.clientWidth) {
+                return {
+                    width: document.documentElement.offsetWidth,
+                    height: document.documentElement.offsetHeight
+                }
+            } else {
+                return {
+                    width: document.documentElement.clientWidth + getScrollWith(),
+                    height: document.documentElement.clientHeight + getScrollWith()
+                }
+            }
+        }
     </script>
 </head>
 <body>

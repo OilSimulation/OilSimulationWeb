@@ -421,3 +421,30 @@ legend {
 .ui-dialog {
 	box-shadow: rgba(0, 0, 0, 0.498039) 10px 10px 10px;
 }
+
+.fa-arrows-alt:before{content:"\f0b2"}
+.fa
+{
+    display:inline-block;
+    font:normal normal normal 14px/1 FontAwesome;
+    font-size:inherit;
+    text-rendering:auto;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale
+}
+span.right 
+{ 
+    margin-right:0px;
+    right:0;
+    line-height:35px;
+    position:absolute;
+    color:#72b890;
+}
+span a{
+    padding: 1em 2em;
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+.color-gray {
+    background-color: #63687e;
+}
