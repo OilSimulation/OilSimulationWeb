@@ -233,14 +233,14 @@
             }); 
 
             $("#fullscreen").click(function (){
-                if($("#fullText").text()=="全屏显示")
+                if($("#fullText").text()=="全屏模式")
                 {
                     $("#fullText").text("退出全屏"); 
                     parent.postMessage("ScreenMax()", "*");
                 }
                 else
                 {
-                    $("#fullText").text("全屏显示");
+                    $("#fullText").text("全屏模式");
                     parent.postMessage("ScreenNomal()", "*");
                 }
             });
