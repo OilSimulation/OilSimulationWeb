@@ -66,9 +66,7 @@
   color: #fff;
    border: 1px solid gray;
 }
-.box:nth-child(even){
-  
-}
+
 
 .wrapper {
   border: 1px solid red;
