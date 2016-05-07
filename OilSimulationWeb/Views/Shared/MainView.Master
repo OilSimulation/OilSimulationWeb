@@ -121,8 +121,7 @@
                 stats.update(); 
                 if (reload) {
                     reload = false;
-                    LoadWebGLData(0); 
-                    //LoadWellData();
+                    LoadWebGLData(0);  
                 }
             
                 controls.update(); 
@@ -280,9 +279,7 @@
                     //loadedMesh.rotation.x = -0.3;
                     scene.add(mesh);
                 }
-            });
-
-            //scene.add(myLoader.AddWell(0,0,0,10));
+            }); 
         }
 
         function onResize() {
