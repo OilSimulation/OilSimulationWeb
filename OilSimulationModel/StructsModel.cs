@@ -9,6 +9,10 @@ using System.Threading;
 
 namespace OilSimulationModel
 {
+
+
+    
+
     /// <summary>
     /// RGB STRUCT
     /// </summary>
@@ -124,6 +128,24 @@ namespace OilSimulationModel
         public int Step { set; get; }
         public int iLoadFirst { set; get; } 
     }
+
+
+
+    public class PostDataWellPoint
+    {
+        /// <summary>
+        /// OIL:生产井,WATER:注水井
+        /// </summary>
+        public string Type { get; set; }
+        public List<Point> wellPoint;
+    }
+
+    public class Point
+    {
+        public string X { get; set; }
+        public string Y { get; set; }
+    }
+
 
     /// <summary>
     /// 线程结构

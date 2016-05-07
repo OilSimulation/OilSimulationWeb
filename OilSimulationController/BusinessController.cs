@@ -14,6 +14,14 @@ namespace OilSimulationController
 {
     public class BusinessController : Controller
     {
+
+        private  const string WELSPECS = "WELSPECS";
+        private  const string COMPDAT = "COMPDAT";
+        private  const string WCONPROD = "WCONPROD";
+        private  const string WCONINJE = "WCONINJE";
+
+
+
         private static string[] szDynamicPara = { "FIPOIL", "FIPWAT", "PRESSURE", "SWAT", "SOIL" };
         private static List<string> lstDynamicPara = new List<string>(szDynamicPara);
 
@@ -470,11 +478,177 @@ namespace OilSimulationController
             var res = new ConfigurableJsonResult();
             res.Data = stModeData; 
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+           
             return res;
         }
 
+        /// <summary>
+        /// 修改油井坐标
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UpdateWellPoint(List<PostDataWellPoint> data)
+        {
+            string strFilePath = @"E:\Code\OilSimulationWeb\OilSimulationWeb\DataModel\仿真实训\注采系统方案设计与开发效果预测\不同注采比\1\ZHUCAIBI1_SCH.INC";
+            if (ModelState.IsValid)
+            {
+
+            }
+            List<string> listData = CommonModel.ReadInfoFromFile(strFilePath);
+
+            int firstIndex = listData.IndexOf(WELSPECS);//第一个出现 WELSPECS标识索引
+            int index = firstIndex;
+            while (index >= 0)
+            {
+                //删除之前的生产井和注水井
+                listData.RemoveRange(index, 4);
+                index = listData.IndexOf(WELSPECS, index);
+            }
+
+            //增加生产井和注水井
+            for (int i=0;i<data.Count;i++)
+            {
+                if (data[i].Type=="OIL")
+                {
+                    for (int j = 0; j < data[i].wellPoint.Count; j++)
+                    {
+                        string str = "'PRO" + (j + 1) + "' 'P' " + data[i].wellPoint[j].X + " " + data[i].wellPoint[j].Y + " 'OIL' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /";
+                        listData.Insert(firstIndex++, WELSPECS);
+                        listData.Insert(firstIndex++, str);
+                        listData.Insert(firstIndex++, "/");
+                        listData.Insert(firstIndex++, " ");
+                        
+                    }
+
+                }
+                else if (data[i].Type=="WATER")
+                {
+                    for (int j = 0; j < data[i].wellPoint.Count; j++)
+                    {
+                        string str = "'INJ" + (j + 1) + "' 'P' " + data[i].wellPoint[j].X + " " + data[i].wellPoint[j].Y + " 'WATER' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /";
+                        listData.Insert(firstIndex++, WELSPECS);
+                        listData.Insert(firstIndex++, str);
+                        listData.Insert(firstIndex++, "/");
+                        listData.Insert(firstIndex++, " ");
+                        
+                    }
+
+                }
+            }
 
 
+            //删除之前的COMPDAT
+            firstIndex = listData.IndexOf(COMPDAT);
+            index = firstIndex;
+            while (index >= 0)
+            {
+                listData.RemoveRange(index, 4);
+                index = listData.IndexOf(COMPDAT, index);
+            }
+
+
+            //增加COMPDAT
+            for (int i = 0; i < data.Count; i++)
+            {
+                if (data[i].Type == "OIL")
+                {
+
+                    for (int j = 0; j < data[i].wellPoint.Count; j++)
+                    {
+                        string str = "'PRO" + (j + 1) + "' 2* 1 3 'OPEN' 2* 0.01 3* 'Z' 1* /";
+                        listData.Insert(firstIndex++, COMPDAT);
+                        listData.Insert(firstIndex++, str);
+                        listData.Insert(firstIndex++, "/");
+                        listData.Insert(firstIndex++, " ");
+
+                    }
+
+
+                }
+                else if (data[i].Type == "WATER")
+                {
+
+
+
+                    for (int j = 0; j < data[i].wellPoint.Count; j++)
+                    {
+                        string str = "'INJ" + (j + 1) + "' 2* 1 3 'OPEN' 2* 0.01 3* 'Z' 1* /";
+                        listData.Insert(firstIndex++, COMPDAT);
+                        listData.Insert(firstIndex++, str);
+                        listData.Insert(firstIndex++, "/");
+                        listData.Insert(firstIndex++, " ");
+
+                    }
+
+
+                }
+            }
+            //删除之前的WCONPROD
+            firstIndex = listData.IndexOf(WCONPROD);
+            index = firstIndex;
+            while (index >= 0)
+            {
+                listData.RemoveRange(index, 4);
+                index = listData.IndexOf(WCONPROD, index);
+            }
+            //增加WCONPROD
+            for (int i = 0; i < data.Count; i++)
+            {
+                if (data[i].Type == "OIL")
+                {
+
+                    for (int j = 0; j < data[i].wellPoint.Count; j++)
+                    {
+                        string str = "'PRO" + (j + 1) + "' 'OPEN' 'LRAT' 3* 100 1* 10 3* /";
+                        listData.Insert(firstIndex++, WCONPROD);
+                        listData.Insert(firstIndex++, str);
+                        listData.Insert(firstIndex++, "/");
+                        listData.Insert(firstIndex++, " ");
+
+                    }
+
+
+                }
+               
+            }
+
+            //删除之前的WCONINJE
+            firstIndex = listData.IndexOf(WCONINJE);
+            index = firstIndex;
+            while (index >= 0)
+            {
+                listData.RemoveRange(index, 4);
+                index = listData.IndexOf(WCONINJE, index);
+            }
+
+
+            //增加WCONINJE
+            for (int i = 0; i < data.Count; i++)
+            {
+                if (data[i].Type == "WATER")
+                {
+
+                    for (int j = 0; j < data[i].wellPoint.Count; j++)
+                    {
+                        string str = "'INJ" + (j + 1) + "' 'WATER' 'OPEN' 'RATE' 133 1* 400 3* /";
+                        listData.Insert(firstIndex++, WCONINJE);
+                        listData.Insert(firstIndex++, str);
+                        listData.Insert(firstIndex++, "/");
+                        listData.Insert(firstIndex++, " ");
+
+                    }
+                }
+            }
+
+            CommonModel.WriteInfoToFile(strFilePath, listData);
+
+
+            return 1;
+            //调用CMD.exe
+            //ExecBatCommand(s=>s())
+            
+        }
 
 
 
@@ -483,12 +657,12 @@ namespace OilSimulationController
         {
             List<WellData> listWellData = new List<WellData>();
             List<string> listData = CommonModel.ReadInfoFromFile(filePath);//获取井坐标文件数据
-            int wallIndex = listData.IndexOf("WELSPECS");//找到出现 WELSPECS 油井标识的行
+            int wallIndex = listData.IndexOf(WELSPECS);//找到出现 WELSPECS 油井标识的行
             while (wallIndex >= 0)
             {
 
                 listWellData.Add(ParseStrToWell(eModel,listData[wallIndex + 1]));
-                wallIndex = listData.IndexOf("WELSPECS", wallIndex + 1);
+                wallIndex = listData.IndexOf(WELSPECS, wallIndex + 1);
 
             }
 

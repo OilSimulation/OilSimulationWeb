@@ -39,7 +39,6 @@
 
         // once everything is loaded, we run our Three.js stuff.
         function init() {
-
             // 创建和设置渲染器
             webGLRenderer = new THREE.WebGLRenderer({ antialias: true });  //抗锯齿
             //webGLRenderer.setClearColor(new THREE.Color(0x666666, 1.0));
@@ -376,6 +375,9 @@
 			</div> 
 		</div>
 	</div> 
+
+
+
 
     <span class="right color-gray">
 		<a id="fullscreen" href="javascript:void(0);">

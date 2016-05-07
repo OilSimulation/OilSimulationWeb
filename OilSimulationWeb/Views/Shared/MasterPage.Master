@@ -176,21 +176,7 @@
             }
         }
 
-        function BoxClick(id) {
-        }
 
-        function CreateDiv() {
-            var div = document.getElementById('wrapper');
-
-            var divCol = "";
-            for (var i = 0; i < 100; i++) {
-                for (var j = 0; j < 100; j++) {
-
-                    divCol += '<div title="行' + (i + 1) + '列' + (j + 1) + '" class="box" id="id' + i + j + '"    onclick="BoxClick(\'id' + i + j + '\')" ></div>';
-                }
-            }
-            div.innerHTML = divCol;
-        }
     </script>
 </head>
 <body>
