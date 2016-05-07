@@ -115,6 +115,23 @@ namespace OilSimulationController
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
 
             return View();
+        }   
+        
+        /// <summary>
+        /// 自定义点
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SimMode3124()
+        {
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            string szGridFilePath = CommonModel.GetModeUriPath(3123);
+            PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
+
+            ViewData["DynamicProps"] = stPageParams.dynamicProps;
+            ViewData["TimeStep"] = stPageParams.timeSteps;
+            ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+
+            return View();
         }
 
         /// <summary>

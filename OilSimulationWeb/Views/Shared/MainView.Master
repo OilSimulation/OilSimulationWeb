@@ -20,7 +20,7 @@
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/TextGeometry.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/FontUtils.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/helvetiker_regular.typeface.js")%>"></script> 
-
+    		<script type="text/javascript src="<%=Url.Content("~/Scripts/libs/CanvasRenderer.js")%>"></script>
     
     <script type="text/javascript">
     
@@ -33,6 +33,9 @@
         //播放速度 
         var interval = 200; 
         var action;
+        var mouse;
+        var raycaster;
+        var scale = 0.1;
 
         // once everything is loaded, we run our Three.js stuff.
         function init() {
@@ -46,6 +49,8 @@
 
             // 创建场景, that will hold all our elements such as objects, cameras and lights.
             scene = new THREE.Scene();
+            raycaster = new THREE.Raycaster();
+			mouse = new THREE.Vector2();
 
             //var axes = new THREE.AxisHelper(5);
             //scene.add(axes);
@@ -90,7 +95,7 @@
 
             // 设置环境光源
             var ambi = new THREE.AmbientLight(0x33ccff);
-            scene.add(ambi);
+            //scene.add(ambi);
 
             // 设置聚光灯
             var spotLight = new THREE.DirectionalLight(0xffffff);
@@ -265,12 +270,11 @@
             var mIndex = $("#ModeIndex").val();  
             //组装JSON数据
             var jsonData = {Para:paramValue,Mode:mIndex,Step:timeValue,iLoadFirst:isFirstLoad}; 
-            
             myLoader.load(sUrl, JSON.stringify(jsonData) ,function (loadedMesh) {
                 if (isFirstLoad==0) { 
                     loadedMesh.children.forEach(function (child) { }); 
                     mesh = loadedMesh; 
-                    var scale = 0.1;
+                    
                     loadedMesh.scale.set(scale, scale, scale);
                     //loadedMesh.rotation.x = -0.3;
                     scene.add(mesh);
@@ -288,24 +292,24 @@
 
         function onDocumentMouseDown( event ) {
 
-            return;
+            
 	        event.preventDefault();
 
-	        mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-	        mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+	        mouse.x = ( event.clientX / webGLRenderer.domElement.clientWidth ) * 2 - 1;
+	        mouse.y = - ( event.clientY / webGLRenderer.domElement.clientHeight ) * 2 + 1;
 
 	        raycaster.setFromCamera( mouse, camera );
 
-	        var intersects = raycaster.intersectObjects( objects );
+	        var intersects = raycaster.intersectObjects( mesh.children );
 
 	        if ( intersects.length > 0 ) {
 
-		        intersects[ 0 ].object.material.color.setHex( Math.random() * 0xffffff );
 
-		        var particle = new THREE.Sprite( particleMaterial );
-		        particle.position.copy( intersects[ 0 ].point );
-		        particle.scale.x = particle.scale.y = 16;
-		        scene.add( particle );
+                var m = new THREE.MeshBasicMaterial({color:0xffff00,vertexColors:THREE.NoColors});
+
+                var f = myLoader.AddWell(intersects[ 0 ].point.x,intersects[ 0 ].point.y,intersects[ 0 ].point.z,10,0,0);
+                f.scale.set(scale,scale,scale);
+                //scene.add(f);
 
 	        }
 

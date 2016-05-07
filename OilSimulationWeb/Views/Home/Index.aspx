@@ -335,6 +335,9 @@
                                         case 3123:
                                             LoadUrl("/Simulation/SimMode3123");
                                             break;
+                                        case 3124:
+                                            LoadUrl("/Simulation/SimMode3124");
+                                            break;
                                     }
                                 });
                             });
@@ -355,6 +358,7 @@
                             <option value="3121">5点</option>
                             <option value="3122">7点</option>
                             <option value="3123">9点</option>
+                            <option value="3124">自定义点</option>
                             </select>
                             <button id="s1Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                         </div>

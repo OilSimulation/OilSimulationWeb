@@ -278,6 +278,7 @@
     <Content Include="Views\Simulation\SimMode3121.aspx" />
     <Content Include="Views\Simulation\SimMode3122.aspx" />
     <Content Include="Views\Simulation\SimMode3123.aspx" />
+    <Content Include="Views\Simulation\SimMode3124.aspx" />
     <Content Include="Views\Simulation\SimMode3211.aspx" />
     <Content Include="Views\Simulation\SimMode3212.aspx" />
     <Content Include="Views\Simulation\SimMode3213.aspx" />
