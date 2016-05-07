@@ -234,9 +234,10 @@
 
             //下一步按钮事件
             $("#button_forward").click(function(){
-                $("#timeSelect").val( parseInt($("#timeSelect option:selected").val())+1 ).change();   
+                $("#timeSelect").val( parseInt($("#timeSelect option:selected").val())+1 ).change();
             }); 
 
+            //绑定全屏模式点击响应函数
             $("#fullscreen").click(function (){
                 if($("#fullText").text()=="全屏模式")
                 {
@@ -249,16 +250,7 @@
                     parent.postMessage("ScreenNomal()", "*");
                 }
             });
-        } 
-
-        function LoadWellData() {
-            
-            var sUrl = "<%:Url.Action("GetWellPoint","Business") %>"; 
-            var jsonData = {Mode:modeIndex}; 
-            myLoader.LoadWell(sUrl,JSON.stringify(jsonData),scene);
-
-
-        }
+        }  
 
         //执行批处理命令
         function ExcutBatCommand()
