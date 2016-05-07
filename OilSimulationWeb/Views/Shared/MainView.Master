@@ -260,13 +260,22 @@
 
         }
 
+        //执行批处理命令
+        function ExcutBatCommand()
+        { 
+            var mIndex = $("#ModeIndex").val();  
+            $.post('<%:Url.Action("ExecBatCommand","Bussiness") %>' , { Mode: mIndex },
+                    function (data) { 
+                        LoadWebGLData(0);
+                    }); 
+        }
 
         //加载数据
         function LoadWebGLData(isFirstLoad) { 
             var paramValue = $("#paramSelect option:selected").text();
             var timeValue = $("#timeSelect option:selected").val();
             //固定获取DATA的URL
-            var sUrl = "<%:Url.Action("GetData","Business") %>";
+            var sUrl = '<%:Url.Action("GetData","Business") %>';
             var mIndex = $("#ModeIndex").val();  
             //组装JSON数据
             var jsonData = {Para:paramValue,Mode:mIndex,Step:timeValue,iLoadFirst:isFirstLoad}; 
