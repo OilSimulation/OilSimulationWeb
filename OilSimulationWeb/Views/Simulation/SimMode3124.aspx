@@ -8,62 +8,71 @@
 <script type="text/javascript">
     var wellType = 0; //0生产井red,1注水井blue
     var wellP = []; //生产井列表(X:Y)
-    var wellI = []; //注水井列表
-    function BoxClick(x, y) {
-        var box = document.getElementById('id' + x + y);
-        var point = {}; 
-        point.x = x;
-        point.y = y;
+    var wellI = []; //注水井列表 
+
+    function BoxClick(curItem) {
+        var item = $(curItem);
+        var row = item.attr("row");
+        var col = item.attr("col");
+        var point = {};
+        point.x = row;
+        point.y = col;
         if (wellType == 0) {
-            if (box.style.backgroundColor == '#ff0000') {
-                //取消该生产井
-                box.style.backgroundColor = '#ff00ff'; //默认颜色
-                wellP.remove(point); 
+            if (item.hasClass("red")) {
+                //取消该生产井 
+                item.removeClass("red");
+                wellP.remove(point);
             }
             else {
-                if (box.style.backgroundColor == '#0000ff') {
+                if (item.hasClass("blue")) {
                     //取消注水井
                     wellI.remove(point);
                 }
-                //增加生产井
-                box.style.backgroundColor = '#ff0000'; //生产井颜色
+                //增加生产井 
+                item.removeClass("blue");
+                item.addClass("red");
                 wellP.push(point);
             }
         }
         else {
 
-            if (box.style.backgroundColor == '#0000ff') {
-                //取消该注水井
-                box.style.backgroundColor = '#ff00ff'; //默认颜色
+            if (item.hasClass("blue")) {
+                //取消该注水井 
+                item.removeClass("blue");
                 wellI.remove(point);
             }
             else {
-                if (box.style.backgroundColor == '#ff0000') {
+                if (item.hasClass("red")) {
                     //取消注水井生产井
                     wellP.remove(point);
                 }
-                //增加注水井
-                box.style.backgroundColor = '#0000ff'; //注水井颜色
+                //增加注水井 
+                item.removeClass("red");
+                item.addClass("blue");
                 wellI.push(point);
             }
 
         }
 
-
-        //box.style.backgroundColor = '#ff0000';
     }
 
-    function CreateDiv() {
-        var div = document.getElementById('wrapper');
-
+    function CreateDiv(row,col) {
+        var divWrapper = $("#wrapper");
+        divWrapper.html("");
         var divCol = "";
-        for (var i = 0; i < 100; i++) {
-            for (var j = 0; j < 100; j++) {
-
-                divCol += '<div title="行' + (i + 1) + '列' + (j + 1) + '" class="box" id="id' + i + j + '"    onclick="BoxClick(' + i + ',' + j + ')" ></div>';
+        for (var i = 0; i < row; i++) {
+            for (var j = 0; j < col; j++) { 
+                var div = $("<div></div>").appendTo(divWrapper);
+                div.attr("title", "行" + (i + 1) + "列" + (j + 1)); 
+                div.attr("row",  i);
+                div.attr("col",  j);
+                div.addClass("box");
+                div.css("width","5px");
+                div.css("height", "5px");
+                div.click(function () { BoxClick(this); }); 
             }
         }
-        div.innerHTML = divCol;
+        //divWrapper.html(divCol);
     }
     //0生产井,1注水井
     function SetWellType(type) {
@@ -93,9 +102,9 @@
             success: function (result) { ExcutBatCommand(); }
         };
         $.ajax(option);
-           
+
     }
-    window.onload = CreateDiv;
+    $(document).ready(function () { CreateDiv(100,100);}); 
 </script>
     <input id="ModeIndex" type="hidden" value="3124" />
     <table border="1" style="text-align:center;color:White" cellspacing="0" cellpadding="0" width="150" >

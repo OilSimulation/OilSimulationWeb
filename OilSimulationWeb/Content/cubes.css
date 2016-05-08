@@ -449,22 +449,16 @@ span a{
     background-color: #63687e;
 }
 
-.box {
-  background: #ff00ff;
-  height: 5px;
-  line-height: 5px;
-  text-align: center;
-  color: #fff;
-   border: 1px solid gray;
+.box  	
+{
+    background-color:#ff4499;
+    background: #ff9999 ;
+	border-top:1px outset gray; 
+	border-left:1px outset gray;  
+	float:left; 
 }
 
-
-.wrapper {
-  border: 1px solid red;
-  padding: 5px;
-  margin: 20px auto;
-
-  display: grid;
-  grid-template-columns: repeat(100,5px);
-  grid-template-rows: repeat(100, 5px);
-}
+.red{background-color:#ff0000;}
+.blue{background-color:#0000ff;}
+			
+#wrapper { background: #ff9999;height:600px;width:600px;margin:auto;}
