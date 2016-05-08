@@ -455,10 +455,10 @@ span a{
     background: #ff9999 ;
 	border-top:1px outset gray; 
 	border-left:1px outset gray;  
-	float:left; 
+	float:left;   
 }
 
 .red{background-color:#ff0000;}
 .blue{background-color:#0000ff;}
 			
-#wrapper { background: #ff9999;height:600px;width:600px;margin:auto;}
+#wrapper { background: #ff9999;height:600px;width:600px;margin:auto;border:1px outset gray;}
