@@ -312,7 +312,7 @@
                                     }
                                     if ($(this).val() == "312") {
                                         $(".DropDownList.s1Mode").eq(1).css("display", "inline");
-                                    } 
+                                    }
                                 });
                                 $("#s1Btn").click(function () {
                                     var curIndex = parseInt($(".s1Mode:visible").val());
@@ -336,7 +336,9 @@
                                             LoadUrl("/Simulation/SimMode3123");
                                             break;
                                         case 3124:
-                                            LoadUrl("/Simulation/SimMode3124");
+                                            //LoadUrl("/Simulation/SimMode3124");
+                                            CreateDiv();
+                                            $("#btnShow3124").click();
                                             break;
                                     }
                                 });
@@ -361,6 +363,7 @@
                             <option value="3124">自定义点</option>
                             </select>
                             <button id="s1Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
+                            <input id="btnShow3124"  type="hidden" />
                         </div>
                         <script type="text/javascript">
                             $(document).ready(function () {

@@ -13,6 +13,7 @@
     <link href="<%=Url.Content("~/Content/jquery-ui-1.10.2.custom.css")%>" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/jquery-1.4.1.min.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/loading-overlay.min.js")%>"></script>
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/popup_layer.js")%>"></script>
     <script type="text/javascript">
         var isLocalValid;
         var curWebRootUrl;
@@ -53,6 +54,32 @@
                 $("#divControl").children().each(function () { $(this).css("display", "none"); });
 
             });
+
+            var t9 = new PopupLayer({ trigger: "#btnShow3124", popupBlk: "#div3124", closeBtn: "#closeBtn3124", useOverlay: true, useFx: true,
+				    offsets:{
+					    x:0,
+					    y:-41
+				    }
+			    });
+			    t9.doEffects = function(way){
+				    if(way == "open"){
+					    this.popupLayer.css({opacity:0.3}).show(400,function(){
+						    this.popupLayer.animate({
+							    left:($(document).width() - this.popupLayer.width())/2,
+							    top:(document.documentElement.clientHeight - this.popupLayer.height())/2 + $(document).scrollTop(),
+							    opacity:0.8
+						    },1000,function(){this.popupLayer.css("opacity",1)}.binding(this));
+					    }.binding(this));
+				    }
+				    else{
+					    this.popupLayer.animate({
+						    left:this.trigger.offset().left,
+						    top:this.trigger.offset().top,
+						    opacity:0.1
+					    },{duration:500,complete:function(){this.popupLayer.css("opacity",1);this.popupLayer.hide()}.binding(this)});
+				    }
+			    } 
+
             //窗口大小变化
             function onResize() {
                 if (isIframeMax == true) ScreenMax();
@@ -156,8 +183,8 @@
             //ShowLoading(); 
             $("#iframeId").attr("src", sUrl);
         }
-
-        function getViewSizeWithScrollbar() {//包含滚动条 
+        //获取包含滚动条的高度和宽度 
+        function getViewSizeWithScrollbar() {
             if (window.innerWidth) {
                 return {
                     width: window.innerWidth,
@@ -176,6 +203,21 @@
             }
         }
 
+        function CreateDiv() {
+            var div = document.getElementById('wrapper');
+
+            var divCol = "";
+            for (var i = 0; i < 100; i++) {
+                for (var j = 0; j < 100; j++) {
+
+                    divCol += '<div title="行' + (i + 1) + '列' + (j + 1) + '" class="box" id="id' + i + j + '"    onclick="BoxClick(' + i + ',' + j + ')" ></div>';
+                }
+            }
+            div.innerHTML = divCol;
+        }
+
+        function UpdateWellPoint() {
+        }
 
     </script>
 </head>
@@ -187,6 +229,17 @@
 		    <span class="loading-text">loading</span>
 	    </p>
 	    </div>
+        <div id="div3124" class="blk" style="display:none;"> 
+        <div class="head"><div class="head-right"></div></div>
+            <table border="1" style="text-align:center;color:White" cellspacing="0" cellpadding="0" width="150" >
+	        <tr>
+		        <td style="background-color:Red" onclick="SetWellType(0)">生产井</td><td style="background-color:Blue" onclick="SetWellType(1)">注水井</td>
+                <td><button id="closeBtn3124" onclick="UpdateWellPoint()">确定</button></td>
+	        </tr>
+            </table>
+            <div id="wrapper" class="wrapper"> </div>
+            <div class="foot"><div class="foot-right"></div></div>
+        </div>
         <asp:ContentPlaceHolder ID="MainContent" runat="server">
         
         </asp:ContentPlaceHolder>
