@@ -124,7 +124,7 @@ namespace OilSimulationController
         public ActionResult SimMode3124()
         {
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
-            string szGridFilePath = CommonModel.GetModeUriPath(3123);
+            string szGridFilePath = CommonModel.GetModeUriPath(3124);
             PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
 
             ViewData["DynamicProps"] = stPageParams.dynamicProps;

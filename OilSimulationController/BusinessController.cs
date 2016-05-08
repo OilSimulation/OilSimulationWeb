@@ -480,7 +480,8 @@ namespace OilSimulationController
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
            
             return res;
-        }
+        } 
+
 
         /// <summary>
         /// 修改油井坐标
@@ -488,13 +489,20 @@ namespace OilSimulationController
         /// <param name="data"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult UpdateWellPoint(List<PostDataWellPoint> data)
+        public ActionResult UpdateWellPoint(PostDataWellPoint data)
         {
-            string strFilePath = @"E:\Code\OilSimulationWeb\OilSimulationWeb\DataModel\仿真实训\注采系统方案设计与开发效果预测\不同注采比\1\ZHUCAIBI1_SCH.INC";
+            int iModel = 0;
+
             if (ModelState.IsValid)
             {
-
+                iModel = data.modelId;
             }
+            //Grid文件
+            string eGridFile = CommonModel.GetModeUriPath(iModel);
+            //油井文件
+            string strFilePath = eGridFile.Substring(0, eGridFile.IndexOf("_E")) + "_sch.INC";
+
+
             List<string> listData = CommonModel.ReadInfoFromFile(strFilePath);
 
             int firstIndex = listData.IndexOf(WELSPECS);//第一个出现 WELSPECS标识索引
@@ -506,36 +514,27 @@ namespace OilSimulationController
                 index = listData.IndexOf(WELSPECS, index);
             }
 
-            //增加生产井和注水井
-            for (int i=0;i<data.Count;i++)
+            //增加生产井
+            for (int i = 0; i < data.P.Count; i++)
             {
-                if (data[i].Type=="OIL")
-                {
-                    for (int j = 0; j < data[i].wellPoint.Count; j++)
-                    {
-                        string str = "'PRO" + (j + 1) + "' 'P' " + data[i].wellPoint[j].X + " " + data[i].wellPoint[j].Y + " 'OIL' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /";
-                        listData.Insert(firstIndex++, WELSPECS);
-                        listData.Insert(firstIndex++, str);
-                        listData.Insert(firstIndex++, "/");
-                        listData.Insert(firstIndex++, " ");
-                        
-                    }
 
-                }
-                else if (data[i].Type=="WATER")
-                {
-                    for (int j = 0; j < data[i].wellPoint.Count; j++)
-                    {
-                        string str = "'INJ" + (j + 1) + "' 'P' " + data[i].wellPoint[j].X + " " + data[i].wellPoint[j].Y + " 'WATER' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /";
-                        listData.Insert(firstIndex++, WELSPECS);
-                        listData.Insert(firstIndex++, str);
-                        listData.Insert(firstIndex++, "/");
-                        listData.Insert(firstIndex++, " ");
-                        
-                    }
-
-                }
+                string str = "'PRO" + (i + 1) + "' 'P' " + data.I[i].x + " " + data.I[i].y + " 'OIL' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /";
+                listData.Insert(firstIndex++, WELSPECS);
+                listData.Insert(firstIndex++, str);
+                listData.Insert(firstIndex++, "/");
+                listData.Insert(firstIndex++, " ");
             }
+            //增加注水井
+            for (int i = 0; i < data.I.Count; i++)
+            {
+
+                string str = "'INJ" + (i + 1) + "' 'P' " + data.I[i].x + " " + data.I[i].y + " 'WATER' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /";
+                listData.Insert(firstIndex++, WELSPECS);
+                listData.Insert(firstIndex++, str);
+                listData.Insert(firstIndex++, "/");
+                listData.Insert(firstIndex++, " ");
+            }
+
 
 
             //删除之前的COMPDAT
@@ -549,41 +548,28 @@ namespace OilSimulationController
 
 
             //增加COMPDAT
-            for (int i = 0; i < data.Count; i++)
+            for (int i = 0; i < data.P.Count; i++)
             {
-                if (data[i].Type == "OIL")
-                {
 
-                    for (int j = 0; j < data[i].wellPoint.Count; j++)
-                    {
-                        string str = "'PRO" + (j + 1) + "' 2* 1 3 'OPEN' 2* 0.01 3* 'Z' 1* /";
-                        listData.Insert(firstIndex++, COMPDAT);
-                        listData.Insert(firstIndex++, str);
-                        listData.Insert(firstIndex++, "/");
-                        listData.Insert(firstIndex++, " ");
+                string str = "'PRO" + (i + 1) + "' 2* 1 3 'OPEN' 2* 0.01 3* 'Z' 1* /";
+                listData.Insert(firstIndex++, COMPDAT);
+                listData.Insert(firstIndex++, str);
+                listData.Insert(firstIndex++, "/");
+                listData.Insert(firstIndex++, " ");
 
-                    }
-
-
-                }
-                else if (data[i].Type == "WATER")
-                {
-
-
-
-                    for (int j = 0; j < data[i].wellPoint.Count; j++)
-                    {
-                        string str = "'INJ" + (j + 1) + "' 2* 1 3 'OPEN' 2* 0.01 3* 'Z' 1* /";
-                        listData.Insert(firstIndex++, COMPDAT);
-                        listData.Insert(firstIndex++, str);
-                        listData.Insert(firstIndex++, "/");
-                        listData.Insert(firstIndex++, " ");
-
-                    }
-
-
-                }
             }
+            //COMPDAT
+            for (int i = 0; i < data.I.Count; i++)
+            {
+                string str2 = "'INJ" + (i + 1) + "' 2* 1 3 'OPEN' 2* 0.01 3* 'Z' 1* /";
+                listData.Insert(firstIndex++, COMPDAT);
+                listData.Insert(firstIndex++, str2);
+                listData.Insert(firstIndex++, "/");
+                listData.Insert(firstIndex++, " ");
+            }
+
+
+
             //删除之前的WCONPROD
             firstIndex = listData.IndexOf(WCONPROD);
             index = firstIndex;
@@ -593,24 +579,15 @@ namespace OilSimulationController
                 index = listData.IndexOf(WCONPROD, index);
             }
             //增加WCONPROD
-            for (int i = 0; i < data.Count; i++)
+            for (int i = 0; i < data.P.Count; i++)
             {
-                if (data[i].Type == "OIL")
-                {
 
-                    for (int j = 0; j < data[i].wellPoint.Count; j++)
-                    {
-                        string str = "'PRO" + (j + 1) + "' 'OPEN' 'LRAT' 3* 100 1* 10 3* /";
-                        listData.Insert(firstIndex++, WCONPROD);
-                        listData.Insert(firstIndex++, str);
-                        listData.Insert(firstIndex++, "/");
-                        listData.Insert(firstIndex++, " ");
+                string str = "'PRO" + (i + 1) + "' 'OPEN' 'LRAT' 3* 100 1* 10 3* /";
+                listData.Insert(firstIndex++, WCONPROD);
+                listData.Insert(firstIndex++, str);
+                listData.Insert(firstIndex++, "/");
+                listData.Insert(firstIndex++, " ");
 
-                    }
-
-
-                }
-               
             }
 
             //删除之前的WCONINJE
@@ -624,30 +601,22 @@ namespace OilSimulationController
 
 
             //增加WCONINJE
-            for (int i = 0; i < data.Count; i++)
+            for (int i = 0; i < data.I.Count; i++)
             {
-                if (data[i].Type == "WATER")
-                {
 
-                    for (int j = 0; j < data[i].wellPoint.Count; j++)
-                    {
-                        string str = "'INJ" + (j + 1) + "' 'WATER' 'OPEN' 'RATE' 133 1* 400 3* /";
-                        listData.Insert(firstIndex++, WCONINJE);
-                        listData.Insert(firstIndex++, str);
-                        listData.Insert(firstIndex++, "/");
-                        listData.Insert(firstIndex++, " ");
+                string str = "'INJ" + (i + 1) + "' 'WATER' 'OPEN' 'RATE' 133 1* 400 3* /";
+                listData.Insert(firstIndex++, WCONINJE);
+                listData.Insert(firstIndex++, str);
+                listData.Insert(firstIndex++, "/");
+                listData.Insert(firstIndex++, " ");
 
-                    }
-                }
             }
 
             CommonModel.WriteInfoToFile(strFilePath, listData);
 
 
-            return 1;
-            //调用CMD.exe
-            //ExecBatCommand(s=>s())
-            
+            return new JsonResult();
+
         }
 
 

@@ -253,8 +253,8 @@
         //执行批处理命令
         function ExcutBatCommand()
         { 
-            var mIndex = $("#ModeIndex").val();  
-            $.post('<%:Url.Action("ExecBatCommand","Bussiness") %>' , { Mode: mIndex },
+            var mIndex = $("#ModeIndex").val();
+            $.post('<%:Url.Action("ExecBatCommand","Business") %>', { Mode: mIndex },
                     function (data) { 
                         LoadWebGLData(0);
                     }); 
@@ -314,7 +314,7 @@
 
 
 
-        window.onload = init;
+        //window.onload = init;
         // listen to the resize events
         window.addEventListener('resize', onResize, false);
         //解决跨域HideLoading();

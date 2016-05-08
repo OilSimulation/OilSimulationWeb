@@ -58,22 +58,3 @@
     color: #6C6B6B;
 }
 
-.box {
-  background: #ff00ff;
-  height: 5px;
-  line-height: 5px;
-  text-align: center;
-  color: #fff;
-   border: 1px solid gray;
-}
-
-
-.wrapper {
-  border: 1px solid red;
-  padding: 5px;
-  margin: 20px auto;
-
-  display: grid;
-  grid-template-columns: repeat(100,5px);
-  grid-template-rows: repeat(100, 5px);
-}

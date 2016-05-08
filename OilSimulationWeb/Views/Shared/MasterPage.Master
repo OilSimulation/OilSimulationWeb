@@ -153,7 +153,7 @@
 
                 sUrl = curWebRootUrl + inUrl; 
             }
-            ShowLoading(); 
+            //ShowLoading(); 
             $("#iframeId").attr("src", sUrl);
         }
 

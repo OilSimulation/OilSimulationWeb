@@ -133,19 +133,22 @@ namespace OilSimulationModel
 
     public class PostDataWellPoint
     {
+        public int modelId{ set; get; }
         /// <summary>
-        /// OIL:生产井,WATER:注水井
+        /// 生产井
         /// </summary>
-        public string Type { get; set; }
-        public List<Point> wellPoint;
+        public List<WellPoint> P { set; get; } 
+        /// <summary>
+        /// 注水井
+        /// </summary>
+        public List<WellPoint> I { set; get; }
     }
 
-    public class Point
+    public struct WellPoint
     {
-        public string X { get; set; }
-        public string Y { get; set; }
+        public string x { set; get; }
+        public string y { set; get; }
     }
-
 
     /// <summary>
     /// 线程结构
