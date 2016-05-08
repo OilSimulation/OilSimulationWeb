@@ -20,7 +20,7 @@
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/TextGeometry.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/FontUtils.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/helvetiker_regular.typeface.js")%>"></script> 
-    		<script type="text/javascript src="<%=Url.Content("~/Scripts/libs/CanvasRenderer.js")%>"></script>
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/CanvasRenderer.js")%>"></script>
     
     <script type="text/javascript">
     
