@@ -180,7 +180,7 @@
 
                 sUrl = curWebRootUrl + inUrl; 
             }
-            //ShowLoading(); 
+            ShowLoading(); 
             $("#iframeId").attr("src", sUrl);
         }
         //获取包含滚动条的高度和宽度 
@@ -224,10 +224,10 @@
 <body>
     <div id="Index">
         <div class="loading-overlay">
-	    <p class="loading-spinner">
-		    <span class="loading-icon"></span>
-		    <span class="loading-text">loading</span>
-	    </p>
+	        <p class="loading-spinner">
+		        <span class="loading-icon"></span>
+		        <span class="loading-text">loading</span>
+	        </p>
 	    </div>
         <div id="div3124" class="blk" style="display:none;"> 
         <div class="head"><div class="head-right"></div></div>
