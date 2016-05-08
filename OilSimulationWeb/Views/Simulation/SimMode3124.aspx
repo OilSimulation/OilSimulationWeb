@@ -11,9 +11,7 @@
     var wellI = []; //注水井列表
     function BoxClick(x, y) {
         var box = document.getElementById('id' + x + y);
-        var point = {};
-        //point.push(x);
-        //point.push(y); 
+        var point = {}; 
         point.x = x;
         point.y = y;
         if (wellType == 0) {
@@ -73,6 +71,7 @@
     }
     //修改油坐标
     function UpdateWellPoint() {
+//        //简单JSON结构传值
 //        $.post('<%:Url.Action("UpdateWellPoint2","Business") %>', { Mode: 1 },
 //                    function (data) {
 //                       //ExcutBatCommand();
@@ -84,21 +83,17 @@
         jsonData.modelId = 3124;
         jsonData.P = wellP;
         jsonData.I = wellI;
-
-        //var mIndex = $("#ModeIndex").val();
-        //$.post(url:'<%:Url.Action("UpdateWellPoint","Business") %>', JSON.stringify(jsonData),
-        //            function (data) {
-        //                ExcutBatCommand();
-        //            }); 
-           var option = {
-                url: '<%:Url.Action("UpdateWellPoint","Business") %>',
-                type: 'POST',
-                data:JSON.stringify(jsonData),
-                dataType: 'html',
-                contentType: 'application/json',
-                success: function (result) { alert(result); }
-                }; 
-            $.ajax(option);
+        //复杂结构JSON传值方法
+        var option = {
+            url: '<%:Url.Action("UpdateWellPoint","Business") %>',
+            type: 'POST',
+            data: JSON.stringify(jsonData),
+            dataType: 'html',
+            contentType: 'application/json',
+            success: function (result) { ExcutBatCommand(); }
+        };
+        $.ajax(option);
+           
     }
     window.onload = CreateDiv;
 </script>
