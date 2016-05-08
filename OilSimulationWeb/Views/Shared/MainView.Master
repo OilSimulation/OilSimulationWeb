@@ -314,7 +314,7 @@
 
 
 
-        window.onload = init;
+        //window.onload = init;
         // listen to the resize events
         window.addEventListener('resize', onResize, false);
         //解决跨域HideLoading();

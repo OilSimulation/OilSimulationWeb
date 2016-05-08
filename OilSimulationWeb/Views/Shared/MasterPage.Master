@@ -180,7 +180,7 @@
 
                 sUrl = curWebRootUrl + inUrl; 
             }
-            ShowLoading(); 
+            //ShowLoading(); 
             $("#iframeId").attr("src", sUrl);
         }
         //获取包含滚动条的高度和宽度 
@@ -216,7 +216,8 @@
             div.innerHTML = divCol;
         }
 
-        function UpdateWellPoint() {
+        function UpdateWellPoint() { 
+            LoadUrl("/Simulation/SimMode3124");
         }
 
     </script>

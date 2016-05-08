@@ -336,9 +336,9 @@
                                             LoadUrl("/Simulation/SimMode3123");
                                             break;
                                         case 3124:
-                                            //LoadUrl("/Simulation/SimMode3124");
-                                            CreateDiv();
-                                            $("#btnShow3124").click();
+                                            LoadUrl("/Simulation/SimMode3124");
+                                            //CreateDiv();
+                                            //$("#btnShow3124").click();
                                             break;
                                     }
                                 });

@@ -12,6 +12,8 @@
     function BoxClick(x, y) {
         var box = document.getElementById('id' + x + y);
         var point = {};
+        //point.push(x);
+        //point.push(y); 
         point.x = x;
         point.y = y;
         if (wellType == 0) {
@@ -84,10 +86,19 @@
         jsonData.I = wellI;
 
         //var mIndex = $("#ModeIndex").val();
-        $.post('<%:Url.Action("UpdateWellPoint","Business") %>', jsonData,
-                    function (data) {
-                        ExcutBatCommand();
-                    }); 
+        //$.post(url:'<%:Url.Action("UpdateWellPoint","Business") %>', JSON.stringify(jsonData),
+        //            function (data) {
+        //                ExcutBatCommand();
+        //            }); 
+           var option = {
+                url: '<%:Url.Action("UpdateWellPoint","Business") %>',
+                type: 'POST',
+                data:JSON.stringify(jsonData),
+                dataType: 'html',
+                contentType: 'application/json',
+                success: function (result) { alert(result); }
+                }; 
+            $.ajax(option);
     }
     window.onload = CreateDiv;
 </script>
