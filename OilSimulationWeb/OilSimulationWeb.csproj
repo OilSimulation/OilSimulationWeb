@@ -248,6 +248,7 @@
     <Content Include="Scripts\libs\WebGLDeferredRenderer.js" />
     <Content Include="Scripts\Loader.js" />
     <Content Include="Scripts\loading-overlay.min.js" />
+    <Content Include="Scripts\popup_layer.js" />
     <Content Include="Scripts\renderers\CanvasRenderer.js" />
     <Content Include="Scripts\renderers\CSS2DRenderer.js" />
     <Content Include="Scripts\renderers\CSS3DRenderer.js" />
