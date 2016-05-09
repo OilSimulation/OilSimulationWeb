@@ -58,18 +58,15 @@
 
     function CreateGrid(row,col) {
         var divWrapper = $("#wrapper");
-        divWrapper.css("width", col * (5 + 1) + "px");
-        divWrapper.css("height", row * (5 + 1) + "px");
+        divWrapper.css("width", 1 + col * (5 + 1) + "px");
+        divWrapper.css("height", 1+ row * (5 + 1) + "px");
         divWrapper.html("");
         var tab = $("<table></table>").appendTo(divWrapper);
-        tab.css("table-layout", "fixed");
-        tab.css("border-bottom", "1px solid gray"); ;
-        tab.css("border-right", "1px solid gray"); ;
-        tab.css("cellspacing", "0"); 
-        tab.css("cellpadding", "0");
-        tab.css("border-spacing", "0");
-        tab.css("border-collapse", "collapse"); 
-        //tab.css("width", "100%");
+        tab.addClass("tab"); 
+        tab.attr("cellspacing", "0");
+        tab.attr("cellpadding", "0");
+        tab.attr("rowspacing", "0");
+        tab.attr("rowpadding", "0"); 
         for (var i = 0; i < row; i++) {
             var tr = $("<tr></tr>").appendTo(tab);
             for (var j = 0; j < col; j++) { 
@@ -77,9 +74,7 @@
                 td.attr("title", "行" + (i + 1) + "列" + (j + 1));
                 td.attr("row", i);
                 td.attr("col", j);
-                td.addClass("td");
-                td.css("width", "5px");
-                td.css("height", "5px");
+                td.addClass("td"); 
                 td.click(function () { BoxClick(this); });
             }
         }

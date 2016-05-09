@@ -457,7 +457,13 @@ span a{
 	border-left:1px outset gray;  
 	float:left;   
 }
-
+.tab { 
+    table-layout:fixed ; 
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray; 
+    border-collapse:collapse;
+    border-spacing:0;
+}
 .td {
     height:5px;
     width:5px;
