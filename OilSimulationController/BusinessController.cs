@@ -48,15 +48,15 @@ namespace OilSimulationController
             {
                 iModel = inputData.Mode; 
             }
-            string szEgridPath = CommonModel.GetModeUriPath(iModel); 
-            string targetDir = szEgridPath.Substring(0, szEgridPath.LastIndexOf("\\"));
+            string szEgridPath = CommonModel.GetModeUriPath(iModel);
+            string targetDir = szEgridPath.Substring(0, szEgridPath.LastIndexOf("\\") + 1);
             try
             {
                 System.Diagnostics.Process myProcess = new System.Diagnostics.Process();
                 myProcess.StartInfo.UseShellExecute = false;
                 myProcess.StartInfo.CreateNoWindow = true;
-                myProcess.StartInfo.WorkingDirectory = targetDir;
-                myProcess.StartInfo.FileName = "RUN.BAT";
+                //myProcess.StartInfo.WorkingDirectory = targetDir;
+                myProcess.StartInfo.FileName = targetDir+"RUN.BAT";
                 myProcess.Start();
                 myProcess.WaitForExit();
             }
@@ -505,10 +505,23 @@ namespace OilSimulationController
 
             List<string> listData = CommonModel.ReadInfoFromFile(strFilePath);
 
+
+            //List<string> listWELSPECS = new List<string>();
+            List<string> listOIL = new List<string>();
+            List<string> listWATER = new List<string>();
             int firstIndex = listData.IndexOf(WELSPECS);//第一个出现 WELSPECS标识索引
             int index = firstIndex;
             while (index >= 0)
             {
+                if (listData[index+1].Contains("OIL"))
+                {
+                    listOIL.Add(listData[index + 1]);
+                }
+                else
+                {
+                    listWATER.Add(listData[index + 1]);
+                }
+                
                 //删除之前的生产井和注水井
                 listData.RemoveRange(index, 4);
                 index = listData.IndexOf(WELSPECS, index);
@@ -517,8 +530,18 @@ namespace OilSimulationController
             //增加生产井
             for (int i = 0; i < data.P.Count; i++)
             {
+                //string str = "'PRO" + (i + 1) + "' 'P' " + data.P[i].x + " " + data.P[i].y + " 'OIL' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /";
+                string str = "'PRO" + (i + 1) + "' 'P' " + data.P[i].x + " " + data.P[i].y+" 1* ";
 
-                string str = "'PRO" + (i + 1) + "' 'P' " + data.P[i].x + " " + data.P[i].y + " 'OIL' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /";
+                if (i<listOIL.Count)
+                {
+                    str += listOIL[i].Substring(listOIL[i].IndexOf("'OIL'"), listOIL[i].Length - listOIL[i].IndexOf("'OIL'"));
+                }
+                else
+                {
+                    str += listOIL[listOIL.Count - 1].Substring(listOIL[listOIL.Count - 1].IndexOf("'OIL'"), listOIL[listOIL.Count - 1].Length - listOIL[listOIL.Count - 1].IndexOf("'OIL'"));
+
+                }
                 listData.Insert(firstIndex++, WELSPECS);
                 listData.Insert(firstIndex++, str);
                 listData.Insert(firstIndex++, "/");
@@ -528,7 +551,21 @@ namespace OilSimulationController
             for (int i = 0; i < data.I.Count; i++)
             {
 
-                string str = "'INJ" + (i + 1) + "' 'P' " + data.I[i].x + " " + data.I[i].y + " 'WATER' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /";
+                //string str = "'INJ" + (i + 1) + "' 'P' " + data.I[i].x + " " + data.I[i].y + " 'WATER' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /";
+                string str = "'INJ" + (i + 1) + "' 'P' " + data.I[i].x + " " + data.I[i].y;
+                int indexWater = 0;
+                if (i < listWATER.Count)
+                {
+                    indexWater =listWATER[i].IndexOf("'WATER'");
+                    str += listWATER[i].Substring(indexWater, listWATER[i].Length - indexWater);
+                }
+                else
+                {
+                    indexWater = listWATER[listWATER.Count - 1].IndexOf("'WATER'");
+                    str += listWATER[listWATER.Count - 1].Substring(indexWater, listWATER[listWATER.Count - 1].Length - indexWater);
+
+                }
+
                 listData.Insert(firstIndex++, WELSPECS);
                 listData.Insert(firstIndex++, str);
                 listData.Insert(firstIndex++, "/");
@@ -536,12 +573,13 @@ namespace OilSimulationController
             }
 
 
-
+            //List<string> listCOMPDAT = new List<string>();
             //删除之前的COMPDAT
             firstIndex = listData.IndexOf(COMPDAT);
             index = firstIndex;
             while (index >= 0)
             {
+                //listCOMPDAT.Add(listData[index + 1]);
                 listData.RemoveRange(index, 4);
                 index = listData.IndexOf(COMPDAT, index);
             }
@@ -590,21 +628,35 @@ namespace OilSimulationController
 
             }
 
+
+            List<string> listWCONINJE = new List<string>();
             //删除之前的WCONINJE
             firstIndex = listData.IndexOf(WCONINJE);
             index = firstIndex;
             while (index >= 0)
             {
+                listWCONINJE.Add(listData[index + 1]);
                 listData.RemoveRange(index, 4);
                 index = listData.IndexOf(WCONINJE, index);
             }
 
-
+            int indexWCONINJE = 0;
             //增加WCONINJE
             for (int i = 0; i < data.I.Count; i++)
             {
-
-                string str = "'INJ" + (i + 1) + "' 'WATER' 'OPEN' 'RATE' 133 1* 400 3* /";
+                //string str = "'INJ" + (i + 1) + "' 'WATER' 'OPEN' 'RATE' 133 1* 400 3* /";
+                string str = "'INJ" + (i + 1)+" ";
+                
+                if (i<listWCONINJE.Count)
+                {
+                    indexWCONINJE = listWCONINJE[i].IndexOf("'WATER'");
+                    str += listWCONINJE[i].Substring(indexWCONINJE, listWCONINJE[i].Length - indexWCONINJE);
+                }
+                else 
+                {
+                    indexWCONINJE = listWCONINJE[listWCONINJE.Count - 1].IndexOf("'WATER'");
+                    str += listWCONINJE[listWCONINJE.Count - 1].Substring(indexWCONINJE, listWCONINJE[listWCONINJE.Count - 1].Length - indexWCONINJE);
+                }
                 listData.Insert(firstIndex++, WCONINJE);
                 listData.Insert(firstIndex++, str);
                 listData.Insert(firstIndex++, "/");

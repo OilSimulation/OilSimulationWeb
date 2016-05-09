@@ -101,6 +101,17 @@
     //0生产井,1注水井
     function SetWellType(type) {
         wellType = type;
+        if (type == 0) {
+            $("#PWell").css("color", "black");
+            $("#IWell").css("color", "white");
+
+        }
+        else {
+            $("#PWell").css("color", "white");
+            $("#IWell").css("color", "black");
+
+        }
+
     }
     //修改油坐标
     function UpdateWellPoint() {
@@ -133,7 +144,7 @@
     <input id="ModeIndex" type="hidden" value="3124" />
     <table border="1" style="text-align:center;color:White" cellspacing="0" cellpadding="0" width="150" >
 	<tr>
-		<td style="background-color:Red" onclick="SetWellType(0)">生产井</td><td style="background-color:Blue" onclick="SetWellType(1)">注水井</td>
+		<td id="PWell" style="background-color:Red" onclick="SetWellType(0)">生产井</td><td id="IWell" style="background-color:Blue" onclick="SetWellType(1)">注水井</td>
         <td><button onclick="UpdateWellPoint()">确定</button></td>
 	</tr>
     </table>
