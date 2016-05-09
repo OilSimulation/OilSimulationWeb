@@ -139,14 +139,20 @@
         $.ajax(option);
 
     }
-    $(document).ready(function () { CreateGrid(100, 100); }); 
+    $(document).ready(function () {
+        CreateGrid(100, 100);
+        $("#wrapper").addClass("ShowGrid");
+        parent.postMessage("HideLoading()", "*");
+    }); 
 </script>
     <input id="ModeIndex" type="hidden" value="3124" />
+    <div id="controls_container_top">
     <table border="1" style="text-align:center;color:White" cellspacing="0" cellpadding="0" width="150" >
 	<tr>
 		<td id="PWell" style="background-color:Red" onclick="SetWellType(0)">生产井</td><td id="IWell" style="background-color:Blue" onclick="SetWellType(1)">注水井</td>
         <td><button onclick="UpdateWellPoint()">确定</button></td>
 	</tr>
     </table>
+    </div> 
     <div id="wrapper" class="wrapper"> </div>
 </asp:Content>

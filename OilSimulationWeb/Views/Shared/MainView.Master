@@ -39,6 +39,12 @@
 
         // once everything is loaded, we run our Three.js stuff.
         function init() {
+
+            $("#Stats-output").addClass("hidden");
+            $("#fullSpan").addClass("hidden");
+            $("#controls_container_r").addClass("hidden");
+            $("#controls_container_r").removeClass("blockLine"); 
+
             // 创建和设置渲染器
             webGLRenderer = new THREE.WebGLRenderer({ antialias: true });  //抗锯齿
             //webGLRenderer.setClearColor(new THREE.Color(0x666666, 1.0));
@@ -120,6 +126,8 @@
                 stats.update(); 
                 if (reload) {
                     reload = false;
+                    var iModeIndex = parseInt($("#ModeIndex").val());
+                    if (iModeIndex == 3124) return;
                     LoadWebGLData(0);  
                 }
             
@@ -277,6 +285,11 @@
                     loadedMesh.scale.set(scale, scale, scale);
                     //loadedMesh.rotation.x = -0.3;
                     scene.add(mesh);
+
+                    $("#Stats-output").removeClass("hidden");
+                    $("#fullSpan").removeClass("hidden");
+                    $("#controls_container_r").removeClass("hidden"); 
+                    $("#controls_container_r").addClass("blockLine"); 
                 }
             }); 
         }
@@ -310,11 +323,8 @@
 
 	        }
 
-        }
-
-
-
-        //window.onload = init;
+        } 
+        window.onload = init;
         // listen to the resize events
         window.addEventListener('resize', onResize, false);
         //解决跨域HideLoading();
@@ -322,7 +332,7 @@
     </script>
 </head>
 <body>
-    <div id="controls_container_r" style="display: inline-block; ">
+    <div id="controls_container_r" class="hidden">
 		<div id="controls_innercontainer">  
 			<div class="controls">
 				<legend>操作面板</legend>
@@ -376,16 +386,13 @@
 		</div>
 	</div> 
 
-
-
-
-    <span class="right color-gray">
+    <span id = "fullSpan" class="right color-gray hidden">
 		<a id="fullscreen" href="javascript:void(0);">
 			<span id="fullText">全屏模式</span>
 		</a>
 	</span> 
 
-    <div id="Stats-output">
+    <div id="Stats-output" class="hidden" >
     </div>
     <!-- Div which will hold the Output -->
     <div id="WebGL-output">

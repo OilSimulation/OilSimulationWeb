@@ -41,8 +41,7 @@ body {
 }
 		
 #controls_container_l
-{
-	display:none;
+{ 
 	position:absolute;
 	width:260px;
 	left:0px;
@@ -50,8 +49,7 @@ body {
 }
 
 #controls_container_r
-{
-	display:none;
+{ 
 	position:absolute;
 	z-index:99999;
 	width:260px;
@@ -59,12 +57,11 @@ body {
 	bottom:10px;
 }		
 #controls_container_top
-{
-    display:none;
+{ 
     position:absolute;
     z-index:99999;
-    width:500px;
-    left:100px;
+    width:260px;
+    left:5px;
     top:10px;
 
 }
@@ -477,3 +474,7 @@ span a{
 .blue{background-color:#0000ff;}
 			
 #wrapper { background: #ff9999;margin:auto;border:1px outset gray;}
+
+.hidden{display:none;}
+.blockLine{display:inline-block;}
+.ShowGrid{position:absolute;z-index:99999;left:150px;top:0;}

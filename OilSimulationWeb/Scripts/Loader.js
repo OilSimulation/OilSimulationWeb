@@ -21,13 +21,12 @@ THREE.MyLoader.prototype = {
         loader.load(url, pData, function (text) {
             if (geometry == undefined) {
                 //onLoad(scope.LoadBufferGeometryMode(text)); 
-                onLoad(scope.LoadMode(text));
-                //parent.HideLoading();
+                onLoad(scope.LoadMode(text)); 
                 parent.postMessage("HideLoading()", "*");
             }
             else
-                //onLoad(scope.ChangeBufferGeometryColor(text));
-                onLoad(scope.ChangeColor(pData,text));
+            //onLoad(scope.ChangeBufferGeometryColor(text));
+                onLoad(scope.ChangeColor(pData, text));
         }, function () {
             onProgress;
             //if (geometry == undefined)
@@ -53,7 +52,7 @@ THREE.MyLoader.prototype = {
 
 
 
-    ChangeColor: function (data,text) {
+    ChangeColor: function (data, text) {
         var jsonData = JSON.parse(text);
         modelJsonData = jsonData;
         var info, color;
