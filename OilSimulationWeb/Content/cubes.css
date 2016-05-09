@@ -458,7 +458,16 @@ span a{
 	float:left;   
 }
 
+.td {
+    height:5px;
+    width:5px;
+    table-layout:fixed ;
+    text-align: center;
+    border-top: 1px solid gray;
+    border-left: 1px solid gray;
+}
+
 .red{background-color:#ff0000;}
 .blue{background-color:#0000ff;}
 			
-#wrapper { background: #ff9999;height:600px;width:600px;margin:auto;border:1px outset gray;}
+#wrapper { background: #ff9999;margin:auto;border:1px outset gray;}

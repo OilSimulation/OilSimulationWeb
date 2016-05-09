@@ -518,7 +518,7 @@ namespace OilSimulationController
             for (int i = 0; i < data.P.Count; i++)
             {
 
-                string str = "'PRO" + (i + 1) + "' 'P' " + data.I[i].x + " " + data.I[i].y + " 'OIL' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /";
+                string str = "'PRO" + (i + 1) + "' 'P' " + data.P[i].x + " " + data.P[i].y + " 'OIL' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /";
                 listData.Insert(firstIndex++, WELSPECS);
                 listData.Insert(firstIndex++, str);
                 listData.Insert(firstIndex++, "/");
