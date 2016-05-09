@@ -66,15 +66,15 @@
         tab.attr("cellspacing", "0");
         tab.attr("cellpadding", "0");
         tab.attr("rowspacing", "0");
-        tab.attr("rowpadding", "0"); 
-        for (var i = 0; i < row; i++) {
+        tab.attr("rowpadding", "0");
+        for (var i = row - 1; i >= 0; i--) {
             var tr = $("<tr></tr>").appendTo(tab);
-            for (var j = 0; j < col; j++) { 
+            for (var j = 0; j < col; j++) {
                 var td = $("<td></td>").appendTo(tr);
                 td.attr("title", "行" + (i + 1) + "列" + (j + 1));
                 td.attr("row", i);
                 td.attr("col", j);
-                td.addClass("td"); 
+                td.addClass("td");
                 td.click(function () { BoxClick(this); });
             }
         }
@@ -84,16 +84,16 @@
         var divWrapper = $("#wrapper");
         divWrapper.html("");
         var divCol = "";
-        for (var i = 0; i < row; i++) {
-            for (var j = 0; j < col; j++) { 
+        for (var i = row - 1; i >= 0; i--) {
+            for (var j = 0; j < col; j++) {
                 var div = $("<div></div>").appendTo(divWrapper);
-                div.attr("title", "行" + (i + 1) + "列" + (j + 1)); 
-                div.attr("row",  i);
-                div.attr("col",  j);
+                div.attr("title", "行" + (i + 1) + "列" + (j + 1));
+                div.attr("row", i);
+                div.attr("col", j);
                 div.addClass("box");
-                div.css("width","5px");
+                div.css("width", "5px");
                 div.css("height", "5px");
-                div.click(function () { BoxClick(this); }); 
+                div.click(function () { BoxClick(this); });
             }
         }
         //divWrapper.html(divCol);

@@ -113,7 +113,7 @@
             // add the output of the renderer to the html element
             document.getElementById("WebGL-output").appendChild(webGLRenderer.domElement);
 
-            document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+            //document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 
          
             // call the render function 
@@ -127,8 +127,8 @@
                 if (reload) {
                     reload = false;
                     var iModeIndex = parseInt($("#ModeIndex").val());
-                    if (iModeIndex == 3124) return;
-                    LoadWebGLData(0);  
+                    if (iModeIndex != 3124)
+                        LoadWebGLData(0);  
                 }
             
                 controls.update(); 

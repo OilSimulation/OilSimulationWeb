@@ -531,7 +531,7 @@ namespace OilSimulationController
             for (int i = 0; i < data.P.Count; i++)
             {
                 //string str = "'PRO" + (i + 1) + "' 'P' " + data.P[i].x + " " + data.P[i].y + " 'OIL' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /";
-                string str = "'PRO" + (i + 1) + "' 'P' " + data.P[i].x + " " + data.P[i].y+" 1* ";
+                string str = "'PRO" + (i + 1) + "' 'P' " + data.P[i].y + " " + data.P[i].x+" 1* ";
 
                 if (i<listOIL.Count)
                 {
@@ -552,7 +552,7 @@ namespace OilSimulationController
             {
 
                 //string str = "'INJ" + (i + 1) + "' 'P' " + data.I[i].x + " " + data.I[i].y + " 'WATER' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /";
-                string str = "'INJ" + (i + 1) + "' 'P' " + data.I[i].x + " " + data.I[i].y;
+                string str = "'INJ" + (i + 1) + "' 'P' " + data.I[i].y + " " + data.I[i].x + " 1* ";
                 int indexWater = 0;
                 if (i < listWATER.Count)
                 {
@@ -645,7 +645,7 @@ namespace OilSimulationController
             for (int i = 0; i < data.I.Count; i++)
             {
                 //string str = "'INJ" + (i + 1) + "' 'WATER' 'OPEN' 'RATE' 133 1* 400 3* /";
-                string str = "'INJ" + (i + 1)+" ";
+                string str = "'INJ" + (i + 1)+"' ";
                 
                 if (i<listWCONINJE.Count)
                 {
