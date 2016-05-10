@@ -77,21 +77,7 @@
             }
         }
     }
-     
-    //0生产井,1注水井
-    function SetWellType(type) {
-        wellType = type;
-        if (type == 0) {
-            $("#PWell").css("color", "black");
-            $("#IWell").css("color", "white");
-
-        }
-        else {
-            $("#PWell").css("color", "white");
-            $("#IWell").css("color", "black"); 
-        }
-
-    }
+      
     //修改油坐标
     function UpdateWellPoint() {
         parent.postMessage("ShowLoading()", "*");
@@ -117,16 +103,48 @@
         CreateGrid(100, 100);
         $("#wrapper").addClass("ShowGrid");
         parent.postMessage("HideLoading()", "*");
+        $(".ui-helper-hidden-accessible").change(function () {
+            var $selectedID = $("input[name='transition']:checked").attr("id");
+            if ($selectedID == "transition_0") {
+                wellType = 0;
+                $("label[for='transition_0']").addClass("ui-state-active").attr("aria-pressed", "true");
+                $("label[for='transition_2']").removeClass("ui-state-active").attr("aria-pressed", "false");
+            }
+            else if ($selectedID == "transition_2") {
+                wellType = 1;
+                $("label[for='transition_0']").removeClass("ui-state-active").attr("aria-pressed", "false");
+                $("label[for='transition_2']").addClass("ui-state-active").attr("aria-pressed", "true");
+            }
+        });
+        //重新计算模型
+        $("#edit_rules_button").click(function () { UpdateWellPoint(); });
     }); 
 </script>
     <input id="ModeIndex" type="hidden" value="3124" />
     <div id="controls_container_top">
-    <table border="1" style="text-align:center;color:White" cellspacing="0" cellpadding="0" width="150" >
-	<tr>
-		<td id="PWell" style="background-color:Red" onclick="SetWellType(0)">生产井</td><td id="IWell" style="background-color:Blue" onclick="SetWellType(1)">注水井</td>
-        <td><button onclick="UpdateWellPoint()">确定</button></td>
-	</tr>
-    </table>
+		<div id="controls_innercontainer"> 
+            <div class="controls">
+		        <legend>设置面板</legend> 
+		        <ul>
+                    <li> 
+						<div class="control">
+							<span id="transition" class="ui-buttonset">
+							<input type="radio" id="transition_0" name="transition" checked="checked" class="ui-helper-hidden-accessible" /><label for="transition_0" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-left ui-state-active" role="button" aria-disabled="false" aria-pressed="true"><span class="ui-button-text">油井</span></label>
+							<!--input type="radio" id="transition_1" name="transition" /><label for="transition_1">Fade</label-->
+							<input type="radio" id="transition_2" name="transition" class="ui-helper-hidden-accessible" /><label for="transition_2" class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-right" role="button" aria-disabled="false" aria-pressed="false"><span class="ui-button-text">水井</span></label>
+							</span>
+						</div>
+					</li>
+                    <li></li>
+                    <li>
+                        <div class="control">
+							<button id="edit_rules_button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">计算模型</span></button>
+					    </div>
+                    </li> 
+                    <li></li> 
+		        </ul>
+	        </div>
+        </div> 
     </div> 
     <div id="wrapper" class="wrapper"> </div>
 </asp:Content>

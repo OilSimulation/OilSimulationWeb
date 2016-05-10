@@ -71,11 +71,7 @@
 .wrapper {
   border: 1px solid red;
   padding: 5px;
-  margin: 20px auto;
-
-  display: grid;
-  grid-template-columns: repeat(100,5px);
-  grid-template-rows: repeat(100, 5px);
+  margin: 20px auto; 
 }
 
 .blk{width:500px;position:relative;border-left:2px solid #85B6E2;border-right:2px solid #85B6E2;position:relative;background:#fff;}
