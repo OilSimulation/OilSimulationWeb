@@ -117,11 +117,16 @@
             }
         });
         //重新计算模型
-        $("#edit_rules_button").click(function () { UpdateWellPoint(); });
+        $("#edit_rules_button").click(function () {
+            $("#controls_container_top").addClass("hidden");
+            $("#controls_container_top").removeClass("blockLine");
+            $("#wrapper").addClass("hidden");
+            UpdateWellPoint();
+        });
     }); 
 </script>
     <input id="ModeIndex" type="hidden" value="3124" />
-    <div id="controls_container_top">
+    <div id="controls_container_top" class="blockLine">
 		<div id="controls_innercontainer"> 
             <div class="controls">
 		        <legend>设置面板</legend> 
