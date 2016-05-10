@@ -326,6 +326,9 @@
                                         case 3113:
                                             LoadUrl("/Simulation/SimMode3113");
                                             break;
+                                        case 3114:
+                                            LoadUrl("/Simulation/SimMode3114");
+                                            break;
                                         case 3121:
                                             LoadUrl("/Simulation/SimMode3121");
                                             break;
@@ -355,6 +358,7 @@
                             <option value="3111">200</option>
                             <option value="3112">300</option>
                             <option value="3113">500</option>
+                            <option value="3114">自定义井距</option>
                             </select>
                             <select class="DropDownList s1Mode" style="display:none;">
                             <option value="3121">5点</option>
@@ -362,6 +366,7 @@
                             <option value="3123">9点</option>
                             <option value="3124">自定义点</option>
                             </select>
+                            <input type="text" id="txtWell" ></input>
                             <button id="s1Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                             <input id="btnShow3124"  type="hidden" />
                         </div>

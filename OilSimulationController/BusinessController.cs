@@ -762,6 +762,64 @@ namespace OilSimulationController
             return listResult;
         }
 
+        /// <summary>
+        /// 修改井距离
+        /// </summary>
+        /// <param name="distance">距离</param>
+        /// <param name="gridWidth">网格距离宽度(两个小方格之间的实际距离)</param>
+        private int GetWellDistanceCount(int distance,int gridWidth)
+        {
+            if (distance<gridWidth)
+            {
+                return -1;
+            }
+
+            return distance / gridWidth;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x">x方向网格数(如100)</param>
+        /// <param name="y">y方向网格数(如100)</param>
+        /// <param name="width">井间网格宽度</param>
+        /// <param name="Oil">生产井列表</param>
+        /// <param name="Water">注水井列表</param>
+        private void BuildOilWaterPoint(int x, int y, int width, out List<Point> Oil, out List<Point> Water)
+        {
+            Oil = new List<Point>();
+            Water = new List<Point>();
+
+            if (x <= 1 || y <= 1 || width <= 0 || width > x || width > y)
+            {
+                return;
+            }
+            int xCount = x / width - 1;
+            int yCount = y / width - 1;
+
+            for (int i = 0; i <= xCount; i++)
+            {
+                for (int j = 0; j <= yCount; j++)
+                {
+                    Point pOil = new Point();
+                    pOil.X = i * width + 1;
+                    pOil.Y = j * width + 1;
+                    if (pOil.X <= x && pOil.Y <= y)
+                    {
+                        Oil.Add(pOil);
+                    }
+
+                    Point pWater = new Point();
+                    pWater.X = i * width + 1 + width / 2;
+                    pWater.Y = j * width + 1 + width / 2;
+                    if (pWater.X <= x && pWater.Y <= y)
+                    {
+                        Water.Add(pWater);
+                    }
+                }
+            }
+        }
+
 
         /// <summary>
         /// 

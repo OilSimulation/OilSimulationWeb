@@ -147,6 +147,9 @@ namespace OilSimulationModel
                 case 3113:
                     szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/500/JINGJU500_E100.EGRID");
                     break;
+                case 3114:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/自定义/JINGJU500_E100.EGRID");
+                    break;
                 case 3121:
                     szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井网/五点/WUDIAN_E100.EGRID");
                     break;
