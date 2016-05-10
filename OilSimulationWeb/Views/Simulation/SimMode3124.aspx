@@ -1,8 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/MainView.Master" Inherits="System.Web.Mvc.ViewPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
     SimMode3124
-
-    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <script type="text/javascript">
@@ -55,7 +53,7 @@
         }
 
     }
-
+    //创建网格
     function CreateGrid(row,col) {
         var divWrapper = $("#wrapper");
         divWrapper.css("width", 1 + col * (5 + 1) + "px");
@@ -79,25 +77,7 @@
             }
         }
     }
-
-    function CreateDiv(row,col) {
-        var divWrapper = $("#wrapper");
-        divWrapper.html("");
-        var divCol = "";
-        for (var i = row - 1; i >= 0; i--) {
-            for (var j = 0; j < col; j++) {
-                var div = $("<div></div>").appendTo(divWrapper);
-                div.attr("title", "行" + (i + 1) + "列" + (j + 1));
-                div.attr("row", i);
-                div.attr("col", j);
-                div.addClass("box");
-                div.css("width", "5px");
-                div.css("height", "5px");
-                div.click(function () { BoxClick(this); });
-            }
-        }
-        //divWrapper.html(divCol);
-    }
+     
     //0生产井,1注水井
     function SetWellType(type) {
         wellType = type;
@@ -108,20 +88,13 @@
         }
         else {
             $("#PWell").css("color", "white");
-            $("#IWell").css("color", "black");
-
+            $("#IWell").css("color", "black"); 
         }
 
     }
     //修改油坐标
-    function UpdateWellPoint() {
-//        //简单JSON结构传值
-//        $.post('<%:Url.Action("UpdateWellPoint2","Business") %>', { Mode: 1 },
-//                    function (data) {
-//                       //ExcutBatCommand();
-//                    }); 
-//                    return;
-        
+    function UpdateWellPoint() 
+    { 
         //构造JSON
         var jsonData = {};
         jsonData.modelId = 3124;
@@ -139,6 +112,7 @@
         $.ajax(option);
 
     }
+    //初始化
     $(document).ready(function () {
         CreateGrid(100, 100);
         $("#wrapper").addClass("ShowGrid");

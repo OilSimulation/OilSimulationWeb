@@ -460,6 +460,8 @@ span a{
     border-bottom: 1px solid gray; 
     border-collapse:collapse;
     border-spacing:0;
+    height:600px;
+    width:600px;
 }
 .td {
     height:5px;
@@ -473,7 +475,7 @@ span a{
 .red{background-color:#ff0000;}
 .blue{background-color:#0000ff;}
 			
-#wrapper { background: #ff9999;margin:auto;border:1px outset gray;}
+#wrapper { background: #ff9999;margin:auto;/*border:1px outset gray;*/}
 
 .hidden{display:none;}
 .blockLine{display:inline-block;}
