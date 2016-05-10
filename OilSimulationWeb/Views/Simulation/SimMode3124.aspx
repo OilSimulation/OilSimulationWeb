@@ -93,8 +93,8 @@
 
     }
     //修改油坐标
-    function UpdateWellPoint() 
-    { 
+    function UpdateWellPoint() {
+        parent.postMessage("ShowLoading()", "*");
         //构造JSON
         var jsonData = {};
         jsonData.modelId = 3124;
