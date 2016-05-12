@@ -20,7 +20,12 @@
         $.ajax(option);
 
     }
+    $(document).ready(function () {
+        $("#wellDist").unbind('click').click(function () {
+            UpdateWellDist();
+        });
+    });
 </script>
     <input id="ModeIndex" type="hidden" value="3114" />
-    <input id="wellDist" type="hidden" ondbclick="UpdateWellDist()" value="" />
+    <input id="wellDist" type="hidden" value="" />
 </asp:Content>

@@ -834,8 +834,10 @@ namespace OilSimulationController
             {
                 return;
             }
-            int xCount = x / dxCount - 1;
-            int yCount = y / dyCount - 1;
+            //int xCount = x / dxCount - 1;
+            //int yCount = y / dyCount - 1;
+            int xCount = x / dxCount;
+            int yCount = y / dyCount;
 
             for (int i = 0; i <= xCount; i++)
             {

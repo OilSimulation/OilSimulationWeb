@@ -332,7 +332,7 @@
                                                 $("#iframeId").load(function () {
                                                     var iDist = $("#txtWell").val();
                                                     $("#iframeId")[0].contentWindow.postMessage("$('#wellDist').val(" + iDist + ")", "*");
-                                                    $("#iframeId")[0].contentWindow.postMessage("$('#wellDist').dbclick()", "*");
+                                                    $("#iframeId")[0].contentWindow.postMessage("$('#wellDist').click()", "*");
                                                 });
                                             }
                                             break;
