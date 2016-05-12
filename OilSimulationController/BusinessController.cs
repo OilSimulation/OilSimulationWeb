@@ -844,6 +844,7 @@ namespace OilSimulationController
                 for (int j = 0; j <= yCount; j++)
                 {
                     WellPoint pOil = new WellPoint();
+                    //pOil.x = i * dxCount; 
                     pOil.x = i * dxCount + 1;
                     pOil.y = j * dyCount + 1;
                     if (pOil.x <= x && pOil.y <= y)
@@ -852,8 +853,10 @@ namespace OilSimulationController
                     }
 
                     WellPoint pWater = new WellPoint();
+                    //pWater.x = i * dxCount + dxCount / 2; 
                     pWater.x = i * dxCount + 1 + dxCount / 2;
-                    pWater.y = j * dyCount + 1 + dyCount / 2;
+                    //pWater.y = j * dyCount + 1 + dyCount / 2;
+                    pWater.y = j * dyCount  + dyCount / 2;
                     if (pWater.x <= x && pWater.y <= y)
                     {
                         Water.Add(pWater);
