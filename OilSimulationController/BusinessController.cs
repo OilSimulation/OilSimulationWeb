@@ -49,14 +49,15 @@ namespace OilSimulationController
                 iModel = inputData.Mode; 
             }
             string szEgridPath = CommonModel.GetModeUriPath(iModel);
-            string targetDir = szEgridPath.Substring(0, szEgridPath.LastIndexOf("\\") + 1);
+            string targetDir = System.IO.Path.GetDirectoryName(szEgridPath);
+            //string targetDir = szEgridPath.Substring(0, szEgridPath.LastIndexOf("\\") + 1);
             try
             {
                 System.Diagnostics.Process myProcess = new System.Diagnostics.Process();
                 myProcess.StartInfo.UseShellExecute = false;
                 myProcess.StartInfo.CreateNoWindow = true;
-                //myProcess.StartInfo.WorkingDirectory = targetDir;
-                myProcess.StartInfo.FileName = targetDir+"RUN.BAT";
+                myProcess.StartInfo.WorkingDirectory = targetDir;
+                myProcess.StartInfo.FileName = targetDir+"\\RUN.BAT";
                 myProcess.Start();
                 myProcess.WaitForExit();
             }
