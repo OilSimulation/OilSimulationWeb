@@ -329,7 +329,7 @@
                                         case 3114:
                                             {
                                                 LoadUrl("/Simulation/SimMode3114");
-                                                $("#iframeId").load(function () {
+                                                $("#iframeId").unbind("load").load(function () {
                                                     var iDist = $("#txtWell").val();
                                                     $("#iframeId")[0].contentWindow.postMessage("$('#wellDist').val(" + iDist + ")", "*");
                                                     $("#iframeId")[0].contentWindow.postMessage("$('#wellDist').click()", "*");
