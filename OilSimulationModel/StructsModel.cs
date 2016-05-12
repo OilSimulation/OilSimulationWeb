@@ -130,6 +130,27 @@ namespace OilSimulationModel
     }
 
 
+    public class Box
+    {
+        /// <summary>
+        /// X方向实际宽度
+        /// </summary>
+        public int DxWidth;
+        /// <summary>
+        /// Y方向实际宽度
+        /// </summary>
+        public int DyWidth;
+        /// <summary>
+        /// X方向个数
+        /// </summary>
+        public int BoxXCount;
+        /// <summary>
+        /// Y方向个数
+        /// </summary>
+        public int BoxYCount;
+    }
+
+
 
     public class PostDataWellPoint
     {

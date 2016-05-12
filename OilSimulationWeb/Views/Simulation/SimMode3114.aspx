@@ -3,5 +3,24 @@
     SimMode3114
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<script type="text/javascript" >
+    function UpdateWellDist() {
+        var wellDist = $("#wellDist").val();
+        var jsonData = {};
+        jsonData.Mode = 3114;
+        jsonData.Step = wellDist; //距离
+        var option = {
+            url: '<%:Url.Action("UpdateWellDistance","Business") %>',
+            type: 'POST',
+            data: JSON.stringify(jsonData),
+            dataType: 'html',
+            contentType: 'application/json',
+            success: function (result) { ExcutBatCommand(); }
+        };
+        $.ajax(option);
+
+    }
+</script>
     <input id="ModeIndex" type="hidden" value="3114" />
+    <input id="wellDist" type="hidden" ondbclick="UpdateWellDist()" value="" />
 </asp:Content>

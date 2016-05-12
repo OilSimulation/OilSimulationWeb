@@ -480,7 +480,45 @@ namespace OilSimulationController
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
            
             return res;
-        } 
+        }
+
+
+        /// <summary>
+        /// 修改井距离
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UpdateWellDistance(PostData data)
+        {
+            int iModel = 0;
+
+            if (ModelState.IsValid)
+            {
+                iModel = data.Mode;
+            }
+            string szEgridPath = CommonModel.GetModeUriPath(iModel);
+            //DX,DY
+            string strFilePath = szEgridPath.Substring(0, szEgridPath.IndexOf("_E")) + "_GGO.INC";
+            //小方格X方向距离，Y方向距离
+            Box box = GetDXDY(strFilePath);
+            Point pXY = GetWellDistanceCount(data.Step, box.DxWidth,box.DyWidth);
+            List<WellPoint> listOil = new List<WellPoint>();
+            List<WellPoint> listWater = new List<WellPoint>();
+            BuildOilWaterPoint(box.BoxXCount, box.BoxYCount, pXY.X, pXY.Y, out listOil, out listWater);
+
+            PostDataWellPoint wellPoint = new PostDataWellPoint();
+            wellPoint.modelId = iModel;
+            wellPoint.P = new List<WellPoint>();
+            wellPoint.P.AddRange(listOil);
+            wellPoint.I = new List<WellPoint>();
+            wellPoint.I.AddRange(listWater);
+
+            UpdateWellPoint(wellPoint);
+
+            return new JsonResult();
+        }
+
 
 
         /// <summary>
@@ -763,18 +801,20 @@ namespace OilSimulationController
         }
 
         /// <summary>
-        /// 修改井距离
+        /// 获取X方向网格数，Y方向网格数
         /// </summary>
         /// <param name="distance">距离</param>
-        /// <param name="gridWidth">网格距离宽度(两个小方格之间的实际距离)</param>
-        private int GetWellDistanceCount(int distance,int gridWidth)
+        /// <param name="dxWidth">x方向网格实际距离</param>
+        /// <param name="dwWidth">y方向网格实际距离</param>
+        /// <returns>X方向网格个数，Y方向网格个数</returns>
+        private Point GetWellDistanceCount(int distance, int dxWidth, int dyWidth)
         {
-            if (distance<gridWidth)
+            if (distance < dxWidth || distance < dyWidth)
             {
-                return -1;
+                return new Point(0, 0);
             }
 
-            return distance / gridWidth;
+            return new Point(distance / dxWidth, distance / dyWidth);
         }
 
         /// <summary>
@@ -782,37 +822,37 @@ namespace OilSimulationController
         /// </summary>
         /// <param name="x">x方向网格数(如100)</param>
         /// <param name="y">y方向网格数(如100)</param>
-        /// <param name="width">井间网格宽度</param>
+        /// <param name="width">井间网格个数(即多少个网格)</param>
         /// <param name="Oil">生产井列表</param>
         /// <param name="Water">注水井列表</param>
-        private void BuildOilWaterPoint(int x, int y, int width, out List<Point> Oil, out List<Point> Water)
+        private void BuildOilWaterPoint(int x, int y, int dxCount, int dyCount, out List<WellPoint> Oil, out List<WellPoint> Water)
         {
-            Oil = new List<Point>();
-            Water = new List<Point>();
+            Oil = new List<WellPoint>();
+            Water = new List<WellPoint>();
 
-            if (x <= 1 || y <= 1 || width <= 0 || width > x || width > y)
+            if (x <= 1 || y <= 1 || dxCount <= 0 || dxCount > x || dyCount > y || dyCount<=0)
             {
                 return;
             }
-            int xCount = x / width - 1;
-            int yCount = y / width - 1;
+            int xCount = x / dxCount - 1;
+            int yCount = y / dyCount - 1;
 
             for (int i = 0; i <= xCount; i++)
             {
                 for (int j = 0; j <= yCount; j++)
                 {
-                    Point pOil = new Point();
-                    pOil.X = i * width + 1;
-                    pOil.Y = j * width + 1;
-                    if (pOil.X <= x && pOil.Y <= y)
+                    WellPoint pOil = new WellPoint();
+                    pOil.x = i * dxCount + 1;
+                    pOil.y = j * dyCount + 1;
+                    if (pOil.x <= x && pOil.y <= y)
                     {
                         Oil.Add(pOil);
                     }
 
-                    Point pWater = new Point();
-                    pWater.X = i * width + 1 + width / 2;
-                    pWater.Y = j * width + 1 + width / 2;
-                    if (pWater.X <= x && pWater.Y <= y)
+                    WellPoint pWater = new WellPoint();
+                    pWater.x = i * dxCount + 1 + dxCount / 2;
+                    pWater.y = j * dyCount + 1 + dyCount / 2;
+                    if (pWater.x <= x && pWater.y <= y)
                     {
                         Water.Add(pWater);
                     }
@@ -890,6 +930,45 @@ namespace OilSimulationController
 
 
             return listResult;
+        }
+
+
+        /// <summary>
+        /// 获取X,Y方向小方格宽度
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns>小方格X方向宽度，Y方向宽度</returns>
+        private Box GetDXDY(string filePath)
+        {
+            Box box = new Box();
+            try
+            {
+                List<string> listData = CommonModel.ReadInfoFromFile(filePath);
+                int dxIndex = listData.IndexOf("DX");
+                int dyIndex = listData.IndexOf("DY");
+
+                int dx = Convert.ToInt32(listData[dxIndex + 2].Split(' ')[0]);
+                int dy = Convert.ToInt32(listData[dyIndex + 2].Split(' ')[0]);
+
+
+                
+                box.DxWidth = dx;
+                box.DyWidth = dy;
+
+                int xCount = Convert.ToInt32(listData[dxIndex - 1].Split(',')[1].Split(':')[1]);
+                int yCount = Convert.ToInt32(listData[dyIndex - 1].Split(',')[1].Split(':')[1]);
+                box.BoxXCount = xCount;
+                box.BoxYCount = yCount;
+                return box;
+
+            }
+            catch (System.Exception ex)
+            {
+                return box;	
+            }
+            
+            
+
         }
 
     }

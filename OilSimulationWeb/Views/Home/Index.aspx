@@ -327,7 +327,14 @@
                                             LoadUrl("/Simulation/SimMode3113");
                                             break;
                                         case 3114:
-                                            LoadUrl("/Simulation/SimMode3114");
+                                            {
+                                                LoadUrl("/Simulation/SimMode3114");
+                                                $("#iframeId").load(function () {
+                                                    var iDist = $("#txtWell").val();
+                                                    $("#iframeId")[0].contentWindow.postMessage("$('#wellDist').val(" + iDist + ")", "*");
+                                                    $("#iframeId")[0].contentWindow.postMessage("$('#wellDist').dbclick()", "*");
+                                                });
+                                            }
                                             break;
                                         case 3121:
                                             LoadUrl("/Simulation/SimMode3121");
@@ -366,7 +373,7 @@
                             <option value="3123">9点</option>
                             <option value="3124">自定义点</option>
                             </select>
-                            <input type="text" id="txtWell" ></input>
+                            <input type="text" id="txtWell" />
                             <button id="s1Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                             <input id="btnShow3124"  type="hidden" />
                         </div>
