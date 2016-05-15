@@ -956,7 +956,16 @@ namespace OilSimulationController
             if (index>0)
             {
                 string[] strs = listData[index + 1].Split(' ');
-                string strValue = count + " " + strs[1] + " " + strs[2] + " " + count;
+                List<string> list = new List<string>();
+                foreach (string  str in  strs   )
+                {
+                    if (str.Trim()!="")
+                    {
+                        list.Add(str);
+                    }
+                }
+
+                string strValue = count + " " + list[1] + " " + list[2] + " " + count + " /";
                 listData[index + 1] = strValue;
             }
 
