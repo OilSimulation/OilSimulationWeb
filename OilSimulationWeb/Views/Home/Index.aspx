@@ -305,14 +305,22 @@
                         <!-- 仿真实训 -->
                         <script type="text/javascript">
                             $(document).ready(function () {
+                                $("#txtWell").hide();
                                 $("#s1Main").change(function () {
                                     $(".DropDownList.s1Mode").each(function (intdex, item) { $(item).css("display", "none"); });
                                     if ($(this).val() == "311") {
                                         $(".DropDownList.s1Mode").eq(0).css("display", "inline");
                                     }
                                     if ($(this).val() == "312") {
+                                        $("#txtWell").hide();
                                         $(".DropDownList.s1Mode").eq(1).css("display", "inline");
                                     }
+                                });
+                                $(".DropDownList.s1Mode").change(function () {
+                                    if ($(".s1Mode:visible").val() == "3114")
+                                        $("#txtWell").show(); 
+                                    else
+                                        $("#txtWell").hide();   
                                 });
                                 $("#s1Btn").click(function () {
                                     var curIndex = parseInt($(".s1Mode:visible").val());
@@ -373,7 +381,7 @@
                             <option value="3123">9点</option>
                             <option value="3124">自定义点</option>
                             </select>
-                            <input type="text" id="txtWell" />
+                            <input type="text" id="txtWell" style="width:50px;" />
                             <button id="s1Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                             <input id="btnShow3124"  type="hidden" />
                         </div>
