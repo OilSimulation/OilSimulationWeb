@@ -19,6 +19,10 @@ namespace OilSimulationController
         private  const string COMPDAT = "COMPDAT";
         private  const string WCONPROD = "WCONPROD";
         private  const string WCONINJE = "WCONINJE";
+        /// <summary>
+        /// 井总数标志
+        /// </summary>
+        private const string WELLDIMS = "WELLDIMS";
 
 
 
@@ -501,13 +505,14 @@ namespace OilSimulationController
             string szEgridPath = CommonModel.GetModeUriPath(iModel);
             //DX,DY
             string strFilePath = szEgridPath.Substring(0, szEgridPath.IndexOf("_E")) + "_GGO.INC";
+            string strWellCountFilePath = szEgridPath.Substring(0, szEgridPath.IndexOf("_E")) + "_E100.DATA";
             //小方格X方向距离，Y方向距离
             Box box = GetDXDY(strFilePath);
             Point pXY = GetWellDistanceCount(data.Step, box.DxWidth,box.DyWidth);
             List<WellPoint> listOil = new List<WellPoint>();
             List<WellPoint> listWater = new List<WellPoint>();
             BuildOilWaterPoint(box.BoxXCount, box.BoxYCount, pXY.X, pXY.Y, out listOil, out listWater);
-
+            UpdateWellMaxCount(strWellCountFilePath, listOil.Count + listWater.Count);//修改油井总数
             PostDataWellPoint wellPoint = new PostDataWellPoint();
             wellPoint.modelId = iModel;
             wellPoint.P = new List<WellPoint>();
@@ -936,6 +941,26 @@ namespace OilSimulationController
 
 
             return listResult;
+        }
+
+
+        /// <summary>
+        /// 修改可布井总数
+        /// </summary>
+        /// <param name="filePath">记录井总文件路径(如:JINGJU500_E100.DATA)</param>
+        /// <param name="count"></param>
+        private void UpdateWellMaxCount(string filePath,int count)
+        {
+            List<string> listData = CommonModel.ReadInfoFromFile(filePath);
+            int index = listData.IndexOf(WELLDIMS);
+            if (index>0)
+            {
+                string[] strs = listData[index + 1].Split(' ');
+                string strValue = count + " " + strs[1] + " " + strs[2] + " " + count;
+                listData[index + 1] = strValue;
+            }
+
+            CommonModel.WriteInfoToFile(filePath, listData);
         }
 
 
