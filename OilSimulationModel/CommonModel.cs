@@ -60,13 +60,13 @@ namespace OilSimulationModel
                     szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/平面径向流/PINGMIAN_E100.EGRID");
                     break;
                 case 15:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/稳定水压恒压边界/MODEL2D_E100.EGRID");
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/球面向心流/QIUMIAN_E100.EGRID");
                     break;
                 case 16:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/稳定水压恒压边界/MODEL2D_E100.EGRID");
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/稳定水压弹性驱动/WENDINGSHUIYA_E100.EGRID");
                     break;
                 case 17:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/封闭边界/MODEL2D_E100.EGRID");
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/封闭边界/FENGBI_E100.EGRID");
                     break;
                 //虚拟实验
                 case 211:

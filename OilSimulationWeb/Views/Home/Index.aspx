@@ -296,9 +296,9 @@
                             <option value="2323">高残余油0.5</option>
                             </select>
                             <select class="DropDownList v3Mode" style="display:none;">
-                            <option value="2331">常规曲线</option>
-                            <option value="2332">菱形曲线</option>
-                            <option value="2333">星形曲线</option>
+                            <option value="2331">常型曲线</option>
+                            <option value="2332">立型曲线</option>
+                            <option value="2333">X型曲线</option>
                             </select>
                             <button id="v3Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                         </div>
