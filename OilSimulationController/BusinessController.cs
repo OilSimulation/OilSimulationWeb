@@ -15,10 +15,11 @@ namespace OilSimulationController
     public class BusinessController : Controller
     {
 
-        private  const string WELSPECS = "WELSPECS";
-        private  const string COMPDAT = "COMPDAT";
-        private  const string WCONPROD = "WCONPROD";
-        private  const string WCONINJE = "WCONINJE";
+        private const string WELSPECS = "WELSPECS";
+        private const string COMPDAT = "COMPDAT";
+        private const string WCONPROD = "WCONPROD";
+        private const string WCONINJE = "WCONINJE";
+        private const string TSTEP = "TSTEP";
         /// <summary>
         /// 井总数标志
         /// </summary>
@@ -37,7 +38,7 @@ namespace OilSimulationController
         {
             string strData = "本地可用";
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
-            return Json(strData, JsonRequestBehavior.AllowGet); 
+            return Json(strData, JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace OilSimulationController
             int iModel = 0;
             if (ModelState.IsValid)
             {
-                iModel = inputData.Mode; 
+                iModel = inputData.Mode;
             }
             string szEgridPath = CommonModel.GetModeUriPath(iModel);
             string targetDir = System.IO.Path.GetDirectoryName(szEgridPath);
@@ -61,7 +62,7 @@ namespace OilSimulationController
                 myProcess.StartInfo.UseShellExecute = false;
                 myProcess.StartInfo.CreateNoWindow = true;
                 myProcess.StartInfo.WorkingDirectory = targetDir;
-                myProcess.StartInfo.FileName = targetDir+"\\RUN.BAT";
+                myProcess.StartInfo.FileName = targetDir + "\\RUN.BAT";
                 myProcess.Start();
                 myProcess.WaitForExit();
             }
@@ -81,7 +82,7 @@ namespace OilSimulationController
         {
             string szRetValue = iStep.ToString();
             ///左边补0
-            szRetValue = szRetValue.PadLeft(4, '0');   
+            szRetValue = szRetValue.PadLeft(4, '0');
             ///.X
             szRetValue = ".X" + szRetValue;
             //返回字符串
@@ -144,12 +145,12 @@ namespace OilSimulationController
             float coordinateZ = 0.0f;
 
             int iLevel = (int)(model.nz / 2.0 + 0.5);
-            Pillar p = model.GetGridAtIJK(model.nx / 2, model.ny / 2, iLevel-1);
+            Pillar p = model.GetGridAtIJK(model.nx / 2, model.ny / 2, iLevel - 1);
             coordinateX = p.Center.x;
             coordinateY = p.Center.y;
             coordinateZ = p.Center.z;
 
-            return new float[3] { coordinateX, coordinateY, coordinateZ }; 
+            return new float[3] { coordinateX, coordinateY, coordinateZ };
         }
 
         /// <summary>
@@ -164,9 +165,9 @@ namespace OilSimulationController
         /// <param name="egridFilePath"></param>
         /// <returns></returns>
         private List<float[]> GetCenterPointData(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
-        { 
+        {
             List<float[]> lst = new List<float[]>();
-            if ( lstDynamicPara.IndexOf(szProName) != -1 )
+            if (lstDynamicPara.IndexOf(szProName) != -1)
             {
                 //
                 string initFilename = Path.ChangeExtension(egridFilePath, GetStepFileExt(iStep));
@@ -204,7 +205,7 @@ namespace OilSimulationController
                                 dwInfo.ct[0] = (center.x);
                                 dwInfo.ct[1] = (center.y);
                                 dwInfo.ct[2] = (center.z);
-                                dwInfo.ct[3] = (v); 
+                                dwInfo.ct[3] = (v);
                                 lst.Add(new float[4] { center.x, center.y, center.z, v });
                             }
                     }
@@ -304,15 +305,15 @@ namespace OilSimulationController
 
         }
 
-       /// <summary>
-       /// 获取颜色属性
-       /// </summary>
-       /// <param name="model"></param>
-       /// <param name="szProName"></param>
-       /// <param name="iStep"></param>
-       /// <param name="k"></param>
-       /// <param name="egridFilePath"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// 获取颜色属性
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="szProName"></param>
+        /// <param name="iStep"></param>
+        /// <param name="k"></param>
+        /// <param name="egridFilePath"></param>
+        /// <returns></returns>
         private List<float[]> GetCenterPointColor(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
         {
 
@@ -354,7 +355,7 @@ namespace OilSimulationController
                     {
                         for (int j = 0; j < model.ny; j++)
                             for (int i = 0; i < model.nx; i++)
-                            { 
+                            {
                                 bool isActive = model.IsActive(i, j, k);
                                 if (isActive)
                                 {
@@ -362,7 +363,7 @@ namespace OilSimulationController
                                     int indexPos = k * model.nx * model.ny + j * model.nx + i;
                                     int pos = model.IndexNode[indexPos];
                                     ///!!!! 这里的v才是网格(i,j,k)上的属性值
-                                    float v = propValues[pos]; 
+                                    float v = propValues[pos];
                                     //listColors.Add(v);
                                     lst.Add(new float[] { v });
                                 }
@@ -397,7 +398,7 @@ namespace OilSimulationController
                     {
                         for (int j = 0; j < model.ny; j++)
                             for (int i = 0; i < model.nx; i++)
-                            { 
+                            {
                                 bool isActive = model.IsActive(i, j, k);
                                 if (isActive)
                                 {
@@ -417,7 +418,7 @@ namespace OilSimulationController
             return lst;
 
         }
-          
+
 
         /// <summary>
         /// 获取数据
@@ -426,6 +427,8 @@ namespace OilSimulationController
         [HttpPost]
         public ActionResult GetData(PostData inputData)
         {
+            UpdateWaterfloodingOpporunity(@"E:\Code\OilSimulationWeb\OilSimulationWeb\DataModel\仿真实训\注采系统方案设计与开发效果预测\不同注水时机\自定义\ZHONG_SCH.INC", 90);
+            
             int iModel = 0;
             string szPara = "";
             int iStep = 0;
@@ -436,17 +439,17 @@ namespace OilSimulationController
                 szPara = inputData.Para;
                 iStep = inputData.Step;
                 iLoadFirst = inputData.iLoadFirst;
-            } 
+            }
             //Grid文件
-            string eGridFile = CommonModel.GetModeUriPath(iModel); 
+            string eGridFile = CommonModel.GetModeUriPath(iModel);
             //油井文件
             string strWellFilePath = eGridFile.Substring(0, eGridFile.IndexOf("_E")) + "_sch.INC";
-             
+
 
             EclipseModel gridModel = EclipseParser.ParseEgrid(eGridFile);
 
-            int countXFiles = EclipseParser.CountXFiles(eGridFile); 
-              
+            int countXFiles = EclipseParser.CountXFiles(eGridFile);
+
             ModeData stModeData = new ModeData();
             //获取最大最小值 
             stModeData.mm = CaculateMaxMinValue(szPara, countXFiles, eGridFile);
@@ -459,10 +462,10 @@ namespace OilSimulationController
                 stModeData.xyz = new List<float[]>();
                 for (int i = 0; i < gridModel.nz; i++)
                 {
-                    stModeData.Data.AddRange(GetCenterPointData(gridModel, szPara, iStep, i, eGridFile)); 
+                    stModeData.Data.AddRange(GetCenterPointData(gridModel, szPara, iStep, i, eGridFile));
                     //计算XYZ的距离
                     Pillar p = gridModel.GetGridAtIJK(0, 0, i);
-                    stModeData.xyz.Add(new float[] { (p.Center.x - p.a.x) * 2, (p.Center.y - p.a.y) * 2, (p.Center.z - p.a.z) * 2 }); 
+                    stModeData.xyz.Add(new float[] { (p.Center.x - p.a.x) * 2, (p.Center.y - p.a.y) * 2, (p.Center.z - p.a.z) * 2 });
                 }
             }
             else
@@ -470,20 +473,20 @@ namespace OilSimulationController
                 stModeData.Data = new List<float[]>();
                 for (int i = 0; i < gridModel.nz; i++)
                 {
-                    stModeData.Data.AddRange(GetCenterPointColor(gridModel, szPara, iStep, i, eGridFile));  
+                    stModeData.Data.AddRange(GetCenterPointColor(gridModel, szPara, iStep, i, eGridFile));
                 }
 
             }
 
 
-            stModeData.WellPoint = GetWellPoint(gridModel,strWellFilePath);
+            stModeData.WellPoint = GetWellPoint(gridModel, strWellFilePath);
 
-            
+
             stModeData.lev = gridModel.nz;
             var res = new ConfigurableJsonResult();
-            res.Data = stModeData; 
+            res.Data = stModeData;
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
-           
+
             return res;
         }
 
@@ -508,7 +511,7 @@ namespace OilSimulationController
             string strWellCountFilePath = szEgridPath.Substring(0, szEgridPath.IndexOf("_E")) + "_E100.DATA";
             //小方格X方向距离，Y方向距离
             Box box = GetDXDY(strFilePath);
-            Point pXY = GetWellDistanceCount(data.Step, box.DxWidth,box.DyWidth);
+            Point pXY = GetWellDistanceCount(data.Step, box.DxWidth, box.DyWidth);
             List<WellPoint> listOil = new List<WellPoint>();
             List<WellPoint> listWater = new List<WellPoint>();
             BuildOilWaterPoint(box.BoxXCount, box.BoxYCount, pXY.X, pXY.Y, out listOil, out listWater);
@@ -557,7 +560,7 @@ namespace OilSimulationController
             int index = firstIndex;
             while (index >= 0)
             {
-                if (listData[index+1].Contains("OIL"))
+                if (listData[index + 1].Contains("OIL"))
                 {
                     listOIL.Add(listData[index + 1]);
                 }
@@ -565,7 +568,7 @@ namespace OilSimulationController
                 {
                     listWATER.Add(listData[index + 1]);
                 }
-                
+
                 //删除之前的生产井和注水井
                 listData.RemoveRange(index, 4);
                 index = listData.IndexOf(WELSPECS, index);
@@ -575,9 +578,9 @@ namespace OilSimulationController
             for (int i = 0; i < data.P.Count; i++)
             {
                 //string str = "'PRO" + (i + 1) + "' 'P' " + data.P[i].x + " " + data.P[i].y + " 'OIL' 1* 'STD' 'SHUT' 'YES' 1* 'SEG' 3* 'STD' /";
-                string str = "'PRO" + (i + 1) + "' 'P' " + data.P[i].y + " " + data.P[i].x+" 1* ";
+                string str = "'PRO" + (i + 1) + "' 'P' " + data.P[i].y + " " + data.P[i].x + " 1* ";
 
-                if (i<listOIL.Count)
+                if (i < listOIL.Count)
                 {
                     str += listOIL[i].Substring(listOIL[i].IndexOf("'OIL'"), listOIL[i].Length - listOIL[i].IndexOf("'OIL'"));
                 }
@@ -600,7 +603,7 @@ namespace OilSimulationController
                 int indexWater = 0;
                 if (i < listWATER.Count)
                 {
-                    indexWater =listWATER[i].IndexOf("'WATER'");
+                    indexWater = listWATER[i].IndexOf("'WATER'");
                     str += listWATER[i].Substring(indexWater, listWATER[i].Length - indexWater);
                 }
                 else
@@ -689,14 +692,14 @@ namespace OilSimulationController
             for (int i = 0; i < data.I.Count; i++)
             {
                 //string str = "'INJ" + (i + 1) + "' 'WATER' 'OPEN' 'RATE' 133 1* 400 3* /";
-                string str = "'INJ" + (i + 1)+"' ";
-                
-                if (i<listWCONINJE.Count)
+                string str = "'INJ" + (i + 1) + "' ";
+
+                if (i < listWCONINJE.Count)
                 {
                     indexWCONINJE = listWCONINJE[i].IndexOf("'WATER'");
                     str += listWCONINJE[i].Substring(indexWCONINJE, listWCONINJE[i].Length - indexWCONINJE);
                 }
-                else 
+                else
                 {
                     indexWCONINJE = listWCONINJE[listWCONINJE.Count - 1].IndexOf("'WATER'");
                     str += listWCONINJE[listWCONINJE.Count - 1].Substring(indexWCONINJE, listWCONINJE[listWCONINJE.Count - 1].Length - indexWCONINJE);
@@ -718,7 +721,7 @@ namespace OilSimulationController
 
 
 
-        private List<WellData> GetWellPoint(EclipseModel eModel,string filePath)
+        private List<WellData> GetWellPoint(EclipseModel eModel, string filePath)
         {
             List<WellData> listWellData = new List<WellData>();
             List<string> listData = CommonModel.ReadInfoFromFile(filePath);//获取井坐标文件数据
@@ -726,7 +729,7 @@ namespace OilSimulationController
             while (wallIndex >= 0)
             {
 
-                listWellData.Add(ParseStrToWell(eModel,listData[wallIndex + 1]));
+                listWellData.Add(ParseStrToWell(eModel, listData[wallIndex + 1]));
                 wallIndex = listData.IndexOf(WELSPECS, wallIndex + 1);
 
             }
@@ -741,7 +744,7 @@ namespace OilSimulationController
         /// </summary>
         /// <param name="strData"></param>
         /// <returns></returns>
-        private WellData ParseStrToWell(EclipseModel eModel,string strData)
+        private WellData ParseStrToWell(EclipseModel eModel, string strData)
         {
             WellData data = new WellData();
             int x, y, z;
@@ -752,7 +755,7 @@ namespace OilSimulationController
             int.TryParse(listd[3], out y);
             int.TryParse(listd[4].Substring(0, 1), out z);
 
-            PillarPoint pPoint = eModel.GetGridAtIJK(x-1, y-1, 0).Center;
+            PillarPoint pPoint = eModel.GetGridAtIJK(x - 1, y - 1, 0).Center;
 
             data.x = pPoint.x;
             data.y = pPoint.y;
@@ -836,7 +839,7 @@ namespace OilSimulationController
             Oil = new List<WellPoint>();
             Water = new List<WellPoint>();
 
-            if (x <= 1 || y <= 1 || dxCount <= 0 || dxCount > x || dyCount > y || dyCount<=0)
+            if (x <= 1 || y <= 1 || dxCount <= 0 || dxCount > x || dyCount > y || dyCount <= 0)
             {
                 return;
             }
@@ -862,7 +865,7 @@ namespace OilSimulationController
                     //pWater.x = i * dxCount + dxCount / 2; 
                     pWater.x = i * dxCount + 1 + dxCount / 2;
                     //pWater.y = j * dyCount + 1 + dyCount / 2;
-                    pWater.y = j * dyCount  + dyCount / 2;
+                    pWater.y = j * dyCount + dyCount / 2;
                     if (pWater.x <= x && pWater.y <= y)
                     {
                         Water.Add(pWater);
@@ -878,7 +881,7 @@ namespace OilSimulationController
         /// <param name="listData"></param>
         /// <param name="isOutLine">是否做轮廓过滤</param>
         /// <returns></returns>
-        private List<View3DPoint> GetOutlinePoint(List<View3DPoint> listData,bool isOutLine)
+        private List<View3DPoint> GetOutlinePoint(List<View3DPoint> listData, bool isOutLine)
         {
             if (listData.Count <= 0)
             {
@@ -949,17 +952,17 @@ namespace OilSimulationController
         /// </summary>
         /// <param name="filePath">记录井总文件路径(如:JINGJU500_E100.DATA)</param>
         /// <param name="count"></param>
-        private void UpdateWellMaxCount(string filePath,int count)
+        private void UpdateWellMaxCount(string filePath, int count)
         {
             List<string> listData = CommonModel.ReadInfoFromFile(filePath);
             int index = listData.IndexOf(WELLDIMS);
-            if (index>0)
+            if (index > 0)
             {
                 string[] strs = listData[index + 1].Split(' ');
                 List<string> list = new List<string>();
-                foreach (string  str in  strs   )
+                foreach (string str in strs)
                 {
-                    if (str.Trim()!="")
+                    if (str.Trim() != "")
                     {
                         list.Add(str);
                     }
@@ -991,7 +994,7 @@ namespace OilSimulationController
                 int dy = Convert.ToInt32(listData[dyIndex + 2].Split(' ')[0]);
 
 
-                
+
                 box.DxWidth = dx;
                 box.DyWidth = dy;
 
@@ -1004,12 +1007,145 @@ namespace OilSimulationController
             }
             catch (System.Exception ex)
             {
-                return box;	
+                return box;
             }
-            
-            
+
+
 
         }
+
+
+
+        /// <summary>
+        ///修改注水时机文件_sch.inc
+        /// </summary>
+        /// <param name="filePath">文件路径</param>
+        /// <param name="day">第多少天进行注水</param>
+        private static void UpdateWaterfloodingOpporunity(string filePath, int day)
+        {
+            //List<string> listData = new List<string>();
+            //listData.AddRange(CommonModel.ReadInfoFromFile(filePath));
+            try
+            {
+                List<string> listData = CommonModel.ReadInfoFromFile(filePath);
+                List<string> listWater = new List<string>();
+
+                //多少天分割的天数
+                int daySplit = 0;
+                int indexTSTEP = listData.IndexOf(TSTEP);
+                if (indexTSTEP > 0)
+                {
+                    int.TryParse(listData[indexTSTEP + 1].Replace('/', ' ').Trim(), out daySplit);
+                }
+                else
+                {
+                    return;
+                }
+
+                List<string> listWaterZero = new List<string>();
+                int index = listData.IndexOf(WCONINJE);
+                while (index >= 0)
+                {
+
+                    string str = listData[index + 1].Split(' ')[4];
+                    if (str.Trim() == "0")
+                    {
+                        listWaterZero.Add(listData[index]);
+                        listWaterZero.Add(listData[index + 1]);
+                        listWaterZero.Add(listData[index + 2]);
+                        listWaterZero.Add(listData[index + 3]);
+                    }
+                    else
+                    {
+                        listWater.Add(listData[index]);
+                        listWater.Add(listData[index + 1]);
+                        listWater.Add(listData[index + 2]);
+                        listWater.Add(listData[index + 3]);
+                    }
+
+                    listData.RemoveRange(index, 4);
+                    index = listData.IndexOf(WCONINJE, index);
+                }
+                //第多少行注水
+                int rowDay = day / daySplit;
+
+                //TSTEP 第一个索引位置
+                int startTSTEPIndex = 0;
+                int i = 0;
+                indexTSTEP = listData.IndexOf(TSTEP);
+                startTSTEPIndex = indexTSTEP;
+                while (indexTSTEP >= 0)
+                {
+                    //找到数据增加的对应索引
+                    if (i == rowDay)
+                    {
+                        if (rowDay == 0)
+                        {
+                            //一开始就注水
+                            //listData.Insert(indexTSTEP-1,)
+                            listData.InsertRange(indexTSTEP - 1, listWater);
+                        }
+                        else
+                        {
+                            //后面开始注水,需要在第一个TSTEP前面加一个'INJ9' 'WATER' 'OPEN' 'RATE' 0 1* 400 3* /  "0"的值
+                            //再在对应的TSTEP下加入注水信息。
+                            if (listWaterZero.Count <= 0)
+                            {
+                                //构造一个ZERO的数据
+                                for (int k = 0; k < listWater.Count; k++)
+                                {
+                                    if (listWater[k].Contains("RATE"))
+                                    {
+                                        string[] strs = listWater[k].Split(' ');
+                                        strs[4] = "0";
+                                        string str = "";
+                                        for (int j = 0; j < strs.Length; j++)
+                                        {
+                                            if (j == strs.Length - 1)
+                                            {
+                                                str += strs[j];
+                                            }
+                                            else
+                                            {
+                                                str += strs[j] + " ";
+                                            }
+                                        }
+                                        listWaterZero.Add(str);
+                                    }
+                                    else
+                                    {
+                                        listWaterZero.Add(listWater[k]);
+                                    }
+                                }
+
+
+                            }
+                            //水的索引在下面,先加水,
+                            listData.InsertRange(indexTSTEP, listWater);
+                            //再加ZERO
+                            listData.InsertRange(startTSTEPIndex, listWaterZero);
+
+                        }
+
+                        break;
+                    }
+
+                    i++;
+                    indexTSTEP = listData.IndexOf(TSTEP, indexTSTEP + 1);
+                }
+
+
+
+                CommonModel.WriteInfoToFile(filePath, listData);
+
+            }
+            catch (System.Exception ex)
+            {
+                return;
+            }
+
+        }
+
 
     }
 }
