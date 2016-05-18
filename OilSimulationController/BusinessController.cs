@@ -427,7 +427,6 @@ namespace OilSimulationController
         [HttpPost]
         public ActionResult GetData(PostData inputData)
         {
-            UpdateWaterfloodingOpporunity(@"E:\Code\OilSimulationWeb\OilSimulationWeb\DataModel\仿真实训\注采系统方案设计与开发效果预测\不同注水时机\自定义\ZHONG_SCH.INC", 90);
             
             int iModel = 0;
             string szPara = "";
@@ -1021,7 +1020,7 @@ namespace OilSimulationController
         /// </summary>
         /// <param name="filePath">文件路径</param>
         /// <param name="day">第多少天进行注水</param>
-        private static void UpdateWaterfloodingOpporunity(string filePath, int day)
+        private  void UpdateInWaterfloodingOpporunity(string filePath, int day)
         {
             //List<string> listData = new List<string>();
             //listData.AddRange(CommonModel.ReadInfoFromFile(filePath));
@@ -1146,6 +1145,48 @@ namespace OilSimulationController
 
         }
 
+        /// <summary>
+        /// 修改注采比
+        /// </summary>
+        /// <param name="filePath">文件路径_sch.inc</param>
+        /// <param name="percent"></param>
+        private void UpdateInColorPercent(string filePath, int percent)
+        {
+
+        }
+
+        /// <summary>
+        /// 修改 不同最大井底注入压力
+        /// </summary>
+        /// <param name="filePath">文件路径_sch.inc</param>
+        /// <param name="pressure">压力</param>
+        private void UpdateMaxWellBottomPressure(string filePath, int pressure)
+        {
+            List<string> listData = CommonModel.ReadInfoFromFile(filePath);
+            int index = listData.IndexOf(WCONINJE);
+            while (index >= 0)
+            {
+                string[] strs = listData[index + 1].Split(' ').Where(s => s.Trim() != "").ToArray();
+                strs[6] = (pressure * 10).ToString();
+                string str = "";
+                for (int i = 0; i < strs.Length;i++ )
+                {
+                    if (i==strs.Length-1)
+                    {
+                        str += strs[i];
+                    }
+                    else
+                    {
+                        str += strs[i] + " ";
+                    }
+                }
+
+                listData[index] = str;
+                index = listData.IndexOf(WCONINJE, index);
+            }
+
+            CommonModel.WriteInfoToFile(filePath, listData);
+        }
 
     }
 }
