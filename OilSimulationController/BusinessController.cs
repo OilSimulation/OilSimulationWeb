@@ -24,6 +24,10 @@ namespace OilSimulationController
         /// 井总数标志
         /// </summary>
         private const string WELLDIMS = "WELLDIMS";
+        /// <summary>
+        /// 注彩比 标志
+        /// </summary>
+        private const string GCONINJE = "GCONINJE";
 
 
 
@@ -427,7 +431,7 @@ namespace OilSimulationController
         [HttpPost]
         public ActionResult GetData(PostData inputData)
         {
-            
+            //UpdateInColorPercent(@"E:\Code\OilSimulationWeb\OilSimulationWeb\DataModel\仿真实训\注采系统方案设计与开发效果预测\不同注采比\自定义\ZHUCAIBI2006_SCH.INC", 0.6);
             int iModel = 0;
             string szPara = "";
             int iStep = 0;
@@ -1014,6 +1018,7 @@ namespace OilSimulationController
         }
 
 
+        #region ************************************  仿真实训-注采系统方案设计与开发效果预测
 
         /// <summary>
         ///修改注水时机文件_sch.inc
@@ -1149,10 +1154,31 @@ namespace OilSimulationController
         /// 修改注采比
         /// </summary>
         /// <param name="filePath">文件路径_sch.inc</param>
-        /// <param name="percent"></param>
-        private void UpdateInColorPercent(string filePath, int percent)
+        /// <param name="percent">百分比</param>
+        private void UpdateInColorPercent(string filePath, double percent)
         {
-
+            List<string> listData = CommonModel.ReadInfoFromFile(filePath);
+            int index = listData.IndexOf(GCONINJE);
+            while (index >= 0)
+            {
+                string[] strs = listData[index + 1].Split(' ').Where(s => s.Trim() != "").ToArray();
+                strs[4] = percent.ToString();
+                string str = "";
+                for (int i = 0; i < strs.Length;i++ )
+                {
+                    if (str.Length-1==i)
+                    {
+                        str += strs[i];
+                    }
+                    else
+                    {
+                        str += strs[i] + " ";
+                    }
+                }
+                listData[index + 1] = str;
+                index = listData.IndexOf(GCONINJE, index + 1);
+            }
+            CommonModel.WriteInfoToFile(filePath, listData);
         }
 
         /// <summary>
@@ -1181,12 +1207,51 @@ namespace OilSimulationController
                     }
                 }
 
-                listData[index] = str;
-                index = listData.IndexOf(WCONINJE, index);
+                listData[index + 1] = str;
+                index = listData.IndexOf(WCONINJE, index+1);
             }
 
             CommonModel.WriteInfoToFile(filePath, listData);
         }
+
+        /// <summary>
+        /// 修改不同最小井底流压
+        /// </summary>
+        /// <param name="filePath">文件路径_sch.inc</param>
+        /// <param name="pressure">压力</param>
+        private void UpdateMinWellBottomPressure(string filePath, int pressure)
+        {
+            List<string> listData = CommonModel.ReadInfoFromFile(filePath);
+            int index = listData.IndexOf(WCONPROD);
+            while (index >= 0)
+            {
+                string[] strs = listData[index + 1].Split(' ').Where(s => s.Trim() != "").ToArray();
+                strs[6] = (pressure * 10).ToString();
+                string str = "";
+                for (int i = 0; i < strs.Length;i++ )
+                {
+                    if (i==strs.Length-1)
+                    {
+                        str += strs[i];
+                    }
+                    else
+                    {
+                        str += strs[i] + " ";
+                    }
+                }
+                listData[index + 1] = str;
+                index = listData.IndexOf(WCONPROD, index + 1);
+            }
+            CommonModel.WriteInfoToFile(filePath, listData);
+        }
+        #endregion
+
+
+        #region ************************************  虚拟实验-非活塞式驱油影响因素
+
+       // private void Update
+
+        #endregion
 
     }
 }
