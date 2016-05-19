@@ -20,6 +20,8 @@ namespace OilSimulationController
         private const string WCONPROD = "WCONPROD";
         private const string WCONINJE = "WCONINJE";
         private const string TSTEP = "TSTEP";
+        private const string SWOF = "SWOF";
+        private const string DENSITY = "DENSITY";
         /// <summary>
         /// 井总数标志
         /// </summary>
@@ -28,6 +30,9 @@ namespace OilSimulationController
         /// 注彩比 标志
         /// </summary>
         private const string GCONINJE = "GCONINJE";
+        private const string PVTW = "PVTW";
+        private const string PVCDO = "PVCDO";
+
 
 
 
@@ -431,7 +436,6 @@ namespace OilSimulationController
         [HttpPost]
         public ActionResult GetData(PostData inputData)
         {
-            //UpdateInColorPercent(@"E:\Code\OilSimulationWeb\OilSimulationWeb\DataModel\仿真实训\注采系统方案设计与开发效果预测\不同注采比\自定义\ZHUCAIBI2006_SCH.INC", 0.6);
             int iModel = 0;
             string szPara = "";
             int iStep = 0;
@@ -1161,7 +1165,7 @@ namespace OilSimulationController
             int index = listData.IndexOf(GCONINJE);
             while (index >= 0)
             {
-                string[] strs = listData[index + 1].Split(' ').Where(s => s.Trim() != "").ToArray();
+                string[] strs = listData[index + 1].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
                 strs[4] = percent.ToString();
                 string str = "";
                 for (int i = 0; i < strs.Length;i++ )
@@ -1192,7 +1196,7 @@ namespace OilSimulationController
             int index = listData.IndexOf(WCONINJE);
             while (index >= 0)
             {
-                string[] strs = listData[index + 1].Split(' ').Where(s => s.Trim() != "").ToArray();
+                string[] strs = listData[index + 1].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
                 strs[6] = (pressure * 10).ToString();
                 string str = "";
                 for (int i = 0; i < strs.Length;i++ )
@@ -1225,7 +1229,7 @@ namespace OilSimulationController
             int index = listData.IndexOf(WCONPROD);
             while (index >= 0)
             {
-                string[] strs = listData[index + 1].Split(' ').Where(s => s.Trim() != "").ToArray();
+                string[] strs = listData[index + 1].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
                 strs[6] = (pressure * 10).ToString();
                 string str = "";
                 for (int i = 0; i < strs.Length;i++ )
@@ -1249,7 +1253,143 @@ namespace OilSimulationController
 
         #region ************************************  虚拟实验-非活塞式驱油影响因素
 
-       // private void Update
+        /// <summary>
+        /// 修改 毛管压力
+        /// </summary>
+        /// <param name="filePath">文件路径 _scal.inc</param>
+        /// <param name="pressure"></param>
+        private void UpdateCapillaryPressure(string filePath, double pressure)
+        {
+            List<string> listData =  CommonModel.ReadInfoFromFile(filePath);
+            int index = listData.IndexOf(SWOF);
+            index += 4;//移四行
+            int endIndex = listData.IndexOf("/", index);
+            // listData.GetRange(index, endIndex - index - 1);
+            
+            List<string> listEndCol = CalcCapillary(pressure, endIndex - index - 1);
+            for (int i = 0; i < listEndCol.Count;i++ )
+            {
+                string[] strs = listData[index + i + 1].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                strs[3] = listEndCol[i];
+                string str = "";
+                for (int k = 0; k < strs.Length;k++ )
+                {
+                    if (k==strs.Length-1)
+                    {
+                        str += strs[k];
+                    }
+                    else
+                    {
+                        str += strs[k] + " ";
+                    }
+                }
+                listData[index + i + 1] = str;
+
+            }
+
+            CommonModel.WriteInfoToFile(filePath, listData);
+
+
+        }
+
+        /// <summary>
+        /// 计算毛管其它参数,还需要提供
+        /// </summary>
+        /// <param name="pressure"></param>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        private List<string> CalcCapillary(double pressure,int row)
+        {
+            List<string> list = new List<string>();
+            for (int i = 0; i < row;i++ )
+            {
+                list.Add((pressure * i).ToString());
+            }
+            return list;
+
+        }
+
+
+        /// <summary>
+        /// 修改密度
+        /// </summary>
+        /// <param name="filePath">文件路径_pvt.inc</param>
+        /// <param name="density">0.5-1.5</param>
+        private void UpdateDensity(string filePath, double density)
+        {
+            if (density < 0.5 || density > 1.5)
+            {
+                return;
+            }
+            //油 水 汽,水定死1000,density=油/水;
+            List<string> listData = CommonModel.ReadInfoFromFile(filePath);
+            int index = listData.IndexOf(DENSITY);
+            index += 4;
+            string[] strs = listData[index].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            int oil = Convert.ToInt32(density * 1000);
+            string str = oil + " " + 1000 + " " + strs[2];
+            listData[index] = str;
+            CommonModel.WriteInfoToFile(filePath, listData);
+
+
+        }
+
+
+        /// <summary>
+        /// 修改粘度
+        /// </summary>
+        /// <param name="filePath">文件路径_pvt.inc</param>
+        /// <param name="treacliness">1-600</param>
+        /// <returns>oil-water</returns>
+        private double UpdateTreacliness(string filePath, int treacliness)
+        {
+            if (treacliness < 1 || treacliness > 600)
+            {
+                return 0;
+            }
+            //treacliness=oil/water treacliness1-600,显示差值=oli-water,water定死0.5
+            List<string> listData = CommonModel.ReadInfoFromFile(filePath);
+            int indexPVTW = listData.IndexOf(PVTW);//water 
+            int indexPVCDO = listData.IndexOf(PVCDO);//oil
+            double water = 0.5;
+            double oil = water * treacliness;
+
+            indexPVTW += 4;
+            indexPVCDO += 4;
+            string[] strsWater = listData[indexPVTW].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] strsOil = listData[indexPVCDO].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            strsWater[3] = (0.5).ToString();
+            strsOil[3] = oil.ToString();
+            listData[indexPVTW] = ArrayToString(strsWater);
+            listData[indexPVCDO] = ArrayToString(strsOil);
+            CommonModel.WriteInfoToFile(filePath, listData);
+
+            return oil - water;
+        }
+
+        
+
+        /// <summary>
+        /// 将数组转换成用空格分割的字符串
+        /// </summary>
+        /// <param name="strs"></param>
+        /// <returns></returns>
+        private string ArrayToString(string[] strs)
+        {
+            string str = "";
+            for (int i = 0; i < strs.Length;i++ )
+            {
+                if (i==strs.Length-1)
+                {
+                    str += strs[i];
+                }
+                else
+                {
+                    str += strs[i] + " ";
+                }
+            }
+            return str;
+        }
 
         #endregion
 
