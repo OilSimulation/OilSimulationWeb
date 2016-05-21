@@ -20,13 +20,13 @@ THREE.MyLoader.prototype = {
         loader.setCrossOrigin(this.crossOrigin);
         loader.load(url, pData, function (text) {
             if (geometry == undefined) {
-                //onLoad(scope.LoadBufferGeometryMode(text)); 
-                onLoad(scope.LoadMode(text)); 
+                onLoad(scope.LoadBufferGeometryMode(text));
+                //onLoad(scope.LoadMode(text));
                 parent.postMessage("HideLoading()", "*");
             }
             else
-            //onLoad(scope.ChangeBufferGeometryColor(text));
-                onLoad(scope.ChangeColor(pData, text));
+                onLoad(scope.ChangeBufferGeometryColor(text));
+            //onLoad(scope.ChangeColor(pData, text));
         }, function () {
             onProgress;
             //if (geometry == undefined)
@@ -175,7 +175,8 @@ THREE.MyLoader.prototype = {
         geometry = new THREE.BufferGeometry();
 
         var dataLen = jsonData.Data.length; //模型立方体个数
-
+        //右手坐标系
+        //立方体的八个顶点A,B,C,D,E,F,G,H。排列方式：底面ABCD,上面EFGH，从上往下看逆时针排序。
         //*12一个立方体有六个面，每一个面分成二个三角形
         //*3 一个三角形需要三个点来描述
         //*3 一个点需要X,Y,Z三个坐标来描述
@@ -197,44 +198,44 @@ THREE.MyLoader.prototype = {
             centery = jsonData.Data[i][1] - jsonData.ct[1];
             centerz = jsonData.Data[i][2] - jsonData.ct[2];
 
-            ax = centerx - xw;
-            ay = centery - yw;
-            az = centerz + zw;
+            ax = centerx - xw / 2;
+            ay = centery - yw / 2;
+            az = centerz + zw / 2;
 
-            bx = centerx + xw;
-            by = centery - yw;
-            bz = centerz + zw;
+            bx = centerx + xw / 2;
+            by = centery - yw / 2;
+            bz = centerz + zw / 2;
 
-            cx = centerx + xw;
-            cy = centery - yw;
-            cz = centerz - zw;
+            cx = centerx + xw / 2;
+            cy = centery - yw / 2;
+            cz = centerz - zw / 2;
 
-            dx = centerx - xw;
-            dy = centery - yw;
-            dz = centerz - zw;
+            dx = centerx - xw / 2;
+            dy = centery - yw / 2;
+            dz = centerz - zw / 2;
 
-            ex = centerx - xw;
-            ey = centery + yw;
-            ez = centerz + zw;
+            ex = centerx - xw / 2;
+            ey = centery + yw / 2;
+            ez = centerz + zw / 2;
 
-            fx = centerx + xw;
-            fy = centery + yw;
-            fz = centerz + zw;
+            fx = centerx + xw / 2;
+            fy = centery + yw / 2;
+            fz = centerz + zw / 2;
 
-            gx = centerx + xw;
-            gy = centery + yw;
-            gz = centerz - zw;
+            gx = centerx + xw / 2;
+            gy = centery + yw / 2;
+            gz = centerz - zw / 2;
 
-            hx = centerx - xw;
-            hy = centery + yw;
-            hz = centerz - zw;
+            hx = centerx - xw / 2;
+            hy = centery + yw / 2;
+            hz = centerz - zw / 2;
 
-            positions[i * 108 + 0] = ax;
-            positions[i * 108 + 1] = ay;
-            positions[i * 108 + 2] = az;
-            positions[i * 108 + 3] = ex;
-            positions[i * 108 + 4] = ey;
-            positions[i * 108 + 5] = ez;
+            positions[i * 108 + 0] = ex;
+            positions[i * 108 + 1] = ey;
+            positions[i * 108 + 2] = ez;
+            positions[i * 108 + 3] = ax;
+            positions[i * 108 + 4] = ay;
+            positions[i * 108 + 5] = az;
             positions[i * 108 + 6] = fx;
             positions[i * 108 + 7] = fy;
             positions[i * 108 + 8] = fz;
@@ -249,105 +250,105 @@ THREE.MyLoader.prototype = {
             positions[i * 108 + 16] = fy;
             positions[i * 108 + 17] = fz;
 
-            positions[i * 108 + 18] = ax;
-            positions[i * 108 + 19] = ay;
-            positions[i * 108 + 20] = az;
+            positions[i * 108 + 18] = fx;
+            positions[i * 108 + 19] = fy;
+            positions[i * 108 + 20] = fz;
             positions[i * 108 + 21] = bx;
             positions[i * 108 + 22] = by;
             positions[i * 108 + 23] = bz;
-            positions[i * 108 + 24] = cx;
-            positions[i * 108 + 25] = cy;
-            positions[i * 108 + 26] = cz;
+            positions[i * 108 + 24] = gx;
+            positions[i * 108 + 25] = gy;
+            positions[i * 108 + 26] = gz;
 
-            positions[i * 108 + 27] = ax;
-            positions[i * 108 + 28] = ay;
-            positions[i * 108 + 29] = az;
-            positions[i * 108 + 30] = dx;
-            positions[i * 108 + 31] = dy;
-            positions[i * 108 + 32] = dz;
-            positions[i * 108 + 33] = cx;
-            positions[i * 108 + 34] = cy;
-            positions[i * 108 + 35] = cz;
+            positions[i * 108 + 27] = bx;
+            positions[i * 108 + 28] = by;
+            positions[i * 108 + 29] = bz;
+            positions[i * 108 + 30] = cx;
+            positions[i * 108 + 31] = cy;
+            positions[i * 108 + 32] = cz;
+            positions[i * 108 + 33] = gx;
+            positions[i * 108 + 34] = gy;
+            positions[i * 108 + 35] = gz;
 
-            positions[i * 108 + 36] = ax;
-            positions[i * 108 + 37] = ay;
-            positions[i * 108 + 38] = az;
-            positions[i * 108 + 39] = dx;
-            positions[i * 108 + 40] = dy;
-            positions[i * 108 + 41] = dz;
+            positions[i * 108 + 36] = gx;
+            positions[i * 108 + 37] = gy;
+            positions[i * 108 + 38] = gz;
+            positions[i * 108 + 39] = cx;
+            positions[i * 108 + 40] = cy;
+            positions[i * 108 + 41] = cz;
             positions[i * 108 + 42] = hx;
             positions[i * 108 + 43] = hy;
             positions[i * 108 + 44] = hz;
 
-            positions[i * 108 + 45] = ax;
-            positions[i * 108 + 46] = ay;
-            positions[i * 108 + 47] = az;
-            positions[i * 108 + 48] = ex;
-            positions[i * 108 + 49] = ey;
-            positions[i * 108 + 50] = ez;
+            positions[i * 108 + 45] = cx;
+            positions[i * 108 + 46] = cy;
+            positions[i * 108 + 47] = cz;
+            positions[i * 108 + 48] = dx;
+            positions[i * 108 + 49] = dy;
+            positions[i * 108 + 50] = dz;
             positions[i * 108 + 51] = hx;
             positions[i * 108 + 52] = hy;
             positions[i * 108 + 53] = hz;
 
-            positions[i * 108 + 54] = gx;
-            positions[i * 108 + 55] = gy;
-            positions[i * 108 + 56] = gz;
-            positions[i * 108 + 57] = cx;
-            positions[i * 108 + 58] = cy;
-            positions[i * 108 + 59] = cz;
-            positions[i * 108 + 60] = bx;
-            positions[i * 108 + 61] = by;
-            positions[i * 108 + 62] = bz;
+            positions[i * 108 + 54] = hx;
+            positions[i * 108 + 55] = hy;
+            positions[i * 108 + 56] = hz;
+            positions[i * 108 + 57] = dx;
+            positions[i * 108 + 58] = dy;
+            positions[i * 108 + 59] = dz;
+            positions[i * 108 + 60] = ex;
+            positions[i * 108 + 61] = ey;
+            positions[i * 108 + 62] = ez;
 
-            positions[i * 108 + 63] = gx;
-            positions[i * 108 + 64] = gy;
-            positions[i * 108 + 65] = gz;
-            positions[i * 108 + 66] = fx;
-            positions[i * 108 + 67] = fy;
-            positions[i * 108 + 68] = fz;
-            positions[i * 108 + 69] = bx;
-            positions[i * 108 + 70] = by;
-            positions[i * 108 + 71] = bz;
+            positions[i * 108 + 63] = dx;
+            positions[i * 108 + 64] = dy;
+            positions[i * 108 + 65] = dz;
+            positions[i * 108 + 66] = ax;
+            positions[i * 108 + 67] = ay;
+            positions[i * 108 + 68] = az;
+            positions[i * 108 + 69] = ex;
+            positions[i * 108 + 70] = ey;
+            positions[i * 108 + 71] = ez;
 
-            positions[i * 108 + 72] = gx;
-            positions[i * 108 + 73] = gy;
-            positions[i * 108 + 74] = gz;
-            positions[i * 108 + 75] = cx;
-            positions[i * 108 + 76] = cy;
-            positions[i * 108 + 77] = cz;
-            positions[i * 108 + 78] = dx;
-            positions[i * 108 + 79] = dy;
-            positions[i * 108 + 80] = dz;
+            positions[i * 108 + 72] = hx;
+            positions[i * 108 + 73] = hy;
+            positions[i * 108 + 74] = hz;
+            positions[i * 108 + 75] = ex;
+            positions[i * 108 + 76] = ey;
+            positions[i * 108 + 77] = ez;
+            positions[i * 108 + 78] = gx;
+            positions[i * 108 + 79] = gy;
+            positions[i * 108 + 80] = gz;
 
-            positions[i * 108 + 81] = gx;
-            positions[i * 108 + 82] = gy;
-            positions[i * 108 + 83] = gz;
-            positions[i * 108 + 84] = hx;
-            positions[i * 108 + 85] = hy;
-            positions[i * 108 + 86] = hz;
-            positions[i * 108 + 87] = dx;
-            positions[i * 108 + 88] = dy;
-            positions[i * 108 + 89] = dz;
+            positions[i * 108 + 81] = ex;
+            positions[i * 108 + 82] = ey;
+            positions[i * 108 + 83] = ez;
+            positions[i * 108 + 84] = fx;
+            positions[i * 108 + 85] = fy;
+            positions[i * 108 + 86] = fz;
+            positions[i * 108 + 87] = gx;
+            positions[i * 108 + 88] = gy;
+            positions[i * 108 + 89] = gz;
 
-            positions[i * 108 + 90] = gx;
-            positions[i * 108 + 91] = gy;
-            positions[i * 108 + 92] = gz;
-            positions[i * 108 + 93] = hx;
-            positions[i * 108 + 94] = hy;
-            positions[i * 108 + 95] = hz;
-            positions[i * 108 + 96] = ex;
-            positions[i * 108 + 97] = ey;
-            positions[i * 108 + 98] = ez;
+            positions[i * 108 + 90] = ax;
+            positions[i * 108 + 91] = ay;
+            positions[i * 108 + 92] = az;
+            positions[i * 108 + 93] = dx;
+            positions[i * 108 + 94] = dy;
+            positions[i * 108 + 95] = dz;
+            positions[i * 108 + 96] = bx;
+            positions[i * 108 + 97] = by;
+            positions[i * 108 + 98] = bz;
 
-            positions[i * 108 + 99] = gx;
-            positions[i * 108 + 100] = gy;
-            positions[i * 108 + 101] = gz;
-            positions[i * 108 + 102] = fx;
-            positions[i * 108 + 103] = fy;
-            positions[i * 108 + 104] = fz;
-            positions[i * 108 + 105] = ex;
-            positions[i * 108 + 106] = ey;
-            positions[i * 108 + 107] = ez;
+            positions[i * 108 + 99] = dx;
+            positions[i * 108 + 100] = dy;
+            positions[i * 108 + 101] = dz;
+            positions[i * 108 + 102] = cx;
+            positions[i * 108 + 103] = cy;
+            positions[i * 108 + 104] = cz;
+            positions[i * 108 + 105] = bx;
+            positions[i * 108 + 106] = by;
+            positions[i * 108 + 107] = bz;
 
 
             var info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][3], jsonData.mm[1], jsonData.mm[0]);
@@ -370,11 +371,27 @@ THREE.MyLoader.prototype = {
 
         geometry.computeBoundingSphere();
         var material = new THREE.MeshBasicMaterial({
-            color: 0xffff00, vertexColors: THREE.VertexColors
+            color: 0xffffff, vertexColors: THREE.VertexColors
         });
         var mesh = new THREE.Mesh(geometry, material);
 
-        return mesh;
+        var group = new THREE.Group();
+
+        var xTW = 0, yTW = 0, zTW = 0; //各个坐标方向总宽度
+        for (var i = 0; i < jsonData.xyz.length; i++) {
+            xTW += jsonData.xyz[i][0];
+            yTW += jsonData.xyz[i][1];
+            zTW += jsonData.xyz[i][2];
+        }
+
+        //增加油井
+        for (var i = 0; i < jsonData.WellPoint.length; i++) {
+            //container.add(this.AddWell(jsonData.WellPoint[i].x - jsonData.ct[0], -jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z, jsonData.xyz[1]));
+            group.add(this.AddWell(jsonData.WellPoint[i].x - jsonData.ct[0] - jsonData.xyz[0][0] / 2, jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z - jsonData.ct[2], zTW / 2 + 50, jsonData.xyz[0][2], jsonData.WellPoint[i].name));
+            group.add(this.AddWellName(jsonData.WellPoint[i].x - jsonData.ct[0], jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z - jsonData.ct[2] + zTW / 2 + 60, jsonData.xyz[0][2], jsonData.WellPoint[i].name));
+        }
+        group.add(mesh);
+        return group;
     },
 
     ChangeBufferGeometryColor: function (text) {
@@ -389,6 +406,10 @@ THREE.MyLoader.prototype = {
                 var colorHex = (info["R"] << 16) | (info["G"] << 8) | info["B"];
                 color.setHex(colorHex);
             }
+            else {
+                var kkk = 0;
+            }
+
             for (var j = 0; j < 108; j += 3) {
                 colorsArray[i * 108 + j + 0] = color.r;
                 colorsArray[i * 108 + j + 1] = color.g;
