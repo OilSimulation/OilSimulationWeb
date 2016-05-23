@@ -473,10 +473,10 @@ span a{
 }
 
 .red{background-color:#ff0000;}
-.blue{background-color:#0000ff;}
-			
-#wrapper { background: #ff9999;margin:auto;/*border:1px outset gray;*/}
-
+.blue{background-color:#0000ff;} 
+#wrapper { background: #ff9999;margin:auto;/*border:1px outset gray;*/} 
 .hidden{display:none;}
 .blockLine{display:inline-block;}
 .ShowGrid{position:absolute;z-index:99999;left:125px;top:0;}
+
+#playback_speed_field{ cursor:pointer; }
