@@ -212,7 +212,7 @@
                         var curIndex = $("#timeSelect option:selected").val();
                         var curSpeed = parseInt($("#playback_speed_field").attr("speed"));
                         var nextIndex = parseInt(curIndex) + curSpeed;
-                        if (nextIndex <= $("#timeSelect > option").length) 
+                        if (nextIndex <= $("#timeSelect > option").length-1) 
                         {
                             $("#timeSelect").val((nextIndex).toString()).change();
                             //curIndex = nextIndex;
