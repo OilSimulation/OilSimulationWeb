@@ -126,6 +126,7 @@
     }); 
 </script>
     <input id="ModeIndex" type="hidden" value="3124" />
+    <input id="DelayLoad" type="hidden" />
     <div id="controls_container_top" class="blockLine">
 		<div id="controls_innercontainer"> 
             <div class="controls">

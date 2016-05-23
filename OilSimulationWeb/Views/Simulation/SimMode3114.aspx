@@ -26,6 +26,7 @@
         });
     });
 </script>
+    <input id="DelayLoad" type="hidden" />
     <input id="ModeIndex" type="hidden" value="3114" />
     <input id="wellDist" type="hidden" value="" />
 </asp:Content>

@@ -127,8 +127,10 @@
                 if (reload) {
                     reload = false;
                     var iModeIndex = parseInt($("#ModeIndex").val());
-                    if (iModeIndex != 3114 && iModeIndex != 3124)
-                        LoadWebGLData(0);  
+                    if ($("#DelayLoad").length == 0) 
+                    {
+                        LoadWebGLData(0);             
+                    }  
                 }
             
                 controls.update(); 
