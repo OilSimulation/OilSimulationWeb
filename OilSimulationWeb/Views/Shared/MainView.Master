@@ -210,11 +210,12 @@
                     $(".ui-icon-play").removeClass("ui-icon-play").addClass("ui-icon-pause");
                     action = setInterval(function () {
                         var curIndex = $("#timeSelect option:selected").val();
-                        var nextIndex = parseInt(curIndex) + 1;
-                        if (nextIndex < $("#timeSelect > option").length) 
+                        var curSpeed = parseInt($("#playback_speed_field").attr("speed"));
+                        var nextIndex = parseInt(curIndex) + curSpeed;
+                        if (nextIndex <= $("#timeSelect > option").length) 
                         {
                             $("#timeSelect").val((nextIndex).toString()).change();
-                            curIndex = nextIndex;
+                            //curIndex = nextIndex;
                         }
                         else 
                         {
@@ -234,14 +235,34 @@
             });
 
             //上一步按钮事件
-            $("#button_backward").click(function(){
-                $("#timeSelect").val( parseInt($("#timeSelect option:selected").val())-1 ).change();   
+            $("#button_backward").click(function () {
+                var curSpeed = parseInt($("#playback_speed_field").attr("speed"));
+                $("#timeSelect").val(parseInt($("#timeSelect option:selected").val()) - curSpeed).change();   
             });
 
             //下一步按钮事件
-            $("#button_forward").click(function(){
-                $("#timeSelect").val( parseInt($("#timeSelect option:selected").val())+1 ).change();
-            }); 
+            $("#button_forward").click(function () {
+                var curSpeed = parseInt($("#playback_speed_field").attr("speed"));
+                $("#timeSelect").val(parseInt($("#timeSelect option:selected").val()) + curSpeed).change();
+            });
+            //播放速度
+            $("#playback_speed_field").click(function () {
+                var curSpeed = $("#playback_speed_field").attr("speed");
+                if (curSpeed == "1") 
+                {
+                    $("#playback_speed_field").attr("speed", "2");
+                    $("#playback_speed_field").text("2.0x");
+                }
+                else if (curSpeed == "2")
+                {
+                    $("#playback_speed_field").attr("speed", "3");
+                    $("#playback_speed_field").text("3.0x");
+                }
+                else if (curSpeed == "3") {
+                    $("#playback_speed_field").attr("speed","1");
+                    $("#playback_speed_field").text("1.0x");
+                }
+            });
 
             //绑定全屏模式点击响应函数
             $("#fullscreen").click(function (){
@@ -350,7 +371,7 @@
 						<div class="mini_label">网格数#:</div>
 						<div class="mini_field"><% =ViewData["TotalGrids"]%></div>
 						<div class="mini_label">Speed:</div>
-						<div id="playback_speed_field" class="mini_field">1.0x</div>
+						<div id="playback_speed_field" speed="1" class="mini_field">1.0x</div>
 					</li> 
 					<li class="spacer"></li>
 					<li>
