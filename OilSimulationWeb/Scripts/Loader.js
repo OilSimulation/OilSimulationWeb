@@ -495,6 +495,22 @@ THREE.MyLoader.prototype = {
         console.timeEnd('MyLoader');
 
         return container;
+    },
+    //绘制管道,inR:内径,outR:外径,height:管高,radialSegments:上、下面分成多少份
+    DrawPipe: function (inR, outR, height, radialSegments) {
+        //true表示是否去掉圆柱上下两个面，
+        var inCylinder = new THREE.CylinderGeometry(inR, inR, height, radialSegments, 1, true);
+        var outCylinder = new THREE.CylinderGeometry(outR, outR, height, radialSegments, 1, true);
+        // Cloning original geometry for debuging
+
+       var smooth = inCylinder.clone();
+
+        // mergeVertices(); is run in case of duplicated vertices
+        smooth.mergeVertices();
+        smooth.computeFaceNormals();
+        smooth.computeVertexNormals();
+
+
     }
 
 };
