@@ -33,10 +33,59 @@ namespace OilSimulationController
         /// 改变毛细管压力
         /// </summary>
         /// <returns></returns>
-        public ActionResult VirtualMode212()
+        public ActionResult VirtualMode2111()
         {
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
-            string szGridFilePath = CommonModel.GetModeUriPath(212);
+            string szGridFilePath = CommonModel.GetModeUriPath(2111);
+            PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
+
+            ViewData["DynamicProps"] = stPageParams.dynamicProps;
+            ViewData["TimeStep"] = stPageParams.timeSteps;
+            ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+
+            return View();
+        }
+        /// <summary>
+        /// 改变毛细管压力
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult VirtualMode2112()
+        {
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            string szGridFilePath = CommonModel.GetModeUriPath(2112);
+            PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
+
+            ViewData["DynamicProps"] = stPageParams.dynamicProps;
+            ViewData["TimeStep"] = stPageParams.timeSteps;
+            ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+
+            return View();
+        }
+        /// <summary>
+        /// 改变毛细管压力
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult VirtualMode2113()
+        {
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            string szGridFilePath = CommonModel.GetModeUriPath(2113);
+            PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
+
+            ViewData["DynamicProps"] = stPageParams.dynamicProps;
+            ViewData["TimeStep"] = stPageParams.timeSteps;
+            ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+
+            return View();
+        }
+         
+        /// <summary>
+        /// 改变油水比重
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult VirtualMode2121()
+        {
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            string szGridFilePath = CommonModel.GetModeUriPath(2121);
             PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
 
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
@@ -49,10 +98,42 @@ namespace OilSimulationController
         /// 改变油水比重
         /// </summary>
         /// <returns></returns>
-        public ActionResult VirtualMode213()
+        public ActionResult VirtualMode2122()
         {
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
-            string szGridFilePath = CommonModel.GetModeUriPath(213);
+            string szGridFilePath = CommonModel.GetModeUriPath(2122);
+            PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
+
+            ViewData["DynamicProps"] = stPageParams.dynamicProps;
+            ViewData["TimeStep"] = stPageParams.timeSteps;
+            ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+
+            return View();
+        }
+        /// <summary>
+        /// 改变油水比重
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult VirtualMode2123()
+        {
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            string szGridFilePath = CommonModel.GetModeUriPath(2123);
+            PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
+
+            ViewData["DynamicProps"] = stPageParams.dynamicProps;
+            ViewData["TimeStep"] = stPageParams.timeSteps;
+            ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+
+            return View();
+        }
+        /// <summary>
+        /// 改变油水比重
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult VirtualMode2124()
+        {
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            string szGridFilePath = CommonModel.GetModeUriPath(2124);
             PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
 
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
@@ -65,10 +146,10 @@ namespace OilSimulationController
         /// 改变油水粘度
         /// </summary>
         /// <returns></returns>
-        public ActionResult VirtualMode214()
+        public ActionResult VirtualMode2131()
         {
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
-            string szGridFilePath = CommonModel.GetModeUriPath(214);
+            string szGridFilePath = CommonModel.GetModeUriPath(2131);
             PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
 
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
@@ -77,6 +158,55 @@ namespace OilSimulationController
 
             return View();
         }
+        /// <summary>
+        /// 改变油水粘度
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult VirtualMode2132()
+        {
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            string szGridFilePath = CommonModel.GetModeUriPath(2132);
+            PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
+
+            ViewData["DynamicProps"] = stPageParams.dynamicProps;
+            ViewData["TimeStep"] = stPageParams.timeSteps;
+            ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+
+            return View();
+        }
+        /// <summary>
+        /// 改变油水粘度
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult VirtualMode2133()
+        {
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            string szGridFilePath = CommonModel.GetModeUriPath(2133);
+            PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
+
+            ViewData["DynamicProps"] = stPageParams.dynamicProps;
+            ViewData["TimeStep"] = stPageParams.timeSteps;
+            ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+
+            return View();
+        }
+        /// <summary>
+        /// 改变油水粘度
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult VirtualMode2134()
+        {
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            string szGridFilePath = CommonModel.GetModeUriPath(2134);
+            PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
+
+            ViewData["DynamicProps"] = stPageParams.dynamicProps;
+            ViewData["TimeStep"] = stPageParams.timeSteps;
+            ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+
+            return View();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// 毛细管压力 无毛管
         /// </summary>
