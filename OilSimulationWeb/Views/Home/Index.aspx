@@ -426,13 +426,13 @@
                             <option value="3111">200</option>
                             <option value="3112">300</option>
                             <option value="3113">500</option>
-                            <option value="3114">自定义井距</option>
+                            <option value="3114">自定义</option>
                             </select>
                             <select class="DropDownList s1Mode" style="display:none;">
                             <option value="3121">5点</option>
                             <option value="3122">7点</option>
                             <option value="3123">9点</option>
-                            <option value="3124">自定义点</option>
+                            <option value="3124">自定义</option>
                             </select>
                             <input type="text" id="txtWell" style="width:50px;" />
                             <button id="s1Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
@@ -467,6 +467,9 @@
                                         case 3213:
                                             LoadUrl("/Simulation/SimMode3213");
                                             break;
+                                        case 3214:
+                                            LoadUrl("/Simulation/SimMode3214");
+                                            break;
                                         case 3221:
                                             LoadUrl("/Simulation/SimMode3221");
                                             break;
@@ -475,6 +478,9 @@
                                             break;
                                         case 3223:
                                             LoadUrl("/Simulation/SimMode3223");
+                                            break;
+                                        case 3224:
+                                            LoadUrl("/Simulation/SimMode3224");
                                             break;
                                         case 3231:
                                             LoadUrl("/Simulation/SimMode3231");
@@ -485,6 +491,9 @@
                                         case 3233:
                                             LoadUrl("/Simulation/SimMode3233");
                                             break;
+                                        case 3234:
+                                            LoadUrl("/Simulation/SimMode3234");
+                                            break;
                                         case 3241:
                                             LoadUrl("/Simulation/SimMode3241");
                                             break;
@@ -493,6 +502,9 @@
                                             break;
                                         case 3243:
                                             LoadUrl("/Simulation/SimMode3243");
+                                            break;
+                                        case 3244:
+                                            LoadUrl("/Simulation/SimMode3244");
                                             break;
                                     }
                                 });
@@ -511,21 +523,25 @@
                             <option value="3211">早期（同采同注）</option>
                             <option value="3212">中期开发后半年</option>
                             <option value="3213">晚期开发后两年</option>
+                            <option value="3214">自定义</option>
                             </select>
                             <select class="DropDownList s2Mode" style="display:none;">
                             <option value="3221">注采比0.8</option>
                             <option value="3222">注采比1</option>
                             <option value="3223">注采比1.2</option>
+                            <option value="3224">自定义</option>
                             </select>
                             <select class="DropDownList s2Mode" style="display:none;">
                             <option value="3231">35MPA</option>
                             <option value="3232">40MPA</option>
                             <option value="3233">50MPA</option>
+                            <option value="3234">自定义</option>
                             </select>
                             <select class="DropDownList s2Mode" style="display:none;">
                             <option value="3241">1MPA</option>
                             <option value="3242">5MPA</option>
                             <option value="3243">10MPA</option>
+                            <option value="3244">自定义</option>
                             </select>
                             <button id="s2Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                         </div>
