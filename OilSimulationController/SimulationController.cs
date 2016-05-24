@@ -204,6 +204,23 @@ namespace OilSimulationController
         }
 
         /// <summary>
+        /// 不同注水时机 自定义
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SimMode3214()
+        {
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            string szGridFilePath = CommonModel.GetModeUriPath(3214);
+            PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
+
+            ViewData["DynamicProps"] = stPageParams.dynamicProps;
+            ViewData["TimeStep"] = stPageParams.timeSteps;
+            ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+
+            return View();
+        }
+
+        /// <summary>
         /// 不同注采比 注采比0.8
         /// </summary>
         /// <returns></returns>
@@ -245,6 +262,23 @@ namespace OilSimulationController
         {
             Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
             string szGridFilePath = CommonModel.GetModeUriPath(3223);
+            PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
+
+            ViewData["DynamicProps"] = stPageParams.dynamicProps;
+            ViewData["TimeStep"] = stPageParams.timeSteps;
+            ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+
+            return View();
+        }
+
+        /// <summary>
+        /// 不同注采比 自定义
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SimMode3224()
+        {
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            string szGridFilePath = CommonModel.GetModeUriPath(3224);
             PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
 
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
@@ -306,6 +340,23 @@ namespace OilSimulationController
         }
 
         /// <summary>
+        /// 不同最大井底注入压力 自定义
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SimMode3234()
+        {
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            string szGridFilePath = CommonModel.GetModeUriPath(3234);
+            PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
+
+            ViewData["DynamicProps"] = stPageParams.dynamicProps;
+            ViewData["TimeStep"] = stPageParams.timeSteps;
+            ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+
+            return View();
+        }
+
+        /// <summary>
         /// 不同最小井底流压 1MPA
         /// </summary>
         /// <returns></returns>
@@ -356,6 +407,22 @@ namespace OilSimulationController
             return View();
         }
 
+        /// <summary>
+        /// 不同最小井底流压 自定义
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SimMode3244()
+        {
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            string szGridFilePath = CommonModel.GetModeUriPath(3244);
+            PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
+
+            ViewData["DynamicProps"] = stPageParams.dynamicProps;
+            ViewData["TimeStep"] = stPageParams.timeSteps;
+            ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+
+            return View();
+        }
 
     }
 }
