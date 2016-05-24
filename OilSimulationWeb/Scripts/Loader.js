@@ -22,6 +22,8 @@ THREE.MyLoader.prototype = {
             if (geometry == undefined) {
                 onLoad(scope.LoadBufferGeometryMode(text));
                 //onLoad(scope.LoadMode(text));
+                //onLoad(scope.DrawPipe(20, 40, 100, 4));
+                //onLoad(scope.DrawPipe(40, 40, 100, 4));
                 parent.postMessage("HideLoading()", "*");
             }
             else
@@ -498,18 +500,246 @@ THREE.MyLoader.prototype = {
     },
     //绘制管道,inR:内径,outR:外径,height:管高,radialSegments:上、下面分成多少份
     DrawPipe: function (inR, outR, height, radialSegments) {
-        //true表示是否去掉圆柱上下两个面，
+
+
+        geometry = new THREE.BufferGeometry();
+
+
+        //true表示是否去掉圆柱上下两个面，1:表示圆柱分成多少层
         var inCylinder = new THREE.CylinderGeometry(inR, inR, height, radialSegments, 1, true);
         var outCylinder = new THREE.CylinderGeometry(outR, outR, height, radialSegments, 1, true);
-        // Cloning original geometry for debuging
 
-       var smooth = inCylinder.clone();
+        //CylinderGeometry中的顶点坐标会多有两个特殊点，一个在中间，一个在最后
 
-        // mergeVertices(); is run in case of duplicated vertices
-        smooth.mergeVertices();
-        smooth.computeFaceNormals();
-        smooth.computeVertexNormals();
 
+        var inHalf = inCylinder.vertices.length / 2;
+        inCylinder.vertices.splice(inHalf - 1, 1);
+        inCylinder.vertices.pop();
+        inHalf = inCylinder.vertices.length / 2;
+
+        var outHalf = outCylinder.vertices.length / 2;
+        outCylinder.vertices.splice(inHalf - 1, 1);
+        outCylinder.vertices.pop();
+        outHalf = outCylinder.vertices.length / 2;
+        //2*3 每封闭一个面需要在最后的坐标点中加入起始点
+        var positions = new Float32Array(inCylinder.vertices.length * 18 * 3 + 2 * 3);
+        var colors = new Float32Array(inCylinder.vertices.length * 18 * 3 + 2 * 3);
+
+        for (var i = 0; i < colors.length; i++) {
+            colors[i] = 0xf0;
+        }
+
+        //封闭上面
+        for (var i = 0; i < inCylinder.vertices.length/2; i++) {
+            if (i == (inCylinder.vertices.length / 2 - 1)) {
+                //一个三角面
+                positions[i * 18 + 0] = inCylinder.vertices[i].x;
+                positions[i * 18 + 1] = inCylinder.vertices[i].y;
+                positions[i * 18 + 2] = inCylinder.vertices[i].z;
+                positions[i * 18 + 3] = outCylinder.vertices[i].x;
+                positions[i * 18 + 4] = outCylinder.vertices[i].y;
+                positions[i * 18 + 5] = outCylinder.vertices[i].z;
+                positions[i * 18 + 6] = inCylinder.vertices[0].x;
+                positions[i * 18 + 7] = inCylinder.vertices[0].y;
+                positions[i * 18 + 8] = inCylinder.vertices[0].z;
+                //另一个三角面组成一个四边形的面
+                positions[i * 18 + 9] = outCylinder.vertices[i].x;
+                positions[i * 18 + 10] = outCylinder.vertices[i].y;
+                positions[i * 18 + 11] = outCylinder.vertices[i].z;
+                positions[i * 18 + 12] = outCylinder.vertices[0].x;
+                positions[i * 18 + 13] = outCylinder.vertices[0].y;
+                positions[i * 18 + 14] = outCylinder.vertices[0].z;
+                positions[i * 18 + 15] = inCylinder.vertices[0].x;
+                positions[i * 18 + 16] = inCylinder.vertices[0].y;
+                positions[i * 18 + 17] = inCylinder.vertices[0].z;
+            }
+            else {
+                //一个三角面
+                positions[i * 18 + 0] = inCylinder.vertices[i].x;
+                positions[i * 18 + 1] = inCylinder.vertices[i].y;
+                positions[i * 18 + 2] = inCylinder.vertices[i].z;
+                positions[i * 18 + 3] = outCylinder.vertices[i].x;
+                positions[i * 18 + 4] = outCylinder.vertices[i].y;
+                positions[i * 18 + 5] = outCylinder.vertices[i].z;
+                positions[i * 18 + 6] = inCylinder.vertices[i + 1].x;
+                positions[i * 18 + 7] = inCylinder.vertices[i + 1].y;
+                positions[i * 18 + 8] = inCylinder.vertices[i + 1].z;
+                //另一个三角面组成一个四边形的面
+                positions[i * 18 + 9] = outCylinder.vertices[i].x;
+                positions[i * 18 + 10] = outCylinder.vertices[i].y;
+                positions[i * 18 + 11] = outCylinder.vertices[i].z;
+                positions[i * 18 + 12] = outCylinder.vertices[i + 1].x;
+                positions[i * 18 + 13] = outCylinder.vertices[i + 1].y;
+                positions[i * 18 + 14] = outCylinder.vertices[i + 1].z;
+                positions[i * 18 + 15] = inCylinder.vertices[i + 1].x;
+                positions[i * 18 + 16] = inCylinder.vertices[i + 1].y;
+                positions[i * 18 + 17] = inCylinder.vertices[i + 1].z;
+
+            }
+
+        }
+
+//        //封闭下面
+//        for (var i = inHalf; i < inHalf * 2; i++) {
+//            if (i == (inHalf * 2 - 1)) {
+//                //一个三角面
+//                positions[i * 18 + 0] = inCylinder.vertices[i].x;
+//                positions[i * 18 + 1] = inCylinder.vertices[i].y;
+//                positions[i * 18 + 2] = inCylinder.vertices[i].z;
+//                positions[i * 18 + 3] = outCylinder.vertices[i].x;
+//                positions[i * 18 + 4] = outCylinder.vertices[i].y;
+//                positions[i * 18 + 5] = outCylinder.vertices[i].z;
+//                positions[i * 18 + 6] = inCylinder.vertices[inCylinder.vertices.length / 2].x;
+//                positions[i * 18 + 7] = inCylinder.vertices[inCylinder.vertices.length / 2].y;
+//                positions[i * 18 + 8] = inCylinder.vertices[inCylinder.vertices.length / 2].z;
+//                //另一个三角面组成一个四边形的面
+//                positions[i * 18 + 9] = outCylinder.vertices[i].x;
+//                positions[i * 18 + 10] = outCylinder.vertices[i].y;
+//                positions[i * 18 + 11] = outCylinder.vertices[i].z;
+//                positions[i * 18 + 12] = outCylinder.vertices[inCylinder.vertices.length / 2].x;
+//                positions[i * 18 + 13] = outCylinder.vertices[inCylinder.vertices.length / 2].y;
+//                positions[i * 18 + 14] = outCylinder.vertices[inCylinder.vertices.length / 2].z;
+//                positions[i * 18 + 15] = inCylinder.vertices[inCylinder.vertices.length / 2].x;
+//                positions[i * 18 + 16] = inCylinder.vertices[inCylinder.vertices.length / 2].y;
+//                positions[i * 18 + 17] = inCylinder.vertices[inCylinder.vertices.length / 2].z;
+
+//            }
+//            else {
+//                //一个三角面
+//                positions[i * 18 + 0] = inCylinder.vertices[i].x;
+//                positions[i * 18 + 1] = inCylinder.vertices[i].y;
+//                positions[i * 18 + 2] = inCylinder.vertices[i].z;
+//                positions[i * 18 + 3] = outCylinder.vertices[i].x;
+//                positions[i * 18 + 4] = outCylinder.vertices[i].y;
+//                positions[i * 18 + 5] = outCylinder.vertices[i].z;
+//                positions[i * 18 + 6] = inCylinder.vertices[i + 1].x;
+//                positions[i * 18 + 7] = inCylinder.vertices[i + 1].y;
+//                positions[i * 18 + 8] = inCylinder.vertices[i + 1].z;
+//                //另一个三角面组成一个四边形的面
+//                positions[i * 18 + 9] = outCylinder.vertices[i].x;
+//                positions[i * 18 + 10] = outCylinder.vertices[i].y;
+//                positions[i * 18 + 11] = outCylinder.vertices[i].z;
+//                positions[i * 18 + 12] = outCylinder.vertices[i + 1].x;
+//                positions[i * 18 + 13] = outCylinder.vertices[i + 1].y;
+//                positions[i * 18 + 14] = outCylinder.vertices[i + 1].z;
+//                positions[i * 18 + 15] = inCylinder.vertices[i + 1].x;
+//                positions[i * 18 + 16] = inCylinder.vertices[i + 1].y;
+//                positions[i * 18 + 17] = inCylinder.vertices[i + 1].z;
+//            }
+//        }
+
+//        //绘内圆柱面
+//        for (var i = 0; i < inHalf; i++) {
+//            if (i == inHalf - 1) {
+//                positions[i * 18 + 0 + inCylinder.vertices.length * 18] = inCylinder.vertices[i].x;
+//                positions[i * 18 + 1 + inCylinder.vertices.length * 18] = inCylinder.vertices[i].y;
+//                positions[i * 18 + 2 + inCylinder.vertices.length * 18] = inCylinder.vertices[i].z;
+//                positions[i * 18 + 3 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf + i].x;
+//                positions[i * 18 + 4 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf + i].y;
+//                positions[i * 18 + 5 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf + i].z;
+//                positions[i * 18 + 6 + inCylinder.vertices.length * 18] = inCylinder.vertices[0].x;
+//                positions[i * 18 + 7 + inCylinder.vertices.length * 18] = inCylinder.vertices[0].y;
+//                positions[i * 18 + 8 + inCylinder.vertices.length * 18] = inCylinder.vertices[0].z;
+
+
+
+//                positions[i * 18 + 9 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf + i].x;
+//                positions[i * 18 + 10 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf + i].y;
+//                positions[i * 18 + 11 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf + i].z;
+//                positions[i * 18 + 12 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf].x;
+//                positions[i * 18 + 13 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf].y;
+//                positions[i * 18 + 14 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf].z;
+//                positions[i * 18 + 15 + inCylinder.vertices.length * 18] = inCylinder.vertices[0].x;
+//                positions[i * 18 + 16 + inCylinder.vertices.length * 18] = inCylinder.vertices[0].y;
+//                positions[i * 18 + 17 + inCylinder.vertices.length * 18] = inCylinder.vertices[0].z;
+
+//            }
+//            else {
+//                positions[i * 18 + 0 + inCylinder.vertices.length * 18] = inCylinder.vertices[i].x;
+//                positions[i * 18 + 1 + inCylinder.vertices.length * 18] = inCylinder.vertices[i].y;
+//                positions[i * 18 + 2 + inCylinder.vertices.length * 18] = inCylinder.vertices[i].z;
+//                positions[i * 18 + 3 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf + i].x;
+//                positions[i * 18 + 4 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf + i].y;
+//                positions[i * 18 + 5 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf + i].z;
+//                positions[i * 18 + 6 + inCylinder.vertices.length * 18] = inCylinder.vertices[i + 1].x;
+//                positions[i * 18 + 7 + inCylinder.vertices.length * 18] = inCylinder.vertices[i + 1].y;
+//                positions[i * 18 + 8 + inCylinder.vertices.length * 18] = inCylinder.vertices[i + 1].z;
+
+
+
+//                positions[i * 18 + 9 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf + i].x;
+//                positions[i * 18 + 10 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf + i].y;
+//                positions[i * 18 + 11 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf + i].z;
+//                positions[i * 18 + 12 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf + i + 1].x;
+//                positions[i * 18 + 13 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf + i + 1].y;
+//                positions[i * 18 + 14 + inCylinder.vertices.length * 18] = inCylinder.vertices[inHalf + i + 1].z;
+//                positions[i * 18 + 15 + inCylinder.vertices.length * 18] = inCylinder.vertices[i + 1].x;
+//                positions[i * 18 + 16 + inCylinder.vertices.length * 18] = inCylinder.vertices[i + 1].y;
+//                positions[i * 18 + 17 + inCylinder.vertices.length * 18] = inCylinder.vertices[i + 1].z;
+//            }
+//        }
+
+//        //绘外圆柱面
+//        for (var i = 0; i < outHalf; i++) {
+//            if (i == outHalf - 1) {
+//                positions[i * 18 + 0 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[i].x;
+//                positions[i * 18 + 1 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[i].y;
+//                positions[i * 18 + 2 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[i].z;
+//                positions[i * 18 + 3 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf + i].x;
+//                positions[i * 18 + 4 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf + i].y;
+//                positions[i * 18 + 5 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf + i].z;
+//                positions[i * 18 + 6 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[0].x;
+//                positions[i * 18 + 7 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[0].y;
+//                positions[i * 18 + 8 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[0].z;
+
+
+
+//                positions[i * 18 + 9 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf + i].x;
+//                positions[i * 18 + 10 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf + i].y;
+//                positions[i * 18 + 11 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf + i].z;
+//                positions[i * 18 + 12 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf].x;
+//                positions[i * 18 + 13 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf].y;
+//                positions[i * 18 + 14 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf].z;
+//                positions[i * 18 + 15 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[0].x;
+//                positions[i * 18 + 16 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[0].y;
+//                positions[i * 18 + 17 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[0].z;
+
+//            }
+//            else {
+//                positions[i * 18 + 0 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[i].x;
+//                positions[i * 18 + 1 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[i].y;
+//                positions[i * 18 + 2 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[i].z;
+//                positions[i * 18 + 3 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf + i].x;
+//                positions[i * 18 + 4 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf + i].y;
+//                positions[i * 18 + 5 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf + i].z;
+//                positions[i * 18 + 6 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[i + 1].x;
+//                positions[i * 18 + 7 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[i + 1].y;
+//                positions[i * 18 + 8 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[i + 1].z;
+
+
+
+//                positions[i * 18 + 9 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf + i].x;
+//                positions[i * 18 + 10 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf + i].y;
+//                positions[i * 18 + 11 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf + i].z;
+//                positions[i * 18 + 12 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf + i + 1].x;
+//                positions[i * 18 + 13 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf + i + 1].y;
+//                positions[i * 18 + 14 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[outHalf + i + 1].z;
+//                positions[i * 18 + 15 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[i + 1].x;
+//                positions[i * 18 + 16 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[i + 1].y;
+//                positions[i * 18 + 17 + outCylinder.vertices.length * 18 * 2] = outCylinder.vertices[i + 1].z;
+//            }
+//        }
+
+
+        geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.addAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+        geometry.computeBoundingSphere();
+        var material = new THREE.MeshBasicMaterial({
+            color: 0xffffff, vertexColors: THREE.VertexColors
+        });
+        var mesh = new THREE.Mesh(geometry, material);
+        return mesh;
 
     }
 
