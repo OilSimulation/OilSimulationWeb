@@ -69,18 +69,42 @@ namespace OilSimulationModel
                     szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/基础认知/封闭边界/FENGBI_E100.EGRID");
                     break;
                 //虚拟实验
-                case 211:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/MODEL1D_E100.EGRID");
+                case 2111:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/毛管力/自定义/MODEL1D_E100.EGRID");
                     break;
-                case 212:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/3-1变密度/MODEL1D_E100.EGRID");
+                case 2112:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/毛管力/自定义/MODEL1D_E100.EGRID");
                     break;
-                case 213:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/3-2变粘度/MODEL1D_E100.EGRID");
+                case 2113:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/毛管力/自定义/MODEL1D_E100.EGRID");
                     break;
-                case 214:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/3-3变毛管压力/MODEL1D_E100.EGRID");
+                case 2114:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/毛管力/自定义/MODEL1D_E100.EGRID");
                     break;
+                case 2121:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/密度/0.7/MODEL1D_E100.EGRID");
+                    break;
+                case 2122:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/密度/0.8/MODEL1D_E100.EGRID");
+                    break;
+                case 2123:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/密度/0.9/MODEL1D_E100.EGRID");
+                    break;
+                case 2124:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/密度/自定义/MODEL1D_E100.EGRID");
+                    break;
+                case 2131:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/粘度/0.5/MODEL1D_E100.EGRID");
+                    break;
+                case 2132:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/粘度/10/MODEL1D_E100.EGRID");
+                    break;
+                case 2133:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/粘度/50/MODEL1D_E100.EGRID");
+                    break;
+                case 2134:
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/粘度/自定义/MODEL1D_E100.EGRID");
+                    break; 
                 //--水驱油效率实验
                 case 2211:
                     szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/水驱油效率实验/三种类型毛管力/wumaoguan/MAOGUANLI_E100.EGRID");
