@@ -126,20 +126,56 @@
                         <!-- 虚拟实验 -->
                         <script type="text/javascript">
                             $(document).ready(function () {
+                                $("#v1Main").change(function () {
+                                    $(".DropDownList.v1Mode").each(function (intdex, item) { $(item).css("display", "none"); });
+                                    if ($(this).val() == "211") {
+                                        $(".DropDownList.v1Mode").eq(0).css("display", "inline");
+                                    }
+                                    if ($(this).val() == "212") {
+                                        $(".DropDownList.v1Mode").eq(1).css("display", "inline");
+                                    }
+                                    if ($(this).val() == "213") {
+                                        $(".DropDownList.v1Mode").eq(2).css("display", "inline");
+                                    }
+                                });
                                 $("#v1Btn").click(function () {
-                                    var curIndex = parseInt($(".v1Mode").val());
+                                    var curIndex = parseInt($(".v1Mode:visible").val());
                                     switch (curIndex) {
-                                        case 211:
-                                            LoadUrl("/VirExperiment/VirtualMode211");
+                                        case 2111:
+                                            LoadUrl("/VirExperiment/VirtualMode2111");
                                             break;
-                                        case 212:
-                                            LoadUrl("/VirExperiment/VirtualMode212");
+                                        case 2112:
+                                            LoadUrl("/VirExperiment/VirtualMode2112");
                                             break;
-                                        case 213:
-                                            LoadUrl("/VirExperiment/VirtualMode213");
+                                        case 2113:
+                                            LoadUrl("/VirExperiment/VirtualMode2113");
                                             break;
-                                        case 214:
-                                            LoadUrl("/VirExperiment/VirtualMode214");
+                                        case 2114:
+                                            LoadUrl("/VirExperiment/VirtualMode2114");
+                                            break;
+                                        case 2121:
+                                            LoadUrl("/VirExperiment/VirtualMode2121");
+                                            break;
+                                        case 2122:
+                                            LoadUrl("/VirExperiment/VirtualMode2122");
+                                            break;
+                                        case 2123:
+                                            LoadUrl("/VirExperiment/VirtualMode2123");
+                                            break;
+                                        case 2124:
+                                            LoadUrl("/VirExperiment/VirtualMode2124");
+                                            break;
+                                        case 2131:
+                                            LoadUrl("/VirExperiment/VirtualMode2131");
+                                            break;
+                                        case 2132:
+                                            LoadUrl("/VirExperiment/VirtualMode2132");
+                                            break;
+                                        case 2133:
+                                            LoadUrl("/VirExperiment/VirtualMode2133");
+                                            break;
+                                        case 2134:
+                                            LoadUrl("/VirExperiment/VirtualMode2134");
                                             break;
                                     }
                                 });
@@ -147,11 +183,28 @@
                         </script>
                         <div id="VirtualOne" class="navControl" style="display:none;">
                             请选择：
-                            <select class="DropDownList v1Mode">
-                            <option value="211">默认参数非活塞驱油</option>
-                            <option value="212">改变油水比重</option>
-                            <option value="213">改变油水粘度</option>
-                            <option value="214">改变毛细管压力</option>
+                            <select class="DropDownList" id="v1Main"> 
+                            <option value="211">毛细管压力</option>
+                            <option value="212">油水比重差</option>
+                            <option value="213">油水粘度差</option>
+                            </select>
+                            <select class="DropDownList v1Mode" style="display:inline;">
+                            <option value="2111">无毛管</option>
+                            <option value="2112">低毛管</option>
+                            <option value="2113">高毛管</option>
+                            <option value="2114">自定义</option>
+                            </select>
+                            <select class="DropDownList v1Mode" style="display:none;">
+                            <option value="2121">0.7</option>
+                            <option value="2122">0.8</option>
+                            <option value="2123">0.9</option>
+                            <option value="2124">自定义</option>
+                            </select>
+                            <select class="DropDownList v1Mode" style="display:none;">
+                            <option value="2131">0.5</option>
+                            <option value="2132">10</option>
+                            <option value="2133">50</option>
+                            <option value="2134">自定义</option>
                             </select>
                             <button id="v1Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
                         </div> 
