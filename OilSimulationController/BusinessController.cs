@@ -462,6 +462,7 @@ namespace OilSimulationController
             stModeData.mm = CaculateMaxMinValue(szPara, countXFiles, eGridFile);
             if (iLoadFirst == 0)
             {
+
                 //获取中心点坐标
                 stModeData.ct = GetCenterCoordinates(gridModel);
                 //获取数据
@@ -484,11 +485,42 @@ namespace OilSimulationController
                 }
 
             }
+            //if (iModel==15)//球面径向流
+            //{
+            //    float r = 0, q = 0, z = 0;
+            //    for (int i = 0;i< stModeData.Data.Count;i++ )
+            //    {
+            //        if (stModeData.Data[i].Length<3)
+            //        {
+            //            break;
+            //        }
+            //        q = stModeData.Data[i][0];
+            //        r = stModeData.Data[i][1];
+            //        z = stModeData.Data[i][2];
+            //        //将柱坐标转成直角坐标
+            //        stModeData.Data[i][0] = r * (float)Math.Cos(q);
+            //        stModeData.Data[i][0] = r * (float)Math.Sin(q);
+            //    }
+            //}
 
 
             stModeData.WellPoint = GetWellPoint(gridModel, strWellFilePath);
 
+            if (iModel == 15)
+            {
+                string filePath = eGridFile.Substring(0, eGridFile.IndexOf("_E")) + "_ggo.INC";
+                int circleCount = 0, count = 0, zCount = 0;
+                GetGGO(filePath, out circleCount, out count, out zCount);
+                //stModeData.Data.Clear();
+                
+                stModeData.Data[0][0] = circleCount;
+                stModeData.Data[0][1] = count;
+                stModeData.Data[0][2] = zCount;
 
+
+            }
+
+            //0 角度 1 半径 2 Z
             stModeData.lev = gridModel.nz;
             var res = new ConfigurableJsonResult();
             res.Data = stModeData;
@@ -1019,6 +1051,28 @@ namespace OilSimulationController
 
 
 
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="circleCount">多少圈</param>
+        /// <param name="count">一个圆分割的分数</param>
+        /// <param name="zCount">Z方向上个数</param>
+        private void GetGGO(string filePath, out int circleCount, out int count, out int zCount)
+        {
+            List<string> listData = CommonModel.ReadInfoFromFile(filePath);
+            int index = listData.IndexOf("DZ")-1;
+            string strData = listData[index];
+
+            int index1 = strData.IndexOf("(");
+            int index2 = strData.IndexOf(")");
+            strData = strData.Substring(index1 + 1, index2 - index1 - 1);
+            string[] strs = strData.Split(',');
+            int.TryParse(strs[0].Split(':')[1], out circleCount);
+            int.TryParse(strs[1].Split(':')[1], out count);
+            int.TryParse(strs[2].Split(':')[1], out zCount);
         }
 
 

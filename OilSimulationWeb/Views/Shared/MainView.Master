@@ -299,8 +299,8 @@
             var sUrl = '<%:Url.Action("GetData","Business") %>';
             var mIndex = $("#ModeIndex").val();  
             //组装JSON数据
-            var jsonData = {Para:paramValue,Mode:mIndex,Step:timeValue,iLoadFirst:isFirstLoad}; 
-            myLoader.load(sUrl, JSON.stringify(jsonData) ,function (loadedMesh) {
+            var jsonData = {Para:paramValue,Mode:mIndex,Step:timeValue,iLoadFirst:isFirstLoad};
+            myLoader.load(sUrl, JSON.stringify(jsonData), mIndex, function (loadedMesh) {
                 if (isFirstLoad==0) { 
                     loadedMesh.children.forEach(function (child) { }); 
                     mesh = loadedMesh; 
