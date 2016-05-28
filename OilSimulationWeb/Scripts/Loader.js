@@ -21,6 +21,7 @@ THREE.MyLoader.prototype = {
         loader.setCrossOrigin(this.crossOrigin);
         loader.load(url, pData, function (text) {
             if (geometry == undefined) {
+
                 if (modelId == 15) {
                     onLoad(scope.LoadBufferGeometryCircleMode(text));
                     //onLoad(scope.DrawPipe(40, 40, 100, 4));
@@ -512,21 +513,34 @@ THREE.MyLoader.prototype = {
 
         }
         circleGroup = new THREE.Group();
+        var arrayColorData; //包括坐标与颜色
 
         var jsonData = JSON.parse(text);
         //多少圈
-        var circle = jsonData.Data[0][0];
-        var zCount = jsonData.Data[0][2];
-        //jsonData.Data[0][1]:每圈分成多少份
+        var circle = jsonData.Data[0][0]; //(如30)
+        var zCount = jsonData.Data[0][2]; //Z方向个数(如50)
+        var split = jsonData.Data[0][1]; //每圈分成多少份(如60)
         var group = new THREE.Group();
         //return this.DrawPipe(100, 200, 100, 60);
-        var color = new THREE.Color();
+        //var color = new THREE.Color();
         //color.setRGB(255, 0, 0);
         for (var j = 0; j < zCount; j++) {
             for (var i = 0; i < circle; i++) {
-                //jsonData.Data.slice(i
-                color.setRGB(Math.random(), Math.random(), Math.random());
-                this.DrawPipe(10 * (i + 1), 10 * (i + 2), 10, jsonData.Data[0][1], color, ((j + 1) - circle / 2) * 10);
+                var arrayColor = []; //颜色
+                for (var s = 0; s < split; s++) {
+
+                    //jsonData.Data[s * circle + i * split + i * split * circle];
+                    var info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[s * circle + j * split * circle + i][3], jsonData.mm[1], jsonData.mm[0]);
+                    var colorHex;
+                    if (info) {
+                        colorHex = (info["R"] << 16) | (info["G"] << 8) | info["B"];
+                    }
+                    var color = new THREE.Color();
+                    color.setHex(colorHex);
+                    arrayColor.push(color);
+
+                }
+                this.DrawPipe(10 * (i + 1), 10 * (i + 2), 10, split, arrayColor, ((j + 1) - circle / 2) * 10);
             }
 
         }
@@ -535,6 +549,7 @@ THREE.MyLoader.prototype = {
 
     },
     //绘制管道,inR:内径,outR:外径,height:管高,radialSegments:上、下面分成多少份,yOffset：坐标方向的偏移量
+    //color:颜色数据 长度为radialSegments
     DrawPipe: function (inR, outR, height, radialSegments, color, yOffset) {
 
 
@@ -563,12 +578,12 @@ THREE.MyLoader.prototype = {
         //var color = new THREE.Color;
         //color.setRGB(255, 0, 0);
 
-        for (var i = 0; i < colors.length; i += 3) {
-            colors[i + 0] = color.r;
-            colors[i + 1] = color.g;
-            colors[i + 2] = color.b;
+        //        for (var i = 0; i < colors.length; i += 3) {
+        //            colors[i + 0] = color.r;
+        //            colors[i + 1] = color.g;
+        //            colors[i + 2] = color.b;
 
-        }
+        //        }
 
         //上表面
         for (var i = 0; i < g1.vertices.length / 2; i++) {
@@ -621,6 +636,26 @@ THREE.MyLoader.prototype = {
                 positions[i * 18 + 17] = g1.vertices[i + 1].z;
 
             }
+            //增加颜色
+            colors[i * 18 + 0] = color[i].r;
+            colors[i * 18 + 1] = color[i].g;
+            colors[i * 18 + 2] = color[i].b;
+            colors[i * 18 + 3] = color[i].r;
+            colors[i * 18 + 4] = color[i].g;
+            colors[i * 18 + 5] = color[i].b;
+            colors[i * 18 + 6] = color[i].r;
+            colors[i * 18 + 7] = color[i].g;
+            colors[i * 18 + 8] = color[i].b;
+            colors[i * 18 + 9] = color[i].r;
+            colors[i * 18 + 10] = color[i].g;
+            colors[i * 18 + 11] = color[i].b;
+            colors[i * 18 + 12] = color[i].r;
+            colors[i * 18 + 13] = color[i].g;
+            colors[i * 18 + 14] = color[i].b;
+            colors[i * 18 + 15] = color[i].r;
+            colors[i * 18 + 16] = color[i].g;
+            colors[i * 18 + 17] = color[i].b;
+
         }
 
 
@@ -675,10 +710,28 @@ THREE.MyLoader.prototype = {
                 positions[i * 18 + 16] = g1.vertices[i + 1].y + yOffset
                 positions[i * 18 + 17] = g1.vertices[i + 1].z;
             }
+            colors[i * 18 + 0] = color[i - g1.vertices.length / 2].r;
+            colors[i * 18 + 1] = color[i - g1.vertices.length / 2].g;
+            colors[i * 18 + 2] = color[i - g1.vertices.length / 2].b;
+            colors[i * 18 + 3] = color[i - g1.vertices.length / 2].r;
+            colors[i * 18 + 4] = color[i - g1.vertices.length / 2].g;
+            colors[i * 18 + 5] = color[i - g1.vertices.length / 2].b;
+            colors[i * 18 + 6] = color[i - g1.vertices.length / 2].r;
+            colors[i * 18 + 7] = color[i - g1.vertices.length / 2].g;
+            colors[i * 18 + 8] = color[i - g1.vertices.length / 2].b;
+            colors[i * 18 + 9] = color[i - g1.vertices.length / 2].r;
+            colors[i * 18 + 10] = color[i - g1.vertices.length / 2].g;
+            colors[i * 18 + 11] = color[i - g1.vertices.length / 2].b;
+            colors[i * 18 + 12] = color[i - g1.vertices.length / 2].r;
+            colors[i * 18 + 13] = color[i - g1.vertices.length / 2].g;
+            colors[i * 18 + 14] = color[i - g1.vertices.length / 2].b;
+            colors[i * 18 + 15] = color[i - g1.vertices.length / 2].r;
+            colors[i * 18 + 16] = color[i - g1.vertices.length / 2].g;
+            colors[i * 18 + 17] = color[i - g1.vertices.length / 2].b;
 
         }
 
-        //绘圆柱面
+        //绘内圆柱面
         for (var i = 0; i < g1.vertices.length / 2; i++) {
             if (i == g1.vertices.length / 2 - 1) {
                 positions[i * 18 + 0 + g1.vertices.length * 18] = g1.vertices[i].x;
@@ -727,9 +780,28 @@ THREE.MyLoader.prototype = {
                 positions[i * 18 + 16 + g1.vertices.length * 18] = g1.vertices[i + 1].y + yOffset;
                 positions[i * 18 + 17 + g1.vertices.length * 18] = g1.vertices[i + 1].z;
             }
+            colors[i * 18 + 0 + g1.vertices.length * 18] = color[i].r;
+            colors[i * 18 + 1 + g1.vertices.length * 18] = color[i].g;
+            colors[i * 18 + 2 + g1.vertices.length * 18] = color[i].b;
+            colors[i * 18 + 3 + g1.vertices.length * 18] = color[i].r;
+            colors[i * 18 + 4 + g1.vertices.length * 18] = color[i].g;
+            colors[i * 18 + 5 + g1.vertices.length * 18] = color[i].b;
+            colors[i * 18 + 6 + g1.vertices.length * 18] = color[i].r;
+            colors[i * 18 + 7 + g1.vertices.length * 18] = color[i].g;
+            colors[i * 18 + 8 + g1.vertices.length * 18] = color[i].b;
+            colors[i * 18 + 9 + g1.vertices.length * 18] = color[i].r;
+            colors[i * 18 + 10 + g1.vertices.length * 18] = color[i].g;
+            colors[i * 18 + 11 + g1.vertices.length * 18] = color[i].b;
+            colors[i * 18 + 12 + g1.vertices.length * 18] = color[i].r;
+            colors[i * 18 + 13 + g1.vertices.length * 18] = color[i].g;
+            colors[i * 18 + 14 + g1.vertices.length * 18] = color[i].b;
+            colors[i * 18 + 15 + g1.vertices.length * 18] = color[i].r;
+            colors[i * 18 + 16 + g1.vertices.length * 18] = color[i].g;
+            colors[i * 18 + 17 + g1.vertices.length * 18] = color[i].b;
+
         }
 
-        //绘圆柱面
+        //绘外圆柱面
         for (var i = 0; i < g2.vertices.length / 2; i++) {
             if (i == g2.vertices.length / 2 - 1) {
                 positions[i * 18 + 0 + g2.vertices.length * 18 * 2] = g2.vertices[i].x;
@@ -778,6 +850,25 @@ THREE.MyLoader.prototype = {
                 positions[i * 18 + 16 + g2.vertices.length * 18 * 2] = g2.vertices[i + 1].y + yOffset;
                 positions[i * 18 + 17 + g2.vertices.length * 18 * 2] = g2.vertices[i + 1].z;
             }
+            colors[i * 18 + 0 + g2.vertices.length * 18 * 2] = color[i].r;
+            colors[i * 18 + 1 + g2.vertices.length * 18 * 2] = color[i].g;
+            colors[i * 18 + 2 + g2.vertices.length * 18 * 2] = color[i].b;
+            colors[i * 18 + 3 + g2.vertices.length * 18 * 2] = color[i].r;
+            colors[i * 18 + 4 + g2.vertices.length * 18 * 2] = color[i].g;
+            colors[i * 18 + 5 + g2.vertices.length * 18 * 2] = color[i].b;
+            colors[i * 18 + 6 + g2.vertices.length * 18 * 2] = color[i].r;
+            colors[i * 18 + 7 + g2.vertices.length * 18 * 2] = color[i].g;
+            colors[i * 18 + 8 + g2.vertices.length * 18 * 2] = color[i].b;
+            colors[i * 18 + 9 + g2.vertices.length * 18 * 2] = color[i].r;
+            colors[i * 18 + 10 + g2.vertices.length * 18 * 2] = color[i].g;
+            colors[i * 18 + 11 + g2.vertices.length * 18 * 2] = color[i].b;
+            colors[i * 18 + 12 + g2.vertices.length * 18 * 2] = color[i].r;
+            colors[i * 18 + 13 + g2.vertices.length * 18 * 2] = color[i].g;
+            colors[i * 18 + 14 + g2.vertices.length * 18 * 2] = color[i].b;
+            colors[i * 18 + 15 + g2.vertices.length * 18 * 2] = color[i].r;
+            colors[i * 18 + 16 + g2.vertices.length * 18 * 2] = color[i].g;
+            colors[i * 18 + 17 + g2.vertices.length * 18 * 2] = color[i].b;
+
         }
 
 

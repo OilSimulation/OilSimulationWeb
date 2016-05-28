@@ -485,21 +485,21 @@ namespace OilSimulationController
                 }
 
             }
-            //if (iModel==15)//球面径向流
+            //if (iModel == 15)//球面径向流
             //{
             //    float r = 0, q = 0, z = 0;
-            //    for (int i = 0;i< stModeData.Data.Count;i++ )
+            //    for (int i = 0; i < stModeData.Data.Count; i++)
             //    {
-            //        if (stModeData.Data[i].Length<3)
+            //        if (stModeData.Data[i].Length < 3)
             //        {
             //            break;
             //        }
-            //        q = stModeData.Data[i][0];
-            //        r = stModeData.Data[i][1];
+            //        q = stModeData.Data[i][1];
+            //        r = stModeData.Data[i][0];
             //        z = stModeData.Data[i][2];
             //        //将柱坐标转成直角坐标
             //        stModeData.Data[i][0] = r * (float)Math.Cos(q);
-            //        stModeData.Data[i][0] = r * (float)Math.Sin(q);
+            //        stModeData.Data[i][1] = r * (float)Math.Sin(q);
             //    }
             //}
 
@@ -512,7 +512,7 @@ namespace OilSimulationController
                 int circleCount = 0, count = 0, zCount = 0;
                 GetGGO(filePath, out circleCount, out count, out zCount);
                 //stModeData.Data.Clear();
-                
+
                 stModeData.Data[0][0] = circleCount;
                 stModeData.Data[0][1] = count;
                 stModeData.Data[0][2] = zCount;
