@@ -663,8 +663,52 @@ namespace OilSimulationModel
             //返回地层油藏原始储量
             return Convert.ToSingle(strArray[3]);
         }
-    
-        
+
+        /// <summary>
+        /// 自动生成RSM文件
+        /// </summary>
+        /// <param name="iModeIndex"></param>
+        public static void AutoCreateRsmFile(int iModeIndex)
+        {
+            //GRID文件
+            string szGridFilePath = GetModeUriPath(iModeIndex);
+            //模型名称  
+            string szModeName = Path.GetFileNameWithoutExtension(szGridFilePath);
+            //RSM文件
+            string rsmFilename = Path.ChangeExtension(szGridFilePath, ".RSM");
+            //模块目录
+            string targetDir = System.IO.Path.GetDirectoryName(szGridFilePath);
+            //批处理文件
+            string szBatFile = targetDir + "\\RUN.BAT";
+            //批处理命令 
+            string szBatCommand = String.Format("CAll $eclipse -file {0}  -ver 2006.1", szModeName);
+
+            if (!File.Exists(rsmFilename))
+            {
+                //批处理文件生成  
+                if (!File.Exists(szBatFile))
+                {
+                    FileStream fs = new FileStream(szBatFile, FileMode.OpenOrCreate, FileAccess.ReadWrite); //可以指定盘符，也可以指定任意文件名，还可以为word等文件
+                    StreamWriter sw = new StreamWriter(fs); // 创建写入流
+                    sw.WriteLine(szBatCommand); // 写入Hello World
+                    sw.Close(); //关闭文件
+                }
+                try
+                {
+                    System.Diagnostics.Process myProcess = new System.Diagnostics.Process();
+                    myProcess.StartInfo.UseShellExecute = false;
+                    myProcess.StartInfo.CreateNoWindow = true;
+                    myProcess.StartInfo.WorkingDirectory = targetDir;
+                    myProcess.StartInfo.FileName = szBatFile;
+                    myProcess.Start();
+                    myProcess.WaitForExit();
+                }
+                catch (Exception ex)
+                {
+                    ex.Message.ToString();
+                }
+            }
+        }
 
     }
 
