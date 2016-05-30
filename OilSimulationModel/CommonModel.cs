@@ -635,7 +635,37 @@ namespace OilSimulationModel
             return listData;
         }
 
+
+        /// <summary>
+        /// 获取地层原始储油量
+        /// </summary>
+        /// <param name="iModeIndex"></param>
+        /// <returns></returns>
+        public static float GetOilTotal(int iModeIndex)
+        {
+            string szGridFilePath = GetModeUriPath(iModeIndex);
+            string prtFilename = Path.ChangeExtension(szGridFilePath, ".PRT");
+            List<string> strLst = ReadInfoFromFile(prtFilename);
+            int iIndex = -1;
+            for (int i = 0; i < strLst.Count; i++)
+            {
+                if (strLst[i].IndexOf("ORIGINALLY IN PLACE") != -1)
+                {
+                    iIndex = i;
+                    break;
+                }
+            }
+            if (iIndex == -1)
+            {
+                return 0;
+            }
+            string[] strArray = strLst[iIndex].Split(new char[] { ':', '\t', ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+            //返回地层油藏原始储量
+            return Convert.ToSingle(strArray[3]);
+        }
+    
         
+
     }
 
 }
