@@ -674,6 +674,8 @@ namespace OilSimulationModel
             string szGridFilePath = GetModeUriPath(iModeIndex);
             //模型名称  
             string szModeName = Path.GetFileNameWithoutExtension(szGridFilePath);
+            //油井文件
+            string sumFileName = szGridFilePath.Substring(0, szGridFilePath.IndexOf("_E")) + "_SUM.INC";
             //RSM文件
             string rsmFilename = Path.ChangeExtension(szGridFilePath, ".RSM");
             //模块目录
@@ -692,6 +694,21 @@ namespace OilSimulationModel
                     StreamWriter sw = new StreamWriter(fs); // 创建写入流
                     sw.WriteLine(szBatCommand); // 写入Hello World
                     sw.Close(); //关闭文件
+                }
+                //修改SUM文件
+                {
+                    List<string> listData = new List<string>();
+                    listData.Add("EXCEL");
+                    listData.Add("--FLPR 日产液");
+                    listData.Add("FLPT");
+                    listData.Add("--FOPR  日产油");
+                    listData.Add("FOPT");
+                    listData.Add("FPR");
+                    listData.Add("--FWIR   日注水");
+                    listData.Add("FWIT");
+                    listData.Add("--FWPR   日产水");
+                    listData.Add("FWPT"); 
+                    WriteInfoToFile(sumFileName, listData);    
                 }
                 try
                 {
