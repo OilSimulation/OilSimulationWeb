@@ -114,6 +114,7 @@
     <Content Include="Scripts\controls\TransformControls.js" />
     <Content Include="Scripts\controls\VRControls.js" />
     <Content Include="Scripts\Common.js" />
+    <Content Include="Scripts\jscharts.js" />
     <Content Include="Scripts\libs\ammo.js" />
     <Content Include="Scripts\libs\AsciiEffect.js" />
     <Content Include="Scripts\libs\AssimpJSONLoader.js" />
