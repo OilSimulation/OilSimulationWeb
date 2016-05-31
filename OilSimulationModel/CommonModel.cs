@@ -70,13 +70,13 @@ namespace OilSimulationModel
                     break;
                 //虚拟实验
                 case 2111:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/毛管力/自定义/MODEL1D_E100.EGRID");
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/毛管力/0.5/MODEL1D_E100.EGRID");
                     break;
                 case 2112:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/毛管力/自定义/MODEL1D_E100.EGRID");
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/毛管力/1/MODEL1D_E100.EGRID");
                     break;
                 case 2113:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/毛管力/自定义/MODEL1D_E100.EGRID");
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/毛管力/2/MODEL1D_E100.EGRID");
                     break;
                 case 2114:
                     szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/虚拟实验/非活塞式驱油影响因素/毛管力/自定义/MODEL1D_E100.EGRID");
