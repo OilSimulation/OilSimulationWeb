@@ -447,7 +447,6 @@ namespace OilSimulationController
                 iStep = inputData.Step;
                 iLoadFirst = inputData.iLoadFirst;
             }
-            CommonModel.AutoCreateRsmFile(iModel);
             //Grid文件
             string eGridFile = CommonModel.GetModeUriPath(iModel);
             //油井文件

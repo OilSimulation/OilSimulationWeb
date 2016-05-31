@@ -535,7 +535,40 @@ namespace OilSimulationModel
             {
                 stPageParams.timeSteps[i] = string.Format("{0:yyyy-MM-dd}", timesteps[i]);
             }
- 
+            //采油天数
+            stPageParams.lstDays = new List<float>();
+            //累产液
+            stPageParams.lstFLPT = new List<float>();
+            //累采油
+            stPageParams.lstFOPT = new List<float>();
+            //地层压力
+            stPageParams.lstFPR = new List<float>();
+            //累注水
+            stPageParams.lstFWIT = new List<float>();
+            //累产水
+            stPageParams.lstFWPT = new List<float>(); 
+            //生存RSM文件 （IF） RSM文件不存在
+            AutoCreateRsmFile(szGridFilePath);
+            //地层原始储油量
+            float fMaxOilInclude = GetOilTotal(szGridFilePath);
+            //RSM文件
+            string rsmFilename = Path.ChangeExtension(szGridFilePath, ".RSM");
+            List<string> lst = ReadInfoFromFile(rsmFilename);
+            //从第七行开始
+            for (int i = 6; i < lst.Count; i++ )
+            {
+                string[] strArray = lst[i].Split(new char[] {'\t', ' '}, StringSplitOptions.RemoveEmptyEntries);
+                //采出程度计算--百分比
+                float fCurGetPercent = Convert.ToSingle(strArray[3]) * 100 / fMaxOilInclude;
+                stPageParams.lstDays.Add(Convert.ToSingle(strArray[0]));
+                stPageParams.lstFLPT.Add(Convert.ToSingle(strArray[2]));
+                stPageParams.lstFOPT.Add(fCurGetPercent);
+                stPageParams.lstFPR.Add(Convert.ToSingle(strArray[4]));
+                stPageParams.lstFWIT.Add(Convert.ToSingle(strArray[5]));
+                stPageParams.lstFWPT.Add(Convert.ToSingle(strArray[6]));
+            }
+            //采油效率-采收率 == 最后的采出程度
+            stPageParams.fGetPercent = stPageParams.lstFOPT[stPageParams.lstFOPT.Count-1];
             //网格数字
             stPageParams.iTotalGrid = gridMode.TotalGrids;
 
@@ -563,9 +596,6 @@ namespace OilSimulationModel
             }
             return list;
         }
-
-
-        
 
         /// <summary>
         /// 
@@ -641,37 +671,34 @@ namespace OilSimulationModel
         /// </summary>
         /// <param name="iModeIndex"></param>
         /// <returns></returns>
-        public static float GetOilTotal(int iModeIndex)
+        public static float GetOilTotal(string szGridFilePath)
         {
-            string szGridFilePath = GetModeUriPath(iModeIndex);
-            string prtFilename = Path.ChangeExtension(szGridFilePath, ".PRT");
-            List<string> strLst = ReadInfoFromFile(prtFilename);
-            int iIndex = -1;
-            for (int i = 0; i < strLst.Count; i++)
+            string prtFilename = Path.ChangeExtension(szGridFilePath, ".PRT");  
+            if (File.Exists(prtFilename))
             {
-                if (strLst[i].IndexOf("ORIGINALLY IN PLACE") != -1)
+                using (StreamReader sr = new StreamReader(prtFilename, Encoding.GetEncoding("GBK")))
                 {
-                    iIndex = i;
-                    break;
+                    while (!sr.EndOfStream)
+                    {
+                        string sTemp = sr.ReadLine();
+                        if (sTemp.IndexOf("ORIGINALLY IN PLACE") != -1)
+                        { 
+                            string[] strArray = sTemp.Split(new char[] { ':', '\t', ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                            //返回地层油藏原始储量
+                            return Convert.ToSingle(strArray[3]);
+                        }
+                    }
                 }
             }
-            if (iIndex == -1)
-            {
-                return 0;
-            }
-            string[] strArray = strLst[iIndex].Split(new char[] { ':', '\t', ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
-            //返回地层油藏原始储量
-            return Convert.ToSingle(strArray[3]);
+            return 0;
         }
 
         /// <summary>
         /// 自动生成RSM文件
         /// </summary>
         /// <param name="iModeIndex"></param>
-        public static void AutoCreateRsmFile(int iModeIndex)
-        {
-            //GRID文件
-            string szGridFilePath = GetModeUriPath(iModeIndex);
+        public static void AutoCreateRsmFile(string szGridFilePath)
+        { 
             //模型名称  
             string szModeName = Path.GetFileNameWithoutExtension(szGridFilePath);
             //油井文件

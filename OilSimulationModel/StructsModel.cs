@@ -114,7 +114,14 @@ namespace OilSimulationModel
     {
         public List<string> dynamicProps;
         public string[] timeSteps;
+        public List<float> lstDays;//采油天数
+        public List<float> lstFLPT;//累产液
+        public List<float> lstFOPT;//累产油-〉采出程度
+        public List<float> lstFPR; //地层压力
+        public List<float> lstFWIT;//累产水
+        public List<float> lstFWPT;//累注水
         public int iTotalGrid;
+        public float fGetPercent;//采收率-采油效率
 
     }
 
