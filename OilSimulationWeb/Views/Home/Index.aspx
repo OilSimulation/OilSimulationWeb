@@ -189,9 +189,9 @@
                             <option value="213">油水粘度差</option>
                             </select>
                             <select class="DropDownList v1Mode" style="display:inline;">
-                            <option value="2111">无毛管</option>
-                            <option value="2112">低毛管</option>
-                            <option value="2113">高毛管</option>
+                            <option value="2111">0.5</option>
+                            <option value="2112">1</option>
+                            <option value="2113">2</option>
                             <option value="2114">自定义</option>
                             </select>
                             <select class="DropDownList v1Mode" style="display:none;">
