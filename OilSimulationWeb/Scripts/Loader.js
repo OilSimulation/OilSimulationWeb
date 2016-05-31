@@ -34,9 +34,15 @@ THREE.MyLoader.prototype = {
 
                 parent.postMessage("HideLoading()", "*");
             }
-            else
-                onLoad(scope.ChangeBufferGeometryColor(text));
-            //onLoad(scope.ChangeColor(pData, text));
+            else {
+                if (modelId == 15) {
+                    onLoad(scope.ChangeBufferGeometryCircleColor(text));
+                }
+                else {
+                    onLoad(scope.ChangeBufferGeometryColor(text));
+                    //onLoad(scope.ChangeColor(pData, text));
+                }
+            }
         }, function () {
             onProgress;
             //if (geometry == undefined)
@@ -197,10 +203,6 @@ THREE.MyLoader.prototype = {
         var index = 0;
         var color = new THREE.Color();
         for (var i = 0; i < dataLen; i++) {
-            if (i == 29999) {
-                var xx = 0;
-            }
-            index++;
             xw = jsonData.xyz[parseInt(i / (jsonData.Data.length / jsonData.lev))][0];
             yw = jsonData.xyz[parseInt(i / (jsonData.Data.length / jsonData.lev))][1];
             zw = jsonData.xyz[parseInt(i / (jsonData.Data.length / jsonData.lev))][2];
@@ -431,6 +433,41 @@ THREE.MyLoader.prototype = {
 
     },
 
+    //修改球面径向流颜色
+    ChangeBufferGeometryCircleColor: function (text) {
+        var jsonData = JSON.parse(text);
+        var colors = geometry.getAttribute('color');
+        var colorsArray = colors.array;
+        var info, color;
+        var color = new THREE.Color();
+        //颜色计算还有问题
+        
+
+        for (var i = 0; i < jsonData.Data.length; i++) {
+            info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][0], jsonData.mm[1], jsonData.mm[0]);
+            if (info) {
+                var colorHex = (info["R"] << 16) | (info["G"] << 8) | info["B"];
+                color.setHex(colorHex);
+            }
+            else {
+                var kkk = 0;
+            }
+
+            for (var j = 0; j < 18; j += 3) {
+                if (colorsArray.length >= i * 18 + j + 2) {
+                    //防止异常
+                    break;
+                }
+                colorsArray[i * 18 + j + 0] = color.r;
+                colorsArray[i * 18 + j + 1] = color.g;
+                colorsArray[i * 18 + j + 2] = color.b;
+
+            }
+        }
+        colors.needsUpdate = true;
+
+    },
+
     LoadMode: function (text) {
 
         console.time('MyLoader');
@@ -507,7 +544,7 @@ THREE.MyLoader.prototype = {
         return container;
     },
 
-
+    //画球面径向流
     LoadBufferGeometryCircleMode: function (text) {
         if (circleGroup) {
 
@@ -520,7 +557,7 @@ THREE.MyLoader.prototype = {
         var circle = jsonData.Data[0][0]; //(如30)
         var zCount = jsonData.Data[0][2]; //Z方向个数(如50)
         var split = jsonData.Data[0][1]; //每圈分成多少份(如60)
-        var group = new THREE.Group();
+        //var group = new THREE.Group();
         //return this.DrawPipe(100, 200, 100, 60);
         //var color = new THREE.Color();
         //color.setRGB(255, 0, 0);
@@ -575,15 +612,6 @@ THREE.MyLoader.prototype = {
         //2*3 每封闭一个面需要在最后的坐标点中加入起始点
         var positions = new Float32Array(g1.vertices.length * 18 * 3 + 6);
         var colors = new Float32Array(g1.vertices.length * 18 * 3 + 6);
-        //var color = new THREE.Color;
-        //color.setRGB(255, 0, 0);
-
-        //        for (var i = 0; i < colors.length; i += 3) {
-        //            colors[i + 0] = color.r;
-        //            colors[i + 1] = color.g;
-        //            colors[i + 2] = color.b;
-
-        //        }
 
         //上表面
         for (var i = 0; i < g1.vertices.length / 2; i++) {
@@ -881,18 +909,9 @@ THREE.MyLoader.prototype = {
             color: 0xffffff, vertexColors: THREE.VertexColors, side: THREE.DoubleSide
         });
 
-
-        //        var material = new THREE.MeshPhongMaterial({
-        //            color: 0xFFFFFF, specular: 0xffffff, shininess: 250,
-        //            side: THREE.DoubleSide, vertexColors: THREE.VertexColors
-        //        });
-
         var mesh = new THREE.Mesh(geometry, material);
 
-        //var group = new THREE.Group();
         circleGroup.add(mesh);
-        //return group;
-        //return mesh;
 
     }
 
