@@ -512,10 +512,24 @@ namespace OilSimulationController
                 int circleCount = 0, count = 0, zCount = 0;
                 GetGGO(filePath, out circleCount, out count, out zCount);
                 //stModeData.Data.Clear();
+                if (iLoadFirst==0)
+                {
+                    stModeData.Data[0][0] = circleCount;
+                    stModeData.Data[0][1] = count;
+                    stModeData.Data[0][2] = zCount;
 
-                stModeData.Data[0][0] = circleCount;
-                stModeData.Data[0][1] = count;
-                stModeData.Data[0][2] = zCount;
+                }
+                else
+                {
+                    float f = stModeData.Data[0][0];
+                    float[] fs = new float[4];
+                    fs[0] = f;
+                    fs[1] = circleCount;
+                    fs[2] = count;
+                    fs[3] = zCount;
+                    stModeData.Data[0] = fs;
+
+                }
 
 
             }
