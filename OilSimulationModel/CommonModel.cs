@@ -163,14 +163,14 @@ namespace OilSimulationModel
                     break;
                 //仿真实训
                 case 3111:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/200/JINGJU200_E100.EGRID");
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/100/JINGJU500_E100.EGRID");
                     break;
                 case 3112:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/300/JINGJU300_E100.EGRID");
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/200/JINGJU200_E100.EGRID");
                     break;
                 case 3113:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/500/JINGJU500_E100.EGRID");
-                    break;
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/300/JINGJU300_E100.EGRID");
+                    break; 
                 case 3114:
                     szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/井网井距/井距/自定义/JINGJU500_E100.EGRID");
                     break;
@@ -558,6 +558,7 @@ namespace OilSimulationModel
             for (int i = 6; i < lst.Count; i++ )
             {
                 string[] strArray = lst[i].Split(new char[] {'\t', ' '}, StringSplitOptions.RemoveEmptyEntries);
+                if (strArray.Length < 7) continue;
                 //采出程度计算--百分比
                 float fCurGetPercent = Convert.ToSingle(strArray[3]) * 100 / fMaxOilInclude;
                 stPageParams.lstDays.Add(Convert.ToSingle(strArray[0]));
@@ -737,23 +738,32 @@ namespace OilSimulationModel
                     listData.Add("FWPT"); 
                     WriteInfoToFile(sumFileName, listData);    
                 }
-                try
-                {
-                    System.Diagnostics.Process myProcess = new System.Diagnostics.Process();
-                    myProcess.StartInfo.UseShellExecute = false;
-                    myProcess.StartInfo.CreateNoWindow = true;
-                    myProcess.StartInfo.WorkingDirectory = targetDir;
-                    myProcess.StartInfo.FileName = szBatFile;
-                    myProcess.Start();
-                    myProcess.WaitForExit();
-                }
-                catch (Exception ex)
-                {
-                    ex.Message.ToString();
-                }
+                ExecBatCommand(szGridFilePath);
             }
         }
 
+        /// <summary>
+        /// 执行批处理
+        /// </summary>
+        /// <param name="szGridFilePath"></param>
+        public static void ExecBatCommand(string szGridFilePath)
+        {
+            string targetDir = System.IO.Path.GetDirectoryName(szGridFilePath);
+            try
+            {
+                System.Diagnostics.Process myProcess = new System.Diagnostics.Process();
+                myProcess.StartInfo.UseShellExecute = false;
+                myProcess.StartInfo.CreateNoWindow = true;
+                myProcess.StartInfo.WorkingDirectory = targetDir;
+                myProcess.StartInfo.FileName = targetDir + "\\RUN.BAT";
+                myProcess.Start();
+                myProcess.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                ex.Message.ToString();
+            }
+        }
     }
 
 }

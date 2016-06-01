@@ -3,26 +3,13 @@
     SimMode3114
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<script type="text/javascript" >
-    function UpdateWellDist() {
-        var wellDist = $("#wellDist").val();
-        var jsonData = {};
-        jsonData.Mode = 3114;
-        jsonData.Step = wellDist; //距离
-        var option = {
-            url: '<%:Url.Action("UpdateWellDistance","Business") %>',
-            type: 'POST',
-            data: JSON.stringify(jsonData),
-            dataType: 'html',
-            contentType: 'application/json',
-            success: function (result) { ExcutBatCommand(); }
-        };
-        $.ajax(option);
-
-    }
+<script type="text/javascript" > 
     $(document).ready(function () {
         $("#wellDist").unbind('click').click(function () {
-            UpdateWellDist();
+            var jsonData = {};
+            jsonData.Mode = 3114;
+            jsonData.Step = $("#wellDist").val(); //距离
+            CommonDataUpdate(jsonData);
         });
     });
 </script>

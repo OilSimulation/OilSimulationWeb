@@ -93,7 +93,7 @@
             data: JSON.stringify(jsonData),
             dataType: 'html',
             contentType: 'application/json',
-            success: function (result) { ExcutBatCommand(); }
+            success: function (result) { LoadWebGLData(0) ; }
         };
         $.ajax(option);
 

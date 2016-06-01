@@ -49,39 +49,7 @@ namespace OilSimulationController
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return Json(strData, JsonRequestBehavior.AllowGet);
         }
-
-        /// <summary>
-        /// 运行批处理命令
-        /// </summary>
-        /// <param name="inputData"></param>
-        /// <returns></returns>
-        public ActionResult ExecBatCommand(PostData inputData)
-        {
-            int iModel = 0;
-            if (ModelState.IsValid)
-            {
-                iModel = inputData.Mode;
-            }
-            string szEgridPath = CommonModel.GetModeUriPath(iModel);
-            string targetDir = System.IO.Path.GetDirectoryName(szEgridPath);
-            //string targetDir = szEgridPath.Substring(0, szEgridPath.LastIndexOf("\\") + 1);
-            try
-            {
-                System.Diagnostics.Process myProcess = new System.Diagnostics.Process();
-                myProcess.StartInfo.UseShellExecute = false;
-                myProcess.StartInfo.CreateNoWindow = true;
-                myProcess.StartInfo.WorkingDirectory = targetDir;
-                myProcess.StartInfo.FileName = targetDir + "\\RUN.BAT";
-                myProcess.Start();
-                myProcess.WaitForExit();
-            }
-            catch (Exception ex)
-            {
-                ex.Message.ToString();
-            }
-            return new JsonResult();
-        }
-
+          
         /// <summary>
         /// 获取X000扩展文件
         /// </summary>
@@ -545,12 +513,12 @@ namespace OilSimulationController
 
 
         /// <summary>
-        /// 修改井距离
+        /// 通用数据更新方法
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult UpdateWellDistance(PostData data)
+        public ActionResult CommonDataUpdate(PostData data)
         {
             int iModel = 0;
 
@@ -559,24 +527,15 @@ namespace OilSimulationController
                 iModel = data.Mode;
             }
             string szEgridPath = CommonModel.GetModeUriPath(iModel);
-            //DX,DY
-            string strFilePath = szEgridPath.Substring(0, szEgridPath.IndexOf("_E")) + "_GGO.INC";
-            string strWellCountFilePath = szEgridPath.Substring(0, szEgridPath.IndexOf("_E")) + "_E100.DATA";
-            //小方格X方向距离，Y方向距离
-            Box box = GetDXDY(strFilePath);
-            Point pXY = GetWellDistanceCount(data.Step, box.DxWidth, box.DyWidth);
-            List<WellPoint> listOil = new List<WellPoint>();
-            List<WellPoint> listWater = new List<WellPoint>();
-            BuildOilWaterPoint(box.BoxXCount, box.BoxYCount, pXY.X, pXY.Y, out listOil, out listWater);
-            UpdateWellMaxCount(strWellCountFilePath, listOil.Count + listWater.Count);//修改油井总数
-            PostDataWellPoint wellPoint = new PostDataWellPoint();
-            wellPoint.modelId = iModel;
-            wellPoint.P = new List<WellPoint>();
-            wellPoint.P.AddRange(listOil);
-            wellPoint.I = new List<WellPoint>();
-            wellPoint.I.AddRange(listWater);
-
-            UpdateWellPoint(wellPoint);
+            switch (iModel)
+            {
+                case 3114://修改井距
+                    {
+                        //Step存放井距数据
+                        UpdateWellPoint(GetWellPointByDist(szEgridPath, data.Step));
+                    }
+                    break;
+            } 
 
             return new JsonResult();
         }
@@ -763,17 +722,48 @@ namespace OilSimulationController
                 listData.Insert(firstIndex++, " ");
 
             }
-
+            //回写数据到文件
             CommonModel.WriteInfoToFile(strFilePath, listData);
-
+            //执行批处理文件
+            CommonModel.ExecBatCommand(eGridFile);
 
             return new JsonResult();
 
         }
 
+        /// <summary>
+        ///根据井距计算井网数据
+        /// </summary>
+        /// <param name="szEgridPath"></param>
+        /// <param name="iModel"></param>
+        /// <returns></returns>
+        private PostDataWellPoint GetWellPointByDist(string szEgridPath, int iWellDist)
+        {
+            //DX,DY
+            string strFilePath = szEgridPath.Substring(0, szEgridPath.IndexOf("_E")) + "_GGO.INC";
+            string strWellCountFilePath = szEgridPath.Substring(0, szEgridPath.IndexOf("_E")) + "_E100.DATA";
+            //小方格X方向距离，Y方向距离
+            Box box = GetDXDY(strFilePath);
+            Point pXY = GetWellDistanceCount(iWellDist, box.DxWidth, box.DyWidth);
+            List<WellPoint> listOil = new List<WellPoint>();
+            List<WellPoint> listWater = new List<WellPoint>();
+            BuildOilWaterPoint(box.BoxXCount, box.BoxYCount, pXY.X, pXY.Y, out listOil, out listWater);
+            UpdateWellMaxCount(strWellCountFilePath, listOil.Count + listWater.Count);//修改油井总数
+            PostDataWellPoint wellPoint = new PostDataWellPoint();
+            wellPoint.modelId = 3114;
+            wellPoint.P = new List<WellPoint>();
+            wellPoint.P.AddRange(listOil);
+            wellPoint.I = new List<WellPoint>();
+            wellPoint.I.AddRange(listWater);
+            return wellPoint;
+        }
 
-
-
+        /// <summary>
+        /// 获取井网数据
+        /// </summary>
+        /// <param name="eModel"></param>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         private List<WellData> GetWellPoint(EclipseModel eModel, string filePath)
         {
             List<WellData> listWellData = new List<WellData>();

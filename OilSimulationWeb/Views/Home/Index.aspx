@@ -423,9 +423,9 @@
                             <option value="312">井网</option> 
                             </select>
                             <select class="DropDownList s1Mode" style="display:inline;">
-                            <option value="3111">200</option>
-                            <option value="3112">300</option>
-                            <option value="3113">500</option>
+                            <option value="3111">100</option>
+                            <option value="3112">200</option>
+                            <option value="3113">300</option>
                             <option value="3114">自定义</option>
                             </select>
                             <select class="DropDownList s1Mode" style="display:none;">

@@ -282,14 +282,18 @@
             });
         }  
 
-        //执行批处理命令
-        function ExcutBatCommand()
-        { 
-            var mIndex = $("#ModeIndex").val();
-            $.post('<%:Url.Action("ExecBatCommand","Business") %>', { Mode: mIndex },
-                    function (data) { 
-                        LoadWebGLData(0);
-                    }); 
+        //通用数据更新函数
+        function CommonDataUpdate(jsonData)
+        {
+            var option = {
+                url: '<%:Url.Action("CommonDataUpdate","Business") %>',
+                type: 'POST',
+                data: JSON.stringify(jsonData),
+                dataType: 'html',
+                contentType: 'application/json',
+                success: function (result) { LoadWebGLData(0); }
+            };
+            $.ajax(option);
         }
 
         //加载数据
