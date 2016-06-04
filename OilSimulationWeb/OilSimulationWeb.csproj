@@ -89,6 +89,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\bodybg.jpg" />
+    <Content Include="Images\chart_bg.jpg" />
     <Content Include="Images\db-bg.jpg" />
     <Content Include="Images\foot-nei-bg.jpg" />
     <Content Include="Images\icon-step.png" />
