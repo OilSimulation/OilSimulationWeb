@@ -37,6 +37,8 @@
         var mouse;
         var raycaster;
         var scale = 0.1;
+        //模型颜色最大最小值JSON
+        var mmColorJson = {};
 
         // once everything is loaded, we run our Three.js stuff.
         function init() {
@@ -295,6 +297,18 @@
             };
             $.ajax(option);
         }
+        /////////
+        function GetMaxMinData(jsonData) {
+            var option = {
+                url: '<%:Url.Action("CommonDataUpdate","Business") %>',
+                type: 'POST',
+                data: JSON.stringify(jsonData),
+                dataType: 'html',
+                contentType: 'application/json',
+                success: function (result) { mmColorJson[$("#paramSelect option:selected").text()] == result; }
+            };
+            $.ajax(option);   
+        }
 
         //加载数据
         function LoadWebGLData(isFirstLoad) { 
@@ -302,9 +316,12 @@
             var timeValue = $("#timeSelect option:selected").val();
             //固定获取DATA的URL
             var sUrl = '<%:Url.Action("GetData","Business") %>';
-            var mIndex = $("#ModeIndex").val();  
+            var mIndex = $("#ModeIndex").val();
             //组装JSON数据
-            var jsonData = {Para:paramValue,Mode:mIndex,Step:timeValue,iLoadFirst:isFirstLoad};
+            var jsonData = { Para: paramValue, Mode: mIndex, Step: timeValue, iLoadFirst: isFirstLoad };
+            if (mmColorJson[paramValue] == undefined) {
+                GetMaxMinData(jsonData);
+            }
             myLoader.load(sUrl, JSON.stringify(jsonData), mIndex, function (loadedMesh) {
                 if (isFirstLoad==0) { 
                     loadedMesh.children.forEach(function (child) { }); 
