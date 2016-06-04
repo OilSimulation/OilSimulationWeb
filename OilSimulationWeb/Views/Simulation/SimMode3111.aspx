@@ -13,7 +13,8 @@
     </div>
 
     <script type="text/javascript">
-
+        //left:($(document).width() - this.popupLayer.width())/2,
+		//top:(document.documentElement.clientHeight - this.popupLayer.height())/2 + $(document).scrollTop(),
         var myData = new Array([10, 2], [15, 0], [18, 3], [19, 6], [20, 8.5], [25, 10], [30, 9], [35, 8], [40, 5], [45, 6], [50, 2.5]);
         var myChart = new JSChart('graph', 'line');
         myChart.setDataArray(myData);
