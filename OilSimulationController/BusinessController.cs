@@ -395,7 +395,8 @@ namespace OilSimulationController
             return lst;
 
         }
-
+        static List<float> lista = new List<float>();
+        static List<float> listb = new List<float>();
 
         /// <summary>
         /// 获取数据
@@ -482,13 +483,20 @@ namespace OilSimulationController
                 //stModeData.Data.Clear();
                 if (iLoadFirst==0)
                 {
+                    lista.Clear();
+
                     stModeData.Data[0][0] = circleCount;
                     stModeData.Data[0][1] = count;
                     stModeData.Data[0][2] = zCount;
-
+                    for (int s = 0; s < stModeData.Data.Count;s++ )
+                    {
+                        lista.Add(stModeData.Data[s][3]);
+                    }
                 }
                 else
                 {
+                    listb.Clear();
+
                     float f = stModeData.Data[0][0];
                     float[] fs = new float[4];
                     fs[0] = f;
@@ -496,6 +504,18 @@ namespace OilSimulationController
                     fs[2] = count;
                     fs[3] = zCount;
                     stModeData.Data[0] = fs;
+                    for (int s = 0; s < stModeData.Data.Count; s++)
+                    {
+                        listb.Add(stModeData.Data[s][0]);
+                    }
+                    List<int> l = new List<int>();
+                    for (int k = 0; k < lista.Count;k++ )
+                    {
+                        if (lista[k]!=listb[k])
+                        {
+                            l.Add(k);
+                        }
+                    }
 
                 }
 
