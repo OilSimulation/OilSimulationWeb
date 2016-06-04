@@ -29,7 +29,6 @@ THREE.MyLoader.prototype = {
                 else {
                     onLoad(scope.LoadBufferGeometryMode(text));
                     //onLoad(scope.LoadMode(text));
-                    //onLoad(scope.DrawPipe(20, 40, 100, 4));
                 }
 
                 parent.postMessage("HideLoading()", "*");
@@ -564,10 +563,7 @@ THREE.MyLoader.prototype = {
         var arrayColorData; //包括坐标与颜色
 
         var jsonData = JSON.parse(text);
-//        //多少圈
-        //        var circle = jsonData.Data[0][0]; //(如30)
-        //        var zCount = jsonData.Data[0][2]; //Z方向个数(如50)
-        //        var split = jsonData.Data[0][1]; //每圈分成多少份(如60)
+        //多少圈
         var circle = jsonData.Data[0][0]; //(如30)
         var zCount = jsonData.Data[0][2]; //Z方向个数(如50)
         var split = jsonData.Data[0][1]; //每圈分成多少份(如60)
@@ -605,14 +601,13 @@ THREE.MyLoader.prototype = {
         geometry.addAttribute('Test', new THREE.BufferAttribute(xx, 1));
 
         //true表示是否去掉圆柱上下两个面，1:表示圆柱分成多少层
-        //        var inCylinder = new THREE.CylinderGeometry(inR, inR, height, radialSegments, 1, true);
-        //        var outCylinder = new THREE.CylinderGeometry(outR, outR, height, radialSegments, 1, true);
-        var g1 = new THREE.CylinderGeometry(inR, inR, height, radialSegments, 1, true);
-        var g2 = new THREE.CylinderGeometry(outR, outR, height, radialSegments, 1, true);
+
+        var g1 = new THREE.CylinderGeometry(inR, inR, height, radialSegments, 1, true);//内圈
+        var g2 = new THREE.CylinderGeometry(outR, outR, height, radialSegments, 1, true);//外圈
 
         //CylinderGeometry中的顶点坐标会多有两个特殊点，一个在中间，一个在最后
 
-
+        //移出不需要的坐标
         var inHalf = g1.vertices.length / 2;
         g1.vertices.splice(inHalf - 1, 1);
         g1.vertices.pop();
@@ -833,12 +828,4 @@ THREE.MyLoader.prototype = {
     }
 
 };
-
-//
-function LoadData() {
-
-    
-    
-};
-
  
