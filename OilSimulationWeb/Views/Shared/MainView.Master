@@ -299,7 +299,7 @@
             $.ajax(option);
         }
         /////////
-        function GetMaxMinData(jsonData) {
+        function GetMaxMinData(paramValue,jsonData) {
             var option = {
                 url: '<%:Url.Action("GetColorMaxMin","Business") %>',
                 type: 'POST',
@@ -310,7 +310,7 @@
                 success: function (result) {
                     colorMin = eval(result)[0];
                     colorMax = eval(result)[1];
-                    mmColorJson[$("#paramSelect option:selected").text()] = eval(result);
+                    mmColorJson[paramValue] = eval(result);
                 }
             };
             $.ajax(option);   
@@ -326,7 +326,7 @@
             //组装JSON数据
             var jsonData = { Para: paramValue, Mode: mIndex, Step: timeValue, iLoadFirst: isFirstLoad };
             if (mmColorJson[paramValue] == undefined) {
-                GetMaxMinData(jsonData);
+                GetMaxMinData(paramValue,jsonData);
             }
             myLoader.load(sUrl, JSON.stringify(jsonData), mIndex, function (loadedMesh) {
                 if (isFirstLoad == 0) {
