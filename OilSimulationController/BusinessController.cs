@@ -448,6 +448,42 @@ namespace OilSimulationController
             return lst;
 
         }
+
+
+        /// <summary>
+        /// 获取颜色最大 最小值
+        /// </summary>
+        /// <param name="postData"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetColorMaxMin(PostData postData)
+        {
+            int iModel = 0;
+            string szPara = "";
+            int iStep = 0;
+            int iLoadFirst = -1;
+            if (ModelState.IsValid)
+            {
+                iModel = postData.Mode;
+                szPara = postData.Para;
+                iStep = postData.Step;
+                iLoadFirst = postData.iLoadFirst;
+            }
+            //Grid文件
+            string eGridFile = CommonModel.GetModeUriPath(iModel);
+            int countXFiles = EclipseParser.CountXFiles(eGridFile);
+
+            ////获取最大最小值 
+              
+              var res = new ConfigurableJsonResult();
+              res.Data = CaculateMaxMinValue(szPara, countXFiles, eGridFile); 
+              HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+
+              return res;
+
+        }
+
+
         /// <summary>
         /// 获取数据
         /// </summary>
@@ -478,7 +514,7 @@ namespace OilSimulationController
 
             ModeData stModeData = new ModeData();
             ////获取最大最小值 
-            stModeData.mm = CaculateMaxMinValue(szPara, countXFiles, eGridFile);
+            //stModeData.mm = CaculateMaxMinValue(szPara, countXFiles, eGridFile);
             if (iLoadFirst == 0)
             {
                 //获取最大最小值 

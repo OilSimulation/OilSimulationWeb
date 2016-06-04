@@ -39,6 +39,7 @@
         var scale = 0.1;
         //模型颜色最大最小值JSON
         var mmColorJson = {};
+        var colorMin, colorMax;
 
         // once everything is loaded, we run our Three.js stuff.
         function init() {
@@ -300,12 +301,17 @@
         /////////
         function GetMaxMinData(jsonData) {
             var option = {
-                url: '<%:Url.Action("CommonDataUpdate","Business") %>',
+                url: '<%:Url.Action("GetColorMaxMin","Business") %>',
                 type: 'POST',
                 data: JSON.stringify(jsonData),
                 dataType: 'html',
+                async: false,
                 contentType: 'application/json',
-                success: function (result) { mmColorJson[$("#paramSelect option:selected").text()] == result; }
+                success: function (result) {
+                    colorMin = eval(result)[0];
+                    colorMax = eval(result)[1];
+                    //mmColorJson[$("#paramSelect option:selected").text()] = eval(result);
+                }
             };
             $.ajax(option);   
         }

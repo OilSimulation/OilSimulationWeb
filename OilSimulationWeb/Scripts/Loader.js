@@ -9,7 +9,6 @@ THREE.MyLoader = function ( manager ) {
 };
 var modelJsonData;
 var circleGroup;
-var colorMin, colorMax;
 THREE.MyLoader.prototype = {
 
     constructor: THREE.MyLoader,
@@ -75,7 +74,7 @@ THREE.MyLoader.prototype = {
         var info, color;
         var colors = [];
         for (var i = 0; i < jsonData.Data.length; i++) {
-            info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][0], jsonData.mm[1], jsonData.mm[0]);
+            info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][0], colorMax, colorMin);
             if (info) {
                 color = (info["R"] << 16) | (info["G"] << 8) | info["B"];
                 colors[i] = color;
@@ -92,7 +91,7 @@ THREE.MyLoader.prototype = {
         var info, color;
         var colors = [];
         for (var i = 0; i < jsonData.Data.length; i++) {
-            info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][0], jsonData.mm[1], jsonData.mm[0]);
+            info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][0], colorMax, colorMin);
             if (info) {
                 color = (info["R"] << 16) | (info["G"] << 8) | info["B"];
                 colors[i] = color;
@@ -163,7 +162,7 @@ THREE.MyLoader.prototype = {
             positions[i] = jsonData.Data[i][0];
             positions[i + 1] = jsonData.Data[i][1];
             positions[i + 2] = jsonData.Data[i][2];
-            var info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][3], jsonData.mm[1], jsonData.mm[0]);
+            var info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][3], colorMax, colorMin);
             var color;
             if (info) {
                 color = (info["R"] << 16) | (info["G"] << 8) | info["B"];
@@ -364,7 +363,7 @@ THREE.MyLoader.prototype = {
             positions[i * 108 + 107] = bz;
 
 
-            var info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][3], jsonData.mm[1], jsonData.mm[0]);
+            var info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][3], colorMax, colorMin);
             var colorHex;
             if (info) {
                 colorHex = (info["R"] << 16) | (info["G"] << 8) | info["B"];
@@ -414,7 +413,7 @@ THREE.MyLoader.prototype = {
         var info, color;
         var color = new THREE.Color();
         for (var i = 0; i < jsonData.Data.length; i++) {
-            info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][0], jsonData.mm[1], jsonData.mm[0]);
+            info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][0], colorMax, colorMin);
             if (info) {
                 var colorHex = (info["R"] << 16) | (info["G"] << 8) | info["B"];
                 color.setHex(colorHex);
@@ -452,7 +451,7 @@ THREE.MyLoader.prototype = {
             for (var i = 0; i < circle; i++) {
                 var arrayColor = []; //每一圈的颜色
                 for (var s = 0; s < split; s++) {
-                    var info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[s * circle + j * split * circle + i][0], jsonData.mm[1], jsonData.mm[0]);
+                    var info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[s * circle + j * split * circle + i][0], colorMax, colorMin);
                     var colorHex;
                     if (info) {
                         colorHex = (info["R"] << 16) | (info["G"] << 8) | info["B"];
@@ -502,7 +501,7 @@ THREE.MyLoader.prototype = {
             xw = jsonData.xyz[parseInt(i / (jsonData.Data.length / jsonData.lev))][0];
             yw = jsonData.xyz[parseInt(i / (jsonData.Data.length / jsonData.lev))][1];
             zw = jsonData.xyz[parseInt(i / (jsonData.Data.length / jsonData.lev))][2];
-            var info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][3], jsonData.mm[1], jsonData.mm[0]);
+            var info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[i][3], colorMax, colorMin);
             var color;
             if (info) {
                 color = (info["R"] << 16) | (info["G"] << 8) | info["B"];
@@ -565,9 +564,7 @@ THREE.MyLoader.prototype = {
         var arrayColorData; //包括坐标与颜色
 
         var jsonData = JSON.parse(text);
-        colorMin = jsonData.mm[0];
-        colorMax = jsonData.mm[1];
-        //多少圈
+//        //多少圈
         //        var circle = jsonData.Data[0][0]; //(如30)
         //        var zCount = jsonData.Data[0][2]; //Z方向个数(如50)
         //        var split = jsonData.Data[0][1]; //每圈分成多少份(如60)
@@ -580,7 +577,7 @@ THREE.MyLoader.prototype = {
                 for (var s = 0; s < split; s++) {
 
                     //jsonData.Data[s * circle + i * split + i * split * circle];
-                    var info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[s * circle + j * split * circle + i][3], jsonData.mm[1], jsonData.mm[0]);
+                    var info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[s * circle + j * split * circle + i][3], colorMax, colorMin);
                     var colorHex;
                     if (info) {
                         colorHex = (info["R"] << 16) | (info["G"] << 8) | info["B"];
