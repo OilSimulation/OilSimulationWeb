@@ -310,7 +310,7 @@
                 success: function (result) {
                     colorMin = eval(result)[0];
                     colorMax = eval(result)[1];
-                    //mmColorJson[$("#paramSelect option:selected").text()] = eval(result);
+                    mmColorJson[$("#paramSelect option:selected").text()] = eval(result);
                 }
             };
             $.ajax(option);   
@@ -329,18 +329,21 @@
                 GetMaxMinData(jsonData);
             }
             myLoader.load(sUrl, JSON.stringify(jsonData), mIndex, function (loadedMesh) {
-                if (isFirstLoad==0) { 
-                    loadedMesh.children.forEach(function (child) { }); 
-                    mesh = loadedMesh; 
-                    
+                if (isFirstLoad == 0) {
+                    loadedMesh.children.forEach(function (child) { });
+                    mesh = loadedMesh;
+
                     loadedMesh.scale.set(scale, scale, scale);
+                    if (mIndex == 15) {
+                        //loadedMesh.rotation.x = 0.1;
+                    }
                     //loadedMesh.rotation.x = -0.3;
                     scene.add(mesh);
 
                     $("#Stats-output").removeClass("hidden");
                     $("#fullSpan").removeClass("hidden");
-                    $("#controls_container_r").removeClass("hidden"); 
-                    $("#controls_container_r").addClass("blockLine"); 
+                    $("#controls_container_r").removeClass("hidden");
+                    $("#controls_container_r").addClass("blockLine");
                 }
             }); 
         }
