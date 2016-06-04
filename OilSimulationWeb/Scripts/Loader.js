@@ -9,6 +9,7 @@ THREE.MyLoader = function ( manager ) {
 };
 var modelJsonData;
 var circleGroup;
+var colorMin, colorMax;
 THREE.MyLoader.prototype = {
 
     constructor: THREE.MyLoader,
@@ -564,14 +565,15 @@ THREE.MyLoader.prototype = {
         var arrayColorData; //包括坐标与颜色
 
         var jsonData = JSON.parse(text);
+        colorMin = jsonData.mm[0];
+        colorMax = jsonData.mm[1];
         //多少圈
+        //        var circle = jsonData.Data[0][0]; //(如30)
+        //        var zCount = jsonData.Data[0][2]; //Z方向个数(如50)
+        //        var split = jsonData.Data[0][1]; //每圈分成多少份(如60)
         var circle = jsonData.Data[0][0]; //(如30)
         var zCount = jsonData.Data[0][2]; //Z方向个数(如50)
         var split = jsonData.Data[0][1]; //每圈分成多少份(如60)
-        //var group = new THREE.Group();
-        //return this.DrawPipe(100, 200, 100, 60);
-        //var color = new THREE.Color();
-        //color.setRGB(255, 0, 0);
         for (var j = 0; j < zCount; j++) {
             for (var i = 0; i < circle; i++) {
                 var arrayColor = []; //颜色

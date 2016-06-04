@@ -133,6 +133,7 @@ namespace OilSimulationController
         /// <summary>
         /// 获取指定帧，指定层数据
         /// </summary>
+        /// <param name="modelId">模块ID</param>
         /// <param name="model"></param>
         /// <param name="szProName"></param>
         /// <param name="iStep"></param>
@@ -141,7 +142,7 @@ namespace OilSimulationController
         /// <param name="fMinValue"></param>
         /// <param name="egridFilePath"></param>
         /// <returns></returns>
-        private List<float[]> GetCenterPointData(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
+        private List<float[]> GetCenterPointData(int modelId,EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
         {
             List<float[]> lst = new List<float[]>();
             if (lstDynamicPara.IndexOf(szProName) != -1)
@@ -165,40 +166,28 @@ namespace OilSimulationController
                     {
                         propValues = initParser.ParseEclipsePropertyFromInit(szProName);
                     }
-                    if (propValues.Length == model.TotalGrids)
-                    {
-                        for (int j = 0; j < model.ny; j++)
-                            for (int i = 0; i < model.nx; i++)
-                            {
-                                //这里面的所有网格都输出
-                                //Pillar p = model.GetGridAtIJK(i, j, k);
-                                PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
-                                int pos = k * model.nx * model.ny + j * model.nx + i;
-                                ///!!!! 这里的v才是网格(i,j,k)上的属性值
-                                float v = propValues[pos];
-                                stCubeInfo dwInfo = new stCubeInfo();
 
-                                dwInfo.ct = new float[4];
-                                dwInfo.ct[0] = (center.x);
-                                dwInfo.ct[1] = (center.y);
-                                dwInfo.ct[2] = (center.z);
-                                dwInfo.ct[3] = (v);
-                                lst.Add(new float[4] { center.x, center.y, center.z, v });
-                            }
-                    }
-                    else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
-                    {
-                        for (int j = 0; j < model.ny; j++)
-                            for (int i = 0; i < model.nx; i++)
-                            {
-                                //Pillar p = model.GetGridAtIJK(i, j, k);
-                                PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
-                                bool isActive = model.IsActive(i, j, k);
-                                if (isActive)
+                    //if (modelId == 15)
+                    //{
+                    //    for (int i = 0; i < propValues.Length; i++)
+                    //    {
+
+                    //        lst.Add(new float[] { propValues[i] });
+                    //    }
+
+                    //}
+                    //else
+                    //{
+
+                        if (propValues.Length == model.TotalGrids)
+                        {
+                            for (int j = 0; j < model.ny; j++)
+                                for (int i = 0; i < model.nx; i++)
                                 {
-                                    //  通过I，J，K算出在整个有效网格中的位置
-                                    int indexPos = k * model.nx * model.ny + j * model.nx + i;
-                                    int pos = model.IndexNode[indexPos];
+                                    //这里面的所有网格都输出
+                                    //Pillar p = model.GetGridAtIJK(i, j, k);
+                                    PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
+                                    int pos = k * model.nx * model.ny + j * model.nx + i;
                                     ///!!!! 这里的v才是网格(i,j,k)上的属性值
                                     float v = propValues[pos];
                                     stCubeInfo dwInfo = new stCubeInfo();
@@ -208,11 +197,37 @@ namespace OilSimulationController
                                     dwInfo.ct[1] = (center.y);
                                     dwInfo.ct[2] = (center.z);
                                     dwInfo.ct[3] = (v);
-                                    //listColors.Add(v);
                                     lst.Add(new float[4] { center.x, center.y, center.z, v });
                                 }
-                            }
-                    }
+                        }
+                        else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
+                        {
+                            for (int j = 0; j < model.ny; j++)
+                                for (int i = 0; i < model.nx; i++)
+                                {
+                                    //Pillar p = model.GetGridAtIJK(i, j, k);
+                                    PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
+                                    bool isActive = model.IsActive(i, j, k);
+                                    if (isActive)
+                                    {
+                                        //  通过I，J，K算出在整个有效网格中的位置
+                                        int indexPos = k * model.nx * model.ny + j * model.nx + i;
+                                        int pos = model.IndexNode[indexPos];
+                                        ///!!!! 这里的v才是网格(i,j,k)上的属性值
+                                        float v = propValues[pos];
+                                        stCubeInfo dwInfo = new stCubeInfo();
+
+                                        dwInfo.ct = new float[4];
+                                        dwInfo.ct[0] = (center.x);
+                                        dwInfo.ct[1] = (center.y);
+                                        dwInfo.ct[2] = (center.z);
+                                        dwInfo.ct[3] = (v);
+                                        //listColors.Add(v);
+                                        lst.Add(new float[4] { center.x, center.y, center.z, v });
+                                    }
+                                }
+                        }
+                    //}
                 }
             }
             else//静态
@@ -226,41 +241,28 @@ namespace OilSimulationController
                     float[] propValues = initParser.ParseEclipsePropertyFromInit(szProName);
                     //fMinValue = propValues.Min();
                     //fMaxValue = propValues.Max();
-                    if (propValues.Length == model.TotalGrids)
+                    if (modelId == 15)
                     {
-                        for (int j = 0; j < model.ny; j++)
-                            for (int i = 0; i < model.nx; i++)
-                            {
-                                //这里面的所有网格都输出
-                                //Pillar p = model.GetGridAtIJK(i, j, k);
-                                PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
-                                int pos = k * model.nx * model.ny + j * model.nx + i;
-                                ///!!!! 这里的v才是网格(i,j,k)上的属性值
-                                float v = propValues[pos];
-                                stCubeInfo dwInfo = new stCubeInfo();
+                        for (int i = 0; i < propValues.Length; i++)
+                        {
 
-                                dwInfo.ct = new float[4];
-                                dwInfo.ct[0] = (center.x);
-                                dwInfo.ct[1] = (center.y);
-                                dwInfo.ct[2] = (center.z);
-                                dwInfo.ct[3] = (v);
-                                //listColors.Add(v);
-                                lst.Add(new float[4] { center.x, center.y, center.z, v });
-                            }
+                            lst.Add(new float[] { propValues[i] });
+                        }
+
+
                     }
-                    else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
+                    else
                     {
-                        for (int j = 0; j < model.ny; j++)
-                            for (int i = 0; i < model.nx; i++)
-                            {
-                                //Pillar p = model.GetGridAtIJK(i, j, k);
-                                PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
-                                bool isActive = model.IsActive(i, j, k);
-                                if (isActive)
+
+                        if (propValues.Length == model.TotalGrids)
+                        {
+                            for (int j = 0; j < model.ny; j++)
+                                for (int i = 0; i < model.nx; i++)
                                 {
-                                    //  通过I，J，K算出在整个有效网格中的位置
-                                    int indexPos = k * model.nx * model.ny + j * model.nx + i;
-                                    int pos = model.IndexNode[indexPos];
+                                    //这里面的所有网格都输出
+                                    //Pillar p = model.GetGridAtIJK(i, j, k);
+                                    PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
+                                    int pos = k * model.nx * model.ny + j * model.nx + i;
                                     ///!!!! 这里的v才是网格(i,j,k)上的属性值
                                     float v = propValues[pos];
                                     stCubeInfo dwInfo = new stCubeInfo();
@@ -273,7 +275,34 @@ namespace OilSimulationController
                                     //listColors.Add(v);
                                     lst.Add(new float[4] { center.x, center.y, center.z, v });
                                 }
-                            }
+                        }
+                        else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
+                        {
+                            for (int j = 0; j < model.ny; j++)
+                                for (int i = 0; i < model.nx; i++)
+                                {
+                                    //Pillar p = model.GetGridAtIJK(i, j, k);
+                                    PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
+                                    bool isActive = model.IsActive(i, j, k);
+                                    if (isActive)
+                                    {
+                                        //  通过I，J，K算出在整个有效网格中的位置
+                                        int indexPos = k * model.nx * model.ny + j * model.nx + i;
+                                        int pos = model.IndexNode[indexPos];
+                                        ///!!!! 这里的v才是网格(i,j,k)上的属性值
+                                        float v = propValues[pos];
+                                        stCubeInfo dwInfo = new stCubeInfo();
+
+                                        dwInfo.ct = new float[4];
+                                        dwInfo.ct[0] = (center.x);
+                                        dwInfo.ct[1] = (center.y);
+                                        dwInfo.ct[2] = (center.z);
+                                        dwInfo.ct[3] = (v);
+                                        //listColors.Add(v);
+                                        lst.Add(new float[4] { center.x, center.y, center.z, v });
+                                    }
+                                }
+                        }
                     }
                 }
             }
@@ -285,13 +314,14 @@ namespace OilSimulationController
         /// <summary>
         /// 获取颜色属性
         /// </summary>
+        /// <param name="modelId">模块ID</param>
         /// <param name="model"></param>
         /// <param name="szProName"></param>
         /// <param name="iStep"></param>
         /// <param name="k"></param>
         /// <param name="egridFilePath"></param>
         /// <returns></returns>
-        private List<float[]> GetCenterPointColor(EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
+        private List<float[]> GetCenterPointColor(int modelId,EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
         {
 
             List<float[]> lst = new List<float[]>();
@@ -316,36 +346,47 @@ namespace OilSimulationController
                     {
                         propValues = initParser.ParseEclipsePropertyFromInit(szProName);
                     }
-                    if (propValues.Length == model.TotalGrids)
-                    {
-                        for (int j = 0; j < model.ny; j++)
-                            for (int i = 0; i < model.nx; i++)
-                            {
-                                //这里面的所有网格都输出 
-                                int pos = k * model.nx * model.ny + j * model.nx + i;
-                                ///!!!! 这里的v才是网格(i,j,k)上的属性值
-                                float v = propValues[pos];
-                                lst.Add(new float[] { v });
-                            }
-                    }
-                    else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
-                    {
-                        for (int j = 0; j < model.ny; j++)
-                            for (int i = 0; i < model.nx; i++)
-                            {
-                                bool isActive = model.IsActive(i, j, k);
-                                if (isActive)
+                    //if (modelId == 15)
+                    //{
+                    //    for (int i = 0; i < propValues.Length; i++)
+                    //    {
+
+                    //        lst.Add(new float[] { propValues[i] });
+                    //    }
+                    //}
+                    //else
+                    //{
+                        if (propValues.Length == model.TotalGrids)
+                        {
+                            for (int j = 0; j < model.ny; j++)
+                                for (int i = 0; i < model.nx; i++)
                                 {
-                                    //  通过I，J，K算出在整个有效网格中的位置
-                                    int indexPos = k * model.nx * model.ny + j * model.nx + i;
-                                    int pos = model.IndexNode[indexPos];
+                                    //这里面的所有网格都输出 
+                                    int pos = k * model.nx * model.ny + j * model.nx + i;
                                     ///!!!! 这里的v才是网格(i,j,k)上的属性值
                                     float v = propValues[pos];
-                                    //listColors.Add(v);
                                     lst.Add(new float[] { v });
                                 }
-                            }
-                    }
+                        }
+                        else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
+                        {
+                            for (int j = 0; j < model.ny; j++)
+                                for (int i = 0; i < model.nx; i++)
+                                {
+                                    bool isActive = model.IsActive(i, j, k);
+                                    if (isActive)
+                                    {
+                                        //  通过I，J，K算出在整个有效网格中的位置
+                                        int indexPos = k * model.nx * model.ny + j * model.nx + i;
+                                        int pos = model.IndexNode[indexPos];
+                                        ///!!!! 这里的v才是网格(i,j,k)上的属性值
+                                        float v = propValues[pos];
+                                        //listColors.Add(v);
+                                        lst.Add(new float[] { v });
+                                    }
+                                }
+                        }
+                    //}
                 }
             }
             else//静态
@@ -359,34 +400,46 @@ namespace OilSimulationController
                     float[] propValues = initParser.ParseEclipsePropertyFromInit(szProName);
                     //fMinValue = propValues.Min();
                     //fMaxValue = propValues.Max();
-                    if (propValues.Length == model.TotalGrids)
+                    if (modelId == 15)
                     {
-                        for (int j = 0; j < model.ny; j++)
-                            for (int i = 0; i < model.nx; i++)
-                            {
-                                //这里面的所有网格都输出 
-                                int pos = k * model.nx * model.ny + j * model.nx + i;
-                                ///!!!! 这里的v才是网格(i,j,k)上的属性值
-                                float v = propValues[pos];
-                                lst.Add(new float[] { v });
-                            }
+                        for (int i = 0; i < propValues.Length; i++)
+                        {
+
+                            lst.Add(new float[] { propValues[i] });
+                        }
                     }
-                    else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
+                    else
                     {
-                        for (int j = 0; j < model.ny; j++)
-                            for (int i = 0; i < model.nx; i++)
-                            {
-                                bool isActive = model.IsActive(i, j, k);
-                                if (isActive)
+
+                        if (propValues.Length == model.TotalGrids)
+                        {
+                            for (int j = 0; j < model.ny; j++)
+                                for (int i = 0; i < model.nx; i++)
                                 {
-                                    //  通过I，J，K算出在整个有效网格中的位置
-                                    int indexPos = k * model.nx * model.ny + j * model.nx + i;
-                                    int pos = model.IndexNode[indexPos];
+                                    //这里面的所有网格都输出 
+                                    int pos = k * model.nx * model.ny + j * model.nx + i;
                                     ///!!!! 这里的v才是网格(i,j,k)上的属性值
                                     float v = propValues[pos];
                                     lst.Add(new float[] { v });
                                 }
-                            }
+                        }
+                        else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
+                        {
+                            for (int j = 0; j < model.ny; j++)
+                                for (int i = 0; i < model.nx; i++)
+                                {
+                                    bool isActive = model.IsActive(i, j, k);
+                                    if (isActive)
+                                    {
+                                        //  通过I，J，K算出在整个有效网格中的位置
+                                        int indexPos = k * model.nx * model.ny + j * model.nx + i;
+                                        int pos = model.IndexNode[indexPos];
+                                        ///!!!! 这里的v才是网格(i,j,k)上的属性值
+                                        float v = propValues[pos];
+                                        lst.Add(new float[] { v });
+                                    }
+                                }
+                        }
                     }
                 }
             }
@@ -424,31 +477,50 @@ namespace OilSimulationController
             int countXFiles = EclipseParser.CountXFiles(eGridFile);
 
             ModeData stModeData = new ModeData();
-            //获取最大最小值 
+            ////获取最大最小值 
             stModeData.mm = CaculateMaxMinValue(szPara, countXFiles, eGridFile);
             if (iLoadFirst == 0)
             {
+                //获取最大最小值 
+                //stModeData.mm = CaculateMaxMinValue(szPara, countXFiles, eGridFile);
 
                 //获取中心点坐标
                 stModeData.ct = GetCenterCoordinates(gridModel);
                 //获取数据
                 stModeData.Data = new List<float[]>();
                 stModeData.xyz = new List<float[]>();
-                for (int i = 0; i < gridModel.nz; i++)
-                {
-                    stModeData.Data.AddRange(GetCenterPointData(gridModel, szPara, iStep, i, eGridFile));
-                    //计算XYZ的距离
-                    Pillar p = gridModel.GetGridAtIJK(0, 0, i);
-                    stModeData.xyz.Add(new float[] { (p.Center.x - p.a.x) * 2, (p.Center.y - p.a.y) * 2, (p.Center.z - p.a.z) * 2 });
-                }
+                //if (iModel == 15)
+                //{
+                //    stModeData.Data.AddRange(GetCenterPointData(iModel, gridModel, szPara, iStep, 0, eGridFile));
+
+                //}
+                //else
+                //{
+
+                    for (int i = 0; i < gridModel.nz; i++)
+                    {
+                        stModeData.Data.AddRange(GetCenterPointData(iModel, gridModel, szPara, iStep, i, eGridFile));
+                        //计算XYZ的距离
+                        Pillar p = gridModel.GetGridAtIJK(0, 0, i);
+                        stModeData.xyz.Add(new float[] { (p.Center.x - p.a.x) * 2, (p.Center.y - p.a.y) * 2, (p.Center.z - p.a.z) * 2 });
+                    }
+                //}
             }
             else
             {
                 stModeData.Data = new List<float[]>();
-                for (int i = 0; i < gridModel.nz; i++)
-                {
-                    stModeData.Data.AddRange(GetCenterPointColor(gridModel, szPara, iStep, i, eGridFile));
-                }
+                //if (iModel == 15)
+                //{
+                //    stModeData.Data.AddRange(GetCenterPointColor(iModel, gridModel, szPara, iStep, 0, eGridFile));
+                //}
+                //else
+                //{
+
+                    for (int i = 0; i < gridModel.nz; i++)
+                    {
+                        stModeData.Data.AddRange(GetCenterPointColor(iModel, gridModel, szPara, iStep, i, eGridFile));
+                    }
+                //}
 
             }
             //if (iModel == 15)//球面径向流
@@ -477,8 +549,16 @@ namespace OilSimulationController
                 string filePath = eGridFile.Substring(0, eGridFile.IndexOf("_E")) + "_ggo.INC";
                 int circleCount = 0, count = 0, zCount = 0;
                 GetGGO(filePath, out circleCount, out count, out zCount);
-                //stModeData.Data.Clear();
-                if (iLoadFirst==0)
+
+                //float f = stModeData.Data[0][0];
+                //float[] fs = new float[4];
+                //fs[0] = f;
+                //fs[1] = circleCount;
+                //fs[2] = count;
+                //fs[3] = zCount;
+                //stModeData.Data[0] = fs;
+
+                if (iLoadFirst == 0)
                 {
 
                     stModeData.Data[0][0] = circleCount;
