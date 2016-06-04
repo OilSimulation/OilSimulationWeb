@@ -51,7 +51,7 @@ body {
 #controls_container_r
 { 
 	position:absolute;
-	z-index:99999;
+	z-index:1000;
 	width:260px;
 	right:0px;
 	bottom:10px;
@@ -59,7 +59,7 @@ body {
 #controls_container_top
 { 
     position:absolute;
-    z-index:99999;
+    z-index:1000;
     width:260px;
     left:5px;
     top:10px;
@@ -472,11 +472,30 @@ span a{
     border-left: 1px solid gray;
 }
 
+.loading {
+  position: relative; 
+}
+
+.loading .loading-overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  -webkit-animation: loadingStart 3s 300ms linear 1 both;
+  -moz-animation: loadingStart 3s 300ms linear 1 both;
+  -o-animation: loadingStart 3s 300ms linear 1 both;
+  animation: loadingStart 3s 300ms linear 1 both;
+  background: rgba(255, 255, 255,0.5);
+  text-align: center;
+  z-index: 1001;
+}
+
 .red{background-color:#ff0000;}
 .blue{background-color:#0000ff;} 
 #wrapper { background: #ff9999;margin:auto;/*border:1px outset gray;*/} 
 .hidden{display:none;}
 .blockLine{display:inline-block;}
-.ShowGrid{position:absolute;z-index:99999;left:125px;top:0;}
+.ShowGrid{position:absolute;z-index:1000;left:125px;top:0;}
 
 #playback_speed_field{ cursor:pointer; }

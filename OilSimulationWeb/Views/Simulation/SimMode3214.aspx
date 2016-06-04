@@ -16,6 +16,6 @@
             //});
         }); 
     </script>
-    <input id="DelayLoad" type="hidden" />
+    <input id="DelayLoad1" type="hidden" />
     <input id="ModeIndex" type="hidden" value="3214" />
 </asp:Content>

@@ -6,7 +6,7 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
     <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
-    <link href="<%=Url.Content("~/Content/cubes.css")%>" rel="stylesheet" type="text/css" />
+    <link href="<%=Url.Content("~/Content/cubes.css")%>" rel="stylesheet" type="text/css" /> 
     <link href="<%=Url.Content("~/Content/jquery-ui-1.10.2.custom.css")%>" rel="stylesheet" type="text/css" />
     
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/jquery-1.4.1.min.js")%>"></script>
@@ -22,6 +22,7 @@
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/FontUtils.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/helvetiker_regular.typeface.js")%>"></script> 
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/CanvasRenderer.js")%>"></script>
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/loading-overlay.min.js")%>"></script> 
     
     <script type="text/javascript">
     
@@ -254,20 +255,20 @@
             //播放速度
             $("#playback_speed_field").click(function () {
                 var curSpeed = $("#playback_speed_field").attr("speed");
-                if (curSpeed == "1") 
-                {
+                if (curSpeed == "1") {
                     $("#playback_speed_field").attr("speed", "2");
                     $("#playback_speed_field").text("2.0x");
                 }
-                else if (curSpeed == "2")
-                {
+                else if (curSpeed == "2") {
                     $("#playback_speed_field").attr("speed", "3");
                     $("#playback_speed_field").text("3.0x");
                 }
                 else if (curSpeed == "3") {
-                    $("#playback_speed_field").attr("speed","1");
+                    $("#playback_speed_field").attr("speed", "1");
                     $("#playback_speed_field").text("1.0x");
                 }
+                var myData = new Array([10, 2], [15, 0], [18, 3], [19, 6], [20, 8.5], [25, 10], [30, 9], [35, 8], [40, 5], [45, 6], [50, 2.5]);
+                ShowLineChart(myData);
             });
 
             //绑定全屏模式点击响应函数
@@ -283,7 +284,44 @@
                     parent.postMessage("ScreenNomal()", "*");
                 }
             });
-        }  
+            //关闭曲线窗口
+            $("#popin_xbutton").click(function () {
+                $("#popin_line").css("display", "none");
+                $("#MainDiv").removeClass("loading");
+            });
+        }
+        //显示曲线
+        function ShowLineChart(myData) 
+        {
+            $("#MainDiv").addClass("loading");
+            $("#popin_line").css('left', ($(document).width() - $("#popin_line").width()) / 2);
+            $("#popin_line").css('top', (document.documentElement.clientHeight - $("#popin_line").height()) / 2 + $(document).scrollTop());
+            $("#popin_line").css('display', 'block');
+            var myChart = new JSChart('graph', 'line');
+            myChart.setDataArray(myData);
+            myChart.setAxisNameFontSize(10);
+            myChart.setAxisNameX('驱油时间（天）');
+            myChart.setAxisNameY('采油采出程度');
+            myChart.setAxisNameColor('#787878');
+            myChart.setAxisValuesNumberX(10);
+            myChart.setAxisValuesNumberY(10);
+            myChart.setAxisValuesColor('#38a4d9');
+            myChart.setAxisColor('#38a4d9');
+            myChart.setLineColor('#C71112');
+            myChart.setTitle('驱油曲线（百分比）');
+            myChart.setTitleColor('#383838');
+            myChart.setGraphExtend(true);
+            myChart.setGridColor('#38a4d9');
+            myChart.setSize(616, 321);
+            myChart.setAxisPaddingLeft(100);
+            myChart.setAxisPaddingRight(50);
+            myChart.setAxisPaddingTop(60);
+            myChart.setAxisPaddingBottom(55);
+            myChart.setTextPaddingLeft(45);
+            myChart.setTextPaddingBottom(12);
+            myChart.setBackgroundImage('../Images/chart_bg.jpg');
+            myChart.draw();
+        }
 
         //通用数据更新函数
         function CommonDataUpdate(jsonData)
@@ -386,73 +424,81 @@
     </script>
 </head>
 <body>
-    <div id="controls_container_r" class="hidden">
-		<div id="controls_innercontainer">  
-			<div class="controls">
-				<legend>操作面板</legend>
-				<ul> 
-					<li>
-						<div id="button_toolbar">
-							<button id="button_reset" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="初始化"><span class="ui-button-icon-primary ui-icon ui-icon-seek-start"></span><span class="ui-button-text">初始化</span></button>
-							<button id="button_play" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="播放"><span class="ui-button-icon-primary ui-icon ui-icon-play"></span><span class="ui-button-text">播放</span></button>
-							<button id="button_backward" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="上一步"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">上一步</span></button>
-							<button id="button_forward" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="下一步"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">下一步</span></button>
-						</div>
-					</li>
+   <div id = "MainDiv">
+        <div class="loading-overlay">   
+            <div id="popin_line" style="width: 630px; height: 340px; overflow: hidden; display:none; position: absolute; z-index: 1002; opacity: 1;">
+	            <div id="popin_titlebar" style="text-align: left;"> </div>
+                <div id="graph">Loading graph...</div>
+                <div class="popin_example_xbutton" id="popin_xbutton" style="left: 510px; top: 10px; width: 120px; text-align: center; text-decoration:underline;position: absolute; z-index: 1004; cursor: pointer;">关闭</div>
+            </div>
+        </div>              
+        <div id="controls_container_r" class="hidden">
+		    <div id="controls_innercontainer">  
+			    <div class="controls">
+				    <legend>操作面板</legend>
+				    <ul> 
+					    <li>
+						    <div id="button_toolbar">
+							    <button id="button_reset" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="初始化"><span class="ui-button-icon-primary ui-icon ui-icon-seek-start"></span><span class="ui-button-text">初始化</span></button>
+							    <button id="button_play" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="播放"><span class="ui-button-icon-primary ui-icon ui-icon-play"></span><span class="ui-button-text">播放</span></button>
+							    <button id="button_backward" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="上一步"><span class="ui-button-icon-primary ui-icon ui-icon-seek-prev"></span><span class="ui-button-text">上一步</span></button>
+							    <button id="button_forward" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="下一步"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">下一步</span></button>
+						    </div>
+					    </li>
 
-					<li>
-						<div class="mini_label">网格数#:</div>
-						<div class="mini_field"><% =ViewData["TotalGrids"]%></div>
-						<div class="mini_label">Speed:</div>
-						<div id="playback_speed_field" speed="1" class="mini_field">1.0x</div>
-					</li> 
-					<li class="spacer"></li>
-					<li>
-						<div class="label">参数选择:</div>
-						<div class="control">
-							<select id="paramSelect" class="select"> 
-                            <% List<String> opts= (List<String>)ViewData["DynamicProps"];
-                                for (int i = 0; i <opts.Count; i++)
-                                { %>
-                                    <option value="<%:i %>"><%:opts[i] %></option>
-                                <% } %>
-							</select>
-						</div>
-					</li>
-					<li class="spacer"></li>
-					<li>
-						<div class="label">当前时间步:</div>
-						<div class="control">
-							<select id="timeSelect" class="select">
-								<% String[] timeOpts = (String[])ViewData["TimeStep"];
-                                for (int i = 0; i < timeOpts.Length; i++)
-                                { %>
-                                    <option value="<%:i%>"><%:timeOpts[i]%></option>
-                                <% } %> 
-							</select>
-						</div>
-					</li>
-					<li class="spacer"></li>
+					    <li>
+						    <div class="mini_label">网格数#:</div>
+						    <div class="mini_field"><% =ViewData["TotalGrids"]%></div>
+						    <div class="mini_label">Speed:</div>
+						    <div id="playback_speed_field" speed="1" class="mini_field">1.0x</div>
+					    </li> 
+					    <li class="spacer"></li>
+					    <li>
+						    <div class="label">参数选择:</div>
+						    <div class="control">
+							    <select id="paramSelect" class="select"> 
+                                <% List<String> opts= (List<String>)ViewData["DynamicProps"];
+                                    for (int i = 0; i <opts.Count; i++)
+                                    { %>
+                                        <option value="<%:i %>"><%:opts[i] %></option>
+                                    <% } %>
+							    </select>
+						    </div>
+					    </li>
+					    <li class="spacer"></li>
+					    <li>
+						    <div class="label">当前时间步:</div>
+						    <div class="control">
+							    <select id="timeSelect" class="select">
+								    <% String[] timeOpts = (String[])ViewData["TimeStep"];
+                                    for (int i = 0; i < timeOpts.Length; i++)
+                                    { %>
+                                        <option value="<%:i%>"><%:timeOpts[i]%></option>
+                                    <% } %> 
+							    </select>
+						    </div>
+					    </li>
+					    <li class="spacer"></li>
 
-				</ul>
+				    </ul>
 						
-			</div> 
-		</div>
-	</div> 
+			    </div> 
+		    </div> 
+        </div>
+        <span id = "fullSpan" class="right color-gray hidden">
+		    <a id="fullscreen" href="javascript:void(0);">
+			    <span id="fullText">全屏模式</span>
+		    </a>
+	    </span>  
 
-    <span id = "fullSpan" class="right color-gray hidden">
-		<a id="fullscreen" href="javascript:void(0);">
-			<span id="fullText">全屏模式</span>
-		</a>
-	</span> 
-
-    <div id="Stats-output" class="hidden" >
-    </div>
-    <!-- Div which will hold the Output -->
-    <div id="WebGL-output">
-    </div> 
-    <asp:ContentPlaceHolder ID="MainContent" runat="server">
+        <div id="Stats-output" class="hidden" >
+        </div>
+        <!-- Div which will hold the Output -->
+        <div id="WebGL-output">
+        </div> 
+        <asp:ContentPlaceHolder ID="MainContent" runat="server">
         
-    </asp:ContentPlaceHolder> 
+        </asp:ContentPlaceHolder> 
+    </div>
 </body>
 </html>

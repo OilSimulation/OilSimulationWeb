@@ -93,8 +93,7 @@
 .loading {
   position: relative;
   pointer-events: none;
-}
-
+} 
 .loading .loading-overlay {
   position: absolute;
   top: 0;
@@ -107,6 +106,7 @@
   animation: loadingStart 3s 300ms linear 1 both;
   background: rgba(255, 255, 255, 0.5);
   text-align: center;
+  z-index: 1001;
 }
 .loading .loading-text {
   font-size: 0.875rem;
