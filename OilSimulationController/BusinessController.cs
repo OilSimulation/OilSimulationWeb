@@ -49,7 +49,7 @@ namespace OilSimulationController
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return Json(strData, JsonRequestBehavior.AllowGet);
         }
-          
+
         /// <summary>
         /// 获取X000扩展文件
         /// </summary>
@@ -142,7 +142,7 @@ namespace OilSimulationController
         /// <param name="fMinValue"></param>
         /// <param name="egridFilePath"></param>
         /// <returns></returns>
-        private List<float[]> GetCenterPointData(int modelId,EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
+        private List<float[]> GetCenterPointData(int modelId, EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
         {
             List<float[]> lst = new List<float[]>();
             if (lstDynamicPara.IndexOf(szProName) != -1)
@@ -167,27 +167,41 @@ namespace OilSimulationController
                         propValues = initParser.ParseEclipsePropertyFromInit(szProName);
                     }
 
-                    //if (modelId == 15)
-                    //{
-                    //    for (int i = 0; i < propValues.Length; i++)
-                    //    {
 
-                    //        lst.Add(new float[] { propValues[i] });
-                    //    }
+                    if (propValues.Length == model.TotalGrids)
+                    {
+                        for (int j = 0; j < model.ny; j++)
+                            for (int i = 0; i < model.nx; i++)
+                            {
+                                //这里面的所有网格都输出
+                                //Pillar p = model.GetGridAtIJK(i, j, k);
+                                PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
+                                int pos = k * model.nx * model.ny + j * model.nx + i;
+                                ///!!!! 这里的v才是网格(i,j,k)上的属性值
+                                float v = propValues[pos];
+                                stCubeInfo dwInfo = new stCubeInfo();
 
-                    //}
-                    //else
-                    //{
-
-                        if (propValues.Length == model.TotalGrids)
-                        {
-                            for (int j = 0; j < model.ny; j++)
-                                for (int i = 0; i < model.nx; i++)
+                                dwInfo.ct = new float[4];
+                                dwInfo.ct[0] = (center.x);
+                                dwInfo.ct[1] = (center.y);
+                                dwInfo.ct[2] = (center.z);
+                                dwInfo.ct[3] = (v);
+                                lst.Add(new float[4] { center.x, center.y, center.z, v });
+                            }
+                    }
+                    else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
+                    {
+                        for (int j = 0; j < model.ny; j++)
+                            for (int i = 0; i < model.nx; i++)
+                            {
+                                //Pillar p = model.GetGridAtIJK(i, j, k);
+                                PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
+                                bool isActive = model.IsActive(i, j, k);
+                                if (isActive)
                                 {
-                                    //这里面的所有网格都输出
-                                    //Pillar p = model.GetGridAtIJK(i, j, k);
-                                    PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
-                                    int pos = k * model.nx * model.ny + j * model.nx + i;
+                                    //  通过I，J，K算出在整个有效网格中的位置
+                                    int indexPos = k * model.nx * model.ny + j * model.nx + i;
+                                    int pos = model.IndexNode[indexPos];
                                     ///!!!! 这里的v才是网格(i,j,k)上的属性值
                                     float v = propValues[pos];
                                     stCubeInfo dwInfo = new stCubeInfo();
@@ -197,37 +211,11 @@ namespace OilSimulationController
                                     dwInfo.ct[1] = (center.y);
                                     dwInfo.ct[2] = (center.z);
                                     dwInfo.ct[3] = (v);
+                                    //listColors.Add(v);
                                     lst.Add(new float[4] { center.x, center.y, center.z, v });
                                 }
-                        }
-                        else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
-                        {
-                            for (int j = 0; j < model.ny; j++)
-                                for (int i = 0; i < model.nx; i++)
-                                {
-                                    //Pillar p = model.GetGridAtIJK(i, j, k);
-                                    PillarPoint center = model.GetGridAtIJK(i, j, k).Center;
-                                    bool isActive = model.IsActive(i, j, k);
-                                    if (isActive)
-                                    {
-                                        //  通过I，J，K算出在整个有效网格中的位置
-                                        int indexPos = k * model.nx * model.ny + j * model.nx + i;
-                                        int pos = model.IndexNode[indexPos];
-                                        ///!!!! 这里的v才是网格(i,j,k)上的属性值
-                                        float v = propValues[pos];
-                                        stCubeInfo dwInfo = new stCubeInfo();
-
-                                        dwInfo.ct = new float[4];
-                                        dwInfo.ct[0] = (center.x);
-                                        dwInfo.ct[1] = (center.y);
-                                        dwInfo.ct[2] = (center.z);
-                                        dwInfo.ct[3] = (v);
-                                        //listColors.Add(v);
-                                        lst.Add(new float[4] { center.x, center.y, center.z, v });
-                                    }
-                                }
-                        }
-                    //}
+                            }
+                    }
                 }
             }
             else//静态
@@ -241,7 +229,7 @@ namespace OilSimulationController
                     float[] propValues = initParser.ParseEclipsePropertyFromInit(szProName);
                     //fMinValue = propValues.Min();
                     //fMaxValue = propValues.Max();
-                    if (modelId == 15)
+                    if (modelId == 15 || modelId == 14)
                     {
                         for (int i = 0; i < propValues.Length; i++)
                         {
@@ -321,7 +309,7 @@ namespace OilSimulationController
         /// <param name="k"></param>
         /// <param name="egridFilePath"></param>
         /// <returns></returns>
-        private List<float[]> GetCenterPointColor(int modelId,EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
+        private List<float[]> GetCenterPointColor(int modelId, EclipseModel model, string szProName, int iStep, int k, string egridFilePath)
         {
 
             List<float[]> lst = new List<float[]>();
@@ -346,47 +334,37 @@ namespace OilSimulationController
                     {
                         propValues = initParser.ParseEclipsePropertyFromInit(szProName);
                     }
-                    //if (modelId == 15)
-                    //{
-                    //    for (int i = 0; i < propValues.Length; i++)
-                    //    {
 
-                    //        lst.Add(new float[] { propValues[i] });
-                    //    }
-                    //}
-                    //else
-                    //{
-                        if (propValues.Length == model.TotalGrids)
-                        {
-                            for (int j = 0; j < model.ny; j++)
-                                for (int i = 0; i < model.nx; i++)
+                    if (propValues.Length == model.TotalGrids)
+                    {
+                        for (int j = 0; j < model.ny; j++)
+                            for (int i = 0; i < model.nx; i++)
+                            {
+                                //这里面的所有网格都输出 
+                                int pos = k * model.nx * model.ny + j * model.nx + i;
+                                ///!!!! 这里的v才是网格(i,j,k)上的属性值
+                                float v = propValues[pos];
+                                lst.Add(new float[] { v });
+                            }
+                    }
+                    else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
+                    {
+                        for (int j = 0; j < model.ny; j++)
+                            for (int i = 0; i < model.nx; i++)
+                            {
+                                bool isActive = model.IsActive(i, j, k);
+                                if (isActive)
                                 {
-                                    //这里面的所有网格都输出 
-                                    int pos = k * model.nx * model.ny + j * model.nx + i;
+                                    //  通过I，J，K算出在整个有效网格中的位置
+                                    int indexPos = k * model.nx * model.ny + j * model.nx + i;
+                                    int pos = model.IndexNode[indexPos];
                                     ///!!!! 这里的v才是网格(i,j,k)上的属性值
                                     float v = propValues[pos];
+                                    //listColors.Add(v);
                                     lst.Add(new float[] { v });
                                 }
-                        }
-                        else    //大量的属性只在有效结点上才有值，下面的代码执行的机会更多
-                        {
-                            for (int j = 0; j < model.ny; j++)
-                                for (int i = 0; i < model.nx; i++)
-                                {
-                                    bool isActive = model.IsActive(i, j, k);
-                                    if (isActive)
-                                    {
-                                        //  通过I，J，K算出在整个有效网格中的位置
-                                        int indexPos = k * model.nx * model.ny + j * model.nx + i;
-                                        int pos = model.IndexNode[indexPos];
-                                        ///!!!! 这里的v才是网格(i,j,k)上的属性值
-                                        float v = propValues[pos];
-                                        //listColors.Add(v);
-                                        lst.Add(new float[] { v });
-                                    }
-                                }
-                        }
-                    //}
+                            }
+                    }
                 }
             }
             else//静态
@@ -400,7 +378,7 @@ namespace OilSimulationController
                     float[] propValues = initParser.ParseEclipsePropertyFromInit(szProName);
                     //fMinValue = propValues.Min();
                     //fMaxValue = propValues.Max();
-                    if (modelId == 15)
+                    if (modelId == 15 || modelId == 14)
                     {
                         for (int i = 0; i < propValues.Length; i++)
                         {
@@ -474,12 +452,12 @@ namespace OilSimulationController
             int countXFiles = EclipseParser.CountXFiles(eGridFile);
 
             ////获取最大最小值 
-              
-              var res = new ConfigurableJsonResult();
-              res.Data = CaculateMaxMinValue(szPara, countXFiles, eGridFile); 
-              HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
 
-              return res;
+            var res = new ConfigurableJsonResult();
+            res.Data = CaculateMaxMinValue(szPara, countXFiles, eGridFile);
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+
+            return res;
 
         }
 
@@ -513,86 +491,43 @@ namespace OilSimulationController
             int countXFiles = EclipseParser.CountXFiles(eGridFile);
 
             ModeData stModeData = new ModeData();
-            ////获取最大最小值 
-            //stModeData.mm = CaculateMaxMinValue(szPara, countXFiles, eGridFile);
             if (iLoadFirst == 0)
             {
-                //获取最大最小值 
-                //stModeData.mm = CaculateMaxMinValue(szPara, countXFiles, eGridFile);
 
                 //获取中心点坐标
                 stModeData.ct = GetCenterCoordinates(gridModel);
                 //获取数据
                 stModeData.Data = new List<float[]>();
                 stModeData.xyz = new List<float[]>();
-                //if (iModel == 15)
-                //{
-                //    stModeData.Data.AddRange(GetCenterPointData(iModel, gridModel, szPara, iStep, 0, eGridFile));
 
-                //}
-                //else
-                //{
-
-                    for (int i = 0; i < gridModel.nz; i++)
-                    {
-                        stModeData.Data.AddRange(GetCenterPointData(iModel, gridModel, szPara, iStep, i, eGridFile));
-                        //计算XYZ的距离
-                        Pillar p = gridModel.GetGridAtIJK(0, 0, i);
-                        stModeData.xyz.Add(new float[] { (p.Center.x - p.a.x) * 2, (p.Center.y - p.a.y) * 2, (p.Center.z - p.a.z) * 2 });
-                    }
-                //}
+                for (int i = 0; i < gridModel.nz; i++)
+                {
+                    stModeData.Data.AddRange(GetCenterPointData(iModel, gridModel, szPara, iStep, i, eGridFile));
+                    //计算XYZ的距离
+                    Pillar p = gridModel.GetGridAtIJK(0, 0, i);
+                    stModeData.xyz.Add(new float[] { (p.Center.x - p.a.x) * 2, (p.Center.y - p.a.y) * 2, (p.Center.z - p.a.z) * 2 });
+                }
             }
             else
             {
                 stModeData.Data = new List<float[]>();
-                //if (iModel == 15)
-                //{
-                //    stModeData.Data.AddRange(GetCenterPointColor(iModel, gridModel, szPara, iStep, 0, eGridFile));
-                //}
-                //else
-                //{
 
-                    for (int i = 0; i < gridModel.nz; i++)
-                    {
-                        stModeData.Data.AddRange(GetCenterPointColor(iModel, gridModel, szPara, iStep, i, eGridFile));
-                    }
-                //}
+                for (int i = 0; i < gridModel.nz; i++)
+                {
+                    stModeData.Data.AddRange(GetCenterPointColor(iModel, gridModel, szPara, iStep, i, eGridFile));
+                }
 
             }
-            //if (iModel == 15)//球面径向流
-            //{
-            //    float r = 0, q = 0, z = 0;
-            //    for (int i = 0; i < stModeData.Data.Count; i++)
-            //    {
-            //        if (stModeData.Data[i].Length < 3)
-            //        {
-            //            break;
-            //        }
-            //        q = stModeData.Data[i][1];
-            //        r = stModeData.Data[i][0];
-            //        z = stModeData.Data[i][2];
-            //        //将柱坐标转成直角坐标
-            //        stModeData.Data[i][0] = r * (float)Math.Cos(q);
-            //        stModeData.Data[i][1] = r * (float)Math.Sin(q);
-            //    }
-            //}
 
 
             stModeData.WellPoint = GetWellPoint(gridModel, strWellFilePath);
 
-            if (iModel == 15)
+            if (iModel == 15 || iModel == 14)
             {
                 string filePath = eGridFile.Substring(0, eGridFile.IndexOf("_E")) + "_ggo.INC";
                 int circleCount = 0, count = 0, zCount = 0;
                 GetGGO(filePath, out circleCount, out count, out zCount);
 
-                //float f = stModeData.Data[0][0];
-                //float[] fs = new float[4];
-                //fs[0] = f;
-                //fs[1] = circleCount;
-                //fs[2] = count;
-                //fs[3] = zCount;
-                //stModeData.Data[0] = fs;
 
                 if (iLoadFirst == 0)
                 {
@@ -650,7 +585,7 @@ namespace OilSimulationController
                         UpdateWellPoint(GetWellPointByDist(szEgridPath, data.Step));
                     }
                     break;
-            } 
+            }
 
             return new JsonResult();
         }
@@ -1182,7 +1117,7 @@ namespace OilSimulationController
         private void GetGGO(string filePath, out int circleCount, out int count, out int zCount)
         {
             List<string> listData = CommonModel.ReadInfoFromFile(filePath);
-            int index = listData.IndexOf("DZ")-1;
+            int index = listData.IndexOf("DZ") - 1;
             string strData = listData[index];
 
             int index1 = strData.IndexOf("(");
@@ -1202,7 +1137,7 @@ namespace OilSimulationController
         /// </summary>
         /// <param name="filePath">文件路径</param>
         /// <param name="day">第多少天进行注水</param>
-        private  void UpdateInWaterfloodingOpporunity(string filePath, int day)
+        private void UpdateInWaterfloodingOpporunity(string filePath, int day)
         {
             //List<string> listData = new List<string>();
             //listData.AddRange(CommonModel.ReadInfoFromFile(filePath));
@@ -1341,9 +1276,9 @@ namespace OilSimulationController
                 string[] strs = listData[index + 1].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
                 strs[4] = percent.ToString();
                 string str = "";
-                for (int i = 0; i < strs.Length;i++ )
+                for (int i = 0; i < strs.Length; i++)
                 {
-                    if (str.Length-1==i)
+                    if (str.Length - 1 == i)
                     {
                         str += strs[i];
                     }
@@ -1372,9 +1307,9 @@ namespace OilSimulationController
                 string[] strs = listData[index + 1].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
                 strs[6] = (pressure * 10).ToString();
                 string str = "";
-                for (int i = 0; i < strs.Length;i++ )
+                for (int i = 0; i < strs.Length; i++)
                 {
-                    if (i==strs.Length-1)
+                    if (i == strs.Length - 1)
                     {
                         str += strs[i];
                     }
@@ -1385,7 +1320,7 @@ namespace OilSimulationController
                 }
 
                 listData[index + 1] = str;
-                index = listData.IndexOf(WCONINJE, index+1);
+                index = listData.IndexOf(WCONINJE, index + 1);
             }
 
             CommonModel.WriteInfoToFile(filePath, listData);
@@ -1405,9 +1340,9 @@ namespace OilSimulationController
                 string[] strs = listData[index + 1].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
                 strs[6] = (pressure * 10).ToString();
                 string str = "";
-                for (int i = 0; i < strs.Length;i++ )
+                for (int i = 0; i < strs.Length; i++)
                 {
-                    if (i==strs.Length-1)
+                    if (i == strs.Length - 1)
                     {
                         str += strs[i];
                     }
@@ -1433,21 +1368,21 @@ namespace OilSimulationController
         /// <param name="pressure"></param>
         private void UpdateCapillaryPressure(string filePath, double pressure)
         {
-            List<string> listData =  CommonModel.ReadInfoFromFile(filePath);
+            List<string> listData = CommonModel.ReadInfoFromFile(filePath);
             int index = listData.IndexOf(SWOF);
             index += 4;//移四行
             int endIndex = listData.IndexOf("/", index);
             // listData.GetRange(index, endIndex - index - 1);
-            
+
             List<string> listEndCol = CalcCapillary(pressure, endIndex - index - 1);
-            for (int i = 0; i < listEndCol.Count;i++ )
+            for (int i = 0; i < listEndCol.Count; i++)
             {
                 string[] strs = listData[index + i + 1].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
                 strs[3] = listEndCol[i];
                 string str = "";
-                for (int k = 0; k < strs.Length;k++ )
+                for (int k = 0; k < strs.Length; k++)
                 {
-                    if (k==strs.Length-1)
+                    if (k == strs.Length - 1)
                     {
                         str += strs[k];
                     }
@@ -1471,10 +1406,10 @@ namespace OilSimulationController
         /// <param name="pressure"></param>
         /// <param name="row"></param>
         /// <returns></returns>
-        private List<string> CalcCapillary(double pressure,int row)
+        private List<string> CalcCapillary(double pressure, int row)
         {
             List<string> list = new List<string>();
-            for (int i = 0; i < row;i++ )
+            for (int i = 0; i < row; i++)
             {
                 list.Add((pressure * i).ToString());
             }
@@ -1540,7 +1475,7 @@ namespace OilSimulationController
             return oil - water;
         }
 
-        
+
 
         /// <summary>
         /// 将数组转换成用空格分割的字符串
@@ -1550,9 +1485,9 @@ namespace OilSimulationController
         private string ArrayToString(string[] strs)
         {
             string str = "";
-            for (int i = 0; i < strs.Length;i++ )
+            for (int i = 0; i < strs.Length; i++)
             {
-                if (i==strs.Length-1)
+                if (i == strs.Length - 1)
                 {
                     str += strs[i];
                 }

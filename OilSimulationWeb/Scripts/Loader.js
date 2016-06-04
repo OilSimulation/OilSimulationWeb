@@ -22,7 +22,7 @@ THREE.MyLoader.prototype = {
         loader.load(url, pData, function (text) {
             if (geometry == undefined) {
 
-                if (modelId == 15) {
+                if (modelId == 15 || modelId == 14) {
                     onLoad(scope.LoadBufferGeometryCircleMode(text));
                     //onLoad(scope.DrawPipe(40, 40, 100, 4));
                 }
@@ -35,7 +35,7 @@ THREE.MyLoader.prototype = {
                 parent.postMessage("HideLoading()", "*");
             }
             else {
-                if (modelId == 15) {
+                if (modelId == 15 || modelId == 14) {
                     onLoad(scope.ChangeBufferGeometryCircleColor(text));
                 }
                 else {
