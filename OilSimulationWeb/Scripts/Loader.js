@@ -692,6 +692,8 @@ THREE.MyLoader.prototype = {
                     }
                     var color = new THREE.Color();
                     color.setHex(colorHex);
+                    //color.setRGB(parseInt(info["R"]), parseInt(info["G"]), parseInt(info["B"]));
+
                     arrayColor.push(color);
 
                 }
@@ -735,291 +737,514 @@ THREE.MyLoader.prototype = {
         var positions = new Float32Array(g1.vertices.length * 2 * 18); // + 2 * 3*4
         var colors = new Float32Array(g1.vertices.length * 2 * 18); // + 2 * 3 * 4
 
-        //上表面
-        for (var i = 0; i < g1.vertices.length / 2; i++) {
-            if (i == g1.vertices.length / 2 - 1) {
-                //一个三角面
-                positions[i * 18 + 0] = g1.vertices[i].x;
-                positions[i * 18 + 1] = g1.vertices[i].y + yOffset;
-                positions[i * 18 + 2] = g1.vertices[i].z;
-                positions[i * 18 + 3] = g2.vertices[i].x;
-                positions[i * 18 + 4] = g2.vertices[i].y + yOffset;
-                positions[i * 18 + 5] = g2.vertices[i].z;
-                positions[i * 18 + 6] = g1.vertices[0].x;
-                positions[i * 18 + 7] = g1.vertices[0].y + yOffset;
-                positions[i * 18 + 8] = g1.vertices[0].z;
-                //另一个三角面组成一个四边形的面
-                positions[i * 18 + 9] = g2.vertices[i].x;
-                positions[i * 18 + 10] = g2.vertices[i].y + yOffset;
-                positions[i * 18 + 11] = g2.vertices[i].z;
-                positions[i * 18 + 12] = g2.vertices[0].x;
-                positions[i * 18 + 13] = g2.vertices[0].y + yOffset;
-                positions[i * 18 + 14] = g2.vertices[0].z;
-                positions[i * 18 + 15] = g1.vertices[0].x;
-                positions[i * 18 + 16] = g1.vertices[0].y + yOffset;
-                positions[i * 18 + 17] = g1.vertices[0].z;
+        //一个一个多边形的画,因为是圆的，所以不用画左右侧面
+        for (var i = 0; i < radialSegments; i++) {
+            if (i == radialSegments - 1) {
+                //上表面*4四个面*2一个面分成两个小三角,*9一个小三角由三个坐标点一个坐标点由XYZ组成
+
+                positions[i * 4 * 2 * 9 + 0] = g1.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 1] = g1.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 2] = g1.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 3] = g2.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 4] = g2.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 5] = g2.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 6] = g1.vertices[0].x;
+                positions[i * 4 * 2 * 9 + 7] = g1.vertices[0].y + yOffset;
+                positions[i * 4 * 2 * 9 + 8] = g1.vertices[0].z;
+
+                positions[i * 4 * 2 * 9 + 9] = g2.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 10] = g2.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 11] = g2.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 12] = g2.vertices[0].x;
+                positions[i * 4 * 2 * 9 + 13] = g2.vertices[0].y + yOffset;
+                positions[i * 4 * 2 * 9 + 14] = g2.vertices[0].z;
+                positions[i * 4 * 2 * 9 + 15] = g1.vertices[0].x;
+                positions[i * 4 * 2 * 9 + 16] = g1.vertices[0].y + yOffset;
+                positions[i * 4 * 2 * 9 + 17] = g1.vertices[0].z;
+                //下表面，+18：上表面
+
+                positions[i * 4 * 2 * 9 + 18 + 0] = g1.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 18 + 1] = g1.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 + 2] = g1.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 18 + 3] = g2.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 18 + 4] = g2.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 + 5] = g2.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 18 + 6] = g1.vertices[g1.vertices.length / 2].x;
+                positions[i * 4 * 2 * 9 + 18 + 7] = g1.vertices[g1.vertices.length / 2].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 + 8] = g1.vertices[g1.vertices.length / 2].z;
+
+                positions[i * 4 * 2 * 9 + 18 + 9] = g2.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 18 + 10] = g2.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 + 11] = g2.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 18 + 12] = g2.vertices[g1.vertices.length / 2].x;
+                positions[i * 4 * 2 * 9 + 18 + 13] = g2.vertices[g1.vertices.length / 2].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 + 14] = g2.vertices[g1.vertices.length / 2].z;
+                positions[i * 4 * 2 * 9 + 18 + 15] = g1.vertices[g1.vertices.length / 2].x;
+                positions[i * 4 * 2 * 9 + 18 + 16] = g1.vertices[g1.vertices.length / 2].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 + 17] = g1.vertices[g1.vertices.length / 2].z;
+
+                //内表面
+
+                positions[i * 4 * 2 * 9 + 18 * 2 + 0] = g1.vertices[g1.vertices.length / 2 + i].x;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 1] = g1.vertices[g1.vertices.length / 2 + i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 2] = g1.vertices[g1.vertices.length / 2 + i].z;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 3] = g1.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 4] = g1.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 5] = g1.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 6] = g1.vertices[g1.vertices.length / 2].x;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 7] = g1.vertices[g1.vertices.length / 2].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 8] = g1.vertices[g1.vertices.length / 2].z;
+
+                positions[i * 4 * 2 * 9 + 18 * 2 + 9] = g1.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 10] = g1.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 11] = g1.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 12] = g1.vertices[0].x;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 13] = g1.vertices[0].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 14] = g1.vertices[0].z;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 15] = g1.vertices[g1.vertices.length / 2].x;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 16] = g1.vertices[g1.vertices.length / 2].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 17] = g1.vertices[g1.vertices.length / 2].z;
+
+
+                //外表面
+
+                positions[i * 4 * 2 * 9 + 18 * 3 + 0] = g2.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 1] = g2.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 2] = g2.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 3] = g2.vertices[g2.vertices.length / 2 + i].x;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 4] = g2.vertices[g2.vertices.length / 2 + i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 5] = g2.vertices[g2.vertices.length / 2 + i].z;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 6] = g2.vertices[0].x;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 7] = g2.vertices[0].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 8] = g2.vertices[0].z;
+
+                positions[i * 4 * 2 * 9 + 18 * 3 + 9] = g2.vertices[g2.vertices.length / 2 + i].x;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 10] = g2.vertices[g2.vertices.length / 2 + i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 11] = g2.vertices[g2.vertices.length / 2 + i].z;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 12] = g2.vertices[g2.vertices.length / 2].x;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 13] = g2.vertices[g2.vertices.length / 2].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 14] = g2.vertices[g2.vertices.length / 2].z;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 15] = g2.vertices[0].x;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 16] = g2.vertices[0].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 17] = g2.vertices[0].z;
+
+
+
 
 
             }
             else {
+                //上表面*4四个面*2一个面分成两个小三角,*9一个小三角由三个坐标点一个坐标点由XYZ组成
+                positions[i * 4 * 2 * 9 + 0] = g1.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 1] = g1.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 2] = g1.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 3] = g2.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 4] = g2.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 5] = g2.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 6] = g1.vertices[i + 1].x;
+                positions[i * 4 * 2 * 9 + 7] = g1.vertices[i + 1].y + yOffset;
+                positions[i * 4 * 2 * 9 + 8] = g1.vertices[i + 1].z;
+
+                positions[i * 4 * 2 * 9 + 9] = g2.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 10] = g2.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 11] = g2.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 12] = g2.vertices[i + 1].x;
+                positions[i * 4 * 2 * 9 + 13] = g2.vertices[i + 1].y + yOffset;
+                positions[i * 4 * 2 * 9 + 14] = g2.vertices[i + 1].z;
+                positions[i * 4 * 2 * 9 + 15] = g1.vertices[i + 1].x;
+                positions[i * 4 * 2 * 9 + 16] = g1.vertices[i + 1].y + yOffset;
+                positions[i * 4 * 2 * 9 + 17] = g1.vertices[i + 1].z;
+                //下表面，+18：上表面
+                positions[i * 4 * 2 * 9 + 18 + 0] = g1.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 18 + 1] = g1.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 + 2] = g1.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 18 + 3] = g2.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 18 + 4] = g2.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 + 5] = g2.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 18 + 6] = g1.vertices[i + 1].x;
+                positions[i * 4 * 2 * 9 + 18 + 7] = g1.vertices[i + 1].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 + 8] = g1.vertices[i + 1].z;
+
+                positions[i * 4 * 2 * 9 + 18 + 9] = g2.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 18 + 10] = g2.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 + 11] = g2.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 18 + 12] = g2.vertices[i + 1].x;
+                positions[i * 4 * 2 * 9 + 18 + 13] = g2.vertices[i + 1].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 + 14] = g2.vertices[i + 1].z;
+                positions[i * 4 * 2 * 9 + 18 + 15] = g1.vertices[i + 1].x;
+                positions[i * 4 * 2 * 9 + 18 + 16] = g1.vertices[i + 1].y + yOffset
+                positions[i * 4 * 2 * 9 + 18 + 17] = g1.vertices[i + 1].z;
+
+                //内表面
+
+                positions[i * 4 * 2 * 9 + 18 * 2 + 0] = g1.vertices[g1.vertices.length / 2 + i].x;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 1] = g1.vertices[g1.vertices.length / 2 + i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 2] = g1.vertices[g1.vertices.length / 2 + i].z;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 3] = g1.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 4] = g1.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 5] = g1.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 6] = g1.vertices[g1.vertices.length / 2 + i + 1].x;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 7] = g1.vertices[g1.vertices.length / 2 + i + 1].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 8] = g1.vertices[g1.vertices.length / 2 + i + 1].z;
+
+                positions[i * 4 * 2 * 9 + 18 * 2 + 9] = g1.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 10] = g1.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 11] = g1.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 12] = g1.vertices[i + 1].x;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 13] = g1.vertices[i + 1].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 14] = g1.vertices[i + 1].z;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 15] = g1.vertices[g1.vertices.length / 2 + i + 1].x;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 16] = g1.vertices[g1.vertices.length / 2 + i + 1].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 2 + 17] = g1.vertices[g1.vertices.length / 2 + i + 1].z;
 
 
-                //一个三角面
-                positions[i * 18 + 0] = g1.vertices[i].x;
-                positions[i * 18 + 1] = g1.vertices[i].y + yOffset;
-                positions[i * 18 + 2] = g1.vertices[i].z;
-                positions[i * 18 + 3] = g2.vertices[i].x;
-                positions[i * 18 + 4] = g2.vertices[i].y + yOffset;
-                positions[i * 18 + 5] = g2.vertices[i].z;
-                positions[i * 18 + 6] = g1.vertices[i + 1].x;
-                positions[i * 18 + 7] = g1.vertices[i + 1].y + yOffset;
-                positions[i * 18 + 8] = g1.vertices[i + 1].z;
-                //另一个三角面组成一个四边形的面
-                positions[i * 18 + 9] = g2.vertices[i].x;
-                positions[i * 18 + 10] = g2.vertices[i].y + yOffset;
-                positions[i * 18 + 11] = g2.vertices[i].z;
-                positions[i * 18 + 12] = g2.vertices[i + 1].x;
-                positions[i * 18 + 13] = g2.vertices[i + 1].y + yOffset;
-                positions[i * 18 + 14] = g2.vertices[i + 1].z;
-                positions[i * 18 + 15] = g1.vertices[i + 1].x;
-                positions[i * 18 + 16] = g1.vertices[i + 1].y + yOffset;
-                positions[i * 18 + 17] = g1.vertices[i + 1].z;
+                //外表面
 
+                positions[i * 4 * 2 * 9 + 18 * 3 + 0] = g2.vertices[i].x;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 1] = g2.vertices[i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 2] = g2.vertices[i].z;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 3] = g2.vertices[g2.vertices.length / 2 + i].x;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 4] = g2.vertices[g2.vertices.length / 2 + i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 5] = g2.vertices[g2.vertices.length / 2 + i].z;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 6] = g2.vertices[i + 1].x;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 7] = g2.vertices[i + 1].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 8] = g2.vertices[i + 1].z;
+
+                positions[i * 4 * 2 * 9 + 18 * 3 + 9] = g2.vertices[g2.vertices.length / 2 + i].x;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 10] = g2.vertices[g2.vertices.length / 2 + i].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 11] = g2.vertices[g2.vertices.length / 2 + i].z;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 12] = g2.vertices[g2.vertices.length / 2 + i + 1].x;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 13] = g2.vertices[g2.vertices.length / 2 + i + 1].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 14] = g2.vertices[g2.vertices.length / 2 + i + 1].z;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 15] = g2.vertices[i + 1].x;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 16] = g2.vertices[i + 1].y + yOffset;
+                positions[i * 4 * 2 * 9 + 18 * 3 + 17] = g2.vertices[i + 1].z;
             }
-            //增加颜色
-            colors[i * 18 + 0] = color[i].r;
-            colors[i * 18 + 1] = color[i].g;
-            colors[i * 18 + 2] = color[i].b;
-            colors[i * 18 + 3] = color[i].r;
-            colors[i * 18 + 4] = color[i].g;
-            colors[i * 18 + 5] = color[i].b;
-            colors[i * 18 + 6] = color[i].r;
-            colors[i * 18 + 7] = color[i].g;
-            colors[i * 18 + 8] = color[i].b;
-            colors[i * 18 + 9] = color[i].r;
-            colors[i * 18 + 10] = color[i].g;
-            colors[i * 18 + 11] = color[i].b;
-            colors[i * 18 + 12] = color[i].r;
-            colors[i * 18 + 13] = color[i].g;
-            colors[i * 18 + 14] = color[i].b;
-            colors[i * 18 + 15] = color[i].r;
-            colors[i * 18 + 16] = color[i].g;
-            colors[i * 18 + 17] = color[i].b;
+            for (var j = 0; j < 18 * 4; j += 3) {
+                colors[i * 4 * 18 + j + 0] = color[i].r;
+                colors[i * 4 * 18 + j + 1] = color[i].g;
+                colors[i * 4 * 18 + j + 2] = color[i].b;
+            }
 
         }
 
 
-        //下表面
-        for (var i = g1.vertices.length / 2; i < g1.vertices.length; i++) {
-            if (i == g1.vertices.length - 1) {
-                //一个三角面
-                positions[i * 18 + 0] = g1.vertices[i].x;
-                positions[i * 18 + 1] = g1.vertices[i].y + yOffset;
-                positions[i * 18 + 2] = g1.vertices[i].z;
-                positions[i * 18 + 3] = g2.vertices[i].x;
-                positions[i * 18 + 4] = g2.vertices[i].y + yOffset;
-                positions[i * 18 + 5] = g2.vertices[i].z;
-                positions[i * 18 + 6] = g1.vertices[g1.vertices.length / 2].x;
-                positions[i * 18 + 7] = g1.vertices[g1.vertices.length / 2].y + yOffset;
-                positions[i * 18 + 8] = g1.vertices[g1.vertices.length / 2].z;
-                //另一个三角面组成一个四边形的面
-                positions[i * 18 + 9] = g2.vertices[i].x;
-                positions[i * 18 + 10] = g2.vertices[i].y + yOffset;
-                positions[i * 18 + 11] = g2.vertices[i].z;
-                positions[i * 18 + 12] = g2.vertices[g1.vertices.length / 2].x;
-                positions[i * 18 + 13] = g2.vertices[g1.vertices.length / 2].y + yOffset;
-                positions[i * 18 + 14] = g2.vertices[g1.vertices.length / 2].z;
-                positions[i * 18 + 15] = g1.vertices[g1.vertices.length / 2].x;
-                positions[i * 18 + 16] = g1.vertices[g1.vertices.length / 2].y + yOffset;
-                positions[i * 18 + 17] = g1.vertices[g1.vertices.length / 2].z;
+
+        //        //上表面
+        //        for (var i = 0; i < g1.vertices.length / 2; i++) {
+        //            if (i == g1.vertices.length / 2 - 1) {
+        //                //一个三角面
+        //                positions[i * 18 + 0] = g1.vertices[i].x;
+        //                positions[i * 18 + 1] = g1.vertices[i].y + yOffset;
+        //                positions[i * 18 + 2] = g1.vertices[i].z;
+        //                positions[i * 18 + 3] = g2.vertices[i].x;
+        //                positions[i * 18 + 4] = g2.vertices[i].y + yOffset;
+        //                positions[i * 18 + 5] = g2.vertices[i].z;
+        //                positions[i * 18 + 6] = g1.vertices[0].x;
+        //                positions[i * 18 + 7] = g1.vertices[0].y + yOffset;
+        //                positions[i * 18 + 8] = g1.vertices[0].z;
+        //                //另一个三角面组成一个四边形的面
+        //                positions[i * 18 + 9] = g2.vertices[i].x;
+        //                positions[i * 18 + 10] = g2.vertices[i].y + yOffset;
+        //                positions[i * 18 + 11] = g2.vertices[i].z;
+        //                positions[i * 18 + 12] = g2.vertices[0].x;
+        //                positions[i * 18 + 13] = g2.vertices[0].y + yOffset;
+        //                positions[i * 18 + 14] = g2.vertices[0].z;
+        //                positions[i * 18 + 15] = g1.vertices[0].x;
+        //                positions[i * 18 + 16] = g1.vertices[0].y + yOffset;
+        //                positions[i * 18 + 17] = g1.vertices[0].z;
 
 
-            }
-            else {
+        //            }
+        //            else {
 
 
+        //                //一个三角面
+        //                positions[i * 18 + 0] = g1.vertices[i].x;
+        //                positions[i * 18 + 1] = g1.vertices[i].y + yOffset;
+        //                positions[i * 18 + 2] = g1.vertices[i].z;
+        //                positions[i * 18 + 3] = g2.vertices[i].x;
+        //                positions[i * 18 + 4] = g2.vertices[i].y + yOffset;
+        //                positions[i * 18 + 5] = g2.vertices[i].z;
+        //                positions[i * 18 + 6] = g1.vertices[i + 1].x;
+        //                positions[i * 18 + 7] = g1.vertices[i + 1].y + yOffset;
+        //                positions[i * 18 + 8] = g1.vertices[i + 1].z;
+        //                //另一个三角面组成一个四边形的面
+        //                positions[i * 18 + 9] = g2.vertices[i].x;
+        //                positions[i * 18 + 10] = g2.vertices[i].y + yOffset;
+        //                positions[i * 18 + 11] = g2.vertices[i].z;
+        //                positions[i * 18 + 12] = g2.vertices[i + 1].x;
+        //                positions[i * 18 + 13] = g2.vertices[i + 1].y + yOffset;
+        //                positions[i * 18 + 14] = g2.vertices[i + 1].z;
+        //                positions[i * 18 + 15] = g1.vertices[i + 1].x;
+        //                positions[i * 18 + 16] = g1.vertices[i + 1].y + yOffset;
+        //                positions[i * 18 + 17] = g1.vertices[i + 1].z;
 
-                //一个三角面
-                positions[i * 18 + 0] = g1.vertices[i].x;
-                positions[i * 18 + 1] = g1.vertices[i].y + yOffset;
-                positions[i * 18 + 2] = g1.vertices[i].z;
-                positions[i * 18 + 3] = g2.vertices[i].x;
-                positions[i * 18 + 4] = g2.vertices[i].y + yOffset;
-                positions[i * 18 + 5] = g2.vertices[i].z;
-                positions[i * 18 + 6] = g1.vertices[i + 1].x;
-                positions[i * 18 + 7] = g1.vertices[i + 1].y + yOffset;
-                positions[i * 18 + 8] = g1.vertices[i + 1].z;
-                //另一个三角面组成一个四边形的面
-                positions[i * 18 + 9] = g2.vertices[i].x;
-                positions[i * 18 + 10] = g2.vertices[i].y + yOffset;
-                positions[i * 18 + 11] = g2.vertices[i].z;
-                positions[i * 18 + 12] = g2.vertices[i + 1].x;
-                positions[i * 18 + 13] = g2.vertices[i + 1].y + yOffset;
-                positions[i * 18 + 14] = g2.vertices[i + 1].z;
-                positions[i * 18 + 15] = g1.vertices[i + 1].x;
-                positions[i * 18 + 16] = g1.vertices[i + 1].y + yOffset
-                positions[i * 18 + 17] = g1.vertices[i + 1].z;
-            }
-            colors[i * 18 + 0] = color[i - g1.vertices.length / 2].r;
-            colors[i * 18 + 1] = color[i - g1.vertices.length / 2].g;
-            colors[i * 18 + 2] = color[i - g1.vertices.length / 2].b;
-            colors[i * 18 + 3] = color[i - g1.vertices.length / 2].r;
-            colors[i * 18 + 4] = color[i - g1.vertices.length / 2].g;
-            colors[i * 18 + 5] = color[i - g1.vertices.length / 2].b;
-            colors[i * 18 + 6] = color[i - g1.vertices.length / 2].r;
-            colors[i * 18 + 7] = color[i - g1.vertices.length / 2].g;
-            colors[i * 18 + 8] = color[i - g1.vertices.length / 2].b;
-            colors[i * 18 + 9] = color[i - g1.vertices.length / 2].r;
-            colors[i * 18 + 10] = color[i - g1.vertices.length / 2].g;
-            colors[i * 18 + 11] = color[i - g1.vertices.length / 2].b;
-            colors[i * 18 + 12] = color[i - g1.vertices.length / 2].r;
-            colors[i * 18 + 13] = color[i - g1.vertices.length / 2].g;
-            colors[i * 18 + 14] = color[i - g1.vertices.length / 2].b;
-            colors[i * 18 + 15] = color[i - g1.vertices.length / 2].r;
-            colors[i * 18 + 16] = color[i - g1.vertices.length / 2].g;
-            colors[i * 18 + 17] = color[i - g1.vertices.length / 2].b;
+        //            }
+        //            //增加颜色
+        //            colors[i * 18 + 0] = color[i].r;
+        //            colors[i * 18 + 1] = color[i].g;
+        //            colors[i * 18 + 2] = color[i].b;
+        //            colors[i * 18 + 3] = color[i].r;
+        //            colors[i * 18 + 4] = color[i].g;
+        //            colors[i * 18 + 5] = color[i].b;
+        //            colors[i * 18 + 6] = color[i].r;
+        //            colors[i * 18 + 7] = color[i].g;
+        //            colors[i * 18 + 8] = color[i].b;
+        //            colors[i * 18 + 9] = color[i].r;
+        //            colors[i * 18 + 10] = color[i].g;
+        //            colors[i * 18 + 11] = color[i].b;
+        //            colors[i * 18 + 12] = color[i].r;
+        //            colors[i * 18 + 13] = color[i].g;
+        //            colors[i * 18 + 14] = color[i].b;
+        //            colors[i * 18 + 15] = color[i].r;
+        //            colors[i * 18 + 16] = color[i].g;
+        //            colors[i * 18 + 17] = color[i].b;
 
-        }
-
-        //绘内圆柱面
-        for (var i = 0; i < g1.vertices.length / 2; i++) {
-            if (i == g1.vertices.length / 2 - 1) {
-                positions[i * 18 + 0 + g1.vertices.length * 18] = g1.vertices[i].x;
-                positions[i * 18 + 1 + g1.vertices.length * 18] = g1.vertices[i].y + yOffset;
-                positions[i * 18 + 2 + g1.vertices.length * 18] = g1.vertices[i].z;
-                positions[i * 18 + 3 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].x;
-                positions[i * 18 + 4 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].y + yOffset;
-                positions[i * 18 + 5 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].z;
-                positions[i * 18 + 6 + g1.vertices.length * 18] = g1.vertices[0].x;
-                positions[i * 18 + 7 + g1.vertices.length * 18] = g1.vertices[0].y + yOffset;
-                positions[i * 18 + 8 + g1.vertices.length * 18] = g1.vertices[0].z;
+        //        }
 
 
+        //        //下表面
+        //        for (var i = g1.vertices.length / 2; i < g1.vertices.length; i++) {
+        //            if (i == g1.vertices.length - 1) {
+        //                ///一个三角面
+        //                positions[i * 18 + 0] = g1.vertices[i].x;
+        //                positions[i * 18 + 1] = g1.vertices[i].y + yOffset;
+        //                positions[i * 18 + 2] = g1.vertices[i].z;
+        //                positions[i * 18 + 3] = g2.vertices[i].x;
+        //                positions[i * 18 + 4] = g2.vertices[i].y + yOffset;
+        //                positions[i * 18 + 5] = g2.vertices[i].z;
+        //                positions[i * 18 + 6] = g1.vertices[g1.vertices.length / 2].x;
+        //                positions[i * 18 + 7] = g1.vertices[g1.vertices.length / 2].y + yOffset;
+        //                positions[i * 18 + 8] = g1.vertices[g1.vertices.length / 2].z;
+        //                //另一个三角面组成一个四边形的面
+        //                positions[i * 18 + 9] = g2.vertices[i].x;
+        //                positions[i * 18 + 10] = g2.vertices[i].y + yOffset;
+        //                positions[i * 18 + 11] = g2.vertices[i].z;
+        //                positions[i * 18 + 12] = g2.vertices[g1.vertices.length / 2].x;
+        //                positions[i * 18 + 13] = g2.vertices[g1.vertices.length / 2].y + yOffset;
+        //                positions[i * 18 + 14] = g2.vertices[g1.vertices.length / 2].z;
+        //                positions[i * 18 + 15] = g1.vertices[g1.vertices.length / 2].x;
+        //                positions[i * 18 + 16] = g1.vertices[g1.vertices.length / 2].y + yOffset;
+        //                positions[i * 18 + 17] = g1.vertices[g1.vertices.length / 2].z;
+        //                //                //一个三角面
+        //                //                positions[i * 18 + 0] = g2.vertices[i].x;
+        //                //                positions[i * 18 + 1] = g2.vertices[i].y + yOffset;
+        //                //                positions[i * 18 + 2] = g2.vertices[i].z;
+        //                //                positions[i * 18 + 3] = g1.vertices[i].x;
+        //                //                positions[i * 18 + 4] = g1.vertices[i].y + yOffset;
+        //                //                positions[i * 18 + 5] = g1.vertices[i].z;
+        //                //                positions[i * 18 + 6] = g1.vertices[g1.vertices.length / 2].x;
+        //                //                positions[i * 18 + 7] = g1.vertices[g1.vertices.length / 2].y + yOffset;
+        //                //                positions[i * 18 + 8] = g1.vertices[g1.vertices.length / 2].z;
+        //                //                //另一个三角面组成一个四边形的面
+        //                //                positions[i * 18 + 9] = g1.vertices[i].x;
+        //                //                positions[i * 18 + 10] = g1.vertices[i].y + yOffset;
+        //                //                positions[i * 18 + 11] = g1.vertices[i].z;
+        //                //                positions[i * 18 + 12] = g1.vertices[g1.vertices.length / 2].x;
+        //                //                positions[i * 18 + 13] = g1.vertices[g1.vertices.length / 2].y + yOffset;
+        //                //                positions[i * 18 + 14] = g1.vertices[g1.vertices.length / 2].z;
+        //                //                positions[i * 18 + 15] = g2.vertices[g1.vertices.length / 2].x;
+        //                //                positions[i * 18 + 16] = g2.vertices[g1.vertices.length / 2].y + yOffset
+        //                //                positions[i * 18 + 17] = g2.vertices[g1.vertices.length / 2].z;
 
-                positions[i * 18 + 9 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].x;
-                positions[i * 18 + 10 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].y + yOffset;
-                positions[i * 18 + 11 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].z;
-                positions[i * 18 + 12 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2].x;
-                positions[i * 18 + 13 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2].y + yOffset;
-                positions[i * 18 + 14 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2].z;
-                positions[i * 18 + 15 + g1.vertices.length * 18] = g1.vertices[0].x;
-                positions[i * 18 + 16 + g1.vertices.length * 18] = g1.vertices[0].y + yOffset;
-                positions[i * 18 + 17 + g1.vertices.length * 18] = g1.vertices[0].z;
+        //            }
+        //            else {
 
-            }
-            else {
-                positions[i * 18 + 0 + g1.vertices.length * 18] = g1.vertices[i].x;
-                positions[i * 18 + 1 + g1.vertices.length * 18] = g1.vertices[i].y + yOffset;
-                positions[i * 18 + 2 + g1.vertices.length * 18] = g1.vertices[i].z;
-                positions[i * 18 + 3 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].x;
-                positions[i * 18 + 4 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].y + yOffset;
-                positions[i * 18 + 5 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].z;
-                positions[i * 18 + 6 + g1.vertices.length * 18] = g1.vertices[i + 1].x;
-                positions[i * 18 + 7 + g1.vertices.length * 18] = g1.vertices[i + 1].y + yOffset;
-                positions[i * 18 + 8 + g1.vertices.length * 18] = g1.vertices[i + 1].z;
+        //                //                //一个三角面
+        //                //                positions[i * 18 + 0] = g2.vertices[i].x;
+        //                //                positions[i * 18 + 1] = g2.vertices[i].y + yOffset;
+        //                //                positions[i * 18 + 2] = g2.vertices[i].z;
+        //                //                positions[i * 18 + 3] = g1.vertices[i].x;
+        //                //                positions[i * 18 + 4] = g1.vertices[i].y + yOffset;
+        //                //                positions[i * 18 + 5] = g1.vertices[i].z;
+        //                //                positions[i * 18 + 6] = g1.vertices[i + 1].x;
+        //                //                positions[i * 18 + 7] = g1.vertices[i + 1].y + yOffset;
+        //                //                positions[i * 18 + 8] = g1.vertices[i + 1].z;
+        //                //                //另一个三角面组成一个四边形的面
+        //                //                positions[i * 18 + 9] = g1.vertices[i].x;
+        //                //                positions[i * 18 + 10] = g1.vertices[i].y + yOffset;
+        //                //                positions[i * 18 + 11] = g1.vertices[i].z;
+        //                //                positions[i * 18 + 12] = g1.vertices[i + 1].x;
+        //                //                positions[i * 18 + 13] = g1.vertices[i + 1].y + yOffset;
+        //                //                positions[i * 18 + 14] = g1.vertices[i + 1].z;
+        //                //                positions[i * 18 + 15] = g2.vertices[i + 1].x;
+        //                //                positions[i * 18 + 16] = g2.vertices[i + 1].y + yOffset
+        //                //                positions[i * 18 + 17] = g2.vertices[i + 1].z;
 
+        //                //一个三角面
+        //                positions[i * 18 + 0] = g1.vertices[i].x;
+        //                positions[i * 18 + 1] = g1.vertices[i].y + yOffset;
+        //                positions[i * 18 + 2] = g1.vertices[i].z;
+        //                positions[i * 18 + 3] = g2.vertices[i].x;
+        //                positions[i * 18 + 4] = g2.vertices[i].y + yOffset;
+        //                positions[i * 18 + 5] = g2.vertices[i].z;
+        //                positions[i * 18 + 6] = g1.vertices[i + 1].x;
+        //                positions[i * 18 + 7] = g1.vertices[i + 1].y + yOffset;
+        //                positions[i * 18 + 8] = g1.vertices[i + 1].z;
+        //                //另一个三角面组成一个四边形的面
+        //                positions[i * 18 + 9] = g2.vertices[i].x;
+        //                positions[i * 18 + 10] = g2.vertices[i].y + yOffset;
+        //                positions[i * 18 + 11] = g2.vertices[i].z;
+        //                positions[i * 18 + 12] = g2.vertices[i + 1].x;
+        //                positions[i * 18 + 13] = g2.vertices[i + 1].y + yOffset;
+        //                positions[i * 18 + 14] = g2.vertices[i + 1].z;
+        //                positions[i * 18 + 15] = g1.vertices[i + 1].x;
+        //                positions[i * 18 + 16] = g1.vertices[i + 1].y + yOffset
+        //                positions[i * 18 + 17] = g1.vertices[i + 1].z;
+        //            }
+        //            colors[i * 18 + 0] = color[i - g1.vertices.length / 2].r;
+        //            colors[i * 18 + 1] = color[i - g1.vertices.length / 2].g;
+        //            colors[i * 18 + 2] = color[i - g1.vertices.length / 2].b;
+        //            colors[i * 18 + 3] = color[i - g1.vertices.length / 2].r;
+        //            colors[i * 18 + 4] = color[i - g1.vertices.length / 2].g;
+        //            colors[i * 18 + 5] = color[i - g1.vertices.length / 2].b;
+        //            colors[i * 18 + 6] = color[i - g1.vertices.length / 2].r;
+        //            colors[i * 18 + 7] = color[i - g1.vertices.length / 2].g;
+        //            colors[i * 18 + 8] = color[i - g1.vertices.length / 2].b;
+        //            colors[i * 18 + 9] = color[i - g1.vertices.length / 2].r;
+        //            colors[i * 18 + 10] = color[i - g1.vertices.length / 2].g;
+        //            colors[i * 18 + 11] = color[i - g1.vertices.length / 2].b;
+        //            colors[i * 18 + 12] = color[i - g1.vertices.length / 2].r;
+        //            colors[i * 18 + 13] = color[i - g1.vertices.length / 2].g;
+        //            colors[i * 18 + 14] = color[i - g1.vertices.length / 2].b;
+        //            colors[i * 18 + 15] = color[i - g1.vertices.length / 2].r;
+        //            colors[i * 18 + 16] = color[i - g1.vertices.length / 2].g;
+        //            colors[i * 18 + 17] = color[i - g1.vertices.length / 2].b;
 
+        //        }
 
-                positions[i * 18 + 9 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].x;
-                positions[i * 18 + 10 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].y + yOffset;
-                positions[i * 18 + 11 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].z;
-                positions[i * 18 + 12 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i + 1].x;
-                positions[i * 18 + 13 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i + 1].y + yOffset;
-                positions[i * 18 + 14 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i + 1].z;
-                positions[i * 18 + 15 + g1.vertices.length * 18] = g1.vertices[i + 1].x;
-                positions[i * 18 + 16 + g1.vertices.length * 18] = g1.vertices[i + 1].y + yOffset;
-                positions[i * 18 + 17 + g1.vertices.length * 18] = g1.vertices[i + 1].z;
-            }
-            colors[i * 18 + 0 + g1.vertices.length * 18] = color[i].r;
-            colors[i * 18 + 1 + g1.vertices.length * 18] = color[i].g;
-            colors[i * 18 + 2 + g1.vertices.length * 18] = color[i].b;
-            colors[i * 18 + 3 + g1.vertices.length * 18] = color[i].r;
-            colors[i * 18 + 4 + g1.vertices.length * 18] = color[i].g;
-            colors[i * 18 + 5 + g1.vertices.length * 18] = color[i].b;
-            colors[i * 18 + 6 + g1.vertices.length * 18] = color[i].r;
-            colors[i * 18 + 7 + g1.vertices.length * 18] = color[i].g;
-            colors[i * 18 + 8 + g1.vertices.length * 18] = color[i].b;
-            colors[i * 18 + 9 + g1.vertices.length * 18] = color[i].r;
-            colors[i * 18 + 10 + g1.vertices.length * 18] = color[i].g;
-            colors[i * 18 + 11 + g1.vertices.length * 18] = color[i].b;
-            colors[i * 18 + 12 + g1.vertices.length * 18] = color[i].r;
-            colors[i * 18 + 13 + g1.vertices.length * 18] = color[i].g;
-            colors[i * 18 + 14 + g1.vertices.length * 18] = color[i].b;
-            colors[i * 18 + 15 + g1.vertices.length * 18] = color[i].r;
-            colors[i * 18 + 16 + g1.vertices.length * 18] = color[i].g;
-            colors[i * 18 + 17 + g1.vertices.length * 18] = color[i].b;
+        //        //绘内圆柱面
+        //        for (var i = 0; i < g1.vertices.length / 2; i++) {
+        //            if (i == g1.vertices.length / 2 - 1) {
+        //                positions[i * 18 + 0 + g1.vertices.length * 18] = g1.vertices[i].x;
+        //                positions[i * 18 + 1 + g1.vertices.length * 18] = g1.vertices[i].y + yOffset;
+        //                positions[i * 18 + 2 + g1.vertices.length * 18] = g1.vertices[i].z;
+        //                positions[i * 18 + 3 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].x;
+        //                positions[i * 18 + 4 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].y + yOffset;
+        //                positions[i * 18 + 5 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].z;
+        //                positions[i * 18 + 6 + g1.vertices.length * 18] = g1.vertices[0].x;
+        //                positions[i * 18 + 7 + g1.vertices.length * 18] = g1.vertices[0].y + yOffset;
+        //                positions[i * 18 + 8 + g1.vertices.length * 18] = g1.vertices[0].z;
 
-        }
+        //                positions[i * 18 + 9 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].x;
+        //                positions[i * 18 + 10 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].y + yOffset;
+        //                positions[i * 18 + 11 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].z;
+        //                positions[i * 18 + 12 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2].x;
+        //                positions[i * 18 + 13 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2].y + yOffset;
+        //                positions[i * 18 + 14 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2].z;
+        //                positions[i * 18 + 15 + g1.vertices.length * 18] = g1.vertices[0].x;
+        //                positions[i * 18 + 16 + g1.vertices.length * 18] = g1.vertices[0].y + yOffset;
+        //                positions[i * 18 + 17 + g1.vertices.length * 18] = g1.vertices[0].z;
 
-        //绘外圆柱面
-        for (var i = 0; i < g2.vertices.length / 2; i++) {
-            if (i == g2.vertices.length / 2 - 1) {
-                positions[i * 18 + 0 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i].x;
-                positions[i * 18 + 1 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i].y + yOffset;
-                positions[i * 18 + 2 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i].z;
-                positions[i * 18 + 3 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].x;
-                positions[i * 18 + 4 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].y + yOffset;
-                positions[i * 18 + 5 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].z;
-                positions[i * 18 + 6 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[0].x;
-                positions[i * 18 + 7 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[0].y + yOffset;
-                positions[i * 18 + 8 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[0].z;
+        //            }
+        //            else {
+        //                positions[i * 18 + 0 + g1.vertices.length * 18] = g1.vertices[i].x;
+        //                positions[i * 18 + 1 + g1.vertices.length * 18] = g1.vertices[i].y + yOffset;
+        //                positions[i * 18 + 2 + g1.vertices.length * 18] = g1.vertices[i].z;
+        //                positions[i * 18 + 3 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].x;
+        //                positions[i * 18 + 4 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].y + yOffset;
+        //                positions[i * 18 + 5 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].z;
+        //                positions[i * 18 + 6 + g1.vertices.length * 18] = g1.vertices[i + 1].x;
+        //                positions[i * 18 + 7 + g1.vertices.length * 18] = g1.vertices[i + 1].y + yOffset;
+        //                positions[i * 18 + 8 + g1.vertices.length * 18] = g1.vertices[i + 1].z;
 
+        //                positions[i * 18 + 9 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].x;
+        //                positions[i * 18 + 10 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].y + yOffset;
+        //                positions[i * 18 + 11 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i].z;
+        //                positions[i * 18 + 12 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i + 1].x;
+        //                positions[i * 18 + 13 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i + 1].y + yOffset;
+        //                positions[i * 18 + 14 + g1.vertices.length * 18] = g1.vertices[g1.vertices.length / 2 + i + 1].z;
+        //                positions[i * 18 + 15 + g1.vertices.length * 18] = g1.vertices[i + 1].x;
+        //                positions[i * 18 + 16 + g1.vertices.length * 18] = g1.vertices[i + 1].y + yOffset;
+        //                positions[i * 18 + 17 + g1.vertices.length * 18] = g1.vertices[i + 1].z;
+        //            }
+        //            colors[i * 18 + 0 + g1.vertices.length * 18] = color[i].r;
+        //            colors[i * 18 + 1 + g1.vertices.length * 18] = color[i].g;
+        //            colors[i * 18 + 2 + g1.vertices.length * 18] = color[i].b;
+        //            colors[i * 18 + 3 + g1.vertices.length * 18] = color[i].r;
+        //            colors[i * 18 + 4 + g1.vertices.length * 18] = color[i].g;
+        //            colors[i * 18 + 5 + g1.vertices.length * 18] = color[i].b;
+        //            colors[i * 18 + 6 + g1.vertices.length * 18] = color[i].r;
+        //            colors[i * 18 + 7 + g1.vertices.length * 18] = color[i].g;
+        //            colors[i * 18 + 8 + g1.vertices.length * 18] = color[i].b;
+        //            colors[i * 18 + 9 + g1.vertices.length * 18] = color[i].r;
+        //            colors[i * 18 + 10 + g1.vertices.length * 18] = color[i].g;
+        //            colors[i * 18 + 11 + g1.vertices.length * 18] = color[i].b;
+        //            colors[i * 18 + 12 + g1.vertices.length * 18] = color[i].r;
+        //            colors[i * 18 + 13 + g1.vertices.length * 18] = color[i].g;
+        //            colors[i * 18 + 14 + g1.vertices.length * 18] = color[i].b;
+        //            colors[i * 18 + 15 + g1.vertices.length * 18] = color[i].r;
+        //            colors[i * 18 + 16 + g1.vertices.length * 18] = color[i].g;
+        //            colors[i * 18 + 17 + g1.vertices.length * 18] = color[i].b;
 
+        //        }
 
-                positions[i * 18 + 9 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].x;
-                positions[i * 18 + 10 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].y + yOffset;
-                positions[i * 18 + 11 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].z;
-                positions[i * 18 + 12 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2].x;
-                positions[i * 18 + 13 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2].y + yOffset;
-                positions[i * 18 + 14 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2].z;
-                positions[i * 18 + 15 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[0].x;
-                positions[i * 18 + 16 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[0].y + yOffset;
-                positions[i * 18 + 17 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[0].z;
+        //        //绘外圆柱面
+        //        for (var i = 0; i < g2.vertices.length / 2; i++) {
+        //            if (i == g2.vertices.length / 2 - 1) {
+        //                positions[i * 18 + 0 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i].x;
+        //                positions[i * 18 + 1 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i].y + yOffset;
+        //                positions[i * 18 + 2 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i].z;
+        //                positions[i * 18 + 3 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].x;
+        //                positions[i * 18 + 4 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].y + yOffset;
+        //                positions[i * 18 + 5 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].z;
+        //                positions[i * 18 + 6 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[0].x;
+        //                positions[i * 18 + 7 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[0].y + yOffset;
+        //                positions[i * 18 + 8 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[0].z;
 
-            }
-            else {
-                positions[i * 18 + 0 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i].x;
-                positions[i * 18 + 1 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i].y + yOffset;
-                positions[i * 18 + 2 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i].z;
-                positions[i * 18 + 3 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].x;
-                positions[i * 18 + 4 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].y + yOffset;
-                positions[i * 18 + 5 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].z;
-                positions[i * 18 + 6 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i + 1].x;
-                positions[i * 18 + 7 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i + 1].y + yOffset;
-                positions[i * 18 + 8 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i + 1].z;
+        //                positions[i * 18 + 9 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].x;
+        //                positions[i * 18 + 10 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].y + yOffset;
+        //                positions[i * 18 + 11 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].z;
+        //                positions[i * 18 + 12 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2].x;
+        //                positions[i * 18 + 13 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2].y + yOffset;
+        //                positions[i * 18 + 14 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2].z;
+        //                positions[i * 18 + 15 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[0].x;
+        //                positions[i * 18 + 16 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[0].y + yOffset;
+        //                positions[i * 18 + 17 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[0].z;
 
+        //            }
+        //            else {
+        //                positions[i * 18 + 0 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i].x;
+        //                positions[i * 18 + 1 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i].y + yOffset;
+        //                positions[i * 18 + 2 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i].z;
+        //                positions[i * 18 + 3 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].x;
+        //                positions[i * 18 + 4 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].y + yOffset;
+        //                positions[i * 18 + 5 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].z;
+        //                positions[i * 18 + 6 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i + 1].x;
+        //                positions[i * 18 + 7 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i + 1].y + yOffset;
+        //                positions[i * 18 + 8 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i + 1].z;
 
+        //                positions[i * 18 + 9 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].x;
+        //                positions[i * 18 + 10 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].y + yOffset;
+        //                positions[i * 18 + 11 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].z;
+        //                positions[i * 18 + 12 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i + 1].x;
+        //                positions[i * 18 + 13 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i + 1].y + yOffset;
+        //                positions[i * 18 + 14 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i + 1].z;
+        //                positions[i * 18 + 15 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i + 1].x;
+        //                positions[i * 18 + 16 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i + 1].y + yOffset;
+        //                positions[i * 18 + 17 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i + 1].z;
+        //            }
+        //            colors[i * 18 + 0 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].r;
+        //            colors[i * 18 + 1 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].g;
+        //            colors[i * 18 + 2 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].b;
+        //            colors[i * 18 + 3 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].r;
+        //            colors[i * 18 + 4 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].g;
+        //            colors[i * 18 + 5 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].b;
+        //            colors[i * 18 + 6 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].r;
+        //            colors[i * 18 + 7 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].g;
+        //            colors[i * 18 + 8 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].b;
+        //            colors[i * 18 + 9 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].r;
+        //            colors[i * 18 + 10 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].g;
+        //            colors[i * 18 + 11 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].b;
+        //            colors[i * 18 + 12 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].r;
+        //            colors[i * 18 + 13 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].g;
+        //            colors[i * 18 + 14 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].b;
+        //            colors[i * 18 + 15 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].r;
+        //            colors[i * 18 + 16 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].g;
+        //            colors[i * 18 + 17 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].b;
 
-                positions[i * 18 + 9 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].x;
-                positions[i * 18 + 10 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].y + yOffset;
-                positions[i * 18 + 11 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i].z;
-                positions[i * 18 + 12 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i + 1].x;
-                positions[i * 18 + 13 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i + 1].y + yOffset;
-                positions[i * 18 + 14 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[g2.vertices.length / 2 + i + 1].z;
-                positions[i * 18 + 15 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i + 1].x;
-                positions[i * 18 + 16 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i + 1].y + yOffset;
-                positions[i * 18 + 17 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = g2.vertices[i + 1].z;
-            }
-            colors[i * 18 + 0 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].r;
-            colors[i * 18 + 1 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].g;
-            colors[i * 18 + 2 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].b;
-            colors[i * 18 + 3 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].r;
-            colors[i * 18 + 4 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].g;
-            colors[i * 18 + 5 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].b;
-            colors[i * 18 + 6 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].r;
-            colors[i * 18 + 7 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].g;
-            colors[i * 18 + 8 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].b;
-            colors[i * 18 + 9 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].r;
-            colors[i * 18 + 10 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].g;
-            colors[i * 18 + 11 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].b;
-            colors[i * 18 + 12 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].r;
-            colors[i * 18 + 13 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].g;
-            colors[i * 18 + 14 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].b;
-            colors[i * 18 + 15 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].r;
-            colors[i * 18 + 16 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].g;
-            colors[i * 18 + 17 + g2.vertices.length * 18 + g1.vertices.length / 2 * 18] = color[i].b;
-
-        }
+        //        }
 
 
         geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
