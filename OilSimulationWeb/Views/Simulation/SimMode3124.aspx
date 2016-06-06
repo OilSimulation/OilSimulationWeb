@@ -100,6 +100,8 @@
     }
     //初始化
     $(document).ready(function () {
+        $("#controls_container_top").css("left", "5px");
+        $("#controls_container_top").css("top", "10px");
         CreateGrid(100, 100);
         $("#wrapper").addClass("ShowGrid");
         parent.postMessage("HideLoading()", "*");
