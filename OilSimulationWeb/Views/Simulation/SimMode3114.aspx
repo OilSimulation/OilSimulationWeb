@@ -15,7 +15,7 @@
             }
             var jsonData = {};
             jsonData.Mode = 3114;
-            jsonData.Step = userData; //距离
+            jsonData.Para = userData; //距离
             CommonDataUpdate(jsonData);
         });
     });
