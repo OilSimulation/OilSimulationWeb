@@ -290,13 +290,18 @@
                 $("#MainDiv").removeClass("loading");
             });
         }
+        //居中
+        function ShowCenterPosition(jqObj) 
+        {
+            jqObj.css('left', ($(document).width() - jqObj.width()) / 2);
+            jqObj.css('top', (document.documentElement.clientHeight - jqObj.height()) / 2 + $(document).scrollTop());
+        }
         //显示曲线
         function ShowLineChart(myData) 
         {
             $("#MainDiv").addClass("loading");
-            $("#popin_line").css('left', ($(document).width() - $("#popin_line").width()) / 2);
-            $("#popin_line").css('top', (document.documentElement.clientHeight - $("#popin_line").height()) / 2 + $(document).scrollTop());
             $("#popin_line").css('display', 'block');
+            ShowCenterPosition($("#popin_line"));
             var myChart = new JSChart('graph', 'line');
             myChart.setDataArray(myData);
             myChart.setAxisNameFontSize(10);
@@ -334,6 +339,12 @@
                 contentType: 'application/json',
                 success: function (result) { LoadWebGLData(0); }
             };
+            //显示加载
+            parent.postMessage("ShowLoading()", "*");
+            //隐藏参数设置窗口
+            $("#controls_container_top").addClass("hidden");
+            $("#controls_container_top").removeClass("blockLine");
+            //执行AJAX请求
             $.ajax(option);
         }
         /////////

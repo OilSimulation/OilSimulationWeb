@@ -97,13 +97,21 @@ namespace OilSimulationController
                     {
                         propValues = initParser.ParseEclipsePropertyFromInit(szProName);
                     }
-                    if (propValues.Min() < fMinValue)
+                    if (propValues == null)
                     {
-                        fMinValue = propValues.Min();
+                        fMinValue = 0.0f;
+                        fMaxValue = 0.0f;
                     }
-                    if (propValues.Max() > fMaxValue)
+                    else
                     {
-                        fMaxValue = propValues.Max();
+                        if (propValues.Min() < fMinValue)
+                        {
+                            fMinValue = propValues.Min();
+                        }
+                        if (propValues.Max() > fMaxValue)
+                        {
+                            fMaxValue = propValues.Max();
+                        }
                     }
                 }
             }

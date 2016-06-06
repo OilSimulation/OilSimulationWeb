@@ -369,12 +369,6 @@
                                         $(".DropDownList.s1Mode").eq(1).css("display", "inline");
                                     }
                                 });
-                                $(".DropDownList.s1Mode").change(function () {
-                                    if ($(".s1Mode:visible").val() == "3114")
-                                        $("#txtWell").show(); 
-                                    else
-                                        $("#txtWell").hide();   
-                                });
                                 $("#s1Btn").click(function () {
                                     var curIndex = parseInt($(".s1Mode:visible").val());
                                     switch (curIndex) {
@@ -388,14 +382,7 @@
                                             LoadUrl("/Simulation/SimMode3113");
                                             break;
                                         case 3114:
-                                            {
-                                                LoadUrl("/Simulation/SimMode3114");
-                                                $("#iframeId").unbind("load").load(function () {
-                                                    var iDist = $("#txtWell").val();
-                                                    $("#iframeId")[0].contentWindow.postMessage("$('#wellDist').val(" + iDist + ")", "*");
-                                                    $("#iframeId")[0].contentWindow.postMessage("$('#wellDist').click()", "*");
-                                                });
-                                            }
+                                            LoadUrl("/Simulation/SimMode3114");
                                             break;
                                         case 3121:
                                             LoadUrl("/Simulation/SimMode3121");
@@ -408,8 +395,6 @@
                                             break;
                                         case 3124:
                                             LoadUrl("/Simulation/SimMode3124");
-                                            //CreateDiv();
-                                            //$("#btnShow3124").click();
                                             break;
                                     }
                                 });
@@ -434,9 +419,7 @@
                             <option value="3123">9点</option>
                             <option value="3124">自定义</option>
                             </select>
-                            <input type="text" id="txtWell" style="width:50px;" />
-                            <button id="s1Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button>
-                            <input id="btnShow3124"  type="hidden" />
+                            <button id="s1Btn" class="ui-corner-all btnOK"><span class="ui-button-text">加载模型</span></button> 
                         </div>
                         <script type="text/javascript">
                             $(document).ready(function () {
