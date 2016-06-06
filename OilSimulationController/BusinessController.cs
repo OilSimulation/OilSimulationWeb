@@ -589,8 +589,9 @@ namespace OilSimulationController
             {
                 case 3114://修改井距
                     {
-                        //Step存放井距数据
-                        UpdateWellPoint(GetWellPointByDist(szEgridPath, data.Step));
+                        //Para存放井距数据
+                        int iWellDist = Convert.ToInt32(data.Para);
+                        UpdateWellPoint(GetWellPointByDist(szEgridPath, iWellDist));
                     }
                     break;
             }
