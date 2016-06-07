@@ -28,6 +28,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -45,6 +52,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -62,6 +76,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }    
@@ -80,6 +101,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -97,6 +125,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -114,6 +149,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -131,6 +173,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }   
@@ -148,6 +197,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -165,6 +221,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -182,6 +245,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -199,6 +269,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -216,6 +293,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -233,6 +317,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -250,6 +341,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -267,6 +365,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -284,6 +389,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -301,6 +413,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -318,6 +437,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -335,6 +461,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -352,6 +485,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -369,6 +509,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -386,6 +533,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -403,6 +557,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
@@ -420,6 +581,13 @@ namespace OilSimulationController
             ViewData["DynamicProps"] = stPageParams.dynamicProps;
             ViewData["TimeStep"] = stPageParams.timeSteps;
             ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
 
             return View();
         }
