@@ -6,4 +6,10 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <input id="ModeIndex" type="hidden" value="2212" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#fGetSpacer").css("display", "inline ");
+            $("#fGetContent").css("display", "inline ");
+        });
+    </script>
 </asp:Content>

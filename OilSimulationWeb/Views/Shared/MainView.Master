@@ -456,12 +456,17 @@
 							    <button id="button_forward" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="下一步"><span class="ui-button-icon-primary ui-icon ui-icon-seek-next"></span><span class="ui-button-text">下一步</span></button>
 						    </div>
 					    </li>
-
+					    <li class="spacer"></li>
 					    <li>
 						    <div class="mini_label">网格数#:</div>
 						    <div class="mini_field"><% =ViewData["TotalGrids"]%></div>
 						    <div class="mini_label">Speed:</div>
 						    <div id="playback_speed_field" speed="1" class="mini_field">1.0x</div>
+					    </li> 
+					    <li id="fGetSpacer" style="display:none;" class="spacer"></li>
+					    <li id="fGetContent" style="display:none;">
+						    <div id="fGetLabel" class="mini_label">驱油效率:</div>
+						    <div class="mini_field"><% =ViewData["fGetPercent"]%>%</div> 
 					    </li> 
 					    <li class="spacer"></li>
 					    <li>
