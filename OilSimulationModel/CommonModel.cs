@@ -538,15 +538,15 @@ namespace OilSimulationModel
             //采油天数
             stPageParams.lstDays = new List<float>();
             //累产液
-            stPageParams.lstFLPT = new List<float>();
+            stPageParams.lstFLPT = new List<float[]>();
             //累采油
-            stPageParams.lstFOPT = new List<float>();
+            stPageParams.lstFOPT = new List<float[]>();
             //地层压力
-            stPageParams.lstFPR = new List<float>();
+            stPageParams.lstFPR = new List<float[]>();
             //累注水
-            stPageParams.lstFWIT = new List<float>();
+            stPageParams.lstFWIT = new List<float[]>();
             //累产水
-            stPageParams.lstFWPT = new List<float>(); 
+            stPageParams.lstFWPT = new List<float[]>(); 
             //生存RSM文件 （IF） RSM文件不存在
             AutoCreateRsmFile(szGridFilePath);
             //地层原始储油量
@@ -561,15 +561,15 @@ namespace OilSimulationModel
                 if (strArray.Length < 7) continue;
                 //采出程度计算--百分比
                 float fCurGetPercent = Convert.ToSingle(strArray[3]) * 100 / fMaxOilInclude;
-                stPageParams.lstDays.Add(Convert.ToSingle(strArray[0]));
-                stPageParams.lstFLPT.Add(Convert.ToSingle(strArray[2]));
-                stPageParams.lstFOPT.Add(fCurGetPercent);
-                stPageParams.lstFPR.Add(Convert.ToSingle(strArray[4]));
-                stPageParams.lstFWIT.Add(Convert.ToSingle(strArray[5]));
-                stPageParams.lstFWPT.Add(Convert.ToSingle(strArray[6]));
+                //stPageParams.lstDays.Add(Convert.ToSingle(strArray[0]));
+                stPageParams.lstFLPT.Add(new float[] { Convert.ToSingle(strArray[0]), Convert.ToSingle(strArray[2]) });
+                stPageParams.lstFOPT.Add(new float[] { Convert.ToSingle(strArray[0]), fCurGetPercent });
+                stPageParams.lstFPR.Add(new float[] { Convert.ToSingle(strArray[0]), Convert.ToSingle(strArray[4]) });
+                stPageParams.lstFWIT.Add(new float[] { Convert.ToSingle(strArray[0]), Convert.ToSingle(strArray[5]) });
+                stPageParams.lstFWPT.Add(new float[] { Convert.ToSingle(strArray[0]), Convert.ToSingle(strArray[6]) });
             }
             //采油效率-采收率 == 最后的采出程度
-            stPageParams.fGetPercent = stPageParams.lstFOPT[stPageParams.lstFOPT.Count-1];
+            stPageParams.fGetPercent = stPageParams.lstFOPT[stPageParams.lstFOPT.Count-1][1];
             //网格数字
             stPageParams.iTotalGrid = gridMode.TotalGrids;
 
