@@ -590,7 +590,7 @@ THREE.MyLoader.prototype = {
         }
         //增加油井
         if (jsonData.WellPoint.length > 0) {//wellNameMesh
-            var well = this.AddWell(0, -zCount * height / 2, 0, height, 0, 0);
+            var well = this.AddWell(0, -zCount * height / 2, 0, height, 0, jsonData.WellPoint[0].name);
             well.geometry.rotateX(3.141592 / 2);
             circleGroup.add(well);
             var name = this.AddWellName(0, -zCount * height / 2 - height - height, 0, 0, jsonData.WellPoint[0].name);
