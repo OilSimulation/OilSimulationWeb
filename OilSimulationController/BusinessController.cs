@@ -585,6 +585,10 @@ namespace OilSimulationController
                 iModel = data.Mode;
             }
             string szEgridPath = CommonModel.GetModeUriPath(iModel);
+
+            string filePath="";
+            int iData = 0;
+            double dData = 0.0;
             switch (iModel)
             {
                 case 3114://修改井距
@@ -593,6 +597,43 @@ namespace OilSimulationController
                         int iWellDist = Convert.ToInt32(data.Para);
                         UpdateWellPoint(GetWellPointByDist(szEgridPath, iWellDist));
                     }
+                    break;
+                case 3214://修改不同注水时机
+                    filePath = szEgridPath.Substring(0, szEgridPath.IndexOf("_E")) + "_sch.INC";
+                    int.TryParse(data.Para, out iData);
+                    UpdateInWaterfloodingOpporunity(filePath, iData);
+                    break;
+                case 3224://修改注采比
+                    filePath = szEgridPath.Substring(0, szEgridPath.IndexOf("_E")) + "_sch.INC";
+                    double.TryParse(data.Para,out dData);
+                    UpdateInColorPercent(filePath, dData);
+                    break;
+
+                case 3234://不同最大井底注入压力
+                    filePath = szEgridPath.Substring(0, szEgridPath.IndexOf("_E")) + "_sch.INC";
+                    int.TryParse(data.Para, out iData);
+                    UpdateMaxWellBottomPressure(filePath, iData);
+                    break;
+                case 3244://不同最小井底注入压力
+                    filePath = szEgridPath.Substring(0, szEgridPath.IndexOf("_E")) + "_sch.INC";
+                    int.TryParse(data.Para, out iData);
+                    UpdateMinWellBottomPressure(filePath, iData);
+                    break;
+
+                case 2114://虚拟实验\非活塞式驱油影响因素 毛细管压力
+                    filePath = szEgridPath.Substring(0, szEgridPath.IndexOf("_E")) + "_scal.INC";
+                    double.TryParse(data.Para,out dData);
+                    UpdateCapillaryPressure(filePath, dData);
+                    break;
+                case 2124://虚拟实验\非活塞式驱油影响因素 油水比重差（密度）
+                    filePath = szEgridPath.Substring(0, szEgridPath.IndexOf("_E")) + "_pvt.INC";
+                    double.TryParse(data.Para,out dData);
+                    UpdateDensity(filePath, dData);
+                    break;
+                case 2134://虚拟实验\非活塞式驱油影响因素 油水粘度差
+                    filePath = szEgridPath.Substring(0, szEgridPath.IndexOf("_E")) + "_pvt.INC";
+                    int.TryParse(data.Para,out iData);
+                    UpdateTreacliness(filePath, iData);
                     break;
             }
 
@@ -1262,6 +1303,9 @@ namespace OilSimulationController
 
 
                 CommonModel.WriteInfoToFile(filePath, listData);
+                //执行批处理文件
+                CommonModel.ExecBatCommand(filePath);
+
 
             }
             catch (System.Exception ex)
@@ -1300,6 +1344,9 @@ namespace OilSimulationController
                 index = listData.IndexOf(GCONINJE, index + 1);
             }
             CommonModel.WriteInfoToFile(filePath, listData);
+            //执行批处理文件
+            CommonModel.ExecBatCommand(filePath);
+
         }
 
         /// <summary>
@@ -1333,6 +1380,9 @@ namespace OilSimulationController
             }
 
             CommonModel.WriteInfoToFile(filePath, listData);
+            //执行批处理文件
+            CommonModel.ExecBatCommand(filePath);
+
         }
 
         /// <summary>
@@ -1364,6 +1414,8 @@ namespace OilSimulationController
                 index = listData.IndexOf(WCONPROD, index + 1);
             }
             CommonModel.WriteInfoToFile(filePath, listData);
+            //执行批处理文件
+            CommonModel.ExecBatCommand(filePath);
         }
         #endregion
 
@@ -1405,12 +1457,13 @@ namespace OilSimulationController
             }
 
             CommonModel.WriteInfoToFile(filePath, listData);
-
+            //执行批处理文件
+            CommonModel.ExecBatCommand(filePath);
 
         }
 
         /// <summary>
-        /// 计算毛管其它参数,还需要提供
+        /// 计算毛管其它参数,目前都使用相同值
         /// </summary>
         /// <param name="pressure"></param>
         /// <param name="row"></param>
@@ -1420,7 +1473,7 @@ namespace OilSimulationController
             List<string> list = new List<string>();
             for (int i = 0; i < row; i++)
             {
-                list.Add((pressure * i).ToString());
+                list.Add(pressure.ToString());
             }
             return list;
 
@@ -1444,10 +1497,12 @@ namespace OilSimulationController
             index += 4;
             string[] strs = listData[index].Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
             int oil = Convert.ToInt32(density * 1000);
+            //string str = oil + " " + 910 + " " + strs[2];
             string str = oil + " " + 1000 + " " + strs[2];
             listData[index] = str;
             CommonModel.WriteInfoToFile(filePath, listData);
-
+            //执行批处理文件
+            CommonModel.ExecBatCommand(filePath);
 
         }
 
@@ -1480,7 +1535,8 @@ namespace OilSimulationController
             listData[indexPVTW] = ArrayToString(strsWater);
             listData[indexPVCDO] = ArrayToString(strsOil);
             CommonModel.WriteInfoToFile(filePath, listData);
-
+            //执行批处理文件
+            CommonModel.ExecBatCommand(filePath);
             return oil - water;
         }
 

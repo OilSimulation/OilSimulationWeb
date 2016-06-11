@@ -9,13 +9,42 @@
         //初始化
         $(document).ready(function () {
             parent.postMessage("HideLoading()", "*");
-            //重新计算模型
-            //$("#edit_rules_button").click(function () {
-            //$("#controls_container_top").addClass("hidden");
-            //$("#controls_container_top").removeClass("blockLine");  
-            //});
+            ShowCenterPosition($("#controls_container_top"));
+            $("#edit_rules_button").click(function () {
+                var userData = $("#UserData").val(); 
+                //判断数据有效性
+                if (false) {
+                    return;
+                }
+                var jsonData = {};
+                jsonData.Mode = 2124;
+                jsonData.Para = userData; //距离
+                CommonDataUpdate(jsonData);
+            });
         }); 
     </script>
     <input id="ModeIndex" type="hidden" value="2124" />
     <input id="DelayLoad" type="hidden" />
+    <div id="controls_container_top" class="blockLine">
+		<div id="controls_innercontainer"> 
+            <div class="controls">
+		        <legend>设置面板</legend> 
+		        <ul>
+                    <li> 
+                        <div class="label">油水比重差设置:</div>
+						<div class="control"> 
+                            <input id="UserData" type="text" />
+						</div>
+					</li>
+                    <li></li>
+                    <li>
+                        <div class="control">
+							<button id="edit_rules_button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">计算模型</span></button>
+					    </div>
+                    </li> 
+                    <li></li> 
+		        </ul>
+	        </div>
+        </div> 
+    </div> 
 </asp:Content>

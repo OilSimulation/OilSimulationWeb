@@ -105,7 +105,28 @@ namespace OilSimulationController
 
             return View();
         }
-         
+
+        public ActionResult VirtualMode2114()
+        {
+            Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+            string szGridFilePath = CommonModel.GetModeUriPath(2114);
+            PageParams stPageParams = CommonModel.GetPageParams(szGridFilePath);
+
+            ViewData["DynamicProps"] = stPageParams.dynamicProps;
+            ViewData["TimeStep"] = stPageParams.timeSteps;
+            ViewData["TotalGrids"] = stPageParams.iTotalGrid;
+            ViewData["fGetPercent"] = stPageParams.fGetPercent;
+            ViewData["lstDays"] = stPageParams.lstDays;
+            ViewData["lstFLPT"] = stPageParams.lstFLPT;
+            ViewData["lstFOPT"] = stPageParams.lstFOPT;
+            ViewData["lstFPR"] = stPageParams.lstFPR;
+            ViewData["lstFWIT"] = stPageParams.lstFWIT;
+            ViewData["lstFWPT"] = stPageParams.lstFWPT;
+
+            return View();
+        }
+
+
         /// <summary>
         /// 改变油水比重
         /// </summary>
