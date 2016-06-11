@@ -5,12 +5,13 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <script type="text/javascript" >
     $(document).ready(function () {
+        $("#lineChart").removeClass("hidden");
         parent.postMessage("HideLoading()", "*");
         ShowCenterPosition($("#controls_container_top"));
         $("#edit_rules_button").click(function () {
             var userData = $("#UserData").val(); //
             //判断数据有效性
-            if(false){
+            if (false) {
                 return;
             }
             var jsonData = {};

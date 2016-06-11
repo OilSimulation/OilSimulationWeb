@@ -8,6 +8,7 @@
     <script type="text/javascript"> 
         //初始化
         $(document).ready(function () {
+            $("#lineChart").removeClass("hidden");
             parent.postMessage("HideLoading()", "*");
             ShowCenterPosition($("#controls_container_top"));
             $("#edit_rules_button").click(function () {

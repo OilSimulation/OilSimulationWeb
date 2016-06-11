@@ -6,4 +6,9 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <input id="ModeIndex" type="hidden" value="3233" />
+    <script type="text/javascript" >
+        $(document).ready(function () {
+            $("#lineChart").removeClass("hidden");
+        });
+    </script>
 </asp:Content>

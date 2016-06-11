@@ -5,5 +5,10 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <input id="ModeIndex" type="hidden" value="3111" /> 
+    <input id="ModeIndex" type="hidden" value="3111" />  
+    <script type="text/javascript" >
+        $(document).ready(function () {
+            $("#lineChart").removeClass("hidden");
+         });
+    </script>
 </asp:Content>

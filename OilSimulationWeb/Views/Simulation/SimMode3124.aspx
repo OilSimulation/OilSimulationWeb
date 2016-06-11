@@ -100,6 +100,7 @@
     }
     //初始化
     $(document).ready(function () {
+        $("#lineChart").removeClass("hidden");
         $("#controls_container_top").css("left", "5px");
         $("#controls_container_top").css("top", "10px");
         CreateGrid(100, 100);
