@@ -200,13 +200,13 @@ namespace OilSimulationModel
                     szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同注水时机/自定义/ZHONG_E100.EGRID");
                     break;
                 case 3221:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同注采比/0.8/ZHUCAIBI_E100.EGRID");
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同注采比/0.8/ZHUCAIBI2006_E100.EGRID");
                     break;
                 case 3222:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同注采比/1/ZHUCAIBI1_E100.EGRID");
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同注采比/1/ZHUCAIBI2006_E100.EGRID");
                     break;
                 case 3223:
-                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同注采比/1.2/ZHUCAIBI1_E100.EGRID");
+                    szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同注采比/1.2/ZHUCAIBI2006_E100.EGRID");
                     break;
                 case 3224:
                     szUriPath = System.Web.HttpContext.Current.Server.MapPath("~/DataModel/仿真实训/注采系统方案设计与开发效果预测/不同注采比/自定义/ZHUCAIBI2006_E100.EGRID");
