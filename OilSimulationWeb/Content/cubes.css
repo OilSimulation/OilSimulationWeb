@@ -500,3 +500,4 @@ span a{
 .ShowGrid{position:absolute;z-index:1000;left:125px;top:0;}
 
 #playback_speed_field{ cursor:pointer; }
+div .pline{cursor:pointer;text-decoration:underline;float:left;}
