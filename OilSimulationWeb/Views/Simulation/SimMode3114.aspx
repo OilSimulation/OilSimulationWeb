@@ -34,7 +34,11 @@
                             <input id="UserData" type="text" />
 						</div>
 					</li>
-                    <li></li>
+					<li class="spacer"></li>
+                    <li class="explanation_parameter" style="display: block;">
+						<span class="explanation">井距设置描述</span>
+					</li>
+					<li class="spacer"></li>
                     <li>
                         <div class="control">
 							<button id="edit_rules_button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">计算模型</span></button>
