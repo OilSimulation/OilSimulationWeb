@@ -7,6 +7,7 @@ THREE.MyLoader = function ( manager ) {
 	this.manager = ( manager !== undefined ) ? manager : THREE.DefaultLoadingManager;
 
 };
+var height = 10;
 var modelJsonData;
 var circleGroup;
 THREE.MyLoader.prototype = {
@@ -565,7 +566,7 @@ THREE.MyLoader.prototype = {
         var jsonData = JSON.parse(text);
         //多少圈
         var circle = jsonData.Data[0][0]; //(如30)
-        var zCount = jsonData.Data[0][2]; //Z方向个数(如50)
+        var zCount = jsonData.Data[0][2]; //Y方向个数(如50)
         var split = jsonData.Data[0][1]; //每圈分成多少份(如60)
         for (var j = 0; j < zCount; j++) {
             for (var i = 0; i < circle; i++) {
@@ -583,9 +584,18 @@ THREE.MyLoader.prototype = {
                     arrayColor.push(color);
 
                 }
-                this.DrawPipe(10 * (i + 1), 10 * (i + 2), 10, split, arrayColor, ((j + 1) - circle / 2) * 10);
+                this.DrawPipe(height * (i + 1), height * (i + 2), height, split, arrayColor, ((j + 1) - zCount / 2) * height);
             }
 
+        }
+        //增加油井
+        if (jsonData.WellPoint.length > 0) {//wellNameMesh
+            var well = this.AddWell(0, -zCount * height / 2, 0, height, 0, 0);
+            well.geometry.rotateX(3.141592 / 2);
+            circleGroup.add(well);
+            var name = this.AddWellName(0, -zCount * height / 2 - height - height, 0, 0, jsonData.WellPoint[0].name);
+            name.geometry.rotateX(3.141592 / 2);
+            circleGroup.add(name);
         }
         return circleGroup;
 
@@ -602,8 +612,8 @@ THREE.MyLoader.prototype = {
 
         //true表示是否去掉圆柱上下两个面，1:表示圆柱分成多少层
 
-        var g1 = new THREE.CylinderGeometry(inR, inR, height, radialSegments, 1, true);//内圈
-        var g2 = new THREE.CylinderGeometry(outR, outR, height, radialSegments, 1, true);//外圈
+        var g1 = new THREE.CylinderGeometry(inR, inR, height, radialSegments, 1, true); //内圈
+        var g2 = new THREE.CylinderGeometry(outR, outR, height, radialSegments, 1, true); //外圈
 
         //CylinderGeometry中的顶点坐标会多有两个特殊点，一个在中间，一个在最后
 
