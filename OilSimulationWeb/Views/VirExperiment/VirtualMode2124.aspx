@@ -28,15 +28,19 @@
     <div id="controls_container_top" class="blockLine">
 		<div id="controls_innercontainer"> 
             <div class="controls">
-		        <legend>设置面板</legend> 
+		        <legend></legend> 
 		        <ul>
                     <li> 
-                        <div class="label">油水比重差设置:</div>
+                        <div class="label">油水比重:</div>
 						<div class="control"> 
                             <input id="UserData" type="text" />
 						</div>
 					</li>
-                    <li></li>
+					<li class="spacer"></li>
+                    <li class="explanation_parameter" style="display: block;">
+						<span class="explanation">水定为1000kg/M^3，油取值范围为500~1500. 请在上方输入油水比重范围0.5-1.5!</span>
+					</li>
+					<li class="spacer"></li>
                     <li>
                         <div class="control">
 							<button id="edit_rules_button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">计算模型</span></button>

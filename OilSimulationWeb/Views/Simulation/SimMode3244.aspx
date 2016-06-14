@@ -29,10 +29,10 @@
     <div id="controls_container_top" class="blockLine">
 		<div id="controls_innercontainer"> 
             <div class="controls">
-		        <legend>设置面板</legend> 
+		        <legend></legend> 
 		        <ul>
                     <li> 
-                        <div class="label">最小井底流压设置:</div>
+                        <div class="label">最小流压:</div>
 						<div class="control"> 
                             <input id="UserData" type="text" />
 						</div>

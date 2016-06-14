@@ -27,7 +27,7 @@
     <div id="controls_container_top" class="blockLine">
 		<div id="controls_innercontainer"> 
             <div class="controls">
-		        <legend>设置面板</legend> 
+		        <legend></legend> 
 		        <ul>
                     <li> 
                         <div class="label">井距设置:</div>
@@ -37,7 +37,7 @@
 					</li>
 					<li class="spacer"></li>
                     <li class="explanation_parameter" style="display: block;">
-						<span class="explanation">井距设置描述</span>
+						<span class="explanation">平面网格100*100，每格为5，请在上方输入合适在值!</span>
 					</li>
 					<li class="spacer"></li>
                     <li>

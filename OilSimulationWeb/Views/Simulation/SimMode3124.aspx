@@ -133,7 +133,7 @@
     <div id="controls_container_top" class="blockLine">
 		<div id="controls_innercontainer"> 
             <div class="controls">
-		        <legend>设置面板</legend> 
+		        <legend></legend> 
 		        <ul>
                     <li> 
 						<div class="control">

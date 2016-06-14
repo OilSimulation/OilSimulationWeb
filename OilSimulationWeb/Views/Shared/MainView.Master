@@ -40,6 +40,7 @@
         var scale = 0.1;
         //模型颜色最大最小值JSON
         var mmColorJson = {};
+        var szParameter;
         var colorMin, colorMax;
 
         // once everything is loaded, we run our Three.js stuff.
@@ -307,7 +308,7 @@
                         var myChart = new JSChart('graph', 'line');
                         myChart.setDataArray(model);
                         myChart.setAxisNameFontSize(10);
-                        myChart.setAxisNameX('驱油时间（天）');
+                        myChart.setAxisNameX('生产时间（天）');
                         myChart.setAxisNameY('累产油');
                         myChart.setAxisNameColor('#787878');
                         myChart.setAxisValuesNumberX(5);
@@ -317,7 +318,7 @@
                         myChart.setAxisValuesColor('#38a4d9');
                         myChart.setAxisColor('#38a4d9');
                         myChart.setLineColor('#C71112');
-                        myChart.setTitle('累产油曲线');
+                        myChart.setTitle('累产油（万方）');
                         myChart.setTitleColor('#383838');
                         myChart.setGraphExtend(true);
                         myChart.setGridColor('#38a4d9');
@@ -338,7 +339,7 @@
                         var myChart = new JSChart('graph', 'line');
                         myChart.setDataArray(model);
                         myChart.setAxisNameFontSize(10);
-                        myChart.setAxisNameX('驱油时间（天）');
+                        myChart.setAxisNameX('生产时间（天）');
                         myChart.setAxisNameY('采出程度');
                         myChart.setAxisNameColor('#787878');
                         myChart.setAxisValuesNumberX(5);
@@ -348,7 +349,7 @@
                         myChart.setAxisValuesColor('#38a4d9');
                         myChart.setAxisColor('#38a4d9');
                         myChart.setLineColor('#C71112');
-                        myChart.setTitle('采出程度曲线（百分比）');
+                        myChart.setTitle('采出程度（百分比）');
                         myChart.setTitleColor('#383838');
                         myChart.setGraphExtend(true);
                         myChart.setGridColor('#38a4d9');
@@ -369,7 +370,7 @@
                         var myChart = new JSChart('graph', 'line');
                         myChart.setDataArray(model);
                         myChart.setAxisNameFontSize(10);
-                        myChart.setAxisNameX('驱油时间（天）');
+                        myChart.setAxisNameX('生产时间（天）');
                         myChart.setAxisNameY('地层压力');
                         myChart.setAxisNameColor('#787878');
                         myChart.setAxisValuesNumberX(5);
@@ -379,7 +380,7 @@
                         myChart.setAxisValuesColor('#38a4d9');
                         myChart.setAxisColor('#38a4d9');
                         myChart.setLineColor('#C71112');
-                        myChart.setTitle('地层压力曲线');
+                        myChart.setTitle('地层压力（MPa）');
                         myChart.setTitleColor('#383838');
                         myChart.setGraphExtend(true);
                         myChart.setGridColor('#38a4d9');
@@ -400,7 +401,7 @@
                         var myChart = new JSChart('graph', 'line');
                         myChart.setDataArray(model);
                         myChart.setAxisNameFontSize(10);
-                        myChart.setAxisNameX('驱油时间（天）');
+                        myChart.setAxisNameX('生产时间（天）');
                         myChart.setAxisNameY('累产水');
                         myChart.setAxisNameColor('#787878');
                         myChart.setAxisValuesNumberX(5);
@@ -410,7 +411,7 @@
                         myChart.setAxisValuesColor('#38a4d9');
                         myChart.setAxisColor('#38a4d9');
                         myChart.setLineColor('#C71112');
-                        myChart.setTitle('累产水曲线');
+                        myChart.setTitle('累产水（万方）');
                         myChart.setTitleColor('#383838');
                         myChart.setGraphExtend(true);
                         myChart.setGridColor('#38a4d9');
@@ -431,7 +432,7 @@
                         var myChart = new JSChart('graph', 'line');
                         myChart.setDataArray(model);
                         myChart.setAxisNameFontSize(10);
-                        myChart.setAxisNameX('驱油时间（天）');
+                        myChart.setAxisNameX('生产时间（天）');
                         myChart.setAxisNameY('累注水');
                         myChart.setAxisNameColor('#787878');
                         myChart.setAxisValuesNumberX(5);
@@ -441,7 +442,7 @@
                         myChart.setAxisValuesColor('#38a4d9');
                         myChart.setAxisColor('#38a4d9');
                         myChart.setLineColor('#C71112');
-                        myChart.setTitle('累注水曲线');
+                        myChart.setTitle('累注水（万方）');
                         myChart.setTitleColor('#383838');
                         myChart.setGraphExtend(true);
                         myChart.setGridColor('#38a4d9');
@@ -487,9 +488,7 @@
                 dataType: 'html',
                 async: false,
                 contentType: 'application/json',
-                success: function (result) {
-                    colorMin = eval(result)[0];
-                    colorMax = eval(result)[1];
+                success: function (result) { 
                     mmColorJson[paramValue] = eval(result);
                 }
             };
@@ -498,16 +497,18 @@
 
         //加载数据
         function LoadWebGLData(isFirstLoad) { 
-            var paramValue = $("#paramSelect option:selected").text();
+            szParameter = $("#paramSelect option:selected").text(); 
             var timeValue = $("#timeSelect option:selected").val();
             //固定获取DATA的URL
             var sUrl = '<%:Url.Action("GetData","Business") %>';
             var mIndex = $("#ModeIndex").val();
             //组装JSON数据
-            var jsonData = { Para: paramValue, Mode: mIndex, Step: timeValue, iLoadFirst: isFirstLoad };
-            if (mmColorJson[paramValue] == undefined) {
-                GetMaxMinData(paramValue,jsonData);
-            }
+            var jsonData = { Para: szParameter, Mode: mIndex, Step: timeValue, iLoadFirst: isFirstLoad };
+            if (mmColorJson[szParameter] == undefined) {
+                GetMaxMinData(szParameter,jsonData);
+            } 
+            colorMin = mmColorJson[szParameter][0];
+            colorMax = mmColorJson[szParameter][1];
             myLoader.load(sUrl, JSON.stringify(jsonData), mIndex, function (loadedMesh) {
                 if (isFirstLoad == 0) {
                     loadedMesh.children.forEach(function (child) { });
@@ -628,7 +629,7 @@
 				    </ul> 
 			    </div> 
                 <div class="controls hidden" id = "lineChart">
-                    <legend>驱油曲线展示</legend>
+                    <legend>生产曲线</legend>
                     <ul>
                         <li>
 						    <div class="label">累产油:</div>

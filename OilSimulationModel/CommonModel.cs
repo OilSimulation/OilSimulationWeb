@@ -565,11 +565,11 @@ namespace OilSimulationModel
                     //采出程度计算--百分比
                     float fCurGetPercent = Convert.ToSingle(strArray[3]) * 100 / fMaxOilInclude;
                     //stPageParams.lstDays.Add(Convert.ToSingle(strArray[0]));
-                    stPageParams.lstFLPT.Add(new float[] { Convert.ToSingle(strArray[0]), Convert.ToSingle(strArray[2]) });
+                    stPageParams.lstFLPT.Add(new float[] { Convert.ToSingle(strArray[0]), Convert.ToSingle(strArray[2]) / 10000 });
                     stPageParams.lstFOPT.Add(new float[] { Convert.ToSingle(strArray[0]), fCurGetPercent });
-                    stPageParams.lstFPR.Add(new float[] { Convert.ToSingle(strArray[0]), Convert.ToSingle(strArray[4]) });
-                    stPageParams.lstFWIT.Add(new float[] { Convert.ToSingle(strArray[0]), Convert.ToSingle(strArray[5]) });
-                    stPageParams.lstFWPT.Add(new float[] { Convert.ToSingle(strArray[0]), Convert.ToSingle(strArray[6]) });
+                    stPageParams.lstFPR.Add(new float[] { Convert.ToSingle(strArray[0]), Convert.ToSingle(strArray[4]) / 10 });
+                    stPageParams.lstFWIT.Add(new float[] { Convert.ToSingle(strArray[0]), Convert.ToSingle(strArray[5]) / 10000 });
+                    stPageParams.lstFWPT.Add(new float[] { Convert.ToSingle(strArray[0]), Convert.ToSingle(strArray[6]) / 10000 });
                 }
                 //采油效率-采收率 == 最后的采出程度
                 stPageParams.fGetPercent = stPageParams.lstFOPT[stPageParams.lstFOPT.Count-1][1];

@@ -29,7 +29,7 @@
             <div id="controls_container_top" class="blockLine">
 		<div id="controls_innercontainer"> 
             <div class="controls">
-		        <legend>设置面板</legend> 
+		        <legend></legend> 
 		        <ul>
                     <li> 
                         <div class="label">注采比设置:</div>
@@ -37,7 +37,11 @@
                             <input id="UserData" type="text" />
 						</div>
 					</li>
-                    <li></li>
+					<li class="spacer"></li>
+                    <li class="explanation_parameter" style="display: block;">
+						<span class="explanation">注采比（注水/采出的油+水），范围0.5-3.0!</span>
+					</li>
+					<li class="spacer"></li>
                     <li>
                         <div class="control">
 							<button id="edit_rules_button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button" aria-disabled="false"><span class="ui-button-text">计算模型</span></button>
