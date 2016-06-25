@@ -25,7 +25,7 @@ THREE.MyLoader.prototype = {
             if (geometry == undefined) {
 
                 if (modelId == 15 ) {
-                    onLoad(scope.LoadBufferGeometryCircleMode(text, 90, 3 / 4));
+                    onLoad(scope.LoadBufferGeometryCircleMode(text, 90, 1 / 2));
                 
                 }
                 else if (modelId == 14) {
@@ -40,7 +40,7 @@ THREE.MyLoader.prototype = {
             }
             else {
                 if (modelId == 15 ) {
-                    onLoad(scope.ChangeBufferGeometryCircleColor(text, 90, 3 / 4));
+                    onLoad(scope.ChangeBufferGeometryCircleColor(text, 90, 1 / 2));
                     
                 }
                 else if (modelId==14) {
