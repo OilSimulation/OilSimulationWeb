@@ -7,7 +7,8 @@ THREE.MyLoader = function ( manager ) {
 	this.manager = ( manager !== undefined ) ? manager : THREE.DefaultLoadingManager;
 
 };
-var height = 10;
+//绘圆柱Y 方向高度
+var height = 5;
 var modelJsonData;
 var circleGroup;
 THREE.MyLoader.prototype = {
@@ -23,9 +24,12 @@ THREE.MyLoader.prototype = {
         loader.load(url, pData, function (text) {
             if (geometry == undefined) {
 
-                if (modelId == 15 || modelId == 14) {
-                    onLoad(scope.LoadBufferGeometryCircleMode(text));
-                    //onLoad(scope.DrawPipe(40, 40, 100, 4));
+                if (modelId == 15 ) {
+                    onLoad(scope.LoadBufferGeometryCircleMode(text, 90, 3 / 4));
+                
+                }
+                else if (modelId == 14) {
+                    onLoad(scope.LoadBufferGeometryCircleMode(text, 0, 0));
                 }
                 else {
                     onLoad(scope.LoadBufferGeometryMode(text));
@@ -35,8 +39,12 @@ THREE.MyLoader.prototype = {
                 parent.postMessage("HideLoading()", "*");
             }
             else {
-                if (modelId == 15 || modelId == 14) {
-                    onLoad(scope.ChangeBufferGeometryCircleColor(text));
+                if (modelId == 15 ) {
+                    onLoad(scope.ChangeBufferGeometryCircleColor(text, 90, 3 / 4));
+                    
+                }
+                else if (modelId==14) {
+                    onLoad(scope.ChangeBufferGeometryCircleColor(text, 0, 0));
                 }
                 else {
                     onLoad(scope.ChangeBufferGeometryColor(text));
@@ -110,8 +118,8 @@ THREE.MyLoader.prototype = {
 
     },
 
-    //增加井xyz坐标,h 高度,返回 mesh,n:井名称,zW 模型Z坐标方向宽度/2
-    AddWell: function (x, y, z, zW, h, n) {
+    //增加井xyz坐标,h 高度,返回 mesh,n:井名称,zW 模型Z坐标方向宽度/2,color:井颜色
+    AddWell: function (x, y, z, zW, h, n,color) {
 
         //
         var textGeo = new THREE.TextGeometry("O", {
@@ -123,7 +131,7 @@ THREE.MyLoader.prototype = {
             style: "normal"
 
         });
-        var wellMaterial = new THREE.MeshBasicMaterial({ color: 0xAA3264, vertexColors: THREE.VertexColors });
+        var wellMaterial = new THREE.MeshBasicMaterial({ color: color, vertexColors: THREE.VertexColors });
 
         var wellNameMesh = new THREE.Mesh(textGeo, wellMaterial);
         wellNameMesh.position.x = x;
@@ -399,7 +407,13 @@ THREE.MyLoader.prototype = {
         //增加油井
         for (var i = 0; i < jsonData.WellPoint.length; i++) {
             //container.add(this.AddWell(jsonData.WellPoint[i].x - jsonData.ct[0], -jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z, jsonData.xyz[1]));
-            group.add(this.AddWell(jsonData.WellPoint[i].x - jsonData.ct[0] - jsonData.xyz[0][0] / 2, jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z - jsonData.ct[2], zTW / 2 + 50, jsonData.xyz[0][2], jsonData.WellPoint[i].name));
+            if (jsonData.WellPoint[i].name.indexOf('P') >= 0) {
+                group.add(this.AddWell(jsonData.WellPoint[i].x - jsonData.ct[0] - jsonData.xyz[0][0] / 2, jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z - jsonData.ct[2], zTW / 2 + 50, jsonData.xyz[0][2], jsonData.WellPoint[i].name, 0xAA3264));
+            }
+            else {
+                group.add(this.AddWell(jsonData.WellPoint[i].x - jsonData.ct[0] - jsonData.xyz[0][0] / 2, jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z - jsonData.ct[2], zTW / 2 + 50, jsonData.xyz[0][2], jsonData.WellPoint[i].name,0x100F8A));
+            }
+            
             group.add(this.AddWellName(jsonData.WellPoint[i].x - jsonData.ct[0], jsonData.WellPoint[i].y - jsonData.ct[1], jsonData.WellPoint[i].z - jsonData.ct[2] + zTW / 2 + 60, jsonData.xyz[0][2], jsonData.WellPoint[i].name));
         }
         group.add(mesh);
@@ -433,8 +447,8 @@ THREE.MyLoader.prototype = {
 
     },
 
-    //修改球面径向流颜色
-    ChangeBufferGeometryCircleColor: function (text) {
+    //修改球面径向流颜色,text:颜色数据,angle：圆截掉的角度,ydepth:y方向截取深度比例（如3/4）
+    ChangeBufferGeometryCircleColor: function (text, angle, ydepth) {
         var kk = 0;
         var jsonData = JSON.parse(text);
         //var colors; //= geometry.getAttribute('color');
@@ -445,12 +459,14 @@ THREE.MyLoader.prototype = {
         var circle = jsonData.Data[0][1]; //(如30)
         var zCount = jsonData.Data[0][3]; //Z方向个数(如50)
         var split = jsonData.Data[0][2]; //每圈分成多少份(如60)
-
+        var yintercept = parseInt(ydepth * zCount);
+        var intercept = split * angle / 360; //截取的小弧形面 个数
 
         for (var j = 0; j < zCount; j++) {
             for (var i = 0; i < circle; i++) {
                 var arrayColor = []; //每一圈的颜色
                 for (var s = 0; s < split; s++) {
+
                     var info = CaculateColor(255, 14, 1, 1, 14, 255, jsonData.Data[s * circle + j * split * circle + i][0], colorMax, colorMin);
                     var colorHex;
                     if (info) {
@@ -471,6 +487,33 @@ THREE.MyLoader.prototype = {
                         colorss[z * 4 * 18 + k + 2] = arrayColor[z].b;
                     }
                 }
+
+
+
+                //                if (j < yintercept) {
+                //                    for (var z = 0; z < arrayColor.length; z++) {
+                //                        if (z < 4 * 18 * intercept) {
+                //                            continue;
+                //                        }
+                //                        for (var k = 0; k < 4 * 18; k += 3) {
+                //                            colorss[z * 4 * 18 + k + 0] = arrayColor[z].r;
+                //                            colorss[z * 4 * 18 + k + 1] = arrayColor[z].g;
+                //                            colorss[z * 4 * 18 + k + 2] = arrayColor[z].b;
+                //                        }
+                //                    }
+
+                //                }
+                //                else {
+                //                    for (var z = 0; z < arrayColor.length; z++) {
+                //                        for (var k = 0; k < 4 * 18; k += 3) {
+                //                            colorss[z * 4 * 18 + k + 0] = arrayColor[z].r;
+                //                            colorss[z * 4 * 18 + k + 1] = arrayColor[z].g;
+                //                            colorss[z * 4 * 18 + k + 2] = arrayColor[z].b;
+                //                        }
+                //                    }
+
+                //                }
+
                 colors.needsUpdate = true;
             }
 
@@ -555,8 +598,8 @@ THREE.MyLoader.prototype = {
         return container;
     },
 
-    //画球面径向流
-    LoadBufferGeometryCircleMode: function (text) {
+    //画球面径向流,text:坐标、颜色数据,angle：圆截掉的角度,ydepth:Y方向截取深度比例（如3/4,1/2等）
+    LoadBufferGeometryCircleMode: function (text, angle, ydepth) {
         if (circleGroup) {
 
         }
@@ -566,9 +609,10 @@ THREE.MyLoader.prototype = {
         var jsonData = JSON.parse(text);
         //多少圈
         var circle = jsonData.Data[0][0]; //(如30)
-        var zCount = jsonData.Data[0][2]; //Y方向个数(如50)
+        var yCount = jsonData.Data[0][2]; //Y方向个数(如50)
         var split = jsonData.Data[0][1]; //每圈分成多少份(如60)
-        for (var j = 0; j < zCount; j++) {
+        var yintercept = parseInt(yCount * ydepth);
+        for (var j = 0; j < yCount; j++) {
             for (var i = 0; i < circle; i++) {
                 var arrayColor = []; //颜色
                 for (var s = 0; s < split; s++) {
@@ -584,17 +628,22 @@ THREE.MyLoader.prototype = {
                     arrayColor.push(color);
 
                 }
-                this.DrawPipe(height * (i + 1), height * (i + 2), height, split, arrayColor, ((j + 1) - zCount / 2) * height);
+                if (j < yintercept) {
+                    this.DrawPipe(height * (i + 1), height * (i + 2), height, split, arrayColor, ((j + 1) - yCount / 2) * height, angle);
+                }
+                else {
+                    this.DrawPipe(height * (i + 1), height * (i + 2), height, split, arrayColor, ((j + 1) - yCount / 2) * height, 0);
+                }
             }
 
         }
         //增加油井
         if (jsonData.WellPoint.length > 0) {//wellNameMesh
-            var well = this.AddWell(0, -zCount * height / 2, 0, height, 0, jsonData.WellPoint[0].name);
-            well.geometry.rotateX(3.141592 / 2);
+            var well = this.AddWell(0, yCount * height / 2, 0, height, 0, jsonData.WellPoint[0].name, 0xAA3264);
+            well.geometry.rotateX(Math.PI / 2);
             circleGroup.add(well);
-            var name = this.AddWellName(0, -zCount * height / 2 - height - height, 0, 0, jsonData.WellPoint[0].name);
-            name.geometry.rotateX(3.141592 / 2);
+            var name = this.AddWellName(0, yCount * height / 2 - height + height, 0, 0, jsonData.WellPoint[0].name);
+            //name.geometry.rotateX(Math.PI / 2);
             circleGroup.add(name);
         }
         return circleGroup;
@@ -602,9 +651,9 @@ THREE.MyLoader.prototype = {
     },
     //绘制管道,inR:内径,outR:外径,height:管高,radialSegments:上、下面分成多少份,yOffset：坐标方向的偏移量
     //color:颜色数据 长度为radialSegments
-    DrawPipe: function (inR, outR, height, radialSegments, color, yOffset) {
+    DrawPipe: function (inR, outR, height, radialSegments, color, yOffset, angle) {
 
-
+        var intercept = radialSegments * angle / 360; //截取的小弧形面 个数
         geometry = new THREE.BufferGeometry();
         var xx = new Float32Array(1);
         xx[0] = yOffset;
@@ -633,6 +682,10 @@ THREE.MyLoader.prototype = {
 
         //一个一个多边形的画,因为是圆的，所以不用画左右侧面
         for (var i = 0; i < radialSegments; i++) {
+            if (i < intercept) {
+                //不绘制需要截取的数据
+                continue;
+            }
             if (i == radialSegments - 1) {
                 //上表面*4四个面*2一个面分成两个小三角,*9一个小三角由三个坐标点一个坐标点由XYZ组成
 
@@ -826,7 +879,8 @@ THREE.MyLoader.prototype = {
         geometry.addAttribute('color', new THREE.BufferAttribute(colors, 3));
 
         geometry.computeBoundingSphere();
-
+        geometry.rotateX(Math.PI);
+        geometry.rotateY(Math.PI+angle*Math.PI/360/2);
         var material = new THREE.MeshBasicMaterial({
             color: 0xffffff, vertexColors: THREE.VertexColors, side: THREE.DoubleSide
         });
