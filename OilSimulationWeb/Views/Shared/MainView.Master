@@ -11,6 +11,7 @@
     
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/jquery-1.4.1.min.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/jscharts.js")%>"></script> 
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/dygraph-combined.js")%>"></script> 
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/three.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/stats.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/libs/dat.gui.js")%>"></script>
@@ -304,8 +305,16 @@
             {
                 case 1:
                     {
-                        var model = <%= new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(ViewData["lstFLPT"]) %>;
-                        var myChart = new JSChart('graph', 'line');
+                        var model = <%= new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(ViewData["lstFPR"]) %>;
+                        new Dygraph(document.getElementById("graph"), model, { 
+                          title: '累产油（万方）', 
+                          ylabel: '累产油（万方）',
+                          labels: [ '生产时间', '累产油'],//这里确定每列数据的含义
+                          width : 616,//图表的宽度
+                          height: 321,//图表的宽度和高度
+                        });
+                        /*
+                        var myChart = new JSChart('graph', 'line');lstFLPT
                         myChart.setDataArray(model);
                         myChart.setAxisNameFontSize(10);
                         myChart.setAxisNameX('生产时间（天）');
@@ -331,6 +340,7 @@
                         myChart.setTextPaddingBottom(12);
                         myChart.setBackgroundImage('../Images/chart_bg.jpg');
                         myChart.draw();
+                        */
                     }
                 break;
                 case 2:
@@ -569,7 +579,7 @@
 <body>
    <div id = "MainDiv">
         <div class="loading-overlay">   
-            <div id="popin_line" style="width: 630px; height: 340px; overflow: hidden; display:none; position: absolute; z-index: 1002; opacity: 1;">
+            <div id="popin_line" style="width: 630px; height: 340px; overflow: hidden; display:none; position: absolute; z-index: 1002; opacity: 1;background:url(../Images/chart_bg.png);">
 	            <div id="popin_titlebar" style="text-align: left;"> </div>
                 <div id="graph">Loading graph...</div>
                 <div class="popin_example_xbutton" id="popin_xbutton" style="left: 510px; top: 10px; width: 120px; text-align: center; text-decoration:underline;position: absolute; z-index: 1004; cursor: pointer;">关闭</div>
