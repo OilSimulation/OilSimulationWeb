@@ -69,15 +69,6 @@ namespace DBHelper
                     SQLiteCommand sqliteComm = new SQLiteCommand(sqliteConn);
                     sqliteComm.CommandText = strSql;
                     sqliteComm.CommandType = System.Data.CommandType.Text;
-                    //SQLiteDataReader p=sqliteComm.ExecuteReader();
-                    //string sss = DateTime.Now.ToString("s");
-                    //DateTime fff=  DateTime.Parse(sss);
-                    //while (p.Read())
-                    //{
-                       
-                    //    string xx = p["CreateDateTime"].ToString();
-                    //}
-
                     SQLiteDataAdapter sqliteAdapter = new SQLiteDataAdapter(sqliteComm);
                     DataTable dt = new DataTable();
                     sqliteAdapter.Fill(dt);
