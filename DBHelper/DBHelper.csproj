@@ -44,9 +44,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bll\ExercisesTestBLL.cs" />
+    <Compile Include="Bll\ExercisesTitleBLL.cs" />
+    <Compile Include="Bll\ExperimentTypeBLL.cs" />
+    <Compile Include="Bll\StudentExamBLL.cs" />
+    <Compile Include="Bll\StudentExaminationPaperBLL.cs" />
+    <Compile Include="Bll\TitleInfoBLL.cs" />
+    <Compile Include="Bll\TitleItemAssocBLL.cs" />
+    <Compile Include="Bll\TitleItemBLL.cs" />
+    <Compile Include="Bll\TitleTypeBLL.cs" />
     <Compile Include="DBFactory.cs" />
     <Compile Include="DBSqLite.cs" />
     <Compile Include="IDBHelper.cs" />
+    <Compile Include="Model\ModelAll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
