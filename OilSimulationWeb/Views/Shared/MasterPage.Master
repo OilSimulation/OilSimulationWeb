@@ -62,11 +62,13 @@
             window.addEventListener("message", function (event) { eval(event.data); });
             // listen to the resize events
             window.addEventListener('resize', onResize, false);
+
+
         });
         //导航点击对应控制栏的显示
         function ShowMode(modeCtrlId) {
-            $(modeCtrlId).css("display", "block");
-            $(modeCtrlId).find("button").click();
+            //$(modeCtrlId).css("display", "block");
+            //$(modeCtrlId).find("button").click();
         }
         //显示加载动画
         function ShowLoading() {

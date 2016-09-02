@@ -7,13 +7,15 @@
     margin: 0 auto; 
     width:100%;
 }
-#TopPanel .top-main { margin: 0 auto;  width:960px;height:85px; } 
+#TopPanel .top-main { margin: 0 auto;  width:80%;height:85px; } 
 #TopPanel .top-logo{float:left; width:382px; height:85px;}
 .greybg { padding-bottom: 60px; padding-top: 10px;}
-.main { margin: 0 auto;  width:980px; }
+.main { margin: 0 auto;  width:80%; }
 .main .zt { height:24px; padding-top:5px; border-bottom:#FFF solid 2px;}
 .main .zt-tu { float:left; margin-right:6px; padding-top:5px;}
 .main .zt-zi {font-family: "Microsoft YaHei", "微软雅黑", Arial; font-size:14px;color:#ffffff; line-height:20px; }
+/*******左右*************/
+.greybg .main { margin: 0 auto;  width:100%; } 
 
 #LeftPanel { float:left;}
 #LeftPanel .zbar { float:left; width:184px; background:url(../Images/zbar-bg.png) repeat-y; padding-bottom:20px;}
@@ -36,7 +38,7 @@
 #LeftPanel .zbar ul li a {color:#ffffff;text-decoration:none;width:184px;height:54px; display:block; text-align:center; font-size:14px;}
 #LeftPanel .zbar ul li:hover a,#LeftPanel .zbar ul li.select a {color:#fcff00;text-decoration:none;}
 
-#RightPanl { float:right;width:791px; border:2px solid #6C6B6B; background-color:Black;}
+#RightPanl { float:right; width:87%; border:2px solid #6C6B6B; background-color:Black;}
 
 .ScreenNomal{ height: 600px; width: 100%; border:0;}
 
