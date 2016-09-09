@@ -38,26 +38,26 @@ namespace DBHelper.Bll
 
         }
 
-        ///// <summary>
-        ///// 通过学号查询
-        ///// </summary>
-        ///// <param name="StudentNumber"></param>
-        ///// <returns></returns>
-        //public StudentExam? GetStudentExam(int StudentNumber)
-        //{
-        //    string strSql = "select * from StudentExam where StudentNumber=@StudentNumber";
-        //    List<StudentExam> list = DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
-        //        new SQLiteParameter(){  Value=StudentNumber, ParameterName="@StudentNumber"}}));
-        //    if (list.Count > 0)
-        //    {
-        //        return list[0];
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
+        /// <summary>
+        /// 通过学号查询
+        /// </summary>
+        /// <param name="StudentNumber"></param>
+        /// <returns></returns>
+        public StudentExam? GetStudentExamNumber(int StudentNumber)
+        {
+            string strSql = "select * from StudentExam where StudentNumber=@StudentNumber";
+            List<StudentExam> list = DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=StudentNumber, ParameterName="@StudentNumber"}}));
+            if (list.Count > 0)
+            {
+                return list[0];
+            }
+            else
+            {
+                return null;
+            }
 
-        //}
+        }
 
         private List<StudentExam> DataTableToList(DataTable dt)
         {
