@@ -6,6 +6,8 @@ using System.Text;
 namespace DBHelper.Model
 {
 
+
+
     /// <summary>
     /// 题目类型
     /// </summary>
@@ -115,16 +117,20 @@ namespace DBHelper.Model
     /// </summary>
     public struct ExperimentType
     {
-        public int TypeId;
+        public int TypeId { get; set; }
         /// <summary>
         /// 基础认知等
         /// </summary>
-        public string TypeName1;
+        public string TypeName1 { get; set; }
         /// <summary>
         /// 
         /// </summary>
         public string TypeName2;
-        public string TypeDescribe;
+        public string TypeDescribe { get; set; }
+        /// <summary>
+        /// 最后操作时间
+        /// </summary>
+        public DateTime UpdateDateTime { get; set; }
     }
     /// <summary>
     /// 练习、考试与题目对照表
@@ -161,4 +167,20 @@ namespace DBHelper.Model
         /// </summary>
         public int ExercisesTypeId;
     }
+
+
+    #region **********************************************  考试 前台传到后台参数
+    public struct stGetExperimentType
+    {
+        /// <summary>
+        /// 当前第几页
+        /// </summary>
+        public int CurrentPage { get; set; }
+        /// <summary>
+        /// 每页显示个数
+        /// </summary>
+        public int ShowCount { get; set; }
+    }
+
+    #endregion
 }

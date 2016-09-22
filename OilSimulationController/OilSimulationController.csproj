@@ -58,6 +58,10 @@
     <Compile Include="VirExperimentController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DBHelper\DBHelper.csproj">
+      <Project>{F4943699-3F15-47CC-B001-26B05E1587D3}</Project>
+      <Name>DBHelper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OilSimulationModel\OilSimulationModel.csproj">
       <Project>{7879DB25-65E4-4C84-AE0D-37B80CB7FD70}</Project>
       <Name>OilSimulationModel</Name>

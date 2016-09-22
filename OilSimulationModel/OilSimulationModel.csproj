@@ -59,12 +59,6 @@
     <Compile Include="SimulationExperiment.cs" />
     <Compile Include="StructsModel.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DBHelper\DBHelper.csproj">
-      <Project>{F4943699-3F15-47CC-B001-26B05E1587D3}</Project>
-      <Name>DBHelper</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

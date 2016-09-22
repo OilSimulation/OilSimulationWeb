@@ -59,7 +59,6 @@
     <Compile Include="Model\ModelAll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="SqliteDriver\SQLite.Interop.dll" />
     <Content Include="SqliteDriver\System.Data.SQLite.dll" />
