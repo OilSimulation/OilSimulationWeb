@@ -1,20 +1,17 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ExamManage.aspx.cs" Inherits="OilSimulationWeb.Views.Manage.ExamManage" %>
+﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
     <title></title>
-
-    <link href="<%=Url.Content("~/Scripts/ExamJS/static/h-ui/css/H-ui.min.css")%>" rel="stylesheet" type="text/css" /> 
-    <link href="<%=Url.Content("~/Scripts/ExamJS/static/h-ui.admin/css/H-ui.admin.css")%>" rel="stylesheet" type="text/css" /> 
-    <link href="<%=Url.Content("~/Scripts/ExamJS/lib/Hui-iconfont/1.0.7/iconfont.css")%>" rel="stylesheet" type="text/css" /> 
-    <link href="<%=Url.Content("~/Scripts/ExamJS/lib/icheck/icheck.css")%>" rel="stylesheet" type="text/css" /> 
-    <link href="<%=Url.Content("~/Scripts/ExamJS/static/h-ui.admin/skin/default/skin.css")%>" rel="stylesheet" type="text/css" /> 
-    <link href="<%=Url.Content("~/Scripts/ExamJS/static/h-ui.admin/css/style.css")%>" rel="stylesheet" type="text/css" /> 
-
+    <link href="<%=Url.Content("~/Scripts/Exam/static/h-ui/css/H-ui.min.css")%>" rel="stylesheet" type="text/css" /> 
+    <link href="<%=Url.Content("~/Scripts/Exam/static/h-ui.admin/css/H-ui.admin.css")%>" rel="stylesheet" type="text/css" /> 
+    <link href="<%=Url.Content("~/Scripts/Exam/lib/Hui-iconfont/1.0.7/iconfont.css")%>" rel="stylesheet" type="text/css" /> 
+    <link href="<%=Url.Content("~/Scripts/Exam/lib/icheck/icheck.css")%>" rel="stylesheet" type="text/css" /> 
+    <link href="<%=Url.Content("~/Scripts/Exam/static/h-ui.admin/skin/default/skin.css")%>" rel="stylesheet" type="text/css" /> 
+    <link href="<%=Url.Content("~/Scripts/Exam/static/h-ui.admin/css/style.css")%>" rel="stylesheet" type="text/css" /> 
 </head>
-
 <body>
 <header class="navbar-wrapper">
 	<div class="navbar navbar-fixed-top">
@@ -165,10 +162,10 @@
 	</div>
 </section>
 
-    <script type="text/javascript" src="<%=Url.Content("~/Scripts/ExamJS/lib/jquery/1.9.1/jquery.min.js")%>"></script>
-    <script type="text/javascript" src="<%=Url.Content("~/Scripts/ExamJS/lib/layer/2.1/layer.js")%>"></script>
-    <script type="text/javascript" src="<%=Url.Content("~/Scripts/ExamJS/static/h-ui/js/H-ui.js")%>"></script>
-    <script type="text/javascript" src="<%=Url.Content("~/Scripts/ExamJS/static/h-ui.admin/js/H-ui.admin.js")%>"></script>
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/jquery/1.9.1/jquery.min.js")%>"></script>
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/layer/2.1/layer.js")%>"></script>
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/static/h-ui/js/H-ui.js")%>"></script>
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/static/h-ui.admin/js/H-ui.admin.js")%>"></script>
 
 <script type="text/javascript">
     /*资讯-添加*/
@@ -205,8 +202,5 @@
 </script> 
 
 </body>
-
-
-
 
 </html>
