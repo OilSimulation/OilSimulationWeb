@@ -78,13 +78,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\Manage\ExamManage.aspx.cs">
-      <DependentUpon>ExamManage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\Manage\ExamManage.aspx.designer.cs">
-      <DependentUpon>ExamManage.aspx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\EclipseParser.dll" />
@@ -288,6 +281,7 @@
     <Content Include="Views\Innovate\InnModeThree.aspx" />
     <Content Include="Views\Innovate\InnModeTwo.aspx" />
     <Content Include="Views\Manage\ExamManage.aspx" />
+    <Content Include="Views\Manage\Login.aspx" />
     <Content Include="Views\Simulation\SimMode3111.aspx" />
     <Content Include="Views\Simulation\SimMode3112.aspx" />
     <Content Include="Views\Simulation\SimMode3113.aspx" />

@@ -52,6 +52,7 @@
     <Compile Include="BaseController.cs" />
     <Compile Include="HomeController.cs" />
     <Compile Include="InnovateController.cs" />
+    <Compile Include="ManageController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimulationController.cs" />
     <Compile Include="VirExperimentController.cs" />
