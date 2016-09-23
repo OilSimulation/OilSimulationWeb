@@ -38,13 +38,44 @@
 #LeftPanel .zbar ul li a {color:#ffffff;text-decoration:none;width:184px;height:54px; display:block; text-align:center; font-size:14px;}
 #LeftPanel .zbar ul li:hover a,#LeftPanel .zbar ul li.select a {color:#fcff00;text-decoration:none;}
 
-#RightPanl { float:right; width:87%; border:2px solid #6C6B6B; background-color:Black;}
+#RightPanl { float:right;color:#eee; /*width:85%;*/ /*border:2px solid #6C6B6B;*/ background-color:rgba(238, 238, 238,0.1);}
 
 .ScreenNomal{ height: 600px; width: 100%; border:0;}
 
 .ScreenMax{ top:0; left: 0; border:0; position:absolute;}
 
 .clear { clear:both;}
+
+.top
+{
+    font-size: 16px;
+    height: 50px;
+    line-height: 51px;
+    text-indent: 20px;
+    border-bottom: 1px solid #eee;
+} 
+.f-f0 {font-family: "Arial","Hiragino Sans GB","Microsoft YaHei", 微软雅黑, "Helvetica", "sans-serif"}
+
+.bottom{
+    padding: 20px 30px;
+}
+.f-richEditorText{
+    margin: 0;
+    border: 0;
+    text-align: left;
+    color: #eee;
+    line-height: 22px;
+    word-break: break-word;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.t-title
+{
+    margin: 5px 20px 10px 0px;
+    font-size: 16px;
+}
+
 
 .foot2 {
     background: url("../Images/foot-nei-bg.jpg") no-repeat scroll center top transparent;
