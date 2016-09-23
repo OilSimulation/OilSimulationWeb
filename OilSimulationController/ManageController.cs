@@ -47,11 +47,10 @@ namespace OilSimulationController
             return View();
         }
 
-
-        [HttpPost]
-        public ActionResult GetExperimentType(stGetExperimentType data)
+        //[HttpPost]
+        public ActionResult GetExperimentType()
         {
-            List<ExperimentType> listData = ExperimentTypebll.GetExperimentType(data.CurrentPage, data.ShowCount);
+            List<ExperimentType> listData = ExperimentTypebll.GetExperimentType();
             var res = new ConfigurableJsonResult();
             res.Data = listData;
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
@@ -59,6 +58,18 @@ namespace OilSimulationController
             return res;
 
         }
+
+        //[HttpPost]
+//         public ActionResult GetExperimentType(stGetExperimentType data)
+//         {
+//             List<ExperimentType> listData = ExperimentTypebll.GetExperimentType(data.CurrentPage, data.ShowCount);
+//             var res = new ConfigurableJsonResult();
+//             res.Data = listData;
+//             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+// 
+//             return res;
+// 
+//         }
 
         [HttpPost]
         public ActionResult DelExperimentType(int ExperimentTypeId)
