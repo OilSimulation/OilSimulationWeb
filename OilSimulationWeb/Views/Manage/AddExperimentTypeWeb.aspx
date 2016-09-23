@@ -19,20 +19,20 @@
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>大类实验类型名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="TypeName1" name="">
+				<input type="text" class="input-text" value="" placeholder="" id="TypeName1" name=""/>
 			</div>
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>小类实验类型名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="" placeholder="" id="TypeName2" name="">
+				<input type="text" class="input-text" value="" placeholder="" id="TypeName2" name=""/>
 			</div>
 		</div>
 
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2">描述：</label>
 			<div class="formControls col-xs-8 col-sm-9">
-				<input type="text" class="input-text" value="0" placeholder="" id="TypeDescribe" name="">
+				<input type="text" class="input-text" value="0" placeholder="" id="TypeDescribe" name=""/>
 			</div>
 		</div>
         <div class="row cl">
@@ -54,12 +54,12 @@
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/jquery.validation/1.14.0/messages_zh.min.js")%>"></script> 
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/static/h-ui/js/H-ui.js")%>"></script> 
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/static/h-ui.admin/js/H-ui.admin.js")%>"></script> 
-    <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/static/h-ui.admin/js/comment.js")%>"></script>
+<!--     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/static/h-ui.admin/js/comment.js")%>"></script> -->
 
-<%--    <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/webuploader/0.1.5/webuploader.min.js")%>"></script>
---%>    <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/ueditor/1.4.3/ueditor.config.js")%>"></script>
-    <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/ueditor/1.4.3/ueditor.all.min.js")%>"> </script>
-    <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js")%>"></script>
+<!--     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/webuploader/0.1.5/webuploader.min.js")%>"></script> -->
+    <!--     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/ueditor/1.4.3/ueditor.config.js")%>"></script> -->
+    <!--     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/ueditor/1.4.3/ueditor.all.min.js")%>"> </script> -->
+    <!--     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js")%>"></script>
 
 
 
@@ -82,19 +82,20 @@
 <!-- <script type="text/javascript" src="lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script> -->
 <script type="text/javascript">
     function save() {
-       var a =  $("#TypeName1").val();
-       var b=  $("#TypeName2").val();
+        //layer_close();
+        var a = $("#TypeName1").val();
+        var b = $("#TypeName2").val();
         var c = $("#TypeDescribe").val();
         var varUrl;
-        if(true)//增加
+        if (true)//增加
         {
-            varUrl ='<%:Url.Action("AddExperimentType","Manage") %>';
+            varUrl = '<%:Url.Action("AddExperimentType","Manage") %>';
         }
         else//修改
         {
-            varUrl ='<%:Url.Action("UpdateExperimentType","Manage") %>';
+            varUrl = '<%:Url.Action("UpdateExperimentType","Manage") %>';
         }
-        var jsonData = {TypeId:0,TypeName1:a,TypeName2:b,TypeDescribe:c,UpdateDateTime:0};
+        var jsonData = { TypeId: 0, TypeName1: a, TypeName2: b, TypeDescribe: c, UpdateDateTime: 0 };
         var option = {
             url: varUrl,
             type: 'POST',
@@ -105,13 +106,13 @@
             success: function (result) {
                 $(obj).parents("tr").remove();
                 layer.msg('已删除!', 1);
+            }
+
         }
-
     }
-
-    function layer_close() {
-
-    }
+//     function layer_close() {
+// 
+//     }
 </script>
 </body>
 </html>

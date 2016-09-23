@@ -50,27 +50,7 @@
 				</tr>
 			</thead>
 			<tbody id="data">
-				<tr class="text-c">
-					<td><input type="checkbox" value="" name=""></td>
-					<td>10001</td>
-					<td>行业动态</td>
-					<td>H-ui</td>
-					<td>2014-6-11 11:11:42</td>
-					<td class="f-14 td-manage">
-                    <a style="text-decoration:none" class="ml-5" onClick="article_edit('资讯编辑','article-add.html','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> 
-                    <a style="text-decoration:none" class="ml-5" onClick="article_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-				</tr>
-				<tr class="text-c">
-					<td><input type="checkbox" value="" name=""></td>
-					<td>10002</td>
-					<td>行业动态</td>
-					<td>H-ui</td>
-					<td>2014-6-11 11:11:42</td>
-					<td class="f-14 td-manage">
-                        <a style="text-decoration:none" class="ml-5" onClick="article_edit('资讯编辑','article-add.html','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> 
-                        <a style="text-decoration:none" class="ml-5" onClick="article_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
-                    </td>
-				</tr>
+
 			</tbody>
 		</table>
 	</div>
@@ -78,13 +58,13 @@
 
 
 
-<script type="text/javascript" src="lib/My97DatePicker/WdatePicker.js"></script> 
-<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+
 
 
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/My97DatePicker/WdatePicker.js")%>"></script>
-    <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/datatables/1.10.0/jquery.dataTables.min.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/jquery/1.9.1/jquery.min.js")%>"></script>
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/datatables/1.10.0/jquery.dataTables.min.js")%>"></script>
+    
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/layer/2.1/layer.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/static/h-ui/js/H-ui.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/static/h-ui.admin/js/H-ui.admin.js")%>"></script>
@@ -92,36 +72,59 @@
 
 
 <script type="text/javascript">
-    $('.table-sort').dataTable({
+    $('.table-sort').DataTable({
         "aaSorting": [[1, "desc"]], //默认第几个排序
         "bStateSave": true, //状态保存
         "aoColumnDefs": [
         //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable": false, "aTargets": [0, 8]}// 不参与排序的列
+	  {"orderable": false, "aTargets": [0, 5]}// 不参与排序的列
 	]
     });
     $(document).ready(function () {
-        LoadData(1,10);
+        LoadData();
     });
 
-    //page:第几页，count:每页显示条数
-    function LoadData(page, count) {
-        var jsonData = { CurrentPage: page, ShowCount: count};
-
+    function LoadData() {
+//                url: '<%:Url.Action("GetExperimentType","Manage") %>',
+            //url: '<%:Url.Action("IsLocal","Business") %>',
         var option = {
             url: '<%:Url.Action("GetExperimentType","Manage") %>',
             type: 'POST',
-            data: JSON.stringify(jsonData),
             dataType: 'html',
             async: false,
             contentType: 'application/json',
             success: function (result) {
                 //mmColorJson[paramValue] = eval(result);
                 ShowData(eval(result));
+            },
+            error: function (e) {
+                //mmColorJson[paramValue] = eval(result);
+                var k = 0;
             }
+
         };
         $.ajax(option);
+
     }
+
+//    //page:第几页，count:每页显示条数
+//    function LoadData(page, count) {
+//        var jsonData = { CurrentPage: page, ShowCount: count};
+
+//        var option = {
+//            url: '<%:Url.Action("GetExperimentType","Manage") %>',
+//            type: 'POST',
+//            data: JSON.stringify(jsonData),
+//            dataType: 'html',
+//            async: false,
+//            contentType: 'application/json',
+//            success: function (result) {
+//                //mmColorJson[paramValue] = eval(result);
+//                ShowData(eval(result));
+//            }
+//        };
+//        $.ajax(option);
+//    }
 
     //dataValue,获取的实验类型JSON数据
     function ShowData(dataValue) {
@@ -134,10 +137,14 @@
 // 	<td class="f-14 td-manage">
 //     <a style="text-decoration:none" class="ml-5" onClick="article_edit('资讯编辑','article-add.html','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> 
 //     <a style="text-decoration:none" class="ml-5" onClick="article_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-// </tr>
-
-        var jsonData = JSON.parse(dataValue);
+        // </tr>
         var tbodyData = $("#data");
+        tbodyData.remove();//清空列表数据
+        if (dataValue.length<=0) {
+            return;
+        }
+        var jsonData = JSON.parse(dataValue);
+
         for (var i = 0; i < jsonData.length; i++) {
             var tr = $("<tr></tr>").appendTo(tbodyData);
             tr.addClass("text-c");
