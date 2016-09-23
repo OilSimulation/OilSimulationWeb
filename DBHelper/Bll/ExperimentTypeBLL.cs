@@ -80,14 +80,37 @@ namespace DBHelper.Bll
 
         public int AddExperimentType(ExperimentType data)
         {
-            string strSql = "insert into  ExperimentType(TypeName1,TypeName2,TypeDescribe,UpdateDateTime) value (@TypeName1,@TypeName2,@TypeDescribe,@UpdateDateTime)";
+
+            string strSql = "insert into  ExperimentType(TypeName1,TypeName2,TypeDescribe) values (@TypeName1,@TypeName2,@TypeDescribe)";
             return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
-                new SQLiteParameter(){  Value=data.TypeName1, ParameterName="@TypeName1"},
-                new SQLiteParameter(){  Value=data.TypeName2, ParameterName="@TypeName2"},
-                new SQLiteParameter(){  Value=data.TypeDescribe, ParameterName="@TypeDescribe"},
-                new SQLiteParameter(){  Value=data.UpdateDateTime, ParameterName="@UpdateDateTime"},
-            
-            });
+                 new SQLiteParameter(){  Value=data.TypeName1, ParameterName="@TypeName1"},
+                 new SQLiteParameter(){  Value=data.TypeName2, ParameterName="@TypeName2"},
+                 new SQLiteParameter(){  Value=data.TypeDescribe, ParameterName="@TypeDescribe"},
+                 new SQLiteParameter(){  Value=data.UpdateDateTime, ParameterName="@UpdateDateTime"},
+             
+             });
+        }
+
+        /// <summary>
+        /// 判断 大、小类型名称
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public bool IsExistData(ExperimentType data)
+        {
+            string strSql = "select 1 from   ExperimentType where TypeName1=@TypeName1 and TypeName2=@TypeName2";
+            DataTable dt =  DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
+                 new SQLiteParameter(){  Value=data.TypeName1, ParameterName="@TypeName1"},
+                 new SQLiteParameter(){  Value=data.TypeName2, ParameterName="@TypeName2"},
+             });
+            if (dt!=null&&dt.Rows.Count>0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private List<ExperimentType> DataTableToList(DataTable dt)

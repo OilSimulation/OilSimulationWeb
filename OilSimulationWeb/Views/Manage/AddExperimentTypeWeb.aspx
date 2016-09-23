@@ -81,13 +81,142 @@
 <!-- <script type="text/javascript" src="lib/ueditor/1.4.3/ueditor.all.min.js"> </script> -->
 <!-- <script type="text/javascript" src="lib/ueditor/1.4.3/lang/zh-cn/zh-cn.js"></script> -->
 <script type="text/javascript">
+    $(document).ready(function () {
+        var id = parent.$('#ExperimentTypeId').val(); //选中的实验类型ID
+        var type = parent.$('#AddOrUpdate').val(); //AddOrUpdate
+        if (type == 2) {//2:编辑,1:增加
+            LoadData(id);
+        }
+        
+    });
+    function LoadData(id) {//GetExperimentTypeById
+        var option = {
+            url: '<%:Url.Action("GetExperimentTypeById","Manage") %>',
+            type: 'POST',
+            dataType: 'html',
+            async: false,
+            data: id,
+            contentType: 'application/json',
+            success: function (result) {
+                var d = eval(result);
+                if (d.length <= 0) {
+                    return;
+                }
+                var jsonData = JSON.parse(d);
+                $("#TypeName1").val(jsonData.TypeName1);
+                $("#TypeName2").val(jsonData.TypeName2);
+                $("#TypeDescribe").val(jsonData.TypeDescribe);
+            }
+        };
+        $.ajax(option);
+    }
+
+    function ParentAddData(jsonData) {
+        parent.LoadData();
+
+        return;
+        var tbodyData = parent.$("#data"); //datatables
+        var datatables = parent.$("#datatables").DataTable();
+        var checkbox = '<input type="checkbox" value="" name="">'
+        var tr = datatables.row.add([checkbox, jsonData.TypeName1, jsonData.TypeName2, jsonData.TypeDescribe, jsonData.UpdateDataTime]).draw(false);
+
+        return;
+        var tr = $("<tr></tr>").appendTo(tbodyData);
+        tr.addClass("text-c");
+        //Check
+        var tdCheck = $("<td></td>").appendTo(tr);
+        var input = $("<input></input>").appendTo(tdCheck);
+        input.attr("type", "checkbox");
+        input.attr("value", "");
+        input.attr("name", "");
+        //大类实验类型名称
+        var tdType1 = $("<td></td>").appendTo(tr);
+        tdType1.val(jsonData.TypeName1);
+        //小类实验类型名称
+        var tdType2 = $("<td></td>").appendTo(tr);
+        tdType2.val(jsonData.TypeName2);
+
+        var tdDescribe = $("<td></td>").appendTo(tr);
+        tdDescribe.val(jsonData.TypeDescribe);
+
+        var tdUpdateDateTime = $("<td></td>").appendTo(tr);
+        tdUpdateDateTime.val(jsonData.UpdateDateTime);
+
+        //修改与删除按钮
+        var tdManage = $("<td></td>").appendTo(tr);
+        tdManage.addClass("f-14 td-manage");
+        var aEdit = $("<a></a>").appendTo(tdManage);
+        aEdit.addClass("ml-5");
+        aEdit.attr("style", "text-decoration:none");
+        aEdit.attr("onClick", "article_edit('实验类型编辑','AddExperimentTypeWeb','" + jsonData.TypeId + "')");
+        aEdit.attr("href", "javascript:;");
+        aEdit.attr("title", "编辑");
+
+        var aDel = $("<a></a>").appendTo(tdManage);
+        aDel.addClass("ml-5");
+        aDel.attr("style", "text-decoration:none");
+        aDel.attr("onClick", "article_del('this','" + jsonData.TypeId + "')");
+        aDel.attr("href", "javascript:;");
+        aDel.attr("title", "删除");
+
+        parent.LoadData();
+
+    }
+
+    function ParentUpdateData(jsonData) {
+        var tr = parent.$("#TypeId" + jsonData.TypeId);
+        var tds = tr.children();
+        tds[1].html(jsonData.TypeName1);
+        tds[2].html(jsonData.TypeName2);
+        tds[3].html(jsonData.TypeDescribe);
+        tds[4].html(jsonData.UpdateDateTime);
+
+        //parent.RefDataTables();
+    }
+
+
+    function IsExistData(jsonData) {
+        var exist;
+        var option = {
+            url: '<%:Url.Action("IsExistData","Manage") %>',
+            type: 'POST',
+            data: JSON.stringify(jsonData),
+            dataType: 'html',
+            async: false,
+            contentType: 'application/json',
+            success: function (result) {
+                if (result > 0) {
+                    layer.msg("实验类型已经存在！");
+                    exist = true;
+                }
+                else {
+                    exist = false;
+                }
+
+
+            },
+            error: function (e) {
+                layer.msg('操作失败！');
+                exist = true;
+            }
+
+        }
+        $.ajax(option);
+
+        return exist;
+
+    }
+
     function save() {
         //layer_close();
+        var id = parent.$('#ExperimentTypeId').val(); //选中的实验类型ID
+        var type = parent.$('#AddOrUpdate').val(); //AddOrUpdate
+
         var a = $("#TypeName1").val();
         var b = $("#TypeName2").val();
         var c = $("#TypeDescribe").val();
         var varUrl;
-        if (true)//增加
+        if (type==1)//增加
         {
             varUrl = '<%:Url.Action("AddExperimentType","Manage") %>';
         }
@@ -95,7 +224,15 @@
         {
             varUrl = '<%:Url.Action("UpdateExperimentType","Manage") %>';
         }
-        var jsonData = { TypeId: 0, TypeName1: a, TypeName2: b, TypeDescribe: c, UpdateDateTime: 0 };
+        var mydate = new Date();
+        var dateTime = mydate.getFullYear() + "-" + mydate.getMonth() + "-" + mydate.getDate() + " " + mydate.getHours() + ":" + mydate.getMinutes() + ":" + mydate.getSeconds();
+        var jsonData = { TypeId: id, TypeName1: a, TypeName2: b, TypeDescribe: c, UpdateDateTime: dateTime };
+
+        var exit = IsExistData(jsonData);
+        if (exit) {
+            return;
+        }
+
         var option = {
             url: varUrl,
             type: 'POST',
@@ -104,15 +241,37 @@
             async: false,
             contentType: 'application/json',
             success: function (result) {
-                $(obj).parents("tr").remove();
-                layer.msg('已删除!', 1);
+                if (result > 0) {
+                    if (type == 1) {//增加
+                        layer.msg('增加成功！');
+                        ParentAddData(jsonData);
+                    }
+                    else {
+                        layer.msg('编辑成功！');
+                        ParentUpdateData(jsonData);
+                    }
+
+                }
+                else {
+                    if (type == 1) {
+                        layer.msg('增加失败！');
+                    }
+                    else {
+                        layer.msg('编辑失败！');
+                    }
+                }
+
+                //                 $(obj).parents("tr").remove();
+                //                 layer.msg('已删除!', 1);
+            },
+            error: function (e) {
+                layer.msg('操作失败！');
             }
 
         }
+        $.ajax(option);
     }
-//     function layer_close() {
-// 
-//     }
+
 </script>
 </body>
 </html>

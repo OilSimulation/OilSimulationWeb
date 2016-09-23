@@ -38,7 +38,7 @@
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="article_add('添加实验类型','AddExperimentTypeWeb')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加资讯</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
 	<div class="mt-20">
-		<table class="table table-border table-bordered table-bg table-hover table-sort">
+		<table id="datatables" class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" name="" value=""></th>
@@ -49,10 +49,12 @@
 					<th width="120">操作</th>
 				</tr>
 			</thead>
-			<tbody id="data">
+			<tbody id="data" type="text">
 
 			</tbody>
 		</table>
+        <input id="ExperimentTypeId"  style="display:none"/>
+        <input id="AddOrUpdate"  style="display:none"/>
 	</div>
 </div>
 
@@ -72,17 +74,24 @@
 
 
 <script type="text/javascript">
-    $('.table-sort').DataTable({
-        "aaSorting": [[1, "desc"]], //默认第几个排序
-        "bStateSave": true, //状态保存
-        "aoColumnDefs": [
-        //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable": false, "aTargets": [0, 5]}// 不参与排序的列
-	]
-    });
+
     $(document).ready(function () {
         LoadData();
+        RefDataTables();
     });
+
+    function RefDataTables() {
+       
+        $('.table-sort').DataTable({
+            "aaSorting": [[1, "desc"]], //默认第几个排序
+            "bStateSave": true, //状态保存
+            "aoColumnDefs": [
+            //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+	  {"orderable": false, "aTargets": [0, 5]}// 不参与排序的列
+	]
+        });
+
+    }
 
     function LoadData() {
 //                url: '<%:Url.Action("GetExperimentType","Manage") %>',
@@ -95,7 +104,8 @@
             contentType: 'application/json',
             success: function (result) {
                 //mmColorJson[paramValue] = eval(result);
-                ShowData(eval(result));
+                //ShowData(eval(result));
+                ShowData(result);
             },
             error: function (e) {
                 //mmColorJson[paramValue] = eval(result);
@@ -139,7 +149,7 @@
 //     <a style="text-decoration:none" class="ml-5" onClick="article_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
         // </tr>
         var tbodyData = $("#data");
-        tbodyData.remove();//清空列表数据
+        tbodyData.children('tr').remove(); //清空列表
         if (dataValue.length<=0) {
             return;
         }
@@ -147,6 +157,7 @@
 
         for (var i = 0; i < jsonData.length; i++) {
             var tr = $("<tr></tr>").appendTo(tbodyData);
+            tr.attr("id","TypeId"+jsonData[i].TypeId);
             tr.addClass("text-c");
             //Check
             var tdCheck = $("<td></td>").appendTo(tr);
@@ -156,16 +167,16 @@
             input.attr("name", "");
             //大类实验类型名称
             var tdType1 = $("<td></td>").appendTo(tr);
-            tdType1.val(jsonData[i].TypeName1);
+            tdType1.html(jsonData[i].TypeName1);
             //小类实验类型名称
             var tdType2 = $("<td></td>").appendTo(tr);
-            tdType2.val(jsonData[i].TypeName2);
+            tdType2.html(jsonData[i].TypeName2);
 
             var tdDescribe = $("<td></td>").appendTo(tr);
-            tdDescribe.val(jsonData[i].TypeDescribe);
+            tdDescribe.html(jsonData[i].TypeDescribe);
 
             var tdUpdateDateTime = $("<td></td>").appendTo(tr);
-            tdUpdateDateTime.val(jsonData[i].tdUpdateDateTime);
+            tdUpdateDateTime.html(jsonData[i].tdUpdateDateTime);
 
             //修改与删除按钮
             var tdManage = $("<td></td>").appendTo(tr);
@@ -176,13 +187,22 @@
             aEdit.attr("onClick", "article_edit('实验类型编辑','AddExperimentTypeWeb','" + jsonData[i].TypeId + "')");
             aEdit.attr("href", "javascript:;");
             aEdit.attr("title", "编辑");
+            var iEdit = $("<i></i>").appendTo(aEdit);
+            iEdit.addClass("Hui-iconfont");
+            iEdit.html("&#xe6df;"); //&#xe6df;
+            //iEdit.html("&#xe6e2;"); //&#xe6df;
 
             var aDel = $("<a></a>").appendTo(tdManage);
             aDel.addClass("ml-5");
             aDel.attr("style", "text-decoration:none");
-            aDel.attr("onClick", "article_edit(this','" + jsonData[i].TypeId + "')");
+            aDel.attr("onClick", "article_del(this,'" + jsonData[i].TypeId + "')");
             aDel.attr("href", "javascript:;");
             aDel.attr("title", "删除");
+            var iDel = $("<i></i>").appendTo(aDel);
+            iDel.addClass("Hui-iconfont");
+            iDel.html("&#xe6e2;"); //&#xe6e2;
+            //iDel.html("&#xe6df;");
+
         }
 
     }
@@ -190,6 +210,8 @@
 
     /*资讯-添加*/
     function article_add(title, url) {
+        $("#AddOrUpdate").val("1");
+
         var index = layer.open({
             type: 2,
             title: title,
@@ -199,6 +221,8 @@
     }
     /*资讯-编辑*/
     function article_edit(title, url, id, w, h) {
+        $("#ExperimentTypeId").val(id);
+        $("#AddOrUpdate").val("2");
         var index = layer.open({
             type: 2,
             title: title,
@@ -209,17 +233,38 @@
     /*资讯-删除*/
     function article_del(obj, id) {
         layer.confirm('确认要删除吗？', function (index) {
+            var jsonData = { Id: id };
             //删除数据库中的数据 
             var option = {
                 url: '<%:Url.Action("DelExperimentType","Manage") %>',
                 type: 'POST',
-                data: id,
-                dataType: 'html',
+                data: JSON.stringify(jsonData),
+                dataType: 'text',
                 async: false,
                 contentType: 'application/json',
                 success: function (result) {
-                    $(obj).parents("tr").remove();
-                    layer.msg('已删除!', 1);
+                    $(obj).parents("tr").remove().draw();
+
+
+//                    var table = $('#datatables').DataTable();
+//                    var ff = $(obj).tagName;
+//                    var a = $(obj).parent();
+//                    var ac = a.tagName;
+//                    var b = a.parent();
+//                    var bc = b.tagName;
+//                    var rowf = table.row(b);
+//                    rowf.remove().draw(false);
+
+                    //                    var tr = $(obj).parents("tr");
+                    //                    var classv = tr.attr("class");
+                    //                    //                    table
+                    //                    //        .row($(this).parents('tr'))
+                    //                    //        .remove()
+                    //                    //        .draw();
+                    //                    var rowf = table.row(tr);
+                    //                    var x = rowf.remove();
+                    //                    x.draw();
+                    layer.msg('已删除!');
                 }
             };
             $.ajax(option);

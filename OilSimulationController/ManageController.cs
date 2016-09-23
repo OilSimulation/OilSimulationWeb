@@ -17,7 +17,8 @@ namespace OilSimulationController
     [HandleError]
     public class ManageController : Controller
     {
-        public static string strConn = "123";
+        //public static string strConn = "Data Source =../DBFile/DB.db";
+        public static string strConn = @"Data Source =E:\Projects\Code\Oil\OilSimulationWeb\DBFile\DB.db";
 
         ExercisesTestBLL ExercisesTestbll = new ExercisesTestBLL(strConn);
         ExperimentTypeBLL ExperimentTypebll = new ExperimentTypeBLL(strConn);
@@ -59,6 +60,17 @@ namespace OilSimulationController
 
         }
 
+        public ActionResult GetExperimentTypeById(int id)
+        {
+            ExperimentType? listData = ExperimentTypebll.GetExperimentType(id);
+            var res = new ConfigurableJsonResult();
+            res.Data = listData;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+
+            return res;
+
+        }
+
         //[HttpPost]
 //         public ActionResult GetExperimentType(stGetExperimentType data)
 //         {
@@ -72,9 +84,9 @@ namespace OilSimulationController
 //         }
 
         [HttpPost]
-        public ActionResult DelExperimentType(int ExperimentTypeId)
+        public ActionResult DelExperimentType(stId ExperimentTypeId)
         {
-            int result = ExperimentTypebll.DelExperimentType(ExperimentTypeId);
+            int result = ExperimentTypebll.DelExperimentType(ExperimentTypeId.Id);
             var res = new ConfigurableJsonResult();
             res.Data = result;
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
@@ -101,14 +113,24 @@ namespace OilSimulationController
         [HttpPost]
         public ActionResult AddExperimentType(ExperimentType data)
         {
-            data.UpdateDateTime = DateTime.Now;
-            ExperimentTypebll.AddExperimentType(data);
+            //data.UpdateDateTime = DateTime.Now;
+            int result =  ExperimentTypebll.AddExperimentType(data);
             var res = new ConfigurableJsonResult();
-            res.Data = 1;
+            res.Data = result;
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
 
             return res;
 
+        }
+        [HttpPost]
+        public ActionResult IsExistData(ExperimentType data)
+        {
+            bool result = ExperimentTypebll.IsExistData(data);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+
+            return res;
         }
 
     }

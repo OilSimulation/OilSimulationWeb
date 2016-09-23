@@ -125,7 +125,7 @@ namespace DBHelper.Model
         /// <summary>
         /// 
         /// </summary>
-        public string TypeName2;
+        public string TypeName2 { get; set; }
         public string TypeDescribe { get; set; }
         /// <summary>
         /// 最后操作时间
@@ -180,6 +180,11 @@ namespace DBHelper.Model
         /// 每页显示个数
         /// </summary>
         public int ShowCount { get; set; }
+    }
+
+    public struct stId
+    {
+        public int Id { get; set; }
     }
 
     #endregion
