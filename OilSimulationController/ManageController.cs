@@ -18,7 +18,7 @@ namespace OilSimulationController
     public class ManageController : Controller
     {
         //public static string strConn = "Data Source =../DBFile/DB.db";
-        public static string strConn = @"Data Source =E:\Projects\Code\Oil\OilSimulationWeb\DBFile\DB.db";
+        public static string strConn = @"Data Source =E:\Projects\Code\XXX\OilSimulationWeb\DBFile\DB.db";
 
         ExercisesTestBLL ExercisesTestbll = new ExercisesTestBLL(strConn);
         ExperimentTypeBLL ExperimentTypebll = new ExperimentTypeBLL(strConn);
@@ -39,6 +39,8 @@ namespace OilSimulationController
         {
             return View();
         }
+
+        
 
 
         #region *************************************** 实验类型
@@ -220,6 +222,16 @@ namespace OilSimulationController
 
         }
         #endregion
+        #region *************************************** 题目与选项TitleItemAssocWeb
+
+        public ActionResult TitleItemAssocWeb()
+        {
+            return View();
+        }
+
+
+        #endregion
+        //
 
         #region *************************************** 习题或考试
 
