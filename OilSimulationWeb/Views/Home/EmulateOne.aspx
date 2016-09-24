@@ -1,11 +1,79 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/MasterPage.Master" Inherits="System.Web.Mvc.ViewPage<dynamic>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	EmulateOne
+	重庆科技学院油藏仿真实验室
 </asp:Content>
 
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
-    <h2>EmulateOne</h2>
-
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server"> 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#WebGLLayOut").hide();
+            $("#MainLayOut").show();
+            $(".liNav").each(function () { $(this).removeClass("select"); });
+            $(".zbar ul").each(function () { $(this).css("display", "none"); });
+            $("#ModeThree").css("display", "block");
+            $("#ExpSeven").addClass("select");
+            $("#curMode").text($("#ModeThree").prev().text());
+            $("#curitem").text($("#ExpSeven").children().text());
+        });
+    </script>
+    <div id="WebGLLayOut">
+        <iframe id="iframeId" name="iframeId" scrolling="no" class="ScreenNomal"  src=""></iframe>
+    </div>
+    <div id="MainLayOut" style="width:100%;">
+        <div style="width:100%; float:left;">
+            <div style="margin-right: 415px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);">
+                <h2>实验七、井网井距方案设计与开发效果预测</h2>
+                <div class="top f-f0">实验简介</div>
+                <div class="bottom f-richEditorText"><p>&nbsp; &nbsp; &nbsp; &nbsp; 油田的井网形式一般分为规则井网和不规则井网两种。当储层较均质时，适宜用规则井网开采；而储层非均质严重时，宜用不规则井网开采。规则井网一般指面积注水井网，包括直线形井网、交错线形井网、四点井网、五点井网、七点井网、九点井网和反九点井网等。开发井网部署是油田开发中的一个重要问题，需要选择合理的布井方式并确定合理的井网密度，它不仅关系到采油速度、稳产年限，而且关系到油田最终采收率和经济效益。本实验采用数值模拟技术，设计不同的井网井距，模拟开发过程，预测不同时间的单井日产油量、单井日产水量、年产油量、年产水量、含水率、累积产油量、累积产水量、釆出程度、单井日注水量、年注水量、累积注水量、注水压力、地层压力、油井井底流压等技术指标，预测开发效果。</p></div>
+    
+                <div class="top f-f0">预备知识</div>
+                <div class="bottom f-richEditorText"><p>（1）油田注水方式的确定；<br/>（2）不同注采井网的主要特征参数；<br/>（3）合理井网密度的确定方法。</p></div>
+            </div>
+        </div>
+        <div style="width: 400px; margin-left: -400px; position: relative;float: right;">
+           <div>
+                <div class="t-title f-f0">课程内容</div>
+                <object id="forfun" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="400" height="300"
+                codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0">
+                <param name="movie" value="/seufld/seufld/flash/focus2.swf">
+                <param name="quality" value="high">
+                <param name="bgcolor" value="#F0F0F0">
+                <param name="menu" value="false">
+                <param name="wmode" value="opaque"><!--Window|Opaque|Transparent-->
+                <param name="FlashVars" value="">
+                <param name="allowScriptAccess" value="sameDomain">
+                <embed id="forfunex" src="/Flash/井网井距设计.swf"
+                    width="400"
+                    height="300"
+                    align="middle"
+                    quality="high"
+                    bgcolor="#f0fff8"
+                    menu="false"
+                    play="true"
+                    loop="false"
+                    FlashVars=""
+                    allowScriptAccess="sameDomain"
+                    type="application/x-shockwave-flash"
+                    pluginspage="http://www.adobe.com/go/getflashplayer">
+                </embed>
+                </object>
+            </div> 
+            <div style="padding: 10px 20px 10px 0px;">
+                <div class="t-title f-f0">实验演示</div>
+                <div class="m-btnList">
+                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeOne');" ><span class="f-da">1、不同井网方案设计与开发效果预测实验</span></a>
+                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeTwo');" ><span class="f-da">2、不同井距网方案设计与开发效果预测实验</span></a> 
+                </div>
+            </div>
+            <div style="padding: 10px 20px 20px 0px;">
+                <div class="t-title f-f0">随堂测试</div>
+                <div class="m-btnList">
+                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn">
+                        <span class="f-db">参加测试</span> 
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>  
 </asp:Content>

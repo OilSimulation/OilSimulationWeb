@@ -14,6 +14,8 @@
             $(".zbar ul").each(function () { $(this).css("display", "none"); });
             $("#ModeOne").css("display", "block");
             $("#ExpTwo").addClass("select");
+            $("#curMode").text($("#ModeOne").prev().text());
+            $("#curitem").text($("#ExpTwo").children().text());
         });
     </script>
     <div id="WebGLLayOut">

@@ -12,7 +12,9 @@
             $(".liNav").each(function () { $(this).removeClass("select"); });
             $(".zbar ul").each(function () { $(this).css("display", "none"); });
             $("#ModeOne").css("display", "block");
-            $("#ExpOne").addClass("select");
+            $("#ExpThree").addClass("select");
+            $("#curMode").text($("#ModeOne").prev().text());
+            $("#curitem").text($("#ExpThree").children().text());
         });
     </script>
     <div id="WebGLLayOut">
@@ -21,12 +23,12 @@
     <div id="MainLayOut" style="width:100%;">
         <div style="width:100%; float:left;">
             <div style="margin-right: 415px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);">
-                <h2>实验二、渗流方式模拟</h2>
+                <h2>实验三、弹性不稳定渗流模拟</h2>
                 <div class="top f-f0">实验简介</div>
-                <div class="bottom f-richEditorText"><p>&nbsp; &nbsp; &nbsp; &nbsp; 渗流方式即为流体在多孔介质中流动的方式。在实际生产中，油藏形状和布井方式都比较复杂。为研究这些复杂情况下的流体渗流规律，需要概括其共有的渗流特征。根据渗流特点的不同，可以把渗流方式分为单向流、平面径向流、球面向心流。单向流主要存在于岩芯流动及排状井网中，其流线为彼此平行的直线；如果该渗流是稳定流，则在垂直于流动方向的每个截面上，各点的渗流速度相等。平面径向流主要存在于井眼附近，其流线为直线且以二维向中心井汇集，越接近中心，渗流面积越小，但各个平面的渗流状况相同。球面向心流的情况是在开采底水油藏时，因为油藏厚度往往比较大，且为防止底水过快锥进到井底，通常只钻开油层顶部，则在井点附近地区，流线成直线向井点汇集，其渗流面积呈半球面。为了更好地理解不同渗流方式的特征及规律，针对单向流、平面径向流、球面向心流，分别建立一维直角坐标模型、二维径向模型、三维球面模型，利用数值模拟方法研究不同渗流方式的流动过程。</p></div>
+                <div class="bottom f-richEditorText"><p>&nbsp; &nbsp; &nbsp; &nbsp; 在渗流过程中，若各运动要素（压力及流速等）要随时间变化，则称为不稳定流动。在井的生产过程中，压力波的传播分为两个阶段，压力波传到边界之前为压力波传播的第一阶段，传到边界之后为压力波传播的第二阶段。在第一阶段，压降漏斗不断扩大，除井点外各点均加深；压降曲线传到边界以后开始压力波传播的第二阶段：对于定压边界，在相当长时间后，渗流过程就趋于稳定，压力分布曲线和稳定渗流时的对数曲线一致；对于封闭边界，边界处的压力不断下降，随时间增加，从井壁到边界各点压降幅度逐渐趋于一致，这种状态称为“拟稳定状态”，在该状态下，地层中任意一点压降速度为常数，直到地层内各点压力低于饱和压力时，弹性开采阶段结束。通过建立二维平面流动模型，输入油水PVT属性、油水相对渗透率曲线和毛管压力曲线，模拟计算不稳定渗流过程中的压力分布。</p></div>
     
                 <div class="top f-f0">预备知识</div>
-                <div class="bottom f-richEditorText"><p>（1）单向流的概念、渗流规律及其特征、水动力学场图；<br/>（2）平面径向流的概念、渗流规律及其特征、水动力学场图；<br/>（3）球面向心流的概念、渗流规律及其特征。</p></div>
+                <div class="bottom f-richEditorText"><p>（1）弹性不稳定渗流的概念；<br/>（2）定压边界压力波传播变化规律；<br/>（3）封闭边界压力波传播变化规律。</p></div>
             </div>
         </div>
         <div style="width: 400px; margin-left: -400px; position: relative;float: right;">
@@ -41,7 +43,7 @@
                 <param name="wmode" value="opaque"><!--Window|Opaque|Transparent-->
                 <param name="FlashVars" value="">
                 <param name="allowScriptAccess" value="sameDomain">
-                <embed id="forfunex" src="/Flash/渗流方式模拟.swf"
+                <embed id="forfunex" src="/Flash/弹性不稳定渗流模拟.swf"
                     width="400"
                     height="300"
                     align="middle"
@@ -60,9 +62,8 @@
             <div style="padding: 10px 20px 10px 0px;">
                 <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeThree');" ><span class="f-da">1、单向渗流模拟</span></a>
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeFour');" ><span class="f-da">2、平面径向渗流模拟</span></a> 
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeFive');" ><span class="f-da">2、球面向心流模拟</span></a> 
+                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeSix');" ><span class="f-da">1、稳定水压弹性驱动模拟</span></a>
+                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeSeven');" ><span class="f-da">2、封闭弹性驱动模拟</span></a>  
                 </div>
             </div>
             <div style="padding: 10px 20px 20px 0px;">

@@ -236,7 +236,7 @@
 		                    <ul style="display: block;" id="ModeOne"> 
 		                        <li class="liNav" id="ExpOne"><a href="javascript:void(0);ShowMode('BaseOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油模拟</span></a></li>
 		                        <li class="liNav" id="ExpTwo"><a href="javascript:void(0);ShowMode('BaseTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">渗流方式模拟</span></a></li> 
-		                        <li class="liNav" id="ExpThr"><a href="javascript:void(0);ShowMode('BaseThree');" class="oneline"><span class="lmenu-ico"></span><span class="zh">弹性不稳定渗流</span></a></li>
+		                        <li class="liNav" id="ExpThree"><a href="javascript:void(0);ShowMode('BaseThree');" class="oneline"><span class="lmenu-ico"></span><span class="zh">弹性不稳定渗流</span></a></li>
 		                    </ul>
                             <div class="zbar-title">虚拟实验</div> 
 		                    <ul style="display: none" id="ModeTwo"> 
