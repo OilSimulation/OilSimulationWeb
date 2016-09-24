@@ -52,6 +52,36 @@ namespace DBHelper.Bll
             }
 
         }
+
+        public int AddTitleItem(TitleItem info)
+        {
+            string strSql = "insert into  TitleItem(TitleItemContent,UpdateDateTime) values(@TitleItemContent,@UpdateDateTime)";
+            return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=info.UpdateDateTime, ParameterName="@UpdateDateTime"},
+                new SQLiteParameter(){  Value=info.TitleItemContent, ParameterName="@TitleItemContent"}
+            });
+
+        }
+
+        public int UpdateTitleItem(TitleItem info)
+        {
+            string strSql = "update TitleItem set  TitleItemContent=@TitleItemContent,UpdateDateTime=@UpdateDateTime where TitleItemId=@TitleItemId";
+            return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=info.UpdateDateTime, ParameterName="@UpdateDateTime"},
+                new SQLiteParameter(){  Value=info.TitleItemId, ParameterName="@TitleItemId"},
+                new SQLiteParameter(){  Value=info.TitleItemContent, ParameterName="@TitleItemContent"}
+            });
+
+        }
+
+        public int DelTitleItem(int TitleItemId)
+        {
+            string strSql = "delete TitleItem where TitleItemId=@TitleItemId";
+            return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=TitleItemId, ParameterName="@TitleItemId"}
+            });
+        }
+
         private List<TitleItem> DataTableToList(DataTable dt)
         {
             List<TitleItem> list = new List<TitleItem>();
@@ -62,6 +92,12 @@ namespace DBHelper.Bll
                     TitleItem info = new TitleItem();
                     info.TitleItemContent = dr["TitleItemContent"] == DBNull.Value ? "" : dr["TitleItemContent"].ToString();
                     info.TitleItemId = dr["TitleItemId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["TitleItemId"]);
+                    if (dr["UpdateDateTime"] != DBNull.Value)
+                    {
+                        DateTime datetime;
+                        DateTime.TryParse(dr["UpdateDateTime"].ToString(), out datetime);
+                        info.UpdateDateTime = datetime;
+                    }
                     list.Add(info);
                 }
             }

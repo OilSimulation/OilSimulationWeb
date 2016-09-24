@@ -59,8 +59,8 @@ namespace DBHelper.Bll
         /// <returns></returns>
         public int UpdateTitleInfo(TitleInfo info)
         {
-            string strSql = @"update TitleInfo set TitleConent=@TitleConent,TitleTypeId=@TitleTypeId,TypeId=@TypeId,
-            CorrectAnswer=@CorrectAnswer,Score=@Score,UpdateDateTime=@UpdateDateTime where TitleInfoId=@TitleInoId";
+             string strSql = @"update TitleInfo set TitleConent=@TitleConent,TitleTypeId=@TitleTypeId,TypeId=@TypeId,
+                               CorrectAnswer=@CorrectAnswer,UpdateDateTime=@UpdateDateTime,Score=@Score where TitleInfoId=@TitleInfoId";// 
             return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=info.TitleInfoId, ParameterName="@TitleInfoId"},
                 new SQLiteParameter(){  Value=info.TitleConent, ParameterName="@TitleConent"},
