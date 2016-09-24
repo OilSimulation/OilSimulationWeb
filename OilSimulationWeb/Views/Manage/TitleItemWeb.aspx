@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head id="Head1" runat="server">
-    <title>题目管理</title>
+    <title>选项管理</title>
 
 
 
@@ -17,20 +17,16 @@
 
 </head>
 <body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 题目管理 <span class="c-gray en">&gt;</span> 题目列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 选项管理 <span class="c-gray en">&gt;</span> 选项列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="article_add('添加题目','AddTitleInfoWeb')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加数据</a></span>  </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="article_add('添加考试','AddExercisesTestWeb')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加数据</a></span>  </div>
 	<div class="mt-20">
 		<table id="datatables" class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" name="" value=""></th>
-					<th width="100">题目内容</th>
-					<th width="100">题目类型</th>
-					<th width="200">实验类型</th>
-					<th width="120">正确答案</th>
-					<th width="100">该题分数</th>
+					<th width="100">选项内容</th>
                     <th width="120">操作时间</th>
                     <th width="120">操作</th>
 				</tr>
@@ -62,9 +58,6 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-
-        //test();
-
         LoadData();
         RefDataTables();
     });
@@ -82,35 +75,10 @@
 
     }
 
-    function test() {
-        var mydate = new Date();
-        var dateTime = mydate.getFullYear() + "-" + mydate.getMonth() + "-" + mydate.getDate() + " " + mydate.getHours() + ":" + mydate.getMinutes() + ":" + mydate.getSeconds();
-        var jsonData = { TitleInfoId: 1, TitleConent: 2, TitleTypeId: 3, TypeId: 4, CorrectAnswer: 5, Score: 6, UpdateDateTime: dateTime };
-
-        var option = {
-            url: '<%:Url.Action("AddTitleInfo","Manage") %>',
-            type: 'POST',
-            dataType: 'html',
-            async: false,
-            data: JSON.stringify(jsonData),
-            contentType: 'application/json',
-            success: function (result) {
-                var ff = 0;
-                //ShowData(result);
-            },
-            error: function (e) {
-
-            }
-
-        };
-        $.ajax(option);
-
-    }
-
     function LoadData() {
 
         var option = {
-            url: '<%:Url.Action("GetTitleInfo","Manage") %>',
+            url: '<%:Url.Action("GetExercisesTest","Manage") %>',
             type: 'POST',
             dataType: 'html',
             async: false,
@@ -156,15 +124,10 @@
             return;
         }
         var jsonData = JSON.parse(dataValue);
-//        				<th width="100">题目内容</th>
-//					<th width="100">题目类型</th>
-//					<th width="200">实验类型</th>
-//					<th width="120">正确答案</th>
-//					<th width="120">该题分数</th>
-//                    <th width="120">操作时间</th>
+
         for (var i = 0; i < jsonData.length; i++) {
             var tr = $("<tr></tr>").appendTo(tbodyData);
-            tr.attr("id", "TitleInfoId" + jsonData[i].TitleInfoId);
+            tr.attr("id", "ExercisesTestId" + jsonData[i].ExercisesTestId);
             tr.addClass("text-c");
             //Check
             var tdCheck = $("<td></td>").appendTo(tr);
@@ -172,28 +135,12 @@
             input.attr("type", "checkbox");
             input.attr("value", "");
             input.attr("name", "");
-            //题目内容
+            //习题或考试名称
             var tdType1 = $("<td></td>").appendTo(tr);
-            tdType1.html(jsonData[i].TitleConent);
-            //题目类型
+            tdType1.html(jsonData[i].ExercisesName);
+            //考试描述
             var tdType2 = $("<td></td>").appendTo(tr);
-            tdType2.html(jsonData[i].TitleTypeName);
-            //实验类型
-            var tdDescribe = $("<td></td>").appendTo(tr);
-            tdDescribe.html(jsonData[i].TypeName1 + '\\' + jsonData[i].TypeName2);
-            //正确答案
-            var tdCorrectAnswer = $("<td></td>").appendTo(tr);
-            tdCorrectAnswer.html(jsonData[i].CorrectAnswer);
-            //该题分数
-            var tdScore = $("<td></td>").appendTo(tr);
-            tdScore.html(jsonData[i].Score);
-//            //题目选项
-//            var tdItem = $("<td></td>").appendTo(tr);
-//            var items;
-//            for (var j = 0; j < jsonData[i].ListTitleItem.length; j++) {
-//                items += (j + 1) + "、" + jsonData[i].ListTitleItem[j].TitleItemContent + "  ";
-//            }
-//            tdItem.html(items);
+            tdType2.html(jsonData[i].ExercisesDescribe);
             //操作时间
             var tdUpdateDateTime = $("<td></td>").appendTo(tr);
             tdUpdateDateTime.html(jsonData[i].UpdateDateTime);
@@ -204,7 +151,7 @@
             var aEdit = $("<a></a>").appendTo(tdManage);
             aEdit.addClass("ml-5");
             aEdit.attr("style", "text-decoration:none");
-            aEdit.attr("onClick", "article_edit('题目编辑','AddTitleInfoWeb','" + jsonData[i].TitleInfoId + "')");
+            aEdit.attr("onClick", "article_edit('题目编辑','AddExercisesTestWeb','" + jsonData[i].ExercisesTestId + "')");
             aEdit.attr("href", "javascript:;");
             aEdit.attr("title", "编辑");
             var iEdit = $("<i></i>").appendTo(aEdit);
@@ -215,7 +162,7 @@
             var aDel = $("<a></a>").appendTo(tdManage);
             aDel.addClass("ml-5");
             aDel.attr("style", "text-decoration:none");
-            aDel.attr("onClick", "article_del(this,'" + jsonData[i].TitleInfoId + "')");
+            aDel.attr("onClick", "article_del(this,'" + jsonData[i].ExercisesTestId + "')");
             aDel.attr("href", "javascript:;");
             aDel.attr("title", "删除");
             var iDel = $("<i></i>").appendTo(aDel);
@@ -256,7 +203,7 @@
             var jsonData = { Id: id };
             //删除数据库中的数据 
             var option = {
-                url: '<%:Url.Action("DelTitleInfo","Manage") %>',
+                url: '<%:Url.Action("DelExercisesTest","Manage") %>',
                 type: 'POST',
                 data: JSON.stringify(jsonData),
                 dataType: 'html',
@@ -277,6 +224,8 @@
                 }
             };
             $.ajax(option);
+
+
         });
     }
     </script> 

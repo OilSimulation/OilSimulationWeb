@@ -29,6 +29,7 @@
 					<th width="100">考试或练习名称</th>
 					<th width="100">考试描述</th>
                     <th width="120">操作时间</th>
+                    <th width="120">操作</th>
 				</tr>
 			</thead>
 			<tbody id="data" type="text">
@@ -44,9 +45,8 @@
 
 
 
-
-    <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/My97DatePicker/WdatePicker.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/jquery/1.9.1/jquery.min.js")%>"></script>
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/My97DatePicker/WdatePicker.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/datatables/1.10.0/jquery.dataTables.min.js")%>"></script>
     
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/layer/2.1/layer.js")%>"></script>

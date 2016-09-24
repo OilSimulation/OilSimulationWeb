@@ -69,7 +69,9 @@
 			<dt><i class="Hui-iconfont">&#xe613;</i> 试题管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="picture-list.html" data-title="题目类型管理" href="javascript:void(0)">题目类型管理</a></li>
+<%--					<li><a _href="picture-list.html" data-title="题目类型管理" href="javascript:void(0)">题目类型管理</a></li>--%>
+					<li><a _href="TitleItemWeb" data-title="选项管理" href="javascript:void(0)">选项管理</a></li>
+					<li><a _href="TitleItemAssocWeb" data-title="题目选项配置" href="javascript:void(0)">题目选项配置</a></li>
 					<li><a _href="TitleInfoWeb" data-title="题目管理" href="javascript:void(0)">题目管理</a></li>
 					<li><a _href="picture-list.html" data-title="考试管理" href="javascript:void(0)">考试管理</a></li>
 				</ul>

@@ -235,7 +235,8 @@
         }
         var mydate = new Date();
         var dateTime = mydate.getFullYear() + "-" + mydate.getMonth() + "-" + mydate.getDate() + " " + mydate.getHours() + ":" + mydate.getMinutes() + ":" + mydate.getSeconds();
-        var jsonData = { TitleInfoId: id, TitleConent: a, TitleTypeId: b, TypeId: c, CorrectAnswer: d, Score: e, UpdateDateTime: dateTime, TypeName1: TypeNames[0], TypeName2: TypeName1[1], TitleTypeName: TitleTypeName };
+        var jsonData = { TitleInfoId: id, TitleConent: a, TitleTypeId: b, TypeId: c, CorrectAnswer: d, Score: e, UpdateDateTime: dateTime, TypeName1: TypeNames[0], TypeName2: TypeNames[1], TitleTypeName: TitleTypeName };
+        //var jsonData = { TitleInfoId: id, TitleConent: a, TitleTypeId: b, TypeId: c, CorrectAnswer: d, Score: e, UpdateDateTime: dateTime };
 
 //        var exit = IsExistData(jsonData);
 //        if (exit) {
