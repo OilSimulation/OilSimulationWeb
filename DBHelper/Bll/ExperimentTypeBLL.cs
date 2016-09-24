@@ -41,7 +41,7 @@ namespace DBHelper.Bll
         }
 
 
-        public ExperimentType? GetExperimentType(int TypeId)
+        public ExperimentType GetExperimentType(int TypeId)
         {
             string strSql = "select * from ExperimentType where TypeId=@TypeId";
             List<ExperimentType> list = DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
@@ -52,7 +52,7 @@ namespace DBHelper.Bll
             }
             else
             {
-                return null;
+                return new ExperimentType();
             }
 
         }

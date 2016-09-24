@@ -9,7 +9,7 @@ using System.Data;
 
 namespace DBHelper.Bll
 {
-    class TitleTypeBLL
+    public class TitleTypeBLL
     {
         private string m_strConn;
 

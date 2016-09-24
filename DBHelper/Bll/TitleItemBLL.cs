@@ -24,6 +24,18 @@ namespace DBHelper.Bll
             return DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql));
         }
 
+        /// <summary>
+        /// 获取题目的所有选项
+        /// </summary>
+        /// <param name="TitleInfoId"></param>
+        /// <returns></returns>
+        public List<TitleItem> GetTitleInfoAllItem(int TitleInfoId)
+        {
+            string strSql = "select * from TitleItemAssoc a left join TitleItem b on a.TitleItemId=b.TitleItemId where a.TitleInfoId=@TitleInfoId";
+            return DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=TitleInfoId, ParameterName="@TitleInfoId"}}));
+        }
+
 
         public TitleItem? GetTitleItem(int TitleItemId)
         {

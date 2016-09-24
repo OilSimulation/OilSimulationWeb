@@ -23,18 +23,18 @@ namespace DBHelper.Bll
         }
 
 
-        /// <summary>
-        /// 获取某场考试下的所有题目
-        /// </summary>
-        /// <param name="ExercisesTestId"></param>
-        /// <returns></returns>
-        public List<ExercisesTitle> GetExercisesTest(int ExercisesTestId)
-        {
-            string strSql = "select * from ExercisesTitle where ExercisesTestId=@ExercisesTestId";
-            return DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
-                new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"}}));
+        ///// <summary>
+        ///// 获取某场考试下的所有题目
+        ///// </summary>
+        ///// <param name="ExercisesTestId"></param>
+        ///// <returns></returns>
+        //public List<ExercisesTitle> GetExercisesTest(int ExercisesTestId)
+        //{
+        //    string strSql = "select * from ExercisesTitle where ExercisesTestId=@ExercisesTestId";
+        //    return DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
+        //        new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"}}));
 
-        }
+        //}
 
 
         private List<ExercisesTitle> DataTableToList(DataTable dt)

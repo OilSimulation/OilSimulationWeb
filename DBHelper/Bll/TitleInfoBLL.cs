@@ -11,23 +11,28 @@ namespace DBHelper.Bll
 {
     public class TitleInfoBLL
     {
-        private string m_strConn;
 
+
+        private string m_strConn;
+        TitleItemBLL TitleItembll;
         public TitleInfoBLL(string strConn)
         {
             m_strConn = strConn;
+            TitleItembll = new TitleItemBLL(m_strConn);
         }
 
         public List<TitleInfo> GetTitleInfo()
         {
-            string strSql = "select * from TitleInfo";
+            string strSql = @"select * from TitleInfo a left join ExperimentType b on a.TypeId=b.TypeId
+                            left join TitleType c on a.TitleTypeId=c.TiteTypeId";
             return DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql));
         }
 
 
-        public TitleInfo? GetTitleInfo(int TitleInfoId)
+        public TitleInfo GetTitleInfo(int TitleInfoId)
         {
-            string strSql = "select * from TitleInfo where TitleInfoId=@TitleInfoId";
+            string strSql = @"select * from TitleInfo a left join ExperimentType b on a.TypeId=b.TypeId
+                            left join TitleType c on a.TitleTypeId=c.TiteTypeId where TitleInfoId=@TitleInfoId";
             List<TitleInfo> list = DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=TitleInfoId, ParameterName="@TitleInfoId"}}));
             if (list.Count > 0)
@@ -36,10 +41,66 @@ namespace DBHelper.Bll
             }
             else
             {
-                return null;
+                return new TitleInfo();
             }
-
         }
+
+        public int DelTitleInfo(int TitleInfoId)
+        {
+            string strSql = "delete from TitleInfo where TitleInfoId=@TitleInoId";
+            return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=TitleInfoId, ParameterName="@TitleInfoId"}});
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="info">修改条件：TitleInfoId</param>
+        /// <returns></returns>
+        public int UpdateTitleInfo(TitleInfo info)
+        {
+            string strSql = @"update TitleInfo set TitleConent=@TitleConent,TitleTypeId=@TitleTypeId,TypeId=@TypeId,
+            CorrectAnswer=@CorrectAnswer,Score=@Score,UpdateDateTime=@UpdateDateTime where TitleInfoId=@TitleInoId";
+            return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=info.TitleInfoId, ParameterName="@TitleInfoId"},
+                new SQLiteParameter(){  Value=info.TitleConent, ParameterName="@TitleConent"},
+                new SQLiteParameter(){  Value=info.TitleTypeId, ParameterName="@TitleTypeId"},
+                new SQLiteParameter(){  Value=info.TypeId, ParameterName="@TypeId"},
+                new SQLiteParameter(){  Value=info.CorrectAnswer, ParameterName="@CorrectAnswer"},
+                new SQLiteParameter(){  Value=info.Score, ParameterName="@Score"},
+                new SQLiteParameter(){  Value=info.UpdateDateTime, ParameterName="@UpdateDateTime"}
+            });
+        }
+
+        public int AddTitleInfo(TitleInfo info)
+        {
+            string strSql = @"insert into TitleInfo (TitleConent,TitleTypeId,TypeId,CorrectAnswer,Score,UpdateDateTime) 
+                            values (@TitleConent,@TitleTypeId,@TypeId,@CorrectAnswer,@Score,@UpdateDateTime)";
+            return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=info.TitleConent, ParameterName="@TitleConent"},
+                new SQLiteParameter(){  Value=info.TitleTypeId, ParameterName="@TitleTypeId"},
+                new SQLiteParameter(){  Value=info.TypeId, ParameterName="@TypeId"},
+                new SQLiteParameter(){  Value=info.CorrectAnswer, ParameterName="@CorrectAnswer"},
+                new SQLiteParameter(){  Value=info.Score, ParameterName="@Score"},
+                new SQLiteParameter(){  Value=info.UpdateDateTime, ParameterName="@UpdateDateTime"}
+            });
+        }
+
+        /// <summary>
+        /// 获取考试下的所有题目
+        /// </summary>
+        /// <param name="ExercisesTestId">考试id</param>
+        /// <returns></returns>
+        public List<TitleInfo> GetExercisesAllTitle(int ExercisesTestId)
+        {
+            string strSql = @"select * from ExercisesTitle a left join TitleInfo b on a.TitleInfoId=b.TitleInfoId where a.ExercisesTestId=@ExercisesTestId";
+            return DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"}
+            }));
+        }
+
+
+
         private List<TitleInfo> DataTableToList(DataTable dt)
         {
             List<TitleInfo> list = new List<TitleInfo>();
@@ -54,6 +115,17 @@ namespace DBHelper.Bll
                     info.TitleInfoId = dr["TitleInfoId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["TitleInfoId"]);
                     info.TitleTypeId = dr["TitleTypeId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["TitleTypeId"]);
                     info.TypeId = dr["TypeId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["TypeId"]);
+                    info.TitleTypeName = dr["TitleTypeName"] == DBNull.Value ? "" : Convert.ToString(dr["TitleTypeName"]);
+                    info.TypeName1 = dr["TypeName1"] == DBNull.Value ? "" : Convert.ToString(dr["TypeName1"]);
+                    info.TypeName2 = dr["TypeName2"] == DBNull.Value ? "" : Convert.ToString(dr["TypeName2"]);
+                    if (dr["UpdateDateTime"] != DBNull.Value)
+                    {
+                        DateTime datetime;
+                        DateTime.TryParse(dr["UpdateDateTime"].ToString(), out datetime);
+                        info.UpdateDateTime = datetime;
+                    }
+
+                    info.ListTitleItem = TitleItembll.GetTitleInfoAllItem(info.TitleInfoId);
                     list.Add(info);
                 }
             }
