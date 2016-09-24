@@ -74,8 +74,6 @@
         function ShowMode(modeCtrlId) {
             var sUrl = curWebRootUrl + "/Home/" + modeCtrlId;
             window.location.href = sUrl;
-            $("#WebGLLayOut").hide();
-            $("#MainLayOut").show();
         }
         //显示加载动画
         function ShowLoading() {
@@ -235,26 +233,26 @@
                     <div id="LeftPanel"> 
                         <div class="zbar">
                             <div class="zbar-title">基础认知</div> 
-		                    <ul style="display: block;"> 
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('BaseOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油模拟</span></a></li>
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('BaseTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">渗流方式模拟</span></a></li> 
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('BaseThree');" class="oneline"><span class="lmenu-ico"></span><span class="zh">弹性不稳定渗流</span></a></li>
+		                    <ul style="display: block;" id="ModeOne"> 
+		                        <li class="liNav" id="ExpOne"><a href="javascript:void(0);ShowMode('BaseOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油模拟</span></a></li>
+		                        <li class="liNav" id="ExpTwo"><a href="javascript:void(0);ShowMode('BaseTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">渗流方式模拟</span></a></li> 
+		                        <li class="liNav" id="ExpThr"><a href="javascript:void(0);ShowMode('BaseThree');" class="oneline"><span class="lmenu-ico"></span><span class="zh">弹性不稳定渗流</span></a></li>
 		                    </ul>
                             <div class="zbar-title">虚拟实验</div> 
-		                    <ul style="display: none"> 
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('VirtualOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">非活塞式水驱油影响因素</span></a></li>
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('VirtualTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油效率实验</span></a></li> 
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('VirtualThree');" class="oneline"><span class="lmenu-ico"></span><span class="zh">采收率实验</span></a></li>
+		                    <ul style="display: none" id="ModeTwo"> 
+		                        <li class="liNav" id="ExpFour"><a href="javascript:void(0);ShowMode('VirtualOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">非活塞式水驱油影响因素</span></a></li>
+		                        <li class="liNav" id="ExpFive"><a href="javascript:void(0);ShowMode('VirtualTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油效率实验</span></a></li> 
+		                        <li class="liNav" id="ExpSix"><a href="javascript:void(0);ShowMode('VirtualThree');" class="oneline"><span class="lmenu-ico"></span><span class="zh">采收率实验</span></a></li>
 		                    </ul>
                             <div class="zbar-title">仿真实训</div> 
-		                    <ul style="display: none">
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('EmulateOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">井网井距方案开发设计</span></a></li>
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('EmulateTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">注采系统方案开发设计</span></a></li> 
+		                    <ul style="display: none" id="ModeThree">
+		                        <li class="liNav" id="ExpSeven"><a href="javascript:void(0);ShowMode('EmulateOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">井网井距方案开发设计</span></a></li>
+		                        <li class="liNav" id="ExpEight"><a href="javascript:void(0);ShowMode('EmulateTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">注采系统方案开发设计</span></a></li> 
 		                    </ul>
                             <div class="zbar-title">创新实践</div> 
-		                    <ul style="display: none"> 
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('InnovateOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">油藏开发方案实践</span></a></li>
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('InnovateTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">气藏开发方案实践</span></a></li> 
+		                    <ul style="display: none" id="ModeFour"> 
+		                        <li class="liNav" id="ExpNine"><a href="javascript:void(0);ShowMode('InnovateOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">油藏开发方案实践</span></a></li>
+		                        <li class="liNav" id="ExpTen"><a href="javascript:void(0);ShowMode('InnovateTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">气藏开发方案实践</span></a></li> 
 		                    </ul>
 	                    </div> 
                     </div>

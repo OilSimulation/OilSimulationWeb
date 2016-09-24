@@ -93,7 +93,7 @@
     <Content Include="Flash\水驱油模拟.swf" />
     <Content Include="Flash\油藏开发方案实践.swf" />
     <Content Include="Flash\注采系统优化.swf" />
-    <Content Include="Flash\渗流方式模拟..swf" />
+    <Content Include="Flash\渗流方式模拟.swf" />
     <Content Include="Flash\采收率实验.swf" />
     <Content Include="Flash\非活塞式水驱油影响因素.swf" />
     <Content Include="Global.asax" />

@@ -5,6 +5,16 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server"> 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#WebGLLayOut").hide();
+            $("#MainLayOut").show();
+            $(".liNav").each(function () { $(this).removeClass("select"); });
+            $(".zbar ul").each(function () { $(this).css("display", "none"); });
+            $("#ModeOne").css("display","block");
+            $("#ExpOne").addClass("select");
+        });
+    </script>
     <div id="WebGLLayOut">
         <iframe id="iframeId" name="iframeId" scrolling="no" class="ScreenNomal"  src=""></iframe>
     </div>
