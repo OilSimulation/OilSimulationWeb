@@ -27,8 +27,7 @@
             IsLocalValid();
             //获取根目录
             GetRootPath();
-            //加载默认页
-            //LoadUrl("/Base/BaseModeOne");
+
             ///控制导航菜单显示隐藏
             $(".zbar-title").click(function () {
                 if ($(this).next().css("display") == "none") {
@@ -73,8 +72,10 @@
         });
         //导航点击对应控制栏的显示
         function ShowMode(modeCtrlId) {
-            //$(modeCtrlId).css("display", "block");
-            //$(modeCtrlId).find("button").click();
+            var sUrl = curWebRootUrl + "/Home/" + modeCtrlId;
+            window.location.href = sUrl;
+            $("#WebGLLayOut").hide();
+            $("#MainLayOut").show();
         }
         //显示加载动画
         function ShowLoading() {
@@ -141,29 +142,32 @@
             var prePath = strFullPath.substring(0, pos);
             var postPath;
             
-            if (strPath.indexOf('/Home/Index') == -1) {
+            if (strPath.indexOf('/Home') == -1) {
                 if (strPath.substr(1).indexOf('/') == -1) 
                     postPath = strPath; 
                 else
                     postPath = strPath.substring(0, strPath.substr(1).indexOf('/') + 1);
             }
             else {
-                postPath = strPath.substring(0, strPath.indexOf('/Home/Index'));
+                postPath = strPath.substring(0, strPath.indexOf('/Home'));
             }
             curWebRootUrl = (prePath + postPath); 
         }
         //加载新URL路径
         function LoadUrl(inUrl) {
+
+            $("#WebGLLayOut").show();
+            $("#MainLayOut").hide();
             var sUrl;
             if (true == isLocalValid) {
                 sUrl = "http://127.0.0.1/OilSimWebApp" + inUrl;
             }
-            else {
-
+            else { 
                 sUrl = curWebRootUrl + inUrl; 
             }
-            ShowLoading(); 
+            ShowLoading();
             $("#iframeId").attr("src", sUrl);
+
         }
         //获取包含滚动条的高度和宽度 
         function getViewSizeWithScrollbar() {
@@ -232,25 +236,25 @@
                         <div class="zbar">
                             <div class="zbar-title">基础认知</div> 
 		                    <ul style="display: block;"> 
-		                        <li class="liNav select"><a href="javascript:void(0);ShowMode('#BaseOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油模拟</span></a></li>
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('#BaseTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">渗流方式模拟</span></a></li> 
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('#BaseThree');" class="oneline"><span class="lmenu-ico"></span><span class="zh">弹性不稳定渗流</span></a></li>
+		                        <li class="liNav"><a href="javascript:void(0);ShowMode('BaseOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油模拟</span></a></li>
+		                        <li class="liNav"><a href="javascript:void(0);ShowMode('BaseTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">渗流方式模拟</span></a></li> 
+		                        <li class="liNav"><a href="javascript:void(0);ShowMode('BaseThree');" class="oneline"><span class="lmenu-ico"></span><span class="zh">弹性不稳定渗流</span></a></li>
 		                    </ul>
                             <div class="zbar-title">虚拟实验</div> 
 		                    <ul style="display: none"> 
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('#VirtualOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">非活塞式水驱油影响因素</span></a></li>
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('#VirtualTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油效率实验</span></a></li> 
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('#VirtualThree');" class="oneline"><span class="lmenu-ico"></span><span class="zh">采收率实验</span></a></li>
+		                        <li class="liNav"><a href="javascript:void(0);ShowMode('VirtualOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">非活塞式水驱油影响因素</span></a></li>
+		                        <li class="liNav"><a href="javascript:void(0);ShowMode('VirtualTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">水驱油效率实验</span></a></li> 
+		                        <li class="liNav"><a href="javascript:void(0);ShowMode('VirtualThree');" class="oneline"><span class="lmenu-ico"></span><span class="zh">采收率实验</span></a></li>
 		                    </ul>
                             <div class="zbar-title">仿真实训</div> 
 		                    <ul style="display: none">
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('#SimOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">井网井距方案开发设计</span></a></li>
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('#SimTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">注采系统方案开发设计</span></a></li> 
+		                        <li class="liNav"><a href="javascript:void(0);ShowMode('EmulateOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">井网井距方案开发设计</span></a></li>
+		                        <li class="liNav"><a href="javascript:void(0);ShowMode('EmulateTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">注采系统方案开发设计</span></a></li> 
 		                    </ul>
                             <div class="zbar-title">创新实践</div> 
 		                    <ul style="display: none"> 
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('#InnovateOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">油藏开发方案实践</span></a></li>
-		                        <li class="liNav"><a href="javascript:void(0);ShowMode('#InnovateTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">气藏开发方案实践</span></a></li> 
+		                        <li class="liNav"><a href="javascript:void(0);ShowMode('InnovateOne');" class="oneline"><span class="lmenu-ico"></span><span class="zh">油藏开发方案实践</span></a></li>
+		                        <li class="liNav"><a href="javascript:void(0);ShowMode('InnovateTwo');" class="oneline"><span class="lmenu-ico"></span><span class="zh">气藏开发方案实践</span></a></li> 
 		                    </ul>
 	                    </div> 
                     </div>

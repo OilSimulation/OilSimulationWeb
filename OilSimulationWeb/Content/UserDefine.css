@@ -77,6 +77,54 @@
 }
 
 
+.f-da{margin-left: 15px;display: block;font-size: 14px;line-height: 25px;text-decoration: none;color: #ffffff;}
+.m-btnList a:link{text-decoration:none;}
+.m-btnList a:visited{text-decoration:none;}
+.m-btnList a:hover{text-decoration:none;}
+.m-btnList a:active{ text-decoration:none; }
+
+.f-db{display: block; text-align:center;}
+
+.f-ib{display: inline-block;}
+
+.u-btn
+{
+    /*margin-top: 20px;*/
+    margin-left: 15px;
+    width: 325px;
+    border: none !important;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    font-family: "Arial","Hiragino Sans GB","Microsoft YaHei", 微软雅黑, "Helvetica", "sans-serif";
+    border-radius: 4px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.u-btn-lg
+{
+    padding: 11px 14px;
+    font-size: 20px;
+    line-height: 20px;
+    min-width: 110px;    
+}
+
+.u-btn-orange{
+    background-color: #FF6C00;
+    background-repeat: repeat-x;
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#FF7E00), to(#FF6C00));
+    background-image: -moz-linear-gradient(#FF7E00, #FF6C00);
+    background-image: -ms-linear-gradient(#FF7E00, #FF6C00);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FF7E00), color-stop(100%, #FF6C00));
+    background-image: -webkit-linear-gradient(#FF7E00, #FF6C00);
+    background-image: -o-linear-gradient(#FF7E00, #FF6C00);
+    background-image: linear-gradient(#FF7E00, #FF6C00);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff$startColor',endColorstr='#ff$endColor',GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    border-color: #EF6502;
+    color: #fff;
+    border-bottom: 1px solid #b25900;  
+}
 .foot2 {
     background: url("../Images/foot-nei-bg.jpg") no-repeat scroll center top transparent;
     height: 100px;
@@ -97,7 +145,7 @@
   line-height: 5px;
   text-align: center;
   color: #fff;
-   border: 1px solid gray;
+  border: 1px solid gray;
 }
 
 

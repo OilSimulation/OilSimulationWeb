@@ -5,7 +5,10 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server"> 
-    <div style="width:100%;">
+    <div id="WebGLLayOut">
+        <iframe id="iframeId" name="iframeId" scrolling="no" class="ScreenNomal"  src=""></iframe>
+    </div>
+    <div id="MainLayOut" style="width:100%;">
         <div style="width:100%; float:left;">
             <div style="margin-right: 415px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);">
                 <h2>实验一、水驱油模拟</h2>
@@ -44,12 +47,19 @@
                 </embed>
                 </object>
             </div> 
-            <div>
+            <div style="padding: 10px 20px 10px 0px;">
+                <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
-                <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn">
-                    <span class="f-db">报名参加</span>
-                    <span id="j-scholarshipTip" class="scholarshipTip" style="display: none">有机会获得奖学金哦</span>
-                </a>
+                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeOne');" ><span class="f-da">1、活塞式水驱油模拟</span></a>
+                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeTwo');" ><span class="f-da">2、非活塞式水驱油模拟</span></a> 
+                </div>
+            </div>
+            <div style="padding: 10px 20px 20px 0px;">
+                <div class="t-title f-f0">随堂测试</div>
+                <div class="m-btnList">
+                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn">
+                        <span class="f-db">参加测试</span> 
+                    </a>
                 </div>
             </div>
         </div>
