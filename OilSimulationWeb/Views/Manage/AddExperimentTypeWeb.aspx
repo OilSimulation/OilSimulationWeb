@@ -90,19 +90,20 @@
         
     });
     function LoadData(id) {//GetExperimentTypeById
+        var jsonData = { Id: id };
         var option = {
-            url: '<%:Url.Action("GetExperimentTypeById","Manage") %>',
+            url: '<%:Url.Action("GetExperiment","Manage") %>',
             type: 'POST',
             dataType: 'html',
             async: false,
-            data: id,
+            data: JSON.stringify(jsonData),
             contentType: 'application/json',
             success: function (result) {
-                var d = eval(result);
-                if (d.length <= 0) {
+                var jsonData = JSON.parse(result);
+                if (jsonData.length <= 0) {
                     return;
                 }
-                var jsonData = JSON.parse(d);
+                
                 $("#TypeName1").val(jsonData.TypeName1);
                 $("#TypeName2").val(jsonData.TypeName2);
                 $("#TypeDescribe").val(jsonData.TypeDescribe);
@@ -117,10 +118,10 @@
         return;
         var tbodyData = parent.$("#data"); //datatables
         var datatables = parent.$("#datatables").DataTable();
-        var checkbox = '<input type="checkbox" value="" name="">'
-        var tr = datatables.row.add([checkbox, jsonData.TypeName1, jsonData.TypeName2, jsonData.TypeDescribe, jsonData.UpdateDataTime]).draw(false);
+        //var checkbox = '<input type="checkbox" value="" name="">'
+        //var tr = datatables.row.add([checkbox, jsonData.TypeName1, jsonData.TypeName2, jsonData.TypeDescribe, jsonData.UpdateDataTime]).draw(false);
 
-        return;
+        //return;
         var tr = $("<tr></tr>").appendTo(tbodyData);
         tr.addClass("text-c");
         //Check
@@ -155,21 +156,22 @@
         var aDel = $("<a></a>").appendTo(tdManage);
         aDel.addClass("ml-5");
         aDel.attr("style", "text-decoration:none");
-        aDel.attr("onClick", "article_del('this','" + jsonData.TypeId + "')");
+        aDel.attr("onClick", "article_del(this,'" + jsonData.TypeId + "')");
         aDel.attr("href", "javascript:;");
         aDel.attr("title", "删除");
 
-        parent.LoadData();
+        
 
     }
 
     function ParentUpdateData(jsonData) {
         var tr = parent.$("#TypeId" + jsonData.TypeId);
-        var tds = tr.children();
-        tds[1].html(jsonData.TypeName1);
-        tds[2].html(jsonData.TypeName2);
-        tds[3].html(jsonData.TypeDescribe);
-        tds[4].html(jsonData.UpdateDateTime);
+
+         var tds = tr.children();
+         tds.eq(1).text(jsonData.TypeName1);
+         tds.eq(2).text(jsonData.TypeName2);
+         tds.eq(3).text(jsonData.TypeDescribe);
+         tds.eq(4).text(jsonData.UpdateDateTime);
 
         //parent.RefDataTables();
     }
@@ -192,8 +194,6 @@
                 else {
                     exist = false;
                 }
-
-
             },
             error: function (e) {
                 layer.msg('操作失败！');

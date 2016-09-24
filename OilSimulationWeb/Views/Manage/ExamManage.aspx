@@ -70,7 +70,7 @@
 			<dd>
 				<ul>
 					<li><a _href="picture-list.html" data-title="题目类型管理" href="javascript:void(0)">题目类型管理</a></li>
-					<li><a _href="picture-list.html" data-title="题目管理" href="javascript:void(0)">题目管理</a></li>
+					<li><a _href="TitleInfoWeb" data-title="题目管理" href="javascript:void(0)">题目管理</a></li>
 					<li><a _href="picture-list.html" data-title="考试管理" href="javascript:void(0)">考试管理</a></li>
 				</ul>
 			</dd>

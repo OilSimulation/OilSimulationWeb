@@ -23,20 +23,8 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 实验类型管理 <span class="c-gray en">&gt;</span> 实验类型列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
-	<div class="text-c"> <span class="select-box inline">
-		<select name="" class="select">
-			<option value="0">全部分类</option>
-			<option value="1">分类一</option>
-			<option value="2">分类二</option>
-		</select>
-		</span> 日期范围：
-		<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;">
-		-
-		<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" id="logmax" class="input-text Wdate" style="width:120px;">
-		<input type="text" name="" id="" placeholder=" 资讯名称" style="width:250px" class="input-text">
-		<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜资讯</button>
-	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="article_add('添加实验类型','AddExperimentTypeWeb')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加资讯</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="article_add('添加实验类型','AddExperimentTypeWeb')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加数据</a></span>  </div>
 	<div class="mt-20">
 		<table id="datatables" class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
@@ -94,8 +82,7 @@
     }
 
     function LoadData() {
-//                url: '<%:Url.Action("GetExperimentType","Manage") %>',
-            //url: '<%:Url.Action("IsLocal","Business") %>',
+
         var option = {
             url: '<%:Url.Action("GetExperimentType","Manage") %>',
             type: 'POST',
@@ -103,13 +90,11 @@
             async: false,
             contentType: 'application/json',
             success: function (result) {
-                //mmColorJson[paramValue] = eval(result);
-                //ShowData(eval(result));
+
                 ShowData(result);
             },
             error: function (e) {
-                //mmColorJson[paramValue] = eval(result);
-                var k = 0;
+
             }
 
         };
@@ -239,31 +224,18 @@
                 url: '<%:Url.Action("DelExperimentType","Manage") %>',
                 type: 'POST',
                 data: JSON.stringify(jsonData),
-                dataType: 'text',
+                dataType: 'html',
                 async: false,
                 contentType: 'application/json',
                 success: function (result) {
-                    $(obj).parents("tr").remove().draw();
+                    //$(obj).parents("tr").remove().draw();
 
 
-//                    var table = $('#datatables').DataTable();
-//                    var ff = $(obj).tagName;
-//                    var a = $(obj).parent();
-//                    var ac = a.tagName;
-//                    var b = a.parent();
-//                    var bc = b.tagName;
-//                    var rowf = table.row(b);
-//                    rowf.remove().draw(false);
+                    var table = $('#datatables').DataTable();
+      
+                    var rowf = table.row($(obj).parent().parent());
+                    rowf.remove().draw(false);
 
-                    //                    var tr = $(obj).parents("tr");
-                    //                    var classv = tr.attr("class");
-                    //                    //                    table
-                    //                    //        .row($(this).parents('tr'))
-                    //                    //        .remove()
-                    //                    //        .draw();
-                    //                    var rowf = table.row(tr);
-                    //                    var x = rowf.remove();
-                    //                    x.draw();
                     layer.msg('已删除!');
                 }
             };
@@ -271,51 +243,6 @@
 
 
         });
-    }
-    /*资讯-审核*/
-    function article_shenhe(obj, id) {
-        layer.confirm('审核文章？', {
-            btn: ['通过', '不通过', '取消'],
-            shade: false,
-            closeBtn: 0
-        },
-	function () {
-	    $(obj).parents("tr").find(".td-manage").prepend('<a class="c-primary" onClick="article_start(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
-	    $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
-	    $(obj).remove();
-	    layer.msg('已发布', { icon: 6, time: 1000 });
-	},
-	function () {
-	    $(obj).parents("tr").find(".td-manage").prepend('<a class="c-primary" onClick="article_shenqing(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
-	    $(obj).parents("tr").find(".td-status").html('<span class="label label-danger radius">未通过</span>');
-	    $(obj).remove();
-	    layer.msg('未通过', { icon: 5, time: 1000 });
-	});
-    }
-    /*资讯-下架*/
-    function article_stop(obj, id) {
-        layer.confirm('确认要下架吗？', function (index) {
-            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="article_start(this,id)" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
-            $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已下架</span>');
-            $(obj).remove();
-            layer.msg('已下架!', { icon: 5, time: 1000 });
-        });
-    }
-
-    /*资讯-发布*/
-    function article_start(obj, id) {
-        layer.confirm('确认要发布吗？', function (index) {
-            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="article_stop(this,id)" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>');
-            $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
-            $(obj).remove();
-            layer.msg('已发布!', { icon: 6, time: 1000 });
-        });
-    }
-    /*资讯-申请上线*/
-    function article_shenqing(obj, id) {
-        $(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">待审核</span>');
-        $(obj).parents("tr").find(".td-manage").html("");
-        layer.msg('已提交申请，耐心等待审核!', { icon: 1, time: 2000 });
     }
 
 </script> 
