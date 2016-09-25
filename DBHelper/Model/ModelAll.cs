@@ -30,6 +30,8 @@ namespace DBHelper.Model
         /// 选择项 在题目中的索引（该项在题目中的显示位置,答案填写的值）
         /// </summary>
         public int TitleItemIndex { get; set; }
+        public string TitleItemContent { get; set; }
+
         public DateTime UpdateDateTime { get; set; }
     }
 
@@ -41,6 +43,13 @@ namespace DBHelper.Model
         public int TitleItemId { get; set; }
         public string TitleItemContent { get; set; }
         public DateTime UpdateDateTime { get; set; }
+//         #region ************  其他 
+//         /// <summary>
+//         /// 选择项 在题目中的索引（该项在题目中的显示位置,答案填写的值）
+//         /// </summary>
+//         public int TitleItemIndex { get; set; }
+// 
+//         #endregion
     }
 
     /// <summary>

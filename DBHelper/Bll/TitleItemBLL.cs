@@ -37,7 +37,7 @@ namespace DBHelper.Bll
         }
 
 
-        public TitleItem? GetTitleItem(int TitleItemId)
+        public TitleItem GetTitleItem(int TitleItemId)
         {
             string strSql = "select * from TitleItem where TitleItemId=@TitleItemId";
             List<TitleItem> list = DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
@@ -48,10 +48,26 @@ namespace DBHelper.Bll
             }
             else
             {
-                return null;
+                return new TitleItem();
             }
 
         }
+
+        public bool IsExistTitleItem(TitleItem info)
+        {
+            string strSql = "select 1 from TitleItem where TitleItemContent=@TitleItemContent";
+            DataTable list = DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=info.TitleItemContent, ParameterName="@TitleItemContent"}});
+            if (list != null && list.Rows.Count > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
         public int AddTitleItem(TitleItem info)
         {
@@ -76,7 +92,7 @@ namespace DBHelper.Bll
 
         public int DelTitleItem(int TitleItemId)
         {
-            string strSql = "delete TitleItem where TitleItemId=@TitleItemId";
+            string strSql = "delete from TitleItem where TitleItemId=@TitleItemId";
             return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=TitleItemId, ParameterName="@TitleItemId"}
             });
