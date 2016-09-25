@@ -23,6 +23,8 @@ namespace OilSimulationController
         ExperimentTypeBLL ExperimentTypebll = new ExperimentTypeBLL(strConn);
         TitleInfoBLL TitleInfobll = new TitleInfoBLL(strConn);
         TitleTypeBLL TitleTypebll = new TitleTypeBLL(strConn);
+        TitleItemBLL TitleItembll = new TitleItemBLL(strConn);
+        TitleItemAssocBLL TitleItemAssocbll = new TitleItemAssocBLL(strConn);
 
         public ManageController()
         {
@@ -227,6 +229,78 @@ namespace OilSimulationController
 
         }
         #endregion
+
+        #region *************************************** 选项管理TitleItem
+
+        public ActionResult AddTitleItemWeb()
+        {
+            return View();
+        }
+
+        public ActionResult TitleItemWeb()
+        {
+            return View();
+        }
+
+        public ActionResult AddTitleItem(TitleItem info)
+        {
+            int result = TitleItembll.AddTitleItem(info);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        public ActionResult DelTitleItem(stId info)
+        {
+            int result = TitleItembll.DelTitleItem(info.Id);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        public ActionResult UpdateTitleItem(TitleItem info)
+        {
+            int result = TitleItembll.UpdateTitleItem(info);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        public ActionResult GetTitleItem()
+        {
+            List<TitleItem>  result = TitleItembll.GetTitleItem();
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+        public ActionResult GetTitleItemId(stId info)
+        {
+            TitleItem result = TitleItembll.GetTitleItem(info.Id);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        public ActionResult IsExistTitleItem(TitleItem info)
+        {
+            bool result = TitleItembll.IsExistTitleItem(info);
+            var res = new ConfigurableJsonResult();
+            res.Data = result == true ? 1 : 0;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
+
+
+
+        #endregion
+
+
         #region *************************************** 题目与选项TitleItemAssocWeb
 
         public ActionResult TitleItemAssocWeb()
@@ -234,6 +308,63 @@ namespace OilSimulationController
             return View();
         }
 
+
+        /// <summary>
+        /// 获取题目下的所有选项
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public ActionResult GetTitleInfoItem(stId info)
+        {
+            List<TitleItemAssoc> result = TitleItemAssocbll.GetTitleInfoItem(info.Id);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
+
+        /// <summary>
+        /// 删除题目下的选项
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public ActionResult DelTitleItemAssoc(stId info)
+        {
+            int result = TitleItemAssocbll.DelTitleItemAssoc(info.Id);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
+
+        /// <summary>
+        /// 增加题目下的选项
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public ActionResult AddTitleItemAssoc(TitleItemAssoc info)
+        {
+            int result = TitleItemAssocbll.AddTitleItemAssoc(info);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
+
+        public ActionResult IsExistTitleItemAssoc(TitleItemAssoc info)
+        {
+            bool result = TitleItemAssocbll.IsExistTitleItemAssoc(info.TitleInfoId, info.TitleItemId);
+            var res = new ConfigurableJsonResult();
+            res.Data = result == true ? 1 : 0;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
+
+        //public ActionResult 
 
         #endregion
         //
