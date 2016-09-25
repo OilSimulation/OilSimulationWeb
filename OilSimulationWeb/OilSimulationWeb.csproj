@@ -160,19 +160,6 @@
     <Content Include="Scripts\Exam\lib\jquery.validation\1.14.0\validate-methods.js" />
     <Content Include="Scripts\Exam\lib\jquery\1.9.1\jquery.js" />
     <Content Include="Scripts\Exam\lib\jquery\1.9.1\jquery.min.js" />
-    <Content Include="Scripts\Exam\lib\layer\1.9.3\demo.html" />
-    <Content Include="Scripts\Exam\lib\layer\1.9.3\extend\layer.ext.js" />
-    <Content Include="Scripts\Exam\lib\layer\1.9.3\layer.js" />
-    <Content Include="Scripts\Exam\lib\layer\1.9.3\skin\default\icon-ext.png" />
-    <Content Include="Scripts\Exam\lib\layer\1.9.3\skin\default\icon.png" />
-    <Content Include="Scripts\Exam\lib\layer\1.9.3\skin\default\loading-0.gif" />
-    <Content Include="Scripts\Exam\lib\layer\1.9.3\skin\default\loading-1.gif" />
-    <Content Include="Scripts\Exam\lib\layer\1.9.3\skin\default\loading-2.gif" />
-    <Content Include="Scripts\Exam\lib\layer\1.9.3\skin\layer.css" />
-    <Content Include="Scripts\Exam\lib\layer\1.9.3\skin\layer.ext.css" />
-    <Content Include="Scripts\Exam\lib\layer\1.9.3\skin\mono\default.png" />
-    <Content Include="Scripts\Exam\lib\layer\1.9.3\skin\mono\style.css" />
-    <Content Include="Scripts\Exam\lib\layer\1.9.3\更新日志.txt" />
     <Content Include="Scripts\Exam\lib\layer\2.1\demo.html" />
     <Content Include="Scripts\Exam\lib\layer\2.1\extend\layer.ext.js" />
     <Content Include="Scripts\Exam\lib\layer\2.1\layer.js" />
@@ -587,7 +574,6 @@
     <Content Include="Views\Manage\AddExercisesTestWeb.aspx" />
     <Content Include="Views\Manage\AddExperimentTypeWeb.aspx" />
     <Content Include="Views\Manage\AddTitleInfoWeb.aspx" />
-    <Content Include="Views\Manage\AddTitleItemWeb.aspx" />
     <Content Include="Views\Manage\ExamManage.aspx" />
     <Content Include="Views\Manage\ExercisesTestWeb.aspx" />
     <Content Include="Views\Manage\ExperimentTypeWeb.aspx" />
@@ -703,9 +689,6 @@
     <None Include="Scripts\Exam\lib\Hui-iconfont\1.0.7\iconfont.woff" />
     <None Include="Scripts\Exam\lib\icheck\Thumbs.db" />
     <None Include="Scripts\Exam\lib\jquery.validation\1.14.0\README.md" />
-    <None Include="Scripts\Exam\lib\layer\1.9.3\doc\jquery下载.url" />
-    <None Include="Scripts\Exam\lib\layer\1.9.3\doc\layer交流.url" />
-    <None Include="Scripts\Exam\lib\layer\1.9.3\doc\layer官网.url" />
     <None Include="Scripts\Exam\lib\layer\2.1\doc\jquery下载.url" />
     <None Include="Scripts\Exam\lib\layer\2.1\doc\layer交流.url" />
     <None Include="Scripts\Exam\lib\layer\2.1\doc\layer官网.url" />
