@@ -20,7 +20,7 @@
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 选项管理 <span class="c-gray en">&gt;</span> 选项列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="article_add('添加考试','AddExercisesTestWeb')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加数据</a></span>  </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="article_add('添加选项','AddTitleItemWeb')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加数据</a></span>  </div>
 	<div class="mt-20">
 		<table id="datatables" class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
@@ -69,7 +69,7 @@
             "bStateSave": true, //状态保存
             "aoColumnDefs": [
             //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable": false, "aTargets": [0, 5]}// 不参与排序的列
+	  {"orderable": false, "aTargets": [0, 3]}// 不参与排序的列
 	]
         });
 
@@ -78,7 +78,7 @@
     function LoadData() {
 
         var option = {
-            url: '<%:Url.Action("GetExercisesTest","Manage") %>',
+            url: '<%:Url.Action("GetTitleItem","Manage") %>',
             type: 'POST',
             dataType: 'html',
             async: false,
@@ -127,7 +127,7 @@
 
         for (var i = 0; i < jsonData.length; i++) {
             var tr = $("<tr></tr>").appendTo(tbodyData);
-            tr.attr("id", "ExercisesTestId" + jsonData[i].ExercisesTestId);
+            tr.attr("id", "TitleItemId" + jsonData[i].TitleItemId);
             tr.addClass("text-c");
             //Check
             var tdCheck = $("<td></td>").appendTo(tr);
@@ -135,12 +135,12 @@
             input.attr("type", "checkbox");
             input.attr("value", "");
             input.attr("name", "");
-            //习题或考试名称
+           //选项名称
             var tdType1 = $("<td></td>").appendTo(tr);
-            tdType1.html(jsonData[i].ExercisesName);
-            //考试描述
-            var tdType2 = $("<td></td>").appendTo(tr);
-            tdType2.html(jsonData[i].ExercisesDescribe);
+            tdType1.html(jsonData[i].TitleItemContent);
+//            //考试描述
+//            var tdType2 = $("<td></td>").appendTo(tr);
+//            tdType2.html(jsonData[i].ExercisesDescribe);
             //操作时间
             var tdUpdateDateTime = $("<td></td>").appendTo(tr);
             tdUpdateDateTime.html(jsonData[i].UpdateDateTime);
@@ -151,7 +151,7 @@
             var aEdit = $("<a></a>").appendTo(tdManage);
             aEdit.addClass("ml-5");
             aEdit.attr("style", "text-decoration:none");
-            aEdit.attr("onClick", "article_edit('题目编辑','AddExercisesTestWeb','" + jsonData[i].ExercisesTestId + "')");
+            aEdit.attr("onClick", "article_edit('题目编辑','AddTitleItemWeb','" + jsonData[i].TitleItemId + "')");
             aEdit.attr("href", "javascript:;");
             aEdit.attr("title", "编辑");
             var iEdit = $("<i></i>").appendTo(aEdit);
@@ -162,7 +162,7 @@
             var aDel = $("<a></a>").appendTo(tdManage);
             aDel.addClass("ml-5");
             aDel.attr("style", "text-decoration:none");
-            aDel.attr("onClick", "article_del(this,'" + jsonData[i].ExercisesTestId + "')");
+            aDel.attr("onClick", "article_del(this,'" + jsonData[i].TitleItemId + "')");
             aDel.attr("href", "javascript:;");
             aDel.attr("title", "删除");
             var iDel = $("<i></i>").appendTo(aDel);
@@ -179,23 +179,25 @@
     function article_add(title, url) {
         $("#AddOrUpdate").val("1");
 
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
+//        var index = layer.open({
+//            type: 2,
+//            title: title,
+//            content: url
+//        });
+        //        layer.full(index);
+        layer_show(title, url, '', 200);
     }
     /*资讯-编辑*/
     function article_edit(title, url, id, w, h) {
         $("#ExperimentTypeId").val(id);
         $("#AddOrUpdate").val("2");
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
+//        var index = layer.open({
+//            type: 2,
+//            title: title,
+//            content: url
+//        });
+        //        layer.full(index);
+        layer_show(title, url, '', 200);
     }
     /*资讯-删除*/
     function article_del(obj, id) {
@@ -203,7 +205,7 @@
             var jsonData = { Id: id };
             //删除数据库中的数据 
             var option = {
-                url: '<%:Url.Action("DelExercisesTest","Manage") %>',
+                url: '<%:Url.Action("DelTitleItem","Manage") %>',
                 type: 'POST',
                 data: JSON.stringify(jsonData),
                 dataType: 'html',
@@ -220,6 +222,10 @@
                         layer.msg('已删除!');
 
                     }
+                    else {
+                        layer.msg("删除失败！");
+                    }
+
 
                 }
             };

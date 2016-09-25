@@ -230,13 +230,18 @@
                 success: function (result) {
                     //$(obj).parents("tr").remove().draw();
 
+                    if (result > 0) {
+                        var table = $('#datatables').DataTable();
 
-                    var table = $('#datatables').DataTable();
-      
-                    var rowf = table.row($(obj).parent().parent());
-                    rowf.remove().draw(false);
+                        var rowf = table.row($(obj).parent().parent());
+                        rowf.remove().draw(false);
 
-                    layer.msg('已删除!');
+                        layer.msg('已删除!');
+                    }
+                    else {
+                        layer.msg('删除失败！');
+                    }
+
                 }
             };
             $.ajax(option);
@@ -244,7 +249,6 @@
 
         });
     }
-
-</script> 
+    </script> 
 </body>
 </html>

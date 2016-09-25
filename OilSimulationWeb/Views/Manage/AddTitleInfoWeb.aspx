@@ -26,7 +26,6 @@
 			<div class="formControls col-xs-8 col-sm-9">
 				<span class="select-box">
                     <select name="" class="select" id="TitleTypeId">
-					    <option value="0">全部栏目</option>
 
 				    </select>
 				</span>
@@ -38,7 +37,6 @@
 			<div class="formControls col-xs-8 col-sm-9">
 				<span class="select-box">
                     <select name="" class="select" id="TypeId">
-					    <option value="0">全部栏目</option>
 
 				    </select>
 				</span>

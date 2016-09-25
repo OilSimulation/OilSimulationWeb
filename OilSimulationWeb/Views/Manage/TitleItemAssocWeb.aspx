@@ -13,7 +13,11 @@
     <link href="<%=Url.Content("~/Scripts/Exam/static/h-ui.admin/skin/default/skin.css")%>" rel="stylesheet" type="text/css" /> 
     <link href="<%=Url.Content("~/Scripts/Exam/static/h-ui.admin/css/style.css")%>" rel="stylesheet" type="text/css" /> 
     <link href="<%=Url.Content("~/Scripts/Exam/lib/zTree/v3/css/zTreeStyle/zTreeStyle.css")%>" rel="stylesheet" type="text/css" /> 
-
+    <style type="text/css">
+    .table>tbody>tr>td{
+        text-align:center;
+        }
+    </style>
 
 <title></title>
 </head>
@@ -32,32 +36,19 @@
 			<input type="text" name="" id="" placeholder=" 产品名称" style="width:250px" class="input-text">
 			<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜产品</button>
 		</div>
-		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="product_add('添加产品','product-add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加产品</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="product_add('添加产品','product-add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加选项</a></span>  </div>
 		<div class="mt-20">
-			<table class="table table-border table-bordered table-bg table-hover table-sort">
+			<table id="datatable" class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
 					<tr class="text-c">
 						<th width="40"><input name="" type="checkbox" value=""></th>
-						<th width="40">ID</th>
-						<th width="60">缩略图</th>
-						<th width="100">产品名称</th>
-						<th>描述</th>
-						<th width="100">单价</th>
-						<th width="60">发布状态</th>
-						<th width="100">操作</th>
+						<th width="100">选项内容</th>
+						<th width="60">选项位置</th>
+						<th width="60">操作</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="text-c va-m">
-						<td><input name="" type="checkbox" value=""></td>
-						<td>001</td>
-						<td><a onClick="product_show('哥本哈根橡木地板','product-show.html','10001')" href="javascript:;"><img width="60" class="product-thumb" src="pic/product/Thumb/6204.jpg"></a></td>
-						<td class="text-l"><a style="text-decoration:none" onClick="product_show('哥本哈根橡木地板','product-show.html','10001')" href="javascript:;"><img title="国内品牌" src="static/h-ui/images/gq/cn.gif"> <b class="text-success">圣象</b> 哥本哈根橡木地板KS8373</a></td>
-						<td class="text-l">原木的外在,实木条形结构,色泽花纹自然,写意;款式设计吸取实木地板的天然去雕饰之美,在视觉上给人带来深邃联想.多款产品适合搭配不同的风格的室内装饰;功能流露出尊贵典雅的大气韵味。</td>
-						<td><span class="price">356.0</span> 元/平米</td>
-						<td class="td-status"><span class="label label-success radius">已发布</span></td>
-						<td class="td-manage"><a style="text-decoration:none" onClick="product_stop(this,'10001')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_edit('产品编辑','product-add.html','10001')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a> <a style="text-decoration:none" class="ml-5" onClick="product_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-					</tr>
+
 				</tbody>
 			</table>
 		</div>
@@ -96,8 +87,48 @@
                     zTree.expandNode(treeNode);
                     return false;
                 } else {
+                    var jsonDataId = { Id: treeNode.file };
+                    //GetTitleInfoItem
+                    var datatable = $("#datatable").DataTable();
+                    datatable.clear().draw();
+                    //加载 题目下的所有选项
+                    var option = {
+                        url: '<%:Url.Action("GetTitleInfoItem","Manage") %>',
+                        type: 'POST',
+                        async: false,
+                        dataType: 'html',
+                        data: JSON.stringify(jsonDataId),
+                        contentType: 'application/json',
+                        success: function (result) {
+                            var jsonData = JSON.parse(result);
+                            if (jsonData.length > 0) {
+                                for (var i = 0; i < jsonData.length; i++) {
+                                    var aDel = $("<a></a>");
+                                    aDel.addClass("ml-5");
+                                    aDel.attr("style", "text-decoration:none");
+                                    aDel.attr("onClick", "article_del(this,'" + jsonData[i].TitleItemAssocId + "')");
+                                    aDel.attr("href", "javascript:;");
+                                    aDel.attr("title", "删除");
+                                    var iDel = $("<i></i>").appendTo(aDel);
+                                    iDel.addClass("Hui-iconfont");
+                                    iDel.html("&#xe6e2;"); //&#xe6e2;
+
+                                    var ht = aDel[0].outerHTML;
+
+
+                                    var row = datatable.row.add(['<input type="checkbox" value="1" name="">', jsonData[i].TitleItemContent, jsonData[i].TitleItemIndex, ht]).draw();
+                                    //row.addClass("text-c");
+
+                                }
+
+                            }
+
+
+                        }
+                    };
+                    $.ajax(option);
                     //demoIframe.attr("src", treeNode.file + ".html");
-                    
+
                     return true;
                 }
             }
@@ -123,11 +154,11 @@
         //zTree.selectNode(zTree.getNodeByParam("id", '1'));
     });
 
-    $('.table-sort').dataTable({
+    $("#datatable").dataTable({
         "aaSorting": [[1, "desc"]], //默认第几个排序
         "bStateSave": true, //状态保存
         "aoColumnDefs": [
-	  { "orderable": false, "aTargets": [0, 7]}// 制定列不参与排序
+	  { "orderable": false, "aTargets": [0, 1]}// 制定列不参与排序
 	]
     });
 
@@ -155,78 +186,41 @@
         $.ajax(option);
     }
 
-    /*图片-添加*/
-    function product_add(title, url) {
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
-    }
-    /*图片-查看*/
-    function product_show(title, url, id) {
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
-    }
-    /*图片-审核*/
-    function product_shenhe(obj, id) {
-        layer.confirm('审核文章？', {
-            btn: ['通过', '不通过'],
-            shade: false
-        },
-	function () {
-	    $(obj).parents("tr").find(".td-manage").prepend('<a class="c-primary" onClick="product_start(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
-	    $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
-	    $(obj).remove();
-	    layer.msg('已发布', { icon: 6, time: 1000 });
-	},
-	function () {
-	    $(obj).parents("tr").find(".td-manage").prepend('<a class="c-primary" onClick="product_shenqing(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
-	    $(obj).parents("tr").find(".td-status").html('<span class="label label-danger radius">未通过</span>');
-	    $(obj).remove();
-	    layer.msg('未通过', { icon: 5, time: 1000 });
-	});
-    }
-    /*图片-下架*/
-    function product_stop(obj, id) {
-        layer.confirm('确认要下架吗？', function (index) {
-            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="product_start(this,id)" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
-            $(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已下架</span>');
-            $(obj).remove();
-            layer.msg('已下架!', { icon: 5, time: 1000 });
+    function article_del(obj, id) {
+        layer.confirm('确认要删除吗？', function (index) {
+            var jsonData = { Id: id };
+            //删除数据库中的数据 
+            var option = {
+                url: '<%:Url.Action("DelTitleItemAssoc","Manage") %>',
+                type: 'POST',
+                data: JSON.stringify(jsonData),
+                dataType: 'html',
+                async: false,
+                contentType: 'application/json',
+                success: function (result) {
+                    //$(obj).parents("tr").remove().draw();
+                    if (result > 0) {
+                        var table = $('#datatables').DataTable();
+
+                        var rowf = table.row($(obj).parent().parent());
+                        rowf.remove().draw(false);
+
+                        layer.msg('已删除!');
+
+                    }
+                    else {
+
+                        layer.msg('删除失败！');
+                    }
+
+                }
+            };
+            $.ajax(option);
+
+
         });
     }
 
-    /*图片-发布*/
-    function product_start(obj, id) {
-        layer.confirm('确认要发布吗？', function (index) {
-            $(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="product_stop(this,id)" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>');
-            $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
-            $(obj).remove();
-            layer.msg('已发布!', { icon: 6, time: 1000 });
-        });
-    }
-    /*图片-申请上线*/
-    function product_shenqing(obj, id) {
-        $(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">待审核</span>');
-        $(obj).parents("tr").find(".td-manage").html("");
-        layer.msg('已提交申请，耐心等待审核!', { icon: 1, time: 2000 });
-    }
-    /*图片-编辑*/
-    function product_edit(title, url, id) {
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
-    }
-    /*图片-删除*/
     function product_del(obj, id) {
         layer.confirm('确认要删除吗？', function (index) {
             $(obj).parents("tr").remove();

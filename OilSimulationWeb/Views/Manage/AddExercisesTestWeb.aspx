@@ -31,25 +31,14 @@
 		</div>
 
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>题目列表：</label>
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red"></span>考试类型：</label>
             <div class="formControls col-xs-8 col-sm-9">
-            	<table id="titlelist" class="table table-border table-bordered table-bg table-hover table-sort">
-			        <thead>
-				        <tr class="text-c">
-					        <th width="25"><input type="checkbox" name="" value=""></th>
-					        <th width="100">题目内容</th>
-					        <th width="100">题目类型</th>
-					        <th width="200">实验类型</th>
-					        <th width="120">正确答案</th>
-					        <th width="120">该题分数</th>
-                            <th width="200">题目选项</th>
-                            <th width="120">操作时间</th>
-				        </tr>
-			        </thead>
-			        <tbody id="titledata" type="text">
+				<span class="select-box">
+                    <select name="" class="select" id="ExercisesTypeId">
+                    	<option value="-1">考试</option>
 
-			        </tbody>
-		        </table>
+				    </select>
+				</span>
 
 
 			</div>
@@ -79,20 +68,32 @@
     $(document).ready(function () {
         var id = parent.$('#ExperimentTypeId').val(); //选中的实验类型ID
         var type = parent.$('#AddOrUpdate').val(); //AddOrUpdate
-
+        LoadExercisesType();
         if (type == 2) {//2:编辑,1:增加
             LoadData(id);
         }
-        $('titlelist').DataTable({
-            "aaSorting": [[1, "desc"]], //默认第几个排序
-            "bStateSave": true, //状态保存
-            "aoColumnDefs": [
-            //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
-	  {"orderable": false, "aTargets": [0, 5]}// 不参与排序的列
-	]
-        });
-
     });
+
+    //加载实验类型
+    function LoadExercisesType() {
+        var option={
+            url:'<%:Url.Action("GetExperimentType","Manage") %>',
+            type:'POST',
+            dataType:'html',
+            asyc:false,
+            contentType:'application/json',
+            success:function (result) {
+                var jsonData = JSON.parse(result);
+                if (jsonData.length <= 0) {
+                    return;
+                }
+                for (var i = 0; i < jsonData.length; i++) {
+                    $("#ExercisesTypeId").append("<option value='" + jsonData[i].TypeId + "'>" + jsonData[i].TypeName1 + "\\" + jsonData[i].TypeName2 + "</option>");
+                }
+            }
+        }
+        $.ajax(option)
+    }
 
 
     function LoadData(id) {//GetExperimentTypeById
@@ -112,73 +113,75 @@
 
                 $("#ExercisesName").val(jsonData.ExercisesName);
                 $("#ExercisesDescribe").val(jsonData.ExercisesDescribe);
+                $("#ExercisesTypeId").val(jsonData.ExercisesTypeId);
 
-                //题目列表
-                //$("#TypeId").val(jsonData.ListTitleInfo);
-
-                for (var i = 0; i < jsonData.ListTitleInfo.length; i++) {
-                    var tr = $("<tr></tr>").appendTo(tbodyData);
-                    tr.attr("id", "TitleInfoId" + jsonData.ListTitleInfo[i].TitleInfoId);
-                    tr.addClass("text-c");
-                    //Check
-                    var tdCheck = $("<td></td>").appendTo(tr);
-                    var input = $("<input></input>").appendTo(tdCheck);
-                    input.attr("type", "checkbox");
-                    input.attr("value", "");
-                    input.attr("name", "");
-                    //题目内容
-                    var tdType1 = $("<td></td>").appendTo(tr);
-                    tdType1.html(jsonData.ListTitleInfo[i].TitleConent);
-                    //题目类型
-                    var tdType2 = $("<td></td>").appendTo(tr);
-                    tdType2.html(jsonData.ListTitleInfo[i].TitleTypeName);
-                    //实验类型
-                    var tdDescribe = $("<td></td>").appendTo(tr);
-                    tdDescribe.html(jsonData.ListTitleInfo[i].TypeName1 + '\\' + jsonData.ListTitleInfo[i].TypeName2);
-                    //正确答案
-                    var tdCorrectAnswer = $("<td></td>").appendTo(tr);
-                    tdCorrectAnswer.html(jsonData.ListTitleInfo[i].CorrectAnswer);
-                    //该题分数
-                    var tdScore = $("<td></td>").appendTo(tr);
-                    tdScore.html(jsonData.ListTitleInfo[i].Score);
-                    //题目选项
-                    var tdItem = $("<td></td>").appendTo(tr);
-                    var items;
-                    for (var j = 0; j < jsonData.ListTitleInfo[i].ListTitleItem.length; j++) {
-                        items += (j + 1) + "、" + jsonData.ListTitleInfo[i].ListTitleItem[j].TitleItemContent + "  ";
-                    }
-                    tdItem.html(items);
-
-                    //操作时间
-                    var tdUpdateDateTime = $("<td></td>").appendTo(tr);
-                    tdUpdateDateTime.html(jsonData.ListTitleInfo[i].UpdateDateTime);
-
-//                     //修改与删除按钮
-//                     var tdManage = $("<td></td>").appendTo(tr);
-//                     tdManage.addClass("f-14 td-manage");
-//                     var aEdit = $("<a></a>").appendTo(tdManage);
-//                     aEdit.addClass("ml-5");
-//                     aEdit.attr("style", "text-decoration:none");
-//                     aEdit.attr("onClick", "article_edit('题目编辑','AddTitleInfoWeb','" + jsonData[i].TitleInfoId + "')");
-//                     aEdit.attr("href", "javascript:;");
-//                     aEdit.attr("title", "编辑");
-//                     var iEdit = $("<i></i>").appendTo(aEdit);
-//                     iEdit.addClass("Hui-iconfont");
-//                     iEdit.html("&#xe6df;"); //&#xe6df;
-//                     //iEdit.html("&#xe6e2;"); //&#xe6df;
-
-                    var aDel = $("<a></a>").appendTo(tdManage);
-                    aDel.addClass("ml-5");
-                    aDel.attr("style", "text-decoration:none");
-                    aDel.attr("onClick", "article_del(this,'" + jsonData.ListTitleInfo[i].TitleInfoId + "')");
-                    aDel.attr("href", "javascript:;");
-                    aDel.attr("title", "删除");
-                    var iDel = $("<i></i>").appendTo(aDel);
-                    iDel.addClass("Hui-iconfont");
-                    iDel.html("&#xe6e2;"); //&#xe6e2;
-
-                }
-
+//                 //题目列表
+//                 //$("#TypeId").val(jsonData.ListTitleInfo);
+// 
+//                 for (var i = 0; i < jsonData.ListTitleInfo.length; i++) {
+//                     var tr = $("<tr></tr>").appendTo(tbodyData);
+//                     tr.attr("id", "TitleInfoId" + jsonData.ListTitleInfo[i].TitleInfoId);
+//                     tr.addClass("text-c");
+//                     //Check
+//                     var tdCheck = $("<td></td>").appendTo(tr);
+//                     var input = $("<input></input>").appendTo(tdCheck);
+//                     input.attr("type", "checkbox");
+//                     input.attr("value", "");
+//                     input.attr("name", "");
+//                     //题目内容
+//                     var tdType1 = $("<td></td>").appendTo(tr);
+//                     tdType1.html(jsonData.ListTitleInfo[i].TitleConent);
+//                     //题目类型
+//                     var tdType2 = $("<td></td>").appendTo(tr);
+//                     tdType2.html(jsonData.ListTitleInfo[i].TitleTypeName);
+//                     //实验类型
+//                     var tdDescribe = $("<td></td>").appendTo(tr);
+//                     tdDescribe.html(jsonData.ListTitleInfo[i].TypeName1 + '\\' + jsonData.ListTitleInfo[i].TypeName2);
+//                     //正确答案
+//                     var tdCorrectAnswer = $("<td></td>").appendTo(tr);
+//                     tdCorrectAnswer.html(jsonData.ListTitleInfo[i].CorrectAnswer);
+//                     //该题分数
+//                     var tdScore = $("<td></td>").appendTo(tr);
+//                     tdScore.html(jsonData.ListTitleInfo[i].Score);
+// 
+//                      //题目选项
+//                      var tdItem = $("<td></td>").appendTo(tr);
+//                      var items;
+//                      for (var j = 0; j < jsonData.ListTitleInfo[i].ListTitleItem.length; j++) {
+//                          items += (j + 1) + "、" + jsonData.ListTitleInfo[i].ListTitleItem[j].TitleItemContent + "  ";
+//                      }
+//                      tdItem.html(items);
+// 
+//                     //操作时间
+//                     var tdUpdateDateTime = $("<td></td>").appendTo(tr);
+//                     tdUpdateDateTime.html(jsonData.ListTitleInfo[i].UpdateDateTime);
+// 
+// //                     //修改与删除按钮
+// //                     var tdManage = $("<td></td>").appendTo(tr);
+// //                     tdManage.addClass("f-14 td-manage");
+// //                     var aEdit = $("<a></a>").appendTo(tdManage);
+// //                     aEdit.addClass("ml-5");
+// //                     aEdit.attr("style", "text-decoration:none");
+// //                     aEdit.attr("onClick", "article_edit('题目编辑','AddTitleInfoWeb','" + jsonData[i].TitleInfoId + "')");
+// //                     aEdit.attr("href", "javascript:;");
+// //                     aEdit.attr("title", "编辑");
+// //                     var iEdit = $("<i></i>").appendTo(aEdit);
+// //                     iEdit.addClass("Hui-iconfont");
+// //                     iEdit.html("&#xe6df;"); //&#xe6df;
+// //                     //iEdit.html("&#xe6e2;"); //&#xe6df;
+// 
+//                     var aDel = $("<a></a>").appendTo(tdManage);
+//                     aDel.addClass("ml-5");
+//                     aDel.attr("style", "text-decoration:none");
+//                     aDel.attr("onClick", "article_del(this,'" + jsonData.ListTitleInfo[i].TitleInfoId + "')");
+//                     aDel.attr("href", "javascript:;");
+//                     aDel.attr("title", "删除");
+//                     var iDel = $("<i></i>").appendTo(aDel);
+//                     iDel.addClass("Hui-iconfont");
+//                     iDel.html("&#xe6e2;"); //&#xe6e2;
+// 
+//                 }
+// 
             }
         };
         $.ajax(option);
@@ -192,12 +195,10 @@
         var tr = parent.$("#ExercisesTestId" + jsonData.ExercisesTestId);
 
         var tds = tr.children();
-        tds.eq(1).text(jsonData.TitleConent);
-        tds.eq(2).text(jsonData.TitleTypeName);
-        tds.eq(3).text(jsonData.TypeName1 + "\\" + jsonData.TypeName2);
-        tds.eq(4).text(jsonData.CorrectAnswer);
-        tds.eq(5).text(jsonData.Score);
-        tds.eq(6).text(jsonData.UpdateDateTime);
+        tds.eq(1).text(jsonData.ExercisesName);
+        tds.eq(2).text(jsonData.TypeName1 + "\\" + jsonData.TypeName2);
+        tds.eq(3).text(jsonData.ExercisesDescribe);
+        tds.eq(4).text(jsonData.UpdateDateTime);
 
         //parent.RefDataTables();
     }
@@ -274,12 +275,10 @@
 
         var a = $("#ExercisesName").val();
         var b = $("#ExercisesDescribe").val();
+        var c = $("#ExercisesTypeId").val();
+        var TypeName = $("#ExercisesTypeId  option:selected").text();
+        var TypeNames = TypeName.split('\\');
 
-        var tabledata = $('#titledata').DataTable().data();
-        tabledata.each(function v){
-            var f = 0;
-        }
-        
 
 
         var varUrl;
@@ -293,9 +292,7 @@
         }
         var mydate = new Date();
         var dateTime = mydate.getFullYear() + "-" + mydate.getMonth() + "-" + mydate.getDate() + " " + mydate.getHours() + ":" + mydate.getMinutes() + ":" + mydate.getSeconds();
-        var jsonData = { ExercisesTestId: id, ExercisesName: a, ExercisesDescribe: b,  UpdateDateTime: dateTime,
-                        ListTitleInfo:[{TitleInfoId:1}]
-                        };
+        var jsonData = { ExercisesTestId: id, ExercisesName: a, ExercisesDescribe: b, UpdateDateTime: dateTime, ExercisesTypeId: c, TypeName1: TypeNames[0], TypeName2: TypeNames[1] };
 
         //        var exit = IsExistData(jsonData);
         //        if (exit) {
