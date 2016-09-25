@@ -17,13 +17,18 @@ namespace OilSimulationController
     [HandleError]
     public class ManageController : Controller
     {
-        //public static string strConn = "Data Source =../DBFile/DB.db";
-        public static string strConn = @"Data Source =E:\Projects\Code\XXX\OilSimulationWeb\DBFile\DB.db";
+        public static string strConn = @"Data Source =" + HttpRuntime.AppDomainAppPath + "DBFile\\DB.db";
 
         ExercisesTestBLL ExercisesTestbll = new ExercisesTestBLL(strConn);
         ExperimentTypeBLL ExperimentTypebll = new ExperimentTypeBLL(strConn);
         TitleInfoBLL TitleInfobll = new TitleInfoBLL(strConn);
         TitleTypeBLL TitleTypebll = new TitleTypeBLL(strConn);
+
+        public ManageController()
+        {
+
+        }
+
 
         public ActionResult Login()
         {
