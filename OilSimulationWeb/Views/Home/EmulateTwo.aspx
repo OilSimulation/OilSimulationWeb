@@ -6,6 +6,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server"> 
     <script type="text/javascript">
+        var sUrlPre = "/Simulation/SimMode";
         $(document).ready(function () {
             $("#WebGLLayOut").hide();
             $("#MainLayOut").show();
@@ -16,8 +17,64 @@
             $("#curMode").text($("#ModeThree").prev().text());
             $("#curitem").text($("#ExpEight").children().text());
         });
+        function ShowVirControlDiv(sId) {
+            $("#Simulation321").hide();
+            $("#Simulation322").hide();
+            $("#Simulation323").hide();
+            $("#Simulation324").hide();
+            switch (sId) {
+                case 321:
+                    $("#Simulation321").show();
+                    break;
+                case 322:
+                    $("#Simulation322").show();
+                    break;
+                case 323:
+                    $("#Simulation323").show();
+                    break;
+                case 324:
+                    $("#Simulation324").show();
+                    break;
+            }
+        }
     </script>
     <div id="WebGLLayOut">
+        <div id="Simulation321" style="display:inline;">
+            不同注水时机:
+            <select class="DropDownList v1Mode">
+                <option value="3211">早期（同采同注）</option>
+                <option value="3212">中期开发后半年</option>
+                <option value="3213">晚期开发后两年</option>
+                <option value="3214">自定义</option>
+            </select>
+        </div>
+        <div id="Simulation322" style="display:none;">
+            不同注采比:
+            <select class="DropDownList v1Mode">
+                <option value="3221">注采比0.8</option>
+                <option value="3222">注采比1</option>
+                <option value="3223">注采比1.2</option>
+                <option value="3224">自定义</option>
+            </select>
+        </div>
+        <div id="Simulation323" style="display:none;">
+            不同最大井底注入压力:
+            <select class="DropDownList v1Mode">
+                <option value="3231">35MPA</option>
+                <option value="3232">40MPA</option>
+                <option value="3233">50MPA</option>
+                <option value="3234">自定义</option>
+            </select>
+        </div>
+        <div id="Simulation324" style="display:none;">
+            不同最小井底流压:
+            <select class="DropDownList v1Mode">
+                <option value="3241">1MPA</option>
+                <option value="3242">5MPA</option>
+                <option value="3243">10MPA</option>
+                <option value="3244">自定义</option>
+            </select>
+        </div>
         <iframe id="iframeId" name="iframeId" scrolling="no" class="ScreenNomal"  src=""></iframe>
     </div>
     <div id="MainLayOut" style="width:100%;">
@@ -62,10 +119,10 @@
             <div style="padding: 10px 20px 10px 0px;">
                 <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeOne');" ><span class="f-da">1、不同注水时机方案设计与开发效果预测实验</span></a>
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeTwo');" ><span class="f-da">2、不同注采比方案设计与开发效果预测实验</span></a> 
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeTwo');" ><span class="f-da">3、不同最大井底注入压力方案设计与开发效果预测实验</span></a> 
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeTwo');" ><span class="f-da">4、不同最低井底流压方案设计与开发效果预测实验</span></a> 
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(321);LoadUrl('/Simulation/SimMode3211');" ><span class="f-da">1、不同注水时机方案设计与开发效果预测实验</span></a>
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(322);LoadUrl('/Simulation/SimMode3221');" ><span class="f-da">2、不同注采比方案设计与开发效果预测实验</span></a> 
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(323);LoadUrl('/Simulation/SimMode3231');" ><span class="f-da">3、不同最大井底注入压力方案设计与开发效果预测实验</span></a> 
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(324);LoadUrl('/Simulation/SimMode3241');" ><span class="f-da">4、不同最低井底流压方案设计与开发效果预测实验</span></a> 
                 </div>
             </div>
             <div style="padding: 10px 20px 20px 0px;">

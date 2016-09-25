@@ -6,6 +6,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server"> 
     <script type="text/javascript">
+        var sUrlPre = "/VirExperiment/VirtualMode";
         $(document).ready(function () {
             $("#WebGLLayOut").hide();
             $("#MainLayOut").show();
@@ -16,8 +17,48 @@
             $("#curMode").text($("#ModeTwo").prev().text());
             $("#curitem").text($("#ExpFive").children().text());
         });
+        function ShowVirControlDiv(sId) {
+            $("#Virtual221").hide();
+            $("#Virtual222").hide();
+            $("#Virtual223").hide();
+            switch (sId) {
+                case 221:
+                    $("#Virtual221").show();
+                    break;
+                case 222:
+                    $("#Virtual222").show();
+                    break;
+                case 223:
+                    $("#Virtual223").show();
+                    break;
+            }
+        }
     </script>
     <div id="WebGLLayOut">
+        <div id="Virtual221" style="display:inline;">
+            毛细管压力:
+            <select class="DropDownList v1Mode">
+                <option value="2211">无毛管</option>
+                <option value="2212">低毛管</option>
+                <option value="2213">高毛管</option>
+            </select>
+        </div>
+        <div id="Virtual222" style="display:none;">
+            原油粘度级别:
+            <select class="DropDownList v1Mode">
+                <option value="2221">低粘度0.5</option>
+                <option value="2222">中粘度5</option>
+                <option value="2223">高粘度50</option>
+            </select>
+        </div>
+        <div id="Virtual223" style="display:none;">
+            原油密度级别:
+            <select class="DropDownList v1Mode">
+                <option value="2231">低密度0.7</option>
+                <option value="2232">中密度0.9</option>
+                <option value="2233">高密度1.15</option>
+            </select>
+        </div>
         <iframe id="iframeId" name="iframeId" scrolling="no" class="ScreenNomal"  src=""></iframe>
     </div>
     <div id="MainLayOut" style="width:100%;">
@@ -62,9 +103,9 @@
             <div style="padding: 10px 20px 10px 0px;">
                 <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeOne');" ><span class="f-da">1、三种类型毛管压力下的水驱油效率实验</span></a>
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeTwo');" ><span class="f-da">2、三种类型原油粘度级别下的水驱油效率实验</span></a> 
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeTwo');" ><span class="f-da">2、三种类型原油密度级别下的水驱油效率实验</span></a> 
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(221);LoadUrl('/VirExperiment/VirtualMode2211');" ><span class="f-da">1、三种类型毛管压力下的水驱油效率实验</span></a>
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(222);LoadUrl('/VirExperiment/VirtualMode2221');" ><span class="f-da">2、三种类型原油粘度级别下的水驱油效率实验</span></a> 
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(223);LoadUrl('/VirExperiment/VirtualMode2231');" ><span class="f-da">2、三种类型原油密度级别下的水驱油效率实验</span></a> 
                 </div>
             </div>
             <div style="padding: 10px 20px 20px 0px;">

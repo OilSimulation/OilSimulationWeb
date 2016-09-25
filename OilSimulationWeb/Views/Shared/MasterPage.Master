@@ -28,6 +28,10 @@
             //获取根目录
             GetRootPath();
 
+            $(".DropDownList").change(function () {
+                LoadUrl(sUrlPre + $(this).val());
+            });
+
             ///控制导航菜单显示隐藏
             $(".zbar-title").click(function () {
                 if ($(this).next().css("display") == "none") {
@@ -61,7 +65,7 @@
                 if (isIframeMax == true) ScreenMax();
 
                 $("#RightPanl").width($(".greybg .main").width() - 200);
-                
+
             }
             //解决跨域HideLoading();
             window.addEventListener("message", function (event) { eval(event.data); });

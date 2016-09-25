@@ -6,6 +6,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server"> 
     <script type="text/javascript">
+        var sUrlPre = "/VirExperiment/VirtualMode";
         $(document).ready(function () {
             $("#WebGLLayOut").hide();
             $("#MainLayOut").show();
@@ -14,10 +15,53 @@
             $("#ModeTwo").css("display", "block");
             $("#ExpFour").addClass("select");
             $("#curMode").text($("#ModeTwo").prev().text());
-            $("#curitem").text($("#ExpFour").children().text());
+            $("#curitem").text($("#ExpFour").children().text()); 
         });
+        function ShowVirControlDiv(sId) {
+            $("#Virtual211").hide();
+            $("#Virtual212").hide();
+            $("#Virtual213").hide();
+            switch (sId) {
+                case 211:
+                    $("#Virtual211").show();
+                    break;
+                case 212:
+                    $("#Virtual212").show();
+                    break;
+                case 213:
+                    $("#Virtual213").show();
+                    break; 
+            }
+        }
     </script>
     <div id="WebGLLayOut">
+        <div id="Virtual211" style="display:inline;">
+            毛细管压力:
+            <select class="DropDownList v1Mode">
+                <option value="2111">0.5</option>
+                <option value="2112">1</option>
+                <option value="2113">2</option>
+                <option value="2114">自定义</option>
+            </select>
+        </div>
+        <div id="Virtual212" style="display:none;">
+            油水比重差:
+            <select class="DropDownList v1Mode">
+                <option value="2121">0.7</option>
+                <option value="2122">0.8</option>
+                <option value="2123">0.9</option>
+                <option value="2124">自定义</option>
+            </select>
+        </div>
+        <div id="Virtual213" style="display:none;">
+            油水粘度差:
+            <select class="DropDownList v1Mode">
+                <option value="2131">0.5</option>
+                <option value="2132">10</option>
+                <option value="2133">50</option>
+                <option value="2134">自定义</option>
+            </select>
+        </div>
         <iframe id="iframeId" name="iframeId" scrolling="no" class="ScreenNomal"  src=""></iframe>
     </div>
     <div id="MainLayOut" style="width:100%;">
@@ -62,9 +106,9 @@
             <div style="padding: 10px 20px 10px 0px;">
                 <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
-                    <a href="javascript:void(0);" onclick="LoadUrl('/VirExperiment/VirtualMode211');" ><span class="f-da">1、不同毛细管力对水驱油影响模拟</span></a>
-                    <a href="javascript:void(0);" onclick="LoadUrl('/VirExperiment/VirtualMode212');" ><span class="f-da">2、不同油水比重差对水驱油影响模拟</span></a> 
-                    <a href="javascript:void(0);" onclick="LoadUrl('/VirExperiment/VirtualMode213');" ><span class="f-da">3、不同油水粘度差对水驱油影响模拟</span></a> 
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(211);LoadUrl('/VirExperiment/VirtualMode2111');" ><span class="f-da">1、不同毛细管力对水驱油影响模拟</span></a>
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(212);LoadUrl('/VirExperiment/VirtualMode2121');" ><span class="f-da">2、不同油水比重差对水驱油影响模拟</span></a> 
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(213);LoadUrl('/VirExperiment/VirtualMode2131');" ><span class="f-da">3、不同油水粘度差对水驱油影响模拟</span></a> 
                 </div>
             </div>
             <div style="padding: 10px 20px 20px 0px;">

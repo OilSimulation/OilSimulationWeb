@@ -306,6 +306,7 @@
                 case 1:
                     {
                         var model = <%= new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(ViewData["lstFPR"]) %>;
+                        /*
                         new Dygraph(document.getElementById("graph"), model, { 
                           title: '累产油（万方）', 
                           ylabel: '累产油（万方）',
@@ -313,8 +314,9 @@
                           width : 616,//图表的宽度
                           height: 321,//图表的宽度和高度
                         });
-                        /*
-                        var myChart = new JSChart('graph', 'line');lstFLPT
+                        */
+                        //*
+                        var myChart = new JSChart('graph', 'line');
                         myChart.setDataArray(model);
                         myChart.setAxisNameFontSize(10);
                         myChart.setAxisNameX('生产时间（天）');
@@ -340,7 +342,7 @@
                         myChart.setTextPaddingBottom(12);
                         myChart.setBackgroundImage('../Images/chart_bg.jpg');
                         myChart.draw();
-                        */
+                        //*/
                     }
                 break;
                 case 2:

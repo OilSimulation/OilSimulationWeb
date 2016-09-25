@@ -6,6 +6,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server"> 
     <script type="text/javascript">
+        var sUrlPre = "/Simulation/SimMode";
         $(document).ready(function () {
             $("#WebGLLayOut").hide();
             $("#MainLayOut").show();
@@ -16,8 +17,38 @@
             $("#curMode").text($("#ModeThree").prev().text());
             $("#curitem").text($("#ExpSeven").children().text());
         });
+        function ShowVirControlDiv(sId) {
+            $("#Simulation311").hide();
+            $("#Simulation312").hide();
+            switch (sId) {
+                case 311:
+                    $("#Simulation311").show();
+                    break;
+                case 312:
+                    $("#Simulation312").show();
+                    break; 
+            }
+        }
     </script>
     <div id="WebGLLayOut">
+        <div id="Simulation311" style="display:inline;">
+            井距:
+            <select class="DropDownList v1Mode">
+                <option value="3111">100</option>
+                <option value="3112">200</option>
+                <option value="3113">300</option>
+                <option value="3114">自定义</option>
+            </select>
+        </div>
+        <div id="Simulation312" style="display:none;">
+            井网:
+            <select class="DropDownList v1Mode">
+                <option value="3121">5点</option>
+                <option value="3122">7点</option>
+                <option value="3123">9点</option>
+                <option value="3124">自定义</option>
+            </select>
+        </div>
         <iframe id="iframeId" name="iframeId" scrolling="no" class="ScreenNomal"  src=""></iframe>
     </div>
     <div id="MainLayOut" style="width:100%;">
@@ -62,8 +93,8 @@
             <div style="padding: 10px 20px 10px 0px;">
                 <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeOne');" ><span class="f-da">1、不同井网方案设计与开发效果预测实验</span></a>
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeTwo');" ><span class="f-da">2、不同井距网方案设计与开发效果预测实验</span></a> 
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(311);LoadUrl('/Simulation/SimMode3111');" ><span class="f-da">1、不同井网方案设计与开发效果预测实验</span></a>
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(312);LoadUrl('/Simulation/SimMode3121');" ><span class="f-da">2、不同井距网方案设计与开发效果预测实验</span></a> 
                 </div>
             </div>
             <div style="padding: 10px 20px 20px 0px;">

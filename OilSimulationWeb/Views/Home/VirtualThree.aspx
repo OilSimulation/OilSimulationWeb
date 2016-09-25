@@ -6,6 +6,7 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server"> 
     <script type="text/javascript">
+        var sUrlPre = "/VirExperiment/VirtualMode";
         $(document).ready(function () {
             $("#WebGLLayOut").hide();
             $("#MainLayOut").show();
@@ -16,8 +17,48 @@
             $("#curMode").text($("#ModeTwo").prev().text());
             $("#curitem").text($("#ExpSix").children().text());
         });
+        function ShowVirControlDiv(sId) {
+            $("#Virtual231").hide();
+            $("#Virtual232").hide();
+            $("#Virtual233").hide();
+            switch (sId) {
+                case 231:
+                    $("#Virtual231").show();
+                    break;
+                case 232:
+                    $("#Virtual232").show();
+                    break;
+                case 233:
+                    $("#Virtual233").show();
+                    break;
+            }
+        }
     </script>
     <div id="WebGLLayOut">
+        <div id="Virtual231" style="display:inline;">
+            束缚水饱和度:
+            <select class="DropDownList v1Mode">
+                <option value="2311">低束缚水0</option>
+                <option value="2312">中束缚水0.3</option>
+                <option value="2313">高束缚水0.5</option>
+            </select>
+        </div>
+        <div id="Virtual232" style="display:none;">
+            残余油饱和度:
+            <select class="DropDownList v1Mode">
+                <option value="2321">低残余油0</option>
+                <option value="2322">中残余油0.3</option>
+                <option value="2323">高残余油0.5</option>
+            </select>
+        </div>
+        <div id="Virtual233" style="display:none;">
+            油水相渗曲线:
+            <select class="DropDownList v1Mode">
+                <option value="2331">常型曲线</option>
+                <option value="2332">立型曲线</option>
+                <option value="2333">X型曲线</option>
+            </select>
+        </div>
         <iframe id="iframeId" name="iframeId" scrolling="no" class="ScreenNomal"  src=""></iframe>
     </div>
     <div id="MainLayOut" style="width:100%;">
@@ -62,9 +103,9 @@
             <div style="padding: 10px 20px 10px 0px;">
                 <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeOne');" ><span class="f-da">1、三种类型束缚水饱和度下的采收率实验</span></a>
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeTwo');" ><span class="f-da">2、三种类型残余油饱和度下的采收率实验</span></a> 
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeTwo');" ><span class="f-da">3、三种类型油水相渗曲线下的采收率实验</span></a> 
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(231);LoadUrl('/VirExperiment/VirtualMode2311');" ><span class="f-da">1、三种类型束缚水饱和度下的采收率实验</span></a>
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(232);LoadUrl('/VirExperiment/VirtualMode2321');" ><span class="f-da">2、三种类型残余油饱和度下的采收率实验</span></a> 
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(233);LoadUrl('/VirExperiment/VirtualMode2331');" ><span class="f-da">3、三种类型油水相渗曲线下的采收率实验</span></a> 
                 </div>
             </div>
             <div style="padding: 10px 20px 20px 0px;">
