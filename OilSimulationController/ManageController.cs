@@ -303,6 +303,13 @@ namespace OilSimulationController
 
         #region *************************************** 题目与选项TitleItemAssocWeb
 
+
+        public ActionResult AddTitleItemAssocWeb()
+        {
+            return View();
+        }
+
+
         public ActionResult TitleItemAssocWeb()
         {
             return View();
@@ -322,6 +329,21 @@ namespace OilSimulationController
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return res;
 
+        }
+
+
+        /// <summary>
+        /// 获取题目中最大的索引+1
+        /// </summary>
+        /// <param name="info">TitleInfoId(题目ID)</param>
+        /// <returns></returns>
+        public ActionResult GetTitleItemAssocIndex(stId info)
+        {
+            int result = TitleItemAssocbll.GetTitleItemAssocIndex(info.Id);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
         }
 
         /// <summary>
