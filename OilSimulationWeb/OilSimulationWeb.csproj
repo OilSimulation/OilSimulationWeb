@@ -574,6 +574,7 @@
     <Content Include="Views\Manage\AddExercisesTestWeb.aspx" />
     <Content Include="Views\Manage\AddExperimentTypeWeb.aspx" />
     <Content Include="Views\Manage\AddTitleInfoWeb.aspx" />
+    <Content Include="Views\Manage\AddTitleItemAssocWeb.aspx" />
     <Content Include="Views\Manage\AddTitleItemWeb.aspx" />
     <Content Include="Views\Manage\ExamManage.aspx" />
     <Content Include="Views\Manage\ExercisesTestWeb.aspx" />

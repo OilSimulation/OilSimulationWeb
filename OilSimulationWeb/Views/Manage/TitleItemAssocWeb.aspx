@@ -36,7 +36,7 @@
 			<input type="text" name="" id="" placeholder=" 产品名称" style="width:250px" class="input-text">
 			<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜产品</button>
 		</div>
-		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="product_add('添加产品','product-add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加选项</a></span>  </div>
+		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="AddTitleItemAssoc('添加选项','AddTitleItemAssocWeb')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加选项</a></span>  </div>
 		<div class="mt-20">
 			<table id="datatable" class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
@@ -66,6 +66,8 @@
 
 
 <script type="text/javascript">
+    //当前选中的题目Id
+    var CurrentTitleInfoId = -1;
     var setting = {
         view: {
             dblClickExpand: false,
@@ -87,53 +89,62 @@
                     zTree.expandNode(treeNode);
                     return false;
                 } else {
-                    var jsonDataId = { Id: treeNode.file };
-                    //GetTitleInfoItem
-                    var datatable = $("#datatable").DataTable();
-                    datatable.clear().draw();
-                    //加载 题目下的所有选项
-                    var option = {
-                        url: '<%:Url.Action("GetTitleInfoItem","Manage") %>',
-                        type: 'POST',
-                        async: false,
-                        dataType: 'html',
-                        data: JSON.stringify(jsonDataId),
-                        contentType: 'application/json',
-                        success: function (result) {
-                            var jsonData = JSON.parse(result);
-                            if (jsonData.length > 0) {
-                                for (var i = 0; i < jsonData.length; i++) {
-                                    var aDel = $("<a></a>");
-                                    aDel.addClass("ml-5");
-                                    aDel.attr("style", "text-decoration:none");
-                                    aDel.attr("onClick", "article_del(this,'" + jsonData[i].TitleItemAssocId + "')");
-                                    aDel.attr("href", "javascript:;");
-                                    aDel.attr("title", "删除");
-                                    var iDel = $("<i></i>").appendTo(aDel);
-                                    iDel.addClass("Hui-iconfont");
-                                    iDel.html("&#xe6e2;"); //&#xe6e2;
-
-                                    var ht = aDel[0].outerHTML;
-
-
-                                    var row = datatable.row.add(['<input type="checkbox" value="1" name="">', jsonData[i].TitleItemContent, jsonData[i].TitleItemIndex, ht]).draw();
-                                    //row.addClass("text-c");
-
-                                }
-
-                            }
-
-
-                        }
-                    };
-                    $.ajax(option);
-                    //demoIframe.attr("src", treeNode.file + ".html");
-
+                    CurrentTitleInfoId = treeNode.file;
+                    LoadTitleItem();
                     return true;
                 }
             }
         }
     };
+
+
+
+
+    //加载对应题目下的选项
+    function LoadTitleItem() {
+        var jsonDataId = { Id: CurrentTitleInfoId };
+       
+        var datatable = $("#datatable").DataTable();
+        datatable.clear().draw();
+        //加载 题目下的所有选项
+        var option = {
+            url: '<%:Url.Action("GetTitleInfoItem","Manage") %>',
+            type: 'POST',
+            async: false,
+            dataType: 'html',
+            data: JSON.stringify(jsonDataId),
+            contentType: 'application/json',
+            success: function (result) {
+                var jsonData = JSON.parse(result);
+                if (jsonData.length > 0) {
+                    for (var i = 0; i < jsonData.length; i++) {
+                        var aDel = $("<a></a>");
+                        aDel.addClass("ml-5");
+                        aDel.attr("style", "text-decoration:none");
+                        aDel.attr("onClick", "article_del(this,'" + jsonData[i].TitleItemAssocId + "')");
+                        aDel.attr("href", "javascript:;");
+                        aDel.attr("title", "删除");
+                        var iDel = $("<i></i>").appendTo(aDel);
+                        iDel.addClass("Hui-iconfont");
+                        iDel.html("&#xe6e2;"); //&#xe6e2;
+
+                        var ht = aDel[0].outerHTML;
+
+
+                        var row = datatable.row.add(['<input type="checkbox" value="1" name="">', jsonData[i].TitleItemContent, jsonData[i].TitleItemIndex, ht]).draw();
+                        //row.addClass("text-c");
+
+                    }
+
+                }
+
+
+            }
+        };
+        $.ajax(option);
+
+    }
+
 
     var zNodes ;
     var code;
@@ -186,6 +197,14 @@
         $.ajax(option);
     }
 
+    function AddTitleItemAssoc(title, url) {
+        if (CurrentTitleInfoId == -1) {
+            layer.msg('请先选择题目！');
+            return;
+        }
+        layer_show(title, url, '', 400);
+    }
+
     function article_del(obj, id) {
         layer.confirm('确认要删除吗？', function (index) {
             var jsonData = { Id: id };
@@ -200,11 +219,8 @@
                 success: function (result) {
                     //$(obj).parents("tr").remove().draw();
                     if (result > 0) {
-                        var table = $('#datatables').DataTable();
-
-                        var rowf = table.row($(obj).parent().parent());
-                        rowf.remove().draw(false);
-
+                        var table = $('#datatable').DataTable();
+                        table.row($(obj).parents('tr')).remove().draw();
                         layer.msg('已删除!');
 
                     }
@@ -220,6 +236,8 @@
 
         });
     }
+
+
 
     function product_del(obj, id) {
         layer.confirm('确认要删除吗？', function (index) {

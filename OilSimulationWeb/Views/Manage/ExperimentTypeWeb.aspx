@@ -197,12 +197,13 @@
     function article_add(title, url) {
         $("#AddOrUpdate").val("1");
 
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
+        layer_show(title,url,'',400);
+//        var index = layer.open({
+//            type: 2,
+//            title: title,
+//            content: url
+//        });
+//        layer.full(index);
     }
     /*资讯-编辑*/
     function article_edit(title, url, id, w, h) {
