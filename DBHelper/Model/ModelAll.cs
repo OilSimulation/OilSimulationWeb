@@ -177,11 +177,43 @@ namespace DBHelper.Model
         /// <summary>
         /// 题目ID
         /// </summary>
-        public int TitleInfoId;
+        public int TitleInfoId { get; set; }
         /// <summary>
         /// 考试ID
         /// </summary>
-        public int ExercisesTestId;
+        public int ExercisesTestId { get; set; }
+
+        public int ExercisesTitleIndex { get; set; }
+
+        public DateTime UpdateDateTime { get; set; }
+
+        #region ******************** 其他
+        /// <summary>
+        /// 题目
+        /// </summary>
+        public string TitleConent { get; set; }
+        /// <summary>
+        /// 正确答案(判断题 1正确,2错误 )
+        /// </summary>
+        public int CorrectAnswer { get; set; }
+        /// <summary>
+        /// 该题得分
+        /// </summary>
+        public int Score { get; set; }
+
+        ///// <summary>
+        ///// 考试的实验类型
+        ///// </summary>
+        //public int TypeId { get; set; }
+        ///// <summary>
+        ///// 考试的实验类型名称
+        ///// </summary>
+        //public int TypeName1 { get; set; }
+        ///// <summary>
+        ///// 考试的实验类型名称
+        ///// </summary>
+        //public int TypeName2 { get; set; }
+        #endregion
 
     }
 
@@ -205,12 +237,23 @@ namespace DBHelper.Model
         /// -1:表示一次考试。其它表示一次习题，与ExperimentType表中的TypeId相关联
         /// </summary>
         public int ExercisesTypeId { get; set; }
+
+        public DateTime UpdateDateTime { get; set; }
+
+
+        #region **************  其他
         /// <summary>
         /// 一次考试对应的题目列表
         /// </summary>
         public List<TitleInfo> ListTitleInfo { get; set; }
 
-        public DateTime UpdateDateTime { get; set; }
+        /// <summary>
+        /// 基础认知等
+        /// </summary>
+        public string TypeName1 { get; set; }
+        public string TypeName2 { get; set; }
+        #endregion
+
     }
 
 
@@ -230,6 +273,11 @@ namespace DBHelper.Model
     public struct stId
     {
         public int Id { get; set; }
+    }
+    public struct stId2
+    {
+        public int Id1 { get; set; }
+        public int Id2 { get; set; }
     }
 
     #endregion

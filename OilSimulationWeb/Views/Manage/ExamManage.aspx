@@ -75,7 +75,7 @@
 					<li><a _href="TitleItemAssocWeb" data-title="题目选项配置" href="javascript:void(0)">题目选项配置</a></li>
 					
 					<li><a _href="ExercisesTestWeb" data-title="考试管理" href="javascript:void(0)">考试管理</a></li>
-                    <li><a _href="ExercisesTestWeb" data-title="考试管理" href="javascript:void(0)">考试题目配置</a></li>
+                    <li><a _href="ExercisesTitleWeb" data-title="考试管理" href="javascript:void(0)">考试题目配置</a></li>
 				</ul>
 			</dd>
 		</dl>

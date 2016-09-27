@@ -25,6 +25,7 @@ namespace OilSimulationController
         TitleTypeBLL TitleTypebll = new TitleTypeBLL(strConn);
         TitleItemBLL TitleItembll = new TitleItemBLL(strConn);
         TitleItemAssocBLL TitleItemAssocbll = new TitleItemAssocBLL(strConn);
+        ExercisesTitleBLL ExercisesTitlebll = new ExercisesTitleBLL(strConn);
 
         public ManageController()
         {
@@ -173,6 +174,23 @@ namespace OilSimulationController
             res.Data = listData;
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return res;
+        }
+
+
+        /// <summary>
+        /// 根据实验类型获取题目
+        /// </summary>
+        /// <param name="TypeId">实验类型ID</param>
+        /// <returns></returns>
+        public ActionResult GetTitleInfoTypeId(stId TypeId)
+        {
+            
+            List<TitleInfo> listData = TitleInfobll.GetTitleInfoTypeId(TypeId.Id);
+            var res = new ConfigurableJsonResult();
+            res.Data = listData;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
         }
 
         [HttpPost]
@@ -446,6 +464,93 @@ namespace OilSimulationController
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return res;
 
+        }
+
+        #endregion
+
+        #region *************************************** 习题或考试与题目对照表(ExercisesTitle)
+
+        public ActionResult AddExercisesTitleWeb()
+        {
+            return View();
+        }
+
+        public ActionResult ExercisesTitleWeb()
+        {
+            return View();
+        }
+
+
+        /// <summary>
+        /// 获取考试 中 题目位置的最大位置+1
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public ActionResult GetExercisesTitleMaxIndex(stId info)
+        {
+            int result = ExercisesTitlebll.GetExercisesTitleMaxIndex(info.Id);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
+
+
+        /// <summary>
+        /// 判断 考试中是否存在某题目
+        /// </summary>
+        /// <param name="info">只取考试ID与题目ID</param>
+        /// <returns></returns>
+        public ActionResult IsExistExercisesTitle(ExercisesTitle info)
+        {
+            bool result = ExercisesTitlebll.IsExistExercisesTitle(info.ExercisesTestId,info.TitleInfoId);
+            var res = new ConfigurableJsonResult();
+            res.Data = result == true ? 1 : 0;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        /// <summary>
+        /// 获取某场考试下的所有题目
+        /// </summary>
+        /// <param name="info">考试ID</param>
+        /// <returns></returns>
+        public ActionResult GetExercisesTitle(stId info)
+        {
+            List<ExercisesTitle> result = ExercisesTitlebll.GetExercisesTitle(info.Id);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
+
+        public ActionResult DelExercisesTitle(stId info)
+        {
+            int result = ExercisesTitlebll.DelExercisesTitle(info.Id);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        public ActionResult UpdateExercisesTitle(ExercisesTitle info)
+        {
+            int result = ExercisesTitlebll.UpdateExercisesTitle(info);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        public ActionResult AddExercisesTitle(ExercisesTitle info)
+        {
+            int result = ExercisesTitlebll.AddExercisesTitle(info);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
         }
 
         #endregion

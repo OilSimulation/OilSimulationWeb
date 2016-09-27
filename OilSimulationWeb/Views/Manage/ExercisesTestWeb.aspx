@@ -27,8 +27,8 @@
 				<tr class="text-c">
 					<th width="25"><input type="checkbox" name="" value=""></th>
 					<th width="100">考试或练习名称</th>
-					<th width="100">考试描述</th>
 					<th width="100">考试类型</th>
+					<th width="100">考试描述</th>
                     <th width="120">操作时间</th>
                     <th width="120">操作</th>
 				</tr>
@@ -141,7 +141,14 @@
             tdType1.html(jsonData[i].ExercisesName);
             //考试类型
             var tdExercises = $("<td></td>").appendTo(tr);
-            tdExercises.html(jsonData[i].ExercisesDescribe);
+            if (jsonData[i].ExercisesTypeId == -1) {
+                tdExercises.html('考试');
+            }
+            else {
+                tdExercises.html(jsonData[i].TypeName1 + "\\" + jsonData[i].TypeName2);
+            }
+
+            
 
             //考试描述
             var tdType2 = $("<td></td>").appendTo(tr);

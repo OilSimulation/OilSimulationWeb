@@ -22,14 +22,14 @@ namespace DBHelper.Bll
 
         public List<ExercisesTest> GetExercisesTest()
         {
-            string strSql = "select * from ExercisesTest";
+            string strSql = "select * from ExercisesTest a left join ExperimentType b on a.ExercisesTypeId=b.TypeId";
             return DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql));
         }
 
 
         public ExercisesTest GetExercisesTest(int ExercisesTestId)
         {
-            string strSql = "select * from ExercisesTest where ExercisesTestId=@ExercisesTestId";
+            string strSql = "select * from ExercisesTest a left join  ExperimentType b on where a.ExercisesTypeId=b.TypeId and ExercisesTestId=@ExercisesTestId";
             List<ExercisesTest> list = DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"}}));
             if (list.Count > 0)
@@ -97,6 +97,8 @@ namespace DBHelper.Bll
                     info.ExercisesName = dr["ExercisesName"] == DBNull.Value ? "" : dr["ExercisesName"].ToString();
                     info.ExercisesTestId = dr["ExercisesTestId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["ExercisesTestId"]);
                     info.ExercisesTypeId = dr["ExercisesTypeId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["ExercisesTypeId"]);
+                    info.TypeName1 = dr["TypeName1"] == DBNull.Value ? "" : dr["TypeName1"].ToString();
+                    info.TypeName2 = dr["TypeName2"] == DBNull.Value ? "" : dr["TypeName2"].ToString();
                     if (dr["UpdateDateTime"] != DBNull.Value)
                     {
                         DateTime datetime;

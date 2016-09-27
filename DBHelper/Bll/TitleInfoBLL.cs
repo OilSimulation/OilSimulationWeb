@@ -28,6 +28,18 @@ namespace DBHelper.Bll
             return DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql));
         }
 
+        /// <summary>
+        /// 根据实验类型获取题目
+        /// </summary>
+        /// <param name="TypeId">实验类型</param>
+        /// <returns></returns>
+        public List<TitleInfo> GetTitleInfoTypeId(int TypeId)
+        {
+            string strSql = @"select * from TitleInfo a left join ExperimentType b on a.TypeId=b.TypeId
+                            left join TitleType c on a.TitleTypeId=c.TiteTypeId where a.TypeId=@TypeId";
+            return DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=TypeId, ParameterName="@TypeId"}}));
+        }
 
         public TitleInfo GetTitleInfo(int TitleInfoId)
         {
@@ -93,7 +105,10 @@ namespace DBHelper.Bll
         /// <returns></returns>
         public List<TitleInfo> GetExercisesAllTitle(int ExercisesTestId)
         {
-            string strSql = @"select * from ExercisesTitle a left join TitleInfo b on a.TitleInfoId=b.TitleInfoId where a.ExercisesTestId=@ExercisesTestId";
+            string strSql = @"select * from ExercisesTitle a left join TitleInfo b on a.TitleInfoId=b.TitleInfoId 
+                            left join ExperimentType c on b.TypeId=c.TypeId
+                            left join TitleType d on b.TitleTypeId=d.TitleTypeId
+                            where a.ExercisesTestId=@ExercisesTestId";
             return DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"}
             }));

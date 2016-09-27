@@ -64,6 +64,26 @@ namespace DBHelper.Bll
 
 
         /// <summary>
+        /// 获取题目选项位置索引+1
+        /// </summary>
+        /// <param name="TitleInfoId"></param>
+        /// <returns></returns>
+        public int GetTitleItemAssocIndex(int TitleInfoId)
+        {
+            string strSql = "select Max(TitleItemIndex) from TitleItemAssoc where  TitleInfoId=@TitleInfoId ";
+            object obj = DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteScalar(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=TitleInfoId, ParameterName="@TitleInfoId"}});
+            int result = 1;
+            if (obj!=null)
+            {
+                int.TryParse(obj.ToString(), out result);
+                result++;
+            }
+            return result;
+
+        }
+
+        /// <summary>
         /// 获取 题目下的所有选项信息
         /// </summary>
         /// <param name="TitleInfoId"></param>
@@ -78,7 +98,7 @@ namespace DBHelper.Bll
 
         public int DelTitleItemAssoc(int TitleItemAssocId)
         {
-            string strSql = "delete from TitleItemAssoc TitleItemAssocId=@TitleItemAssocId";
+            string strSql = "delete from TitleItemAssoc where TitleItemAssocId=@TitleItemAssocId";
             return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=TitleItemAssocId, ParameterName="@TitleItemAssocId"}});
         }
@@ -164,6 +184,7 @@ namespace DBHelper.Bll
                     info.TitleItemId = dr["TitleItemId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["TitleItemId"]);
                     info.TitleInfoId = dr["TitleInfoId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["TitleInfoId"]);
                     info.TitleItemIndex = dr["TitleItemIndex"] == DBNull.Value ? -100 : Convert.ToInt32(dr["TitleItemIndex"]);
+                    info.TitleItemContent = dr["TitleItemContent"] == DBNull.Value ? "" : Convert.ToString(dr["TitleItemContent"]);
                     if (dr["UpdateDateTime"] != DBNull.Value)
                     {
                         DateTime datetime;

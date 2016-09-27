@@ -572,12 +572,14 @@
     <Content Include="Views\Innovate\InnModeThree.aspx" />
     <Content Include="Views\Innovate\InnModeTwo.aspx" />
     <Content Include="Views\Manage\AddExercisesTestWeb.aspx" />
+    <Content Include="Views\Manage\AddExercisesTitleWeb.aspx" />
     <Content Include="Views\Manage\AddExperimentTypeWeb.aspx" />
     <Content Include="Views\Manage\AddTitleInfoWeb.aspx" />
     <Content Include="Views\Manage\AddTitleItemAssocWeb.aspx" />
     <Content Include="Views\Manage\AddTitleItemWeb.aspx" />
     <Content Include="Views\Manage\ExamManage.aspx" />
     <Content Include="Views\Manage\ExercisesTestWeb.aspx" />
+    <Content Include="Views\Manage\ExercisesTitleWeb.aspx" />
     <Content Include="Views\Manage\ExperimentTypeWeb.aspx" />
     <Content Include="Views\Manage\Login.aspx" />
     <Content Include="Views\Manage\TitleInfoWeb.aspx" />
