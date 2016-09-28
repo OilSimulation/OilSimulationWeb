@@ -97,27 +97,27 @@ namespace DBHelper.Model
     /// </summary>
     public struct StudentExaminationPaper
     {
-        public int StudentExaminationPaperId;
+        public int StudentExaminationPaperId { get; set; }
         /// <summary>
         /// 学生编号
         /// </summary>
-        public int StudentId;
+        public int StudentId { get; set; }
         /// <summary>
         /// 题目编号
         /// </summary>
-        public int TitleInfoId;
+        public int TitleInfoId { get; set; }
         /// <summary>
         /// 学生写的答案
         /// </summary>
-        public int StudentAnswer;
+        public int StudentAnswer { get; set; }
         /// <summary>
         /// 得分
         /// </summary>
-        public double Score;
+        public double Score { get; set; }
         /// <summary>
         /// 考试Id
         /// </summary>
-        public int ExercisesTestId;
+        public int ExercisesTestId { get; set; }
     }
 
     public struct StudentExam
@@ -125,27 +125,31 @@ namespace DBHelper.Model
         /// <summary>
         /// 
         /// </summary>
-        public int StudentExamId;
+        public int StudentExamId { get; set; }
         /// <summary>
         /// 学生姓名
         /// </summary>
-        public string StudentName;
+        public string StudentName { get; set; }
         /// <summary>
         /// 学号
         /// </summary>
-        public string StudentNumber;
+        public string StudentNumber { get; set; }
         /// <summary>
         /// 性别
         /// </summary>
-        public int StudentSex;
+        public int StudentSex { get; set; }
         /// <summary>
         /// 电话号码
         /// </summary>
-        public string StudentPhone;
+        public string StudentPhone { get; set; }
+
+        #region ************  其他
         /// <summary>
         /// 总分
         /// </summary>
         public double TotalScore;
+
+        #endregion
     }
 
     /// <summary>
@@ -278,6 +282,36 @@ namespace DBHelper.Model
     {
         public int Id1 { get; set; }
         public int Id2 { get; set; }
+    }
+
+    public struct ExamList
+    {
+
+        /// <summary>
+        /// 考试或练习ID
+        /// </summary>
+        public int ExercisesTestId { get; set; }
+        /// <summary>
+        /// 考试或练习名称
+        /// </summary>
+        public string ExercisesName { get; set; }
+        /// <summary>
+        /// 考试或练习描述
+        /// </summary>
+        public string ExercisesDescribe { get; set; }
+        /// <summary>
+        /// 学生编号
+        /// </summary>
+        //public int StudentExamId { get; set; }
+        /// <summary>
+        /// 学生得分
+        /// </summary>
+        public double StudentScore { get; set; }
+        /// <summary>
+        /// 考试总分
+        /// </summary>
+        public double TotleScore { get; set; }
+
     }
 
     #endregion

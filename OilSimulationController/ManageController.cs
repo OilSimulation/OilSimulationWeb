@@ -26,6 +26,7 @@ namespace OilSimulationController
         TitleItemBLL TitleItembll = new TitleItemBLL(strConn);
         TitleItemAssocBLL TitleItemAssocbll = new TitleItemAssocBLL(strConn);
         ExercisesTitleBLL ExercisesTitlebll = new ExercisesTitleBLL(strConn);
+        StudentExamBLL StudentExambll = new StudentExamBLL(strConn);
 
         public ManageController()
         {
@@ -553,6 +554,48 @@ namespace OilSimulationController
             return res;
         }
 
+        #endregion
+
+
+        #region *************************************** 学生信息(StudentExam )
+
+        public ActionResult StudentExamWeb()
+        {
+            return View();
+        }
+
+        public ActionResult StudentExamExercisesTestWeb()
+        {
+            return View();
+        }
+
+
+        /// <summary>
+        /// 获取学生信息
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetStudentExam()
+        {
+            List<StudentExam> result = StudentExambll.GetStudentExam();
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        /// <summary>
+        /// 查询学生参加的考试
+        /// </summary>
+        /// <param name="info">学生ID</param>
+        /// <returns></returns>
+        public ActionResult GetExercisesTestStudent(stId info)
+        {
+            List<ExamList> result = StudentExambll.GetExercisesTestStudent(info.Id);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
         #endregion
 
 

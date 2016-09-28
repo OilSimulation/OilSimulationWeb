@@ -3,9 +3,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
+
 <html>
 <head>
-<title>考试或练习题目配置</title>
+<title>学生信息</title>
 
     <link href="<%=Url.Content("~/Scripts/Exam/static/h-ui/css/H-ui.min.css")%>" rel="stylesheet" type="text/css" /> 
     <link href="<%=Url.Content("~/Scripts/Exam/static/h-ui.admin/css/H-ui.admin.css")%>" rel="stylesheet" type="text/css" /> 
@@ -28,19 +29,18 @@
 	</ul>
 </div>
 <div style="margin-left:150px;">
-	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 试题管理 <span class="c-gray en">&gt;</span> 考试题目配置 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+	<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 学生成绩管理 <span class="c-gray en">&gt;</span> 学生成绩管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 	<div class="page-container">
-
-		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="AddExercisesTitle('添加题目','AddExercisesTitleWeb')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加题目</a></span>  </div>
+		<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><label id="StudentName"></label><label id="StudentNumber"></label></span>  </div>
 		<div class="mt-20">
 			<table id="datatable" class="table table-border table-bordered table-bg table-hover table-sort">
 				<thead>
 					<tr class="text-c">
-						<th width="40"><input name="" type="checkbox" value=""></th>
-						<th width="100">题目内容</th>
-                        <th width="60">正确答案</th>
-                        <th width="60">该题分数</th>
-                        <th width="60">题目位置</th>
+
+						<th width="100">考试名称</th>
+                        <th width="60">考试描述</th>
+                        <th width="60">考试总分</th>
+                        <th width="60">考试成绩</th>
                         <th width="60">操作</th>
 					</tr>
 				</thead>
@@ -63,10 +63,13 @@
 
 
 <script type="text/javascript">
-    //当前选中的考试Id
+    //当前选中的学生ID
+    var CurrentStudentExamId = -1;
+    //当前选中的考试ID
+    //var CurrentExercisesTestId = -1;
     var CurrentExercisesTestId = -1;
-    //当前选中的考试 实验类型ID(-1表示一次考试，其它表示练习)
-    var CurrentExercisesTypeId = -1;
+    var CurrentTotleScore = 0;
+    var CurrentStudentScore = 0;
     var zNodes;
     var setting = {
         view: {
@@ -89,9 +92,10 @@
                     zTree.expandNode(treeNode);
                     return false;
                 } else {
-                    CurrentExercisesTestId = treeNode.file;
-                    CurrentExercisesTypeId = treeNode.TypeId;
-                    LoadExercisesTitle();
+                    CurrentStudentExamId = treeNode.StudentExamId;
+                    $("#StudentName").val(treeNode.name);
+                    $("#StudentNumber").val(treeNode.StudentNumber);
+                    LoadExercisesTest();
                     return true;
                 }
             }
@@ -101,7 +105,7 @@
 
 
     $(document).ready(function () {
-        LoadExercisesTest();
+        LoadStudentExam();
         var t = $("#treeDemo");
         t = $.fn.zTree.init(t, setting, zNodes);
         //demoIframe = $("#testIframe");
@@ -110,19 +114,17 @@
         //zTree.selectNode(zTree.getNodeByParam("id", '1'));
     });
 
-    //加载 考试对应的题目
-    function LoadExercisesTitle() {
-        var jsonDataId = { Id: CurrentExercisesTestId };
+    //加载 学生参加过的所有考试
+    function LoadExercisesTest() {
+        var jsonDataId = { Id: CurrentStudentExamId };
 
         var datatable = $("#datatable").DataTable();
         datatable.clear().draw();
-        //加载 题目下的所有选项
         var option = {
-            url: '<%:Url.Action("GetExercisesTitle","Manage") %>',
+            url: '<%:Url.Action("","Manage") %>',
             type: 'POST',
             async: false,
             dataType: 'html',
-            data: JSON.stringify(jsonDataId),
             contentType: 'application/json',
             success: function (result) {
                 var jsonData = JSON.parse(result);
@@ -131,9 +133,9 @@
                         var aDel = $("<a></a>");
                         aDel.addClass("ml-5");
                         aDel.attr("style", "text-decoration:none");
-                        aDel.attr("onClick", "article_del(this,'" + jsonData[i].ExercisesTitleId + "')");
+                        aDel.attr("onClick", "viewdetails(this,'" + jsonData[i].ExercisesTestId + "','" + jsonData[i].TotleScore + "','" + jsonData[i].StudentScore + "')");
                         aDel.attr("href", "javascript:;");
-                        aDel.attr("title", "删除");
+                        aDel.attr("title", "查看详情");
                         var iDel = $("<i></i>").appendTo(aDel);
                         iDel.addClass("Hui-iconfont");
                         iDel.html("&#xe6e2;"); //&#xe6e2;
@@ -141,7 +143,7 @@
                         var ht = aDel[0].outerHTML;
 
 
-                        var row = datatable.row.add(['<input type="checkbox" value="1" name="">', jsonData[i].TitleConent, jsonData[i].CorrectAnswer,jsonData[i].Score,jsonData[i].ExercisesTitleIndex, ht]).draw();
+                        var row = datatable.row.add([jsonData[i].ExercisesName, jsonData[i].ExercisesDescribe, jsonData[i].TotleScore, jsonData[i].StudentScore, ht]).draw();
                         //row.addClass("text-c");
 
                     }
@@ -156,7 +158,7 @@
     }
 
 
-   
+
 
 
 
@@ -168,19 +170,19 @@
 	]
     });
 
-    //加载考试数据
-    function LoadExercisesTest() {
+    //加载学生信息
+    function LoadStudentExam() {
         var option = {
-            url: '<%:Url.Action("GetExercisesTest","Manage") %>',
+            url: '<%:Url.Action("GetStudentExam","Manage") %>',
             type: 'POST',
             async: false,
             dataType: 'html',
             contentType: 'application/json',
             success: function (result) {
                 var jsonData = JSON.parse(result);
-                var nodeData = '[{"id":"1","pId":"0","name":"考试列表","open":"true"}';
+                var nodeData = '[{"id":"1","pId":"0","name":"学生列表","open":"true"}';
                 for (var i = 0; i < jsonData.length; i++) {
-                    nodeData += ',{"id":"1' + (i + 1) + '","pId":"1","name":"' + jsonData[i].ExercisesName + '","file":"' + jsonData[i].ExercisesTestId + '","TypeId":"' + jsonData[i].ExercisesTypeId + '"}';
+                    nodeData += ',{"id":"1' + (i + 1) + '","pId":"1","name":"' + jsonData[i].StudentName + '","StudentExamId":"' + jsonData[i].StudentExamId + '","StudentNumber":"' + jsonData[i].StudentNumber + '"}';
                 }
                 nodeData += ']';
                 //nodeData = '{"id":"1","pId":"0","name":"题目列表","open":"1"}';
@@ -192,14 +194,20 @@
         $.ajax(option);
     }
 
-    //增加 考试与题目对应关系
-    function AddExercisesTitle(title, url) {
-        if (CurrentExercisesTestId == -1) {
-            layer.msg('请选择左侧的考试 ！');
-            return;
-        }
-        layer_show(title, url, '', 400);
+    function viewdetails(obj, ExercisesTestId, TotleScore, StudentScore) {
+
+        CurrentExercisesTestId = ExercisesTestId;
+        CurrentStudentScore = StudentScore;
+        CurrentTotleScore = TotleScore;
+        //layer.show("学生答题情况", "StudentExamExercisesTestWeb",'',)
+        var index = layer.open({
+            type: 2,
+            title: "学生答题情况",
+            content: "StudentExamExercisesTestWeb"
+        });
+        layer.full(index);
     }
+
 
     function article_del(obj, id) {
         layer.confirm('确认要删除吗？', function (index) {
@@ -235,12 +243,6 @@
 
 
 
-    function product_del(obj, id) {
-        layer.confirm('确认要删除吗？', function (index) {
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!', { icon: 1, time: 1000 });
-        });
-    }
-</script>
+    </script>
 </body>
 </html>

@@ -59,7 +59,7 @@ namespace DBHelper.Bll
 
         public int DelTitleInfo(int TitleInfoId)
         {
-            string strSql = "delete from TitleInfo where TitleInfoId=@TitleInoId";
+            string strSql = "delete from TitleInfo where TitleInfoId=@TitleInfoId";
             return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=TitleInfoId, ParameterName="@TitleInfoId"}});
         }

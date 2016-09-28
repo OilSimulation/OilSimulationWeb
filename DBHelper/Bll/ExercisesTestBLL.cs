@@ -43,6 +43,26 @@ namespace DBHelper.Bll
 
         }
 
+        /// <summary>
+        /// 获取考试或练习 总分
+        /// </summary>
+        /// <param name="ExercisesTestId"></param>
+        /// <returns></returns>
+        public double GetExercisesTestTotleScore(int ExercisesTestId)
+        {
+            string strSql = "select sum(b.Score) from ExercisesTitle a ,TitleInfo  b where a.ExercisesTestId=@ExercisesTestId and a.TitleInfoId=b.TitleInfoId";
+            object obj = DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteScalar(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"}
+            });
+            double score = 0.0;
+            if (obj != null)
+            {
+                double.TryParse(obj.ToString(), out score);
+            }
+
+            return score;
+        }
+
         public int AddExercisesTest(ExercisesTest info)
         {
             string strSql = @"insert into ExercisesTest (ExercisesName,ExercisesDescribe,ExercisesTypeId,UpdateDateTime) 

@@ -11,10 +11,12 @@ namespace DBHelper.Bll
 {
     public class StudentExamBLL
     {
+        ExercisesTestBLL ExercisesTestbll;
         private string m_strConn;
         public StudentExamBLL(string strConn)
         {
             m_strConn = strConn;
+            ExercisesTestbll = new ExercisesTestBLL(strConn);
         }
 
         public List<StudentExam> GetStudentExam()
@@ -39,6 +41,61 @@ namespace DBHelper.Bll
         }
 
         /// <summary>
+        /// 查询参加了该考试的学生
+        /// </summary>
+        /// <param name="ExercisesTestId"></param>
+        /// <returns></returns>
+        public List<StudentExam> GetStudentExamByExercisesTest(int ExercisesTestId)
+        {
+            string strSql = "select DISTINCT b.StudentExamId,b.StudentSex,b.StudentName,b.StudentNumber,b.StudentPhone from StudentExaminationPaper a,StudentExam b where a.ExercisesTestId=@ExercisesTestId and a.StudentExamId=b.StudentExamId";
+            return DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"}}));
+
+        }
+
+
+        /// <summary>
+        /// 查询学生参加的考试
+        /// </summary>
+        /// <param name="StudentId"></param>
+        /// <returns></returns>
+        public List<ExamList> GetExercisesTestStudent(int StudentId)
+        {
+            //学生参加的考试 
+            string strSql = "select DISTINCT a.StudentExamId,b.ExercisesTestId,b.ExercisesName,b.ExercisesDescribe from StudentExaminationPaper a,ExercisesTest   b where a.StudentExamId=@StudentExamId and a.ExercisesTestId=b.ExercisesTestId";
+
+
+            return DataTableToExamList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=StudentId, ParameterName="@StudentExamId"}}));
+
+        }
+
+        /// <summary>
+        /// 获取学生总成绩
+        /// </summary>
+        /// <param name="StudentId">学生ID</param>
+        /// <param name="ExercisesTestId">考试ID</param>
+        /// <returns></returns>
+        public double GetStudentScore(int StudentId, int ExercisesTestId)
+        {
+            string strSql = @"select sum(d.Score) from (
+                                select * from StudentExaminationPaper  a where a.ExercisesTestId=@ExercisesTestId and a.StudentExamId=@StudentExamId) c
+                                left join TitleInfo d on c.TitleInfoId=d.TitleInfoId where c.StudentAnswer=d.CorrectAnswer";
+            object obj = DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteScalar(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"},
+                new SQLiteParameter(){  Value=StudentId, ParameterName="@StudentExamId"}
+            });
+            double score = 0.0;
+            if (obj != null)
+            {
+                double.TryParse(obj.ToString(), out score);
+            }
+
+
+            return score;
+        }
+
+        /// <summary>
         /// 通过学号查询
         /// </summary>
         /// <param name="StudentNumber"></param>
@@ -59,6 +116,30 @@ namespace DBHelper.Bll
 
         }
 
+
+        private List<ExamList> DataTableToExamList(DataTable dt)
+        {
+            List<ExamList> listInfo = new List<ExamList>();
+            if (dt!=null)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    int StudentExamId = -1;
+                    ExamList info = new ExamList();
+                    info.ExercisesTestId = dr["ExercisesTestId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["ExercisesTestId"]);
+                    info.ExercisesName = dr["ExercisesName"] == DBNull.Value ? "" : dr["ExercisesName"].ToString();
+                    info.ExercisesDescribe = dr["ExercisesDescribe"] == DBNull.Value ? "" : dr["ExercisesDescribe"].ToString();
+                    StudentExamId = dr["StudentExamId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["StudentExamId"]);
+                    info.TotleScore = ExercisesTestbll.GetExercisesTestTotleScore(info.ExercisesTestId);
+                    info.StudentScore = GetStudentScore(StudentExamId, info.ExercisesTestId);
+
+                    listInfo.Add(info);
+
+                }
+            }
+            return listInfo;
+        }
+
         private List<StudentExam> DataTableToList(DataTable dt)
         {
             List<StudentExam> listInfo = new List<StudentExam>();
@@ -69,7 +150,7 @@ namespace DBHelper.Bll
                     StudentExam info = new StudentExam();
                     info.StudentExamId = dr["StudentExamId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["StudentExamId"]);
                     info.StudentSex = dr["StudentSex"] == DBNull.Value ? -100 : Convert.ToInt32(dr["StudentSex"]);
-                    info.TotalScore = dr["TotalScore"] == DBNull.Value ? -100 : Convert.ToDouble(dr["TotalScore"]);
+                    //info.TotalScore = dr["TotalScore"] == DBNull.Value ? -100 : Convert.ToDouble(dr["TotalScore"]);
                     info.StudentName = dr["StudentName"] == DBNull.Value ? "" : dr["StudentName"].ToString();
                     info.StudentNumber = dr["StudentNumber"] == DBNull.Value ? "" : dr["StudentNumber"].ToString();
                     info.StudentPhone = dr["StudentPhone"] == DBNull.Value ? "" : dr["StudentPhone"].ToString();
