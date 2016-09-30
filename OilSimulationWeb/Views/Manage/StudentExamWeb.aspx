@@ -121,7 +121,7 @@
         var datatable = $("#datatable").DataTable();
         datatable.clear().draw();
         var option = {
-            url: '<%:Url.Action("","Manage") %>',
+            url: '<%:Url.Action("GetExercisesTestStudent","Manage") %>',
             type: 'POST',
             async: false,
             dataType: 'html',

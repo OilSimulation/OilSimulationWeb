@@ -16,6 +16,10 @@ namespace DBHelper.Bll
         {
             m_strConn = strConn;
         }
+
+
+        //public void GetStudentExam()
+
         public List<StudentExaminationPaper> GetStudentExaminationPaper()
         {
             string strSql = "select * from StudentExaminationPaper";
@@ -37,26 +41,7 @@ namespace DBHelper.Bll
 
         }
 
-        /// <summary>
-        /// 通过学号查询
-        /// </summary>
-        /// <param name="StudentNumber"></param>
-        /// <returns></returns>
-        public StudentExaminationPaper? GetStudentExam(int StudentNumber)
-        {
-            string strSql = "select * from StudentExam where StudentNumber=@StudentNumber";
-            List<StudentExaminationPaper> list = DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
-                new SQLiteParameter(){  Value=StudentNumber, ParameterName="@StudentNumber"}}));
-            if (list.Count > 0)
-            {
-                return list[0];
-            }
-            else
-            {
-                return null;
-            }
 
-        }
 
         private List<StudentExaminationPaper> DataTableToList(DataTable dt)
         {
