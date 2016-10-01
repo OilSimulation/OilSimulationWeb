@@ -96,11 +96,13 @@
 
     //加载题目 条件实验类型
     function LoadTitle(TypeId) {
+        var jsonData = { Id: TypeId };
         var option = {
             url: '<%:Url.Action("GetTitleInfoTypeId","Manage") %>',
             type: 'POST',
             dataType: 'html',
             asyc: false,
+            data:JSON.stringify(jsonData),
             contentType: 'application/json',
             success: function (result) {
                 var jsonData = JSON.parse(result);
