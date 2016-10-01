@@ -100,7 +100,7 @@ namespace DBHelper.Bll
         /// </summary>
         /// <param name="StudentNumber"></param>
         /// <returns></returns>
-        public StudentExam? GetStudentExamNumber(int StudentNumber)
+        public StudentExam? GetStudentExamNumber(string StudentNumber)
         {
             string strSql = "select * from StudentExam where StudentNumber=@StudentNumber";
             List<StudentExam> list = DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
@@ -116,6 +116,39 @@ namespace DBHelper.Bll
 
         }
 
+        public bool IsExistStudentNumber(string StudentNumber)
+        {
+            string strSql = "select 1 from StudentExam where StudentNumber=@StudentNumber";
+            object obj = DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteScalar(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=StudentNumber, ParameterName="@StudentNumber"}});
+            return obj == null ? false : true;
+
+        }
+
+        public StudentExam? OptStudentNumber(StudentExam info) 
+        {
+            if (!IsExistStudentNumber(info.StudentNumber))
+            {
+                string strSql = "insert into StudentExam(StudentNumber,StudentName) values(@StudentNumber,@StudentName)";
+                int  obj = DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=info.StudentNumber, ParameterName="@StudentNumber"},
+                new SQLiteParameter(){  Value=info.StudentName,ParameterName="@StudentName"}
+                });
+                if (obj>0)
+                {
+                    return GetStudentExamNumber(info.StudentNumber);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return GetStudentExamNumber(info.StudentNumber);
+            }
+
+        }
 
         private List<ExamList> DataTableToExamList(DataTable dt)
         {

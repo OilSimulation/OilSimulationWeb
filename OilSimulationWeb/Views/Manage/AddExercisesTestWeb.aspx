@@ -35,8 +35,7 @@
             <div class="formControls col-xs-8 col-sm-9">
 				<span class="select-box">
                     <select name="" class="select" id="ExercisesTypeId">
-                    	<option value="-1">考试</option>
-
+                        
 				    </select>
 				</span>
 
@@ -80,13 +79,15 @@
             url:'<%:Url.Action("GetExperimentType","Manage") %>',
             type:'POST',
             dataType:'html',
-            asyc:false,
+            async: false,
             contentType:'application/json',
             success:function (result) {
                 var jsonData = JSON.parse(result);
                 if (jsonData.length <= 0) {
                     return;
                 }
+                $("#ExercisesTypeId").append("<option value='-1'>考试</option>");
+
                 for (var i = 0; i < jsonData.length; i++) {
                     $("#ExercisesTypeId").append("<option value='" + jsonData[i].TypeId + "'>" + jsonData[i].TypeName1 + "\\" + jsonData[i].TypeName2 + "</option>");
                 }
@@ -99,7 +100,7 @@
     function LoadData(id) {//GetExperimentTypeById
         var jsonData = { Id: id };
         var option = {
-            url: '<%:Url.Action("GetTitleInfoId","Manage") %>',
+            url: '<%:Url.Action("GetExercisesTestId","Manage") %>',
             type: 'POST',
             dataType: 'html',
             async: false,
@@ -131,7 +132,7 @@
         tds.eq(1).text(jsonData.ExercisesName);
         tds.eq(2).text(jsonData.TypeName1 + "\\" + jsonData.TypeName2);
         tds.eq(3).text(jsonData.ExercisesDescribe);
-        tds.eq(4).text(jsonData.UpdateDateTime);
+        tds.eq(5).text(jsonData.UpdateDateTime);
 
         //parent.RefDataTables();
     }

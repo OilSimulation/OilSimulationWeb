@@ -27,9 +27,9 @@ namespace DBHelper.Bll
         }
 
 
-        public ExercisesTest GetExercisesTest(int ExercisesTestId)
+        public ExercisesTest? GetExercisesTest(int ExercisesTestId)
         {
-            string strSql = "select * from ExercisesTest a left join  ExperimentType b on where a.ExercisesTypeId=b.TypeId and ExercisesTestId=@ExercisesTestId";
+            string strSql = "select * from ExercisesTest a left join  ExperimentType b on  a.ExercisesTypeId=b.TypeId where ExercisesTestId=@ExercisesTestId";
             List<ExercisesTest> list = DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"}}));
             if (list.Count > 0)
@@ -38,7 +38,7 @@ namespace DBHelper.Bll
             }
             else
             {
-                return new ExercisesTest();
+                return null;
             }
 
         }
@@ -125,8 +125,12 @@ namespace DBHelper.Bll
                         DateTime.TryParse(dr["UpdateDateTime"].ToString(), out datetime);
                         info.UpdateDateTime = datetime;
                     }
-                    info.ListTitleInfo = TitleInfobll.GetExercisesAllTitle(info.ExercisesTestId);
-
+                    //info.ListTitleInfo = TitleInfobll.GetExercisesAllTitle(info.ExercisesTestId);
+                    
+                    if (info.ExercisesTestId!=-100&&info.ExercisesTestId == GetCurrentExercises(info.ExercisesTypeId).ExercisesTestId)
+                    {
+                        info.IsUse = 1;
+                    }
                     list.Add(info);
                 }
             }
@@ -141,19 +145,59 @@ namespace DBHelper.Bll
         /// <returns></returns>
         public CurrentExercises GetCurrentExercises(int ExercisesTypeId)
         {
-            string strSql = "select * from CurrentExercises a ,ExercisesTest b where a.ExercisesTestId=b.ExercisesTestId and b.ExercisesTypeId=@ExercisesTypeId";
+            string strSql = "select * from CurrentExercises where ExercisesTypeId=@ExercisesTypeId";
             return DataTableToCurrentExercises(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=ExercisesTypeId, ParameterName="@ExercisesTypeId"}}));
 
         }
 
+        public int SaveCurrentExercises(int ExercisesTestId)
+        {
+            string strSql = "";
+            ExercisesTest? info = GetExercisesTest(ExercisesTestId);
+            if (info == null)
+            {
+                return -1;
+            }
+            else
+            {
+                CurrentExercises model = GetCurrentExercises(info.Value.ExercisesTypeId);
+                if (model.CurrentExercisesId == -100)
+                {
+                    //增加
+                    strSql = "insert into CurrentExercises(ExercisesTestId,ExercisesTypeId) values(@ExercisesTestId,@ExercisesTypeId)";
+                    return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                            new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"},
+                            new SQLiteParameter(){  Value=info.Value.ExercisesTypeId, ParameterName="@ExercisesTypeId"}
+                        });
+
+                }
+                else
+                {
+                    strSql = "update CurrentExercises set ExercisesTestId=@ExercisesTestId where ExercisesTypeId=@ExercisesTypeId";
+                    //修改
+                    return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                            new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"},
+                            new SQLiteParameter(){  Value=info.Value.ExercisesTypeId, ParameterName="@ExercisesTypeId"}
+                        });
+
+                }
+
+            }
+        }
+
         private CurrentExercises DataTableToCurrentExercises(DataTable dt)
         {
             CurrentExercises info = new CurrentExercises();
-            if (dt!=null&&dt.Rows.Count>0)
+            if (dt != null && dt.Rows.Count > 0)
             {
                 info.CurrentExercisesId = dt.Rows[0]["CurrentExercisesId"] == DBNull.Value ? -100 : Convert.ToInt32(dt.Rows[0]["CurrentExercisesId"]);
                 info.ExercisesTestId = dt.Rows[0]["ExercisesTestId"] == DBNull.Value ? -100 : Convert.ToInt32(dt.Rows[0]["ExercisesTestId"]);
+                info.ExercisesTypeId = dt.Rows[0]["ExercisesTypeId"] == DBNull.Value ? -100 : Convert.ToInt32(dt.Rows[0]["ExercisesTypeId"]);
+            }
+            else
+            {
+                info.CurrentExercisesId = -100;
             }
             return info;
         }

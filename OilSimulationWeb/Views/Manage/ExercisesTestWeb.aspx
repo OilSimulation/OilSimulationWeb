@@ -20,7 +20,12 @@
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 试题管理 <span class="c-gray en">&gt;</span> 考试列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
 
-	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a class="btn btn-primary radius" onclick="article_add('添加考试','AddExercisesTestWeb')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加数据</a></span>  </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> 
+        <span class="l">
+            <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> 
+            <a class="btn btn-primary radius" onclick="article_add('添加考试','AddExercisesTestWeb')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加数据</a>
+        </span>  
+    </div>
 	<div class="mt-20">
 		<table id="datatables" class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
@@ -29,6 +34,7 @@
 					<th width="100">考试或练习名称</th>
 					<th width="100">考试类型</th>
 					<th width="100">考试描述</th>
+                    <th width="100">使用标志</th>
                     <th width="120">操作时间</th>
                     <th width="120">操作</th>
 				</tr>
@@ -58,9 +64,11 @@
 
 <script type="text/javascript">
 
+    var ExercisesTestId = -1;
     $(document).ready(function () {
         LoadData();
         RefDataTables();
+
     });
 
     function RefDataTables() {
@@ -153,6 +161,17 @@
             //考试描述
             var tdType2 = $("<td></td>").appendTo(tr);
             tdType2.html(jsonData[i].ExercisesDescribe);
+
+            var bz = $("<td></td>").appendTo(tr);
+            if (jsonData[i].IsUse>0) {
+                bz.html("当前使用");
+            }
+            else {
+                bz.html("");
+            }
+
+            
+
             //操作时间
             var tdUpdateDateTime = $("<td></td>").appendTo(tr);
             tdUpdateDateTime.html(jsonData[i].UpdateDateTime);
@@ -180,7 +199,45 @@
             var iDel = $("<i></i>").appendTo(aDel);
             iDel.addClass("Hui-iconfont");
             iDel.html("&#xe6e2;"); //&#xe6e2;
-            //iDel.html("&#xe6df;");
+
+            var aCurrent = $("<a></a>").appendTo(tdManage);
+            aCurrent.addClass("ml-5");
+            aCurrent.attr("style", "text-decoration:none");
+            aCurrent.attr("onClick", "currentExercises(this,'" + jsonData[i].ExercisesTestId + "')");
+            aCurrent.attr("href", "javascript:;");
+            aCurrent.attr("title", "当前使用");
+            var iCurrent = $("<i></i>").appendTo(aCurrent);
+            iCurrent.addClass("Hui-iconfont");
+            iCurrent.html("&#xe619;"); //&#xe6e2;
+
+
+        }
+
+    }
+
+    function currentExercises(obj,id) {
+        if (ExercisesTestId != id) {
+            var jsonData = { Id: id };
+            var option = {
+                url: '<%:Url.Action("SaveCurrentExercises","Manage") %>',
+                type: 'POST',
+                data: JSON.stringify(jsonData),
+                dataType: 'html',
+                async: false,
+                contentType: 'application/json',
+                success: function (result) {
+                    //$(obj).parents("tr").remove().draw();
+                    if (result > 0) {
+                        LoadData();
+                        //                        var tr = parent.$("#ExercisesTestId" + id);
+                        //                        var tds = tds.chilren();
+                        //                        tds.eq(4).text("当前使用");
+
+                    }
+
+                }
+            };
+            $.ajax(option);
 
         }
 
@@ -191,23 +248,25 @@
     function article_add(title, url) {
         $("#AddOrUpdate").val("1");
 
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
+//        var index = layer.open({
+//            type: 2,
+//            title: title,
+//            content: url
+//        });
+//        layer.full(index);
+        layer_show(title, url, '', 400);
     }
     /*资讯-编辑*/
     function article_edit(title, url, id, w, h) {
         $("#ExperimentTypeId").val(id);
         $("#AddOrUpdate").val("2");
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
+//        var index = layer.open({
+//            type: 2,
+//            title: title,
+//            content: url
+//        });
+//        layer.full(index);
+        layer_show(title, url, '', 400);
     }
     /*资讯-删除*/
     function article_del(obj, id) {

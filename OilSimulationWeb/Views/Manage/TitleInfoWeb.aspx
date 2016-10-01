@@ -128,25 +128,6 @@
 
     }
 
-    //    //page:第几页，count:每页显示条数
-    //    function LoadData(page, count) {
-    //        var jsonData = { CurrentPage: page, ShowCount: count};
-
-    //        var option = {
-    //            url: '<%:Url.Action("GetExperimentType","Manage") %>',
-    //            type: 'POST',
-    //            data: JSON.stringify(jsonData),
-    //            dataType: 'html',
-    //            async: false,
-    //            contentType: 'application/json',
-    //            success: function (result) {
-    //                //mmColorJson[paramValue] = eval(result);
-    //                ShowData(eval(result));
-    //            }
-    //        };
-    //        $.ajax(option);
-    //    }
-
     //dataValue,获取的实验类型JSON数据
     function ShowData(dataValue) {
 
@@ -232,23 +213,26 @@
     function article_add(title, url) {
         $("#AddOrUpdate").val("1");
 
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
+//        var index = layer.open({
+//            type: 2,
+//            title: title,
+//            content: url
+//        });
+//        layer.full(index);
+        layer_show(title, url, '', 400);
     }
     /*资讯-编辑*/
     function article_edit(title, url, id, w, h) {
         $("#ExperimentTypeId").val(id);
         $("#AddOrUpdate").val("2");
-        var index = layer.open({
-            type: 2,
-            title: title,
-            content: url
-        });
-        layer.full(index);
+//        var index = layer.open({
+//            type: 2,
+//            title: title,
+//            content: url
+//        });
+        //        layer.full(index);
+        layer_show(title, url, '', 400);
+
     }
     /*资讯-删除*/
     function article_del(obj, id) {

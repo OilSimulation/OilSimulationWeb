@@ -246,6 +246,12 @@ namespace DBHelper.Model
 
 
         #region **************  其他
+
+        /// <summary>
+        /// 是否使用该考试(前台显示的考试)
+        /// </summary>
+        public int IsUse { get; set; }
+
         /// <summary>
         /// 一次考试对应的题目列表
         /// </summary>
@@ -268,6 +274,10 @@ namespace DBHelper.Model
         /// 前台显示的考试()
         /// </summary>
         public int ExercisesTestId { get; set; }
+        /// <summary>
+        /// 类型
+        /// </summary>
+        public int ExercisesTypeId { get; set; }
     }
 
 

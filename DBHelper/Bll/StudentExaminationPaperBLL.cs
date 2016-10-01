@@ -123,10 +123,14 @@ namespace DBHelper.Bll
         /// <returns></returns>
         public ExamInfo GetExamInfo(int ExercisesTestId, int StudentId)
         {
+//             string strSql = @"select a.ExercisesTestId,a.ExercisesName,a.ExercisesDescribe,c.StudentExamId,c.StudentNumber,c.StudentName from ExercisesTest a 
+//                             left join StudentExaminationPaper b on a.ExercisesTestId=b.ExercisesTestId 
+//                             left join StudentExam c on b.StudentExamId=c.StudentExamId and c.StudentExamId=@StudentExamId
+//                             where a.ExercisesTestId=@ExercisesTestId ";
             string strSql = @"select a.ExercisesTestId,a.ExercisesName,a.ExercisesDescribe,c.StudentExamId,c.StudentNumber,c.StudentName from ExercisesTest a 
                             left join StudentExaminationPaper b on a.ExercisesTestId=b.ExercisesTestId 
-                            left join StudentExam c on b.StudentExamId=c.StudentExamId and c.StudentExamId=@StudentExamId
-                            where a.ExercisesTestId=@ExercisesTestId ";
+                            left join StudentExam c on b.StudentExamId=c.StudentExamId 
+                            where a.ExercisesTestId=@ExercisesTestId and c.StudentExamId=@StudentExamId";
             return DataTableToExamInfo(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"},
                 new SQLiteParameter(){  Value=StudentId, ParameterName="@StudentExamId"}
@@ -140,7 +144,7 @@ namespace DBHelper.Bll
             string strSql = @"select c.TitleInfoId,c.TitleConent,c.CorrectAnswer,c.Score,c.ExercisesTitleIndex,c.ExercisesTestId,d.StudentAnswer from 
 (select b.TitleInfoId,b.TitleConent,b.CorrectAnswer,b.Score,a.ExercisesTitleIndex,a.ExercisesTestId from ExercisesTitle a,TitleInfo b 
 where a.ExercisesTestId=@ExercisesTestId and a.TitleInfoId=b.TitleInfoId order by a.ExercisesTitleIndex asc) c 
-left join StudentExaminationPaper d on c.ExercisesTestId=d.ExercisesTestId and c.TitleInfoId=d.TitleInfoId and d.StudentExamId=@StudentExamId";
+left join StudentExaminationPaper d on c.ExercisesTestId=d.ExercisesTestId where c.TitleInfoId=d.TitleInfoId and d.StudentExamId=@StudentExamId";
             return DataTableToExamTitleInfo(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"},
                 new SQLiteParameter(){  Value=StudentId, ParameterName="@StudentExamId"}

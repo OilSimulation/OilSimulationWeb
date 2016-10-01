@@ -564,6 +564,7 @@
     <Content Include="Views\Examination\InnovateTwoExam.aspx" />
     <Content Include="Views\Examination\InnvateExam.aspx" />
     <Content Include="Views\Examination\SimulationExam.aspx" />
+    <Content Include="Views\Examination\StudentLogin.aspx" />
     <Content Include="Views\Examination\VirExperimentExam.aspx" />
     <Content Include="Views\Examination\VirtualOneExam.aspx" />
     <Content Include="Views\Examination\VirtualThreeExam.aspx" />

@@ -440,7 +440,7 @@ namespace OilSimulationController
         }
         public ActionResult GetExercisesTestId(stId ExercisesTestId)
         {
-            ExercisesTest result = ExercisesTestbll.GetExercisesTest(ExercisesTestId.Id);
+            ExercisesTest? result = ExercisesTestbll.GetExercisesTest(ExercisesTestId.Id);
             var res = new ConfigurableJsonResult();
             res.Data = result;
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
@@ -465,6 +465,15 @@ namespace OilSimulationController
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return res;
 
+        }
+
+        public ActionResult SaveCurrentExercises(stId info)
+        {
+            int result = ExercisesTestbll.SaveCurrentExercises(info.Id);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
         }
 
         #endregion
