@@ -261,6 +261,16 @@ namespace DBHelper.Model
     }
 
 
+    public struct CurrentExercises
+    {
+        public int CurrentExercisesId { get; set; }
+        /// <summary>
+        /// 前台显示的考试()
+        /// </summary>
+        public int ExercisesTestId { get; set; }
+    }
+
+
     #region **********************************************  考试 前台传到后台参数
     public struct stGetExperimentType
     {
@@ -312,6 +322,100 @@ namespace DBHelper.Model
         /// </summary>
         public double TotleScore { get; set; }
 
+    }
+
+
+    public struct ExamItemInfo
+    {
+        /// <summary>
+        /// 题目选项ID
+        /// </summary>
+        public int ExamItemId { get; set; }
+        /// <summary>
+        /// 题目选项名称
+        /// </summary>
+        public string ExamItemName { get; set; }
+        /// <summary>
+        /// 该选项在题目中的位置(题目答案与此项相关)
+        /// </summary>
+        public int TitleItemIndex { get; set; }
+
+    }
+
+    /// <summary>
+    /// 考试题目
+    /// </summary>
+    public struct ExamTitleInfo
+    {
+        /// <summary>
+        /// 题目ID
+        /// </summary>
+        public int TitleInfoId { get; set; }
+        /// <summary>
+        /// 题目内容 
+        /// </summary>
+        public string TitleConent { get; set; }
+
+        /// <summary>
+        /// 正确答案 
+        /// </summary>
+        public int CorrectAnswer { get; set; }
+        /// <summary>
+        /// 学生答案
+        /// </summary>
+        public int StudentAnswer { get; set; }
+
+        /// <summary>
+        /// 该题分数
+        /// </summary>
+        public double Score { get; set; }
+
+        /// <summary>
+        /// 题目选项(按照选项位置排好顺序)
+        /// </summary>
+        public List<ExamItemInfo> ListExamItem { get; set; }
+    }
+
+    public struct ExamInfo
+    {
+        /// <summary>
+        /// 考试或练习ID
+        /// </summary>
+        public int ExercisesTestId { get; set; }
+        /// <summary>
+        /// 考试或练习名称
+        /// </summary>
+        public string ExercisesName { get; set; }
+        /// <summary>
+        /// 考试或练习描述
+        /// </summary>
+        public string ExercisesDescribe { get; set; }
+        /// <summary>
+        /// 学生编号
+        /// </summary>
+        public int StudentExamId { get; set; }
+        /// <summary>
+        /// 学生姓名
+        /// </summary>
+        public string StudentName { get; set; }
+        /// <summary>
+        /// 学生学号
+        /// </summary>
+        public string StudentNumber { get; set; }
+        /// <summary>
+        /// 学生得分
+        /// </summary>
+        public double StudentScore { get; set; }
+        /// <summary>
+        /// 考试总分
+        /// </summary>
+        public double TotleScore { get; set; }
+
+
+        /// <summary>
+        /// 题目列表(按照题目顺序排好顺序)
+        /// </summary>
+        public List<ExamTitleInfo> ListExamTitle { get; set; }
     }
 
     #endregion

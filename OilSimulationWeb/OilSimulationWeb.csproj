@@ -554,10 +554,12 @@
     <Content Include="Views\Base\BaseModeTwo.aspx" />
     <Content Include="Views\Examination\BaseExam.aspx" />
     <Content Include="Views\Examination\BaseOneExam.aspx" />
+    <Content Include="Views\Examination\BaseOneExamWeb.aspx" />
     <Content Include="Views\Examination\BaseThreeExam.aspx" />
     <Content Include="Views\Examination\BaseTwoExam.aspx" />
     <Content Include="Views\Examination\EmulateOneExam.aspx" />
     <Content Include="Views\Examination\EmulateTwoExam.aspx" />
+    <Content Include="Views\Examination\ExamPaper.aspx" />
     <Content Include="Views\Examination\InnovateOneExam.aspx" />
     <Content Include="Views\Examination\InnovateTwoExam.aspx" />
     <Content Include="Views\Examination\InnvateExam.aspx" />

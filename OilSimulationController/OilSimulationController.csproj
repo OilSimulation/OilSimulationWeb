@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="BusinessController.cs" />
     <Compile Include="BaseController.cs" />
+    <Compile Include="ExaminationController.cs" />
     <Compile Include="HomeController.cs" />
     <Compile Include="InnovateController.cs" />
     <Compile Include="ManageController.cs" />

@@ -134,6 +134,30 @@ namespace DBHelper.Bll
 
         }
 
+        /// <summary>
+        /// 获取前台显示的考试
+        /// </summary>
+        /// <param name="ExercisesTypeId">考试ID(-1表示 考试 大于-1表示一次练习)</param>
+        /// <returns></returns>
+        public CurrentExercises GetCurrentExercises(int ExercisesTypeId)
+        {
+            string strSql = "select * from CurrentExercises a ,ExercisesTest b where a.ExercisesTestId=b.ExercisesTestId and b.ExercisesTypeId=@ExercisesTypeId";
+            return DataTableToCurrentExercises(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=ExercisesTypeId, ParameterName="@ExercisesTypeId"}}));
+
+        }
+
+        private CurrentExercises DataTableToCurrentExercises(DataTable dt)
+        {
+            CurrentExercises info = new CurrentExercises();
+            if (dt!=null&&dt.Rows.Count>0)
+            {
+                info.CurrentExercisesId = dt.Rows[0]["CurrentExercisesId"] == DBNull.Value ? -100 : Convert.ToInt32(dt.Rows[0]["CurrentExercisesId"]);
+                info.ExercisesTestId = dt.Rows[0]["ExercisesTestId"] == DBNull.Value ? -100 : Convert.ToInt32(dt.Rows[0]["ExercisesTestId"]);
+            }
+            return info;
+        }
+
 
     }
 }
