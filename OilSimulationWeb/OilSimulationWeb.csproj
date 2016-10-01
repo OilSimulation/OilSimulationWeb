@@ -701,6 +701,7 @@
   <ItemGroup>
     <None Include="Content\icons.ttf" />
     <None Include="Content\icons.woff" />
+    <None Include="DBFile\DB.db" />
     <None Include="Scripts\Exam\lib\Hui-iconfont\1.0.7\iconfont.eot" />
     <None Include="Scripts\Exam\lib\Hui-iconfont\1.0.7\iconfont.ttf" />
     <None Include="Scripts\Exam\lib\Hui-iconfont\1.0.7\iconfont.woff" />
@@ -722,7 +723,6 @@
     <None Include="Scripts\Exam\static\h-ui\images\ucnter\Thumbs.db" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DBFile\" />
     <Folder Include="Scripts\Exam\lib\jquery.validation\1.14.0\demo\" />
     <Folder Include="Scripts\Exam\static\h-ui\images\unslider\" />
   </ItemGroup>
