@@ -70,8 +70,8 @@
             <div style="padding: 10px 20px 20px 0px;">
                 <div class="t-title f-f0">随堂测试</div>
                 <div class="m-btnList">
-                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="LoadUrl('/Examination/StudentLogin');">
-                        <span class="f-db">参加测试</span> <input id="ExperimentTypeId"  style="display:none" value="1"></input>
+                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="LoadExam(1);">
+                        <span class="f-db">参加测试</span>
 
                     </a>
                 </div>

@@ -26,6 +26,20 @@ namespace DBHelper.Bll
             return DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql));
         }
 
+        /// <summary>
+        /// 修改考试状态
+        /// </summary>
+        /// <param name="ExercisesTestId"></param>
+        /// <param name="state">0:正在考试，1已经结束</param>
+        /// <returns></returns>
+        public int UpdateExercisesState(int ExercisesTestId, int state)
+        {
+            string strSql = @"update ExercisesTest set IsOver=@IsOver where  ExercisesTestId=@ExercisesTestId";
+            return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"},
+                new SQLiteParameter(){  Value=state, ParameterName="@IsOver"}
+            });
+        }
 
         public ExercisesTest? GetExercisesTest(int ExercisesTestId)
         {
@@ -65,12 +79,13 @@ namespace DBHelper.Bll
 
         public int AddExercisesTest(ExercisesTest info)
         {
-            string strSql = @"insert into ExercisesTest (ExercisesName,ExercisesDescribe,ExercisesTypeId,UpdateDateTime) 
-                            values(@ExercisesName,@ExercisesDescribe,@ExercisesTypeId,@UpdateDateTime)";
+            string strSql = @"insert into ExercisesTest (ExercisesName,ExercisesDescribe,ExercisesTypeId,UpdateDateTime,IsOver) 
+                            values(@ExercisesName,@ExercisesDescribe,@ExercisesTypeId,@UpdateDateTime,@IsOver)";
             return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=info.ExercisesDescribe, ParameterName="@ExercisesDescribe"},
                 new SQLiteParameter(){  Value=info.ExercisesName, ParameterName="@ExercisesName"},
                 new SQLiteParameter(){  Value=info.ExercisesTypeId, ParameterName="@ExercisesTypeId"},
+                new SQLiteParameter(){  Value=info.IsOver, ParameterName="@IsOver"},
                 new SQLiteParameter(){  Value=info.UpdateDateTime, ParameterName="@UpdateDateTime"}            
             });
 
@@ -83,13 +98,15 @@ namespace DBHelper.Bll
         /// <returns></returns>
         public int UpdateExercisesTest(ExercisesTest info)
         {
-            string strSql = @"update ExercisesTest set ExercisesDescribe=@ExercisesDescribe,ExercisesName=@ExercisesName,ExercisesTypeId=@ExercisesTypeId,UpdateDateTime=@UpdateDateTime
+            string strSql = @"update ExercisesTest set ExercisesDescribe=@ExercisesDescribe,ExercisesName=@ExercisesName
+                            ,ExercisesTypeId=@ExercisesTypeId,UpdateDateTime=@UpdateDateTime,IsOver=@IsOver
                             where ExercisesTestId=@ExercisesTestId";
             return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=info.ExercisesTestId, ParameterName="@ExercisesTestId"},
                 new SQLiteParameter(){  Value=info.ExercisesDescribe, ParameterName="@ExercisesDescribe"},
                 new SQLiteParameter(){  Value=info.ExercisesName, ParameterName="@ExercisesName"},
                 new SQLiteParameter(){  Value=info.ExercisesTypeId, ParameterName="@ExercisesTypeId"},
+                new SQLiteParameter(){  Value=info.IsOver, ParameterName="@IsOver"},
                 new SQLiteParameter(){  Value=info.UpdateDateTime, ParameterName="@UpdateDateTime"}            
             });
 
@@ -117,6 +134,7 @@ namespace DBHelper.Bll
                     info.ExercisesName = dr["ExercisesName"] == DBNull.Value ? "" : dr["ExercisesName"].ToString();
                     info.ExercisesTestId = dr["ExercisesTestId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["ExercisesTestId"]);
                     info.ExercisesTypeId = dr["ExercisesTypeId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["ExercisesTypeId"]);
+                    info.IsOver = dr["IsOver"] == DBNull.Value ? -100 : Convert.ToInt32(dr["IsOver"]);
                     info.TypeName1 = dr["TypeName1"] == DBNull.Value ? "" : dr["TypeName1"].ToString();
                     info.TypeName2 = dr["TypeName2"] == DBNull.Value ? "" : dr["TypeName2"].ToString();
                     if (dr["UpdateDateTime"] != DBNull.Value)

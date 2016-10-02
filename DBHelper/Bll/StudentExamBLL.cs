@@ -125,16 +125,16 @@ namespace DBHelper.Bll
 
         }
 
-        public StudentExam? OptStudentNumber(StudentExam info) 
+        public StudentExam? OptStudentNumber(StudentExam info)
         {
             if (!IsExistStudentNumber(info.StudentNumber))
             {
                 string strSql = "insert into StudentExam(StudentNumber,StudentName) values(@StudentNumber,@StudentName)";
-                int  obj = DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                int obj = DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=info.StudentNumber, ParameterName="@StudentNumber"},
-                new SQLiteParameter(){  Value=info.StudentName,ParameterName="@StudentName"}
+                new SQLiteParameter(){  Value=info.StudentName==null?"":info.StudentName,ParameterName="@StudentName"}
                 });
-                if (obj>0)
+                if (obj > 0)
                 {
                     return GetStudentExamNumber(info.StudentNumber);
                 }

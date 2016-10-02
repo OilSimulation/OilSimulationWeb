@@ -210,10 +210,79 @@
             iCurrent.addClass("Hui-iconfont");
             iCurrent.html("&#xe619;"); //&#xe6e2;
 
+            var aStart = $("<a></a>").appendTo(tdManage);
+            aStart.addClass("ml-5");
+            aStart.attr("style", "text-decoration:none");
+            //aStart.attr("onClick", "currentExercises(this,'" + jsonData[i].ExercisesTestId + "')");
+            aStart.attr("href", "javascript:;");
+            var iStart = $("<i></i>").appendTo(aStart);
+            iStart.addClass("Hui-iconfont");
+
+
+            if (jsonData[i].IsOver>0) {
+                aStart.attr("title", "开始考试");
+                iStart.html("&#xe6e6;"); //开始
+                //aStart.attr("onClick", "UpdateExercisesState(this,'" + jsonData[i].ExercisesTestId + "'," + iStart + ")");
+                aStart.attr("onClick", "UpdateExercisesState(this,'" + jsonData[i].ExercisesTestId + "')");
+                aStart.attr("state", "0");
+            }
+            else {
+                aStart.attr("title", "结束考试");
+                iStart.html("&#xe6e4;"); //结束
+                //aStart.attr("onClick", "UpdateExercisesState(this,'" + jsonData[i].ExercisesTestId + "'," + iStart + ")");
+                aStart.attr("onClick", "UpdateExercisesState(this,'" + jsonData[i].ExercisesTestId + "')");
+                aStart.attr("state", "1");
+
+            }
+
+            
+            
+
 
         }
 
     }
+    //id:考试ID,state:考试状态(0 正在考试,1考试结束),iObj:icon对象
+    function UpdateExercisesState(obj, id,iObj) {
+        var icon = $(obj).attr("state");
+        
+        var state = 0;
+        if (icon == "0") {//开始
+            state = 0;
+        }
+        else {// &#xe6e4; 结束
+            state = 1;
+        }
+
+
+        var jsonData = { Id1: id,Id2:state };
+        var option = {
+            url: '<%:Url.Action("UpdateExercisesState","Manage") %>',
+            type: 'POST',
+            data: JSON.stringify(jsonData),
+            dataType: 'html',
+            async: false,
+            contentType: 'application/json',
+            success: function (result) {
+                if (state == 0) {
+                    obj.children[0].innerHTML = "&#xe6e4;";
+                    //iObj.html("&#xe6e4;");
+                    $(obj).attr("state", "1");
+                }
+                else {
+                    obj.children[0].innerHTML = "&#xe6e6;";
+                    $(obj).attr("state", "0");
+                    //iObj.html("&#xe6e6;");
+
+                }
+
+
+            }
+        };
+        $.ajax(option);
+
+    }
+
 
     function currentExercises(obj,id) {
         if (ExercisesTestId != id) {

@@ -244,6 +244,11 @@ namespace DBHelper.Model
 
         public DateTime UpdateDateTime { get; set; }
 
+        /// <summary>
+        /// 考试是否结束
+        /// </summary>
+        public int IsOver { get; set; }
+
 
         #region **************  其他
 
@@ -381,7 +386,7 @@ namespace DBHelper.Model
         public double Score { get; set; }
 
         /// <summary>
-        /// 题目选项(按照选项位置排好顺序)
+        /// 题目选项(已按照选项顺序位置排好,前台直接按索引取)
         /// </summary>
         public List<ExamItemInfo> ListExamItem { get; set; }
     }
@@ -421,11 +426,38 @@ namespace DBHelper.Model
         /// </summary>
         public double TotleScore { get; set; }
 
+        /// <summary>
+        /// 考试是否结束
+        /// </summary>
+        public int IsOver { get; set; }
 
         /// <summary>
         /// 题目列表(按照题目顺序排好顺序)
         /// </summary>
         public List<ExamTitleInfo> ListExamTitle { get; set; }
+    }
+
+    /// <summary>
+    /// 学生做题的每一个小题
+    /// </summary>
+    public struct StudentItemAnswer
+    {
+        /// <summary>
+        /// 考试ID
+        /// </summary>
+        public int ExercisesTestId { get; set; }
+        /// <summary>
+        /// 学生ID
+        /// </summary>
+        public int StudentExamId { get; set; }
+        /// <summary>
+        /// 题目ID
+        /// </summary>
+        public int TitleInfoId { get; set; }
+        /// <summary>
+        /// 学生答案
+        /// </summary>
+        public int StudentAnswer { get; set; }
     }
 
     #endregion

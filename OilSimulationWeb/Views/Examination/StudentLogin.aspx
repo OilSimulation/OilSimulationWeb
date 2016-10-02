@@ -10,6 +10,7 @@
         width:800px;
         text-align:center;
         margin: auto;
+        color:White;
         }</style>
             <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/lib/jquery/1.9.1/jquery.min.js")%>"></script>
 
@@ -26,24 +27,27 @@
     	</tr>
 
     	<tr>
-    		<td colspan="4">注意：学号请务必填写正确！学号填写错误可能会没有成绩！</td>
+    		<td colspan="4" style="color:Red">注意：学号请务必填写正确！学号填写错误可能会没有成绩！</td>
     	</tr>
    </table>
     </div>
     <script type="text/javascript">
-        var ExperimentTypeId;
-        var studentName=-1;
-        var studentNumber="-1";
-        var StudentExamId = -1;
+//         var ExperimentTypeId;
+//         var studentName=-1;
+//         var studentNumber="-1";
+//         var StudentExamId = -1;
         $(document).ready(function () {
-            parent.postMessage("HideLoading()", "*");
+              parent.postMessage("HideLoading()", "*");
         });
 
         function start() {
-             ExperimentTypeId = parent.$("#ExperimentTypeId").val();
-             studentName = $("#studentname").val();
-             studentNumber = $("#studentnumber").val();
-             var jsonData = { StudentName: studentName, StudentNumber: studentNumber };
+             parent.StudentName = $.trim($("#studentname").val());
+             parent.StudentNumber = $.trim($("#studentnumber").val());
+             if (parent.StudentNumber == "") {
+                 alert("请输入学号！");
+                 return;
+             }
+             var jsonData = { StudentName: parent.StudentName, StudentNumber: parent.StudentNumber };
              var option = {
                  url: '<%:Url.Action("OptStudentNumber","Examination") %>',
                  data: JSON.stringify(jsonData),
@@ -52,13 +56,15 @@
                  async: false,
                  contentType: 'application/json',
                  success: function (result) {
-                     if (result == null) {
+                     if (result == "") {
                          return;
                      }
                      var resultData = JSON.parse(result);
                      if (resultData != null) {
-                         StudentExamId = resultData.StudentExamId;
+                         parent.StudentExamId = resultData.StudentExamId;
                      }
+
+                     parent.LoadUrl("/Examination/ExamPaper");
 
                  }
              }

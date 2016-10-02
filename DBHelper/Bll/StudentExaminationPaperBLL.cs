@@ -70,14 +70,15 @@ namespace DBHelper.Bll
         }
 
 
-        public bool IsExist(int ExercisesTestId, int StudentExamId, int TitleInfoId, int StudentAnswer)
+
+        public bool IsExist(int ExercisesTestId, int StudentExamId, int TitleInfoId)
         {
-            string strSql = "select 1 from StudentExaminationPaper  where ExercisesTestId=@ExercisesTestId,StudentExamId=@StudentExamId,TitleInfoId=@TitleInfoId,StudentAnswer=@StudentAnswer";
+            string strSql = @"select 1 from StudentExaminationPaper  where 
+            ExercisesTestId=@ExercisesTestId and StudentExamId=@StudentExamId and TitleInfoId=@TitleInfoId ";
             object obj =DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteScalar(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"},
                 new SQLiteParameter(){  Value=StudentExamId, ParameterName="@StudentExamId"},
-                new SQLiteParameter(){  Value=TitleInfoId, ParameterName="@TitleInfoId"},
-                new SQLiteParameter(){  Value=StudentAnswer, ParameterName="@StudentAnswer"}
+                new SQLiteParameter(){  Value=TitleInfoId, ParameterName="@TitleInfoId"}
             });
             return obj != null ? true : false;
         }
@@ -85,10 +86,16 @@ namespace DBHelper.Bll
         public int AddExamInfo(int ExercisesTestId, int StudentExamId, int TitleInfoId, int StudentAnswer)
         {
             string strSql = "";
-            if (IsExist(ExercisesTestId, StudentExamId, TitleInfoId, StudentAnswer))
+            ExercisesTest? t =ExercisesTestbll.GetExercisesTest(ExercisesTestId);
+            if (t != null && t.Value.IsOver > 0)
+            {
+                //考试已经结束
+                return -200;
+            }
+            if (IsExist(ExercisesTestId, StudentExamId, TitleInfoId))
             {
                 //修改
-                strSql = "update StudentExaminationPaper set StudentAnswer=@StudentAnswer,UpdateDateTime=@UpdateDateTime where ExercisesTestId=@ExercisesTestId,StudentExamId=@StudentExamId,TitleInfoId=@TitleInfoId";
+                strSql = "update StudentExaminationPaper set StudentAnswer=@StudentAnswer,UpdateDateTime=@UpdateDateTime where ExercisesTestId=@ExercisesTestId and StudentExamId=@StudentExamId  and TitleInfoId=@TitleInfoId";
                 int result = DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
                     new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"},
                     new SQLiteParameter(){  Value=StudentExamId, ParameterName="@StudentExamId"},
@@ -123,28 +130,48 @@ namespace DBHelper.Bll
         /// <returns></returns>
         public ExamInfo GetExamInfo(int ExercisesTestId, int StudentId)
         {
-//             string strSql = @"select a.ExercisesTestId,a.ExercisesName,a.ExercisesDescribe,c.StudentExamId,c.StudentNumber,c.StudentName from ExercisesTest a 
-//                             left join StudentExaminationPaper b on a.ExercisesTestId=b.ExercisesTestId 
-//                             left join StudentExam c on b.StudentExamId=c.StudentExamId and c.StudentExamId=@StudentExamId
-//                             where a.ExercisesTestId=@ExercisesTestId ";
-            string strSql = @"select a.ExercisesTestId,a.ExercisesName,a.ExercisesDescribe,c.StudentExamId,c.StudentNumber,c.StudentName from ExercisesTest a 
-                            left join StudentExaminationPaper b on a.ExercisesTestId=b.ExercisesTestId 
-                            left join StudentExam c on b.StudentExamId=c.StudentExamId 
-                            where a.ExercisesTestId=@ExercisesTestId and c.StudentExamId=@StudentExamId";
-            return DataTableToExamInfo(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
-                new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"},
-                new SQLiteParameter(){  Value=StudentId, ParameterName="@StudentExamId"}
-            }));
+
+            ExercisesTest? info1 = ExercisesTestbll.GetExercisesTest(ExercisesTestId);
+            StudentExam? info2 = StudentExambll.GetStudentExam(StudentId);
+            ExamInfo info = new ExamInfo();
+            if (info1 != null && info2!=null)
+            {
+                info.ExercisesDescribe = info1.Value.ExercisesDescribe;
+                info.ExercisesName = info1.Value.ExercisesName;
+                info.ExercisesTestId = info1.Value.ExercisesTestId;
+                info.TotleScore = ExercisesTestbll.GetExercisesTestTotleScore(info.ExercisesTestId);
+                info.IsOver = info1.Value.IsOver;
+
+
+                info.StudentExamId = info2.Value.StudentExamId;
+                info.StudentName = info2.Value.StudentName;
+                info.StudentNumber = info2.Value.StudentNumber;
+                info.StudentScore = StudentExambll.GetStudentScore(info.StudentExamId, info.ExercisesTestId);
+                info.ListExamTitle = GetExamTitleInfo(info.ExercisesTestId, info.StudentExamId);
+            }
+
+            
+            return info;
+
+//            string strSql = @"select a.ExercisesTestId,a.ExercisesName,a.ExercisesDescribe,c.StudentExamId,c.StudentNumber,c.StudentName from ExercisesTest a 
+//                            left join StudentExaminationPaper b on a.ExercisesTestId=b.ExercisesTestId 
+//                            left join StudentExam c on b.StudentExamId=c.StudentExamId 
+//                            where a.ExercisesTestId=@ExercisesTestId and c.StudentExamId=@StudentExamId";
+//            return DataTableToExamInfo(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
+//                new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"},
+//                new SQLiteParameter(){  Value=StudentId, ParameterName="@StudentExamId"}
+//            }));
 
         }
 
 
         public List<ExamTitleInfo> GetExamTitleInfo(int ExercisesTestId, int StudentId)
         {
+            //c.Score 该题分数非学生得分
             string strSql = @"select c.TitleInfoId,c.TitleConent,c.CorrectAnswer,c.Score,c.ExercisesTitleIndex,c.ExercisesTestId,d.StudentAnswer from 
 (select b.TitleInfoId,b.TitleConent,b.CorrectAnswer,b.Score,a.ExercisesTitleIndex,a.ExercisesTestId from ExercisesTitle a,TitleInfo b 
 where a.ExercisesTestId=@ExercisesTestId and a.TitleInfoId=b.TitleInfoId order by a.ExercisesTitleIndex asc) c 
-left join StudentExaminationPaper d on c.ExercisesTestId=d.ExercisesTestId where c.TitleInfoId=d.TitleInfoId and d.StudentExamId=@StudentExamId";
+left join StudentExaminationPaper d on c.ExercisesTestId=d.ExercisesTestId and c.TitleInfoId=d.TitleInfoId and d.StudentExamId=@StudentExamId";
             return DataTableToExamTitleInfo(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"},
                 new SQLiteParameter(){  Value=StudentId, ParameterName="@StudentExamId"}
@@ -168,9 +195,9 @@ left join StudentExaminationPaper d on c.ExercisesTestId=d.ExercisesTestId where
                 foreach (DataRow dr in dt.Rows)
                 {
                     ExamItemInfo info = new ExamItemInfo();
-                    info.ExamItemId = dr["ExamItemId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["ExamItemId"]);
-                    info.ExamItemId = dr["TitleItemIndex"] == DBNull.Value ? -100 : Convert.ToInt32(dr["TitleItemIndex"]);
-                    info.ExamItemName = dr["ExamItemName"] == DBNull.Value ? "" : dr["ExamItemName"].ToString();
+                    info.ExamItemId = dr["TitleItemId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["TitleItemId"]);
+                    info.TitleItemIndex = dr["TitleItemIndex"] == DBNull.Value ? -100 : Convert.ToInt32(dr["TitleItemIndex"]);
+                    info.ExamItemName = dr["TitleItemContent"] == DBNull.Value ? "" : dr["TitleItemContent"].ToString();
                     listInfo.Add(info);
                 }
             }
@@ -182,18 +209,30 @@ left join StudentExaminationPaper d on c.ExercisesTestId=d.ExercisesTestId where
             List<ExamTitleInfo> listInfo = new List<ExamTitleInfo>();
             if (dt!=null)
             {
+
                 foreach (DataRow dr in dt.Rows)
                 {
                     ExamTitleInfo info = new ExamTitleInfo();
-                    info.TitleInfoId = dr["TitleInfoId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["TitleInfoId"]);
-                    info.TitleConent = dr["TitleConent"] == DBNull.Value ? "" : dr["TitleConent"].ToString();
-                    info.CorrectAnswer = dr["CorrectAnswer"] == DBNull.Value ? -100 : Convert.ToInt32(dr["CorrectAnswer"]);
-                    info.StudentAnswer = dr["StudentAnswer"] == DBNull.Value ? -100 : Convert.ToInt32(dr["StudentAnswer"]);
+
+                    info.TitleInfoId = dr.ItemArray[0] == DBNull.Value ? -100 : Convert.ToInt32(dr.ItemArray[0]);
+                    info.TitleConent = dr.ItemArray[1] == DBNull.Value ? "" : dr.ItemArray[1].ToString();
+                    info.CorrectAnswer = dr.ItemArray[2] == DBNull.Value ? -100 : Convert.ToInt32(dr.ItemArray[2]);
+                    info.StudentAnswer = dr.ItemArray[6] == DBNull.Value ? -100 : Convert.ToInt32(dr.ItemArray[6]);
                     if (info.CorrectAnswer != -100 && info.StudentAnswer != -100 && info.CorrectAnswer == info.StudentAnswer)
                     {
-                        info.Score = dr["Score"] == DBNull.Value ? -100 : Convert.ToInt32(dr["Score"]);
+                        info.Score = dr.ItemArray[3] == DBNull.Value ? -100 : Convert.ToInt32(dr.ItemArray[3]);
                     }
                     info.ListExamItem = GetExamItemInfo(info.TitleInfoId);
+
+                    //info.TitleInfoId = dr["TitleInfoId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["TitleInfoId"]);
+                    //info.TitleConent = dr["TitleConent"] == DBNull.Value ? "" : dr["TitleConent"].ToString();
+                    //info.CorrectAnswer = dr["CorrectAnswer"] == DBNull.Value ? -100 : Convert.ToInt32(dr["CorrectAnswer"]);
+                    //info.StudentAnswer = dr["StudentAnswer"] == DBNull.Value ? -100 : Convert.ToInt32(dr["StudentAnswer"]);
+                    //if (info.CorrectAnswer != -100 && info.StudentAnswer != -100 && info.CorrectAnswer == info.StudentAnswer)
+                    //{
+                    //    info.Score = dr["Score"] == DBNull.Value ? -100 : Convert.ToInt32(dr["Score"]);
+                    //}
+                    //info.ListExamItem = GetExamItemInfo(info.TitleInfoId);
                     listInfo.Add(info);
                 }
             }

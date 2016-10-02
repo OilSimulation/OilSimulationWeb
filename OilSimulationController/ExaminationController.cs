@@ -53,6 +53,7 @@ namespace OilSimulationController
         }
 
 
+
         /// <summary>
         /// 获取学生信息，若学号不存在刚增加，
         /// </summary>
@@ -61,6 +62,16 @@ namespace OilSimulationController
         public ActionResult OptStudentNumber(StudentExam info)
         {
             StudentExam? result = StudentExambll.OptStudentNumber(info);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
+
+        public ActionResult AddExamInfo(StudentItemAnswer info)
+        {
+            int result = StudentExaminationPaperbll.AddExamInfo(info.ExercisesTestId, info.StudentExamId, info.TitleInfoId, info.StudentAnswer);
             var res = new ConfigurableJsonResult();
             res.Data = result;
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");

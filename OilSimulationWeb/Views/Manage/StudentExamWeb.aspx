@@ -230,7 +230,7 @@
                         aDel.attr("title", "查看详情");
                         var iDel = $("<i></i>").appendTo(aDel);
                         iDel.addClass("Hui-iconfont");
-                        iDel.html("&#xe6e2;"); //&#xe6e2;
+                        iDel.html("&#xe667;"); //&#xe6e2;
 
                         var ht = aDel[0].outerHTML;
 

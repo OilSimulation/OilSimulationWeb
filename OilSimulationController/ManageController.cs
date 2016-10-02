@@ -476,6 +476,31 @@ namespace OilSimulationController
             return res;
         }
 
+        /// <summary>
+        /// 获取当前使用的试卷
+        /// </summary>
+        /// <param name="info">实验类型或考试(-1)</param>
+        /// <returns></returns>
+        public ActionResult GetCurrentExercises(stId info)
+        {
+            CurrentExercises result = ExercisesTestbll.GetCurrentExercises(info.Id);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
+
+
+        public ActionResult UpdateExercisesState(stId2 info)
+        {
+            int result = ExercisesTestbll.UpdateExercisesState(info.Id1, info.Id2);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
         #endregion
 
         #region *************************************** 习题或考试与题目对照表(ExercisesTitle)
@@ -600,6 +625,20 @@ namespace OilSimulationController
         public ActionResult GetExercisesTestStudent(stId info)
         {
             List<ExamList> result = StudentExambll.GetExercisesTestStudent(info.Id);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="info">id1:学生编号,id2:考试编号</param>
+        /// <returns></returns>
+        public ActionResult GetStudentScore(stId2 info)
+        {
+            double result = StudentExambll.GetStudentScore(info.Id1,info.Id2);
             var res = new ConfigurableJsonResult();
             res.Data = result;
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");

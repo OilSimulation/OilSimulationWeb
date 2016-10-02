@@ -11,6 +11,7 @@
         width:800px;
         text-align:center;
         margin: auto;
+        color:White;
         }
         .td1{width:800px;}
         .td2{width:400px;}
@@ -25,6 +26,8 @@
 <body>
     <div>
     <table id="table1" border="1" cellspacing="0" cellpadding="0" >
+<%--        <tr><td  colspan="4"  style="text-align:left"><input onclick="Save()" type="button" value="交卷" /></td></tr>
+--%>
 <%--    	<tr >
     		<td  class="td1" colspan="4">1什么考试</td>
     	</tr>
@@ -57,12 +60,14 @@
 --%>    </table>
     </div>
     <script type="text/javascript">
-        var ExercisesTestId=-1;
-        var StudentExamId=-1;
         $(document).ready(function () {
-            ExercisesTestId = parent.ExercisesTestId;
-            StudentExamId = parent.StudentExamId;
-            LoadPaper(ExercisesTestId, StudentExamId);
+            parent.postMessage("HideLoading()", "*");
+
+            //parent.ExperimentTypeId
+
+            //ExercisesTestId = parent.ExercisesTestId;
+            //StudentExamId = parent.StudentExamId;
+            LoadPaper(parent.ExercisesTestId, parent.StudentExamId);
         });
 
         //加载试卷
@@ -79,6 +84,10 @@
                     var resultData = JSON.parse(result);
                     if (resultData.ExercisesTestId <= 0) {
                         return;
+                    }
+                    if (resultData.IsOver > 0) {
+                        //考试已经结束
+                        $("#table2").attr("disabled", "disabled");
                     }
 
 
@@ -132,32 +141,38 @@
 
                     var varTd33 = $("<td></td>");
                     varTd33.addClass("td4");
-                    varTd33.html("学号成绩");
+                    varTd33.html("学生成绩");
                     varTd33.appendTo(varTr3);
 
 
                     var varTd34 = $("<td></td>");
+                    varTd34.attr("id", "StudentScore");
                     varTd34.addClass("td4");
-                    varTd34.html(resultData.StudentScore);
+                    if (resultData.IsOver > 0) {
+                        varTd34.html(resultData.StudentScore);
+                    }
+                    
                     varTd34.appendTo(varTr3);
 
                     varTr3.appendTo($("#table1"));
                     //end table1
 
                     //start table2
-                    for (var i = 0; i < jsonData.ListExamTitle.length; i++) {
+                    for (var i = 0; i < resultData.ListExamTitle.length; i++) {
                         var vTr = $("<tr></tr>");
                         var vTd = $("<td></td>");
                         vTd.attr("colspan", "4");
                         vTd.attr("style", "text-align:left");
-                        vTd.html((i + 1) + "、" + jsonData.ListExamTitle[i].TitleConent);
+                        vTd.html((i + 1) + "、" + resultData.ListExamTitle[i].TitleConent);
                         vTd.appendTo(vTr)
                         vTr.appendTo($("#table2"));
-                        for (var j = 0; j < jsonData.ListExamTitle[i].ListExamItem.length; j++) {
-                            var itemTr = $("<tr></tr>");
+
+                        var itemTr = $("<tr></tr>");
+                        for (var j = 0; j < resultData.ListExamTitle[i].ListExamItem.length; j++) {
+
 
                             var itemTd = $("<td></td>");
-                            if (jsonData.ListExamTitle[i].ListExamItem.length == 2) {
+                            if (resultData.ListExamTitle[i].ListExamItem.length == 2) {
                                 itemTd.addClass("td2");
                                 itemTd.attr("colspan", "2");
                             }
@@ -170,19 +185,20 @@
                             var varInput = $("<input></input>");
                             varInput.attr("type", "radio");
                             varInput.attr("name", i);
-                            varInput.attr("onclick", "onclickitem('" + jsonData.ListExamTitle[i].TitleInfoId + "','" + jsonData.ListExamTitle[i].ListExamItem[j].TitleItemIndex + "')");
-                            if (jsonData.ListExamTitle[i].StudentAnswer == jsonData.ListExamTitle[i].ListExamItem[j].TitleItemIndex && jsonData.ListExamTitle[i].StudentAnswer != 100) {
+                            varInput.attr("onclick", "onclickitem('" + resultData.ListExamTitle[i].TitleInfoId + "','" + resultData.ListExamTitle[i].ListExamItem[j].TitleItemIndex + "')");
+                            if (resultData.ListExamTitle[i].StudentAnswer == resultData.ListExamTitle[i].ListExamItem[j].TitleItemIndex && resultData.ListExamTitle[i].StudentAnswer != 100) {
                                 varInput.attr("checked", "checked");
                             }
                             varInput.appendTo(itemTd);
 
                             var span = $("<span></span>");
-                            span.html(jsonData.ListExamTitle[i].ListExamItem[j].ExamItemName);
+                            span.html(resultData.ListExamTitle[i].ListExamItem[j].ExamItemName);
                             span.appendTo(itemTd);
 
-                            itemTr.appendTo($("#table2"));
+
 
                         }
+                        itemTr.appendTo($("#table2"));
                     }
                     //end table2
 
@@ -195,9 +211,52 @@
         }
 
         //TitleInfoId:题目ID,TitleItemIndex:选择的题目索引
-        function onclickitem(TitleInfoId,TitleItemIndex) {
-            alert(id);
-        };
+        function onclickitem(TitleInfoId, TitleItemIndex) {
+            var jsonData = { ExercisesTestId: parent.ExercisesTestId, StudentExamId: parent.StudentExamId, TitleInfoId: TitleInfoId, StudentAnswer: TitleItemIndex };
+            var option = {
+                url: '<%:Url.Action("AddExamInfo","Examination") %>',
+                data: JSON.stringify(jsonData),
+                dataType: 'html',
+                type: 'POST',
+                async: false,
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result > 0) {
+                    }
+                    else {
+                        if (result == -200) {
+                            alert("考试已结束！不可再修改！");
+                        }
+                        else {
+                            alert("操作失败！");
+                        }
+
+                    }
+
+
+                }
+            }
+            $.ajax(option);
+        }
+
+        //交卷，生成成绩
+        function Save() {
+            var jsonData = { Id1: parent.StudentExamId, Id2: parent.ExercisesTestId };
+            var option = {
+                url: '<%:Url.Action("GetStudentScore","Manage") %>',
+                data: JSON.stringify(jsonData),
+                dataType: 'html',
+                type: 'POST',
+                async: false,
+                contentType: 'application/json',
+                success: function (result) {
+                    //$("#StudentScore").html(result);
+                    $("#table2").attr("disabled", "disabled");
+                }
+            }
+            $.ajax(option);
+
+        }
     </script>
 </body>
 

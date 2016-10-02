@@ -14,6 +14,12 @@
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/jquery-1.4.1.min.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/loading-overlay.min.js")%>"></script> 
     <script type="text/javascript">
+        var ExercisesTestId = -1;
+        var ExperimentTypeId = -1;
+        var StudentExamId = -1;
+        var StudentName = "";
+        var StudentExamId = -1;
+        var StudentNumber = "";
         var isLocalValid;
         var curWebRootUrl;
         var isIframeMax;
@@ -153,7 +159,46 @@
             else {
                 postPath = strPath.substring(0, strPath.indexOf('/Home'));
             }
-            curWebRootUrl = (prePath + postPath); 
+            curWebRootUrl = (prePath + postPath);
+        }
+
+        function LoadExam(experimenttypeid) {
+            ExperimentTypeId = experimenttypeid;
+            var jsonData = { Id: experimenttypeid };
+            //获取当前使用的试卷
+            var option = {
+                url: '<%:Url.Action("GetCurrentExercises","Manage") %>',
+                data: JSON.stringify(jsonData),
+                dataType: 'html',
+                type: 'POST',
+                async: false,
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result == null) {
+                        return;
+                    }
+                    var resultData = JSON.parse(result);
+                    if (resultData != null) {
+                        ExercisesTestId = resultData.ExercisesTestId;
+                    }
+
+
+                }
+            }
+            $.ajax(option);
+
+            LoadExamUrl('/Examination/StudentLogin');
+        }
+        //加载新URL路径
+        function LoadExamUrl(inUrl) {
+
+            $("#WebGLLayOut").show();
+            $("#MainLayOut").hide();
+            var sUrl = curWebRootUrl + inUrl;
+            
+            ShowLoading();
+            $("#iframeId").attr("src", sUrl);
+
         }
         //加载新URL路径
         function LoadUrl(inUrl) {
