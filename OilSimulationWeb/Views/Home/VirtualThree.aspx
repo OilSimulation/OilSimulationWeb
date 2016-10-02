@@ -94,6 +94,7 @@
                     play="true"
                     loop="false"
                     FlashVars=""
+                    allowfullscreen="true"
                     allowScriptAccess="sameDomain"
                     type="application/x-shockwave-flash"
                     pluginspage="http://www.adobe.com/go/getflashplayer">
