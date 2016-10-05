@@ -118,6 +118,7 @@
                     </div> 
                     <div class="page"> 
                        <div class="top f-f0">（三）将实验用油（模拟油）放入相应容器中</div> 
+                       <div class="bottom f-richEditorText"></div>
                        <object id="Object3" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="400" height="300"
                             codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0">
                             <param name="movie" value="/seufld/seufld/flash/focus2.swf">
