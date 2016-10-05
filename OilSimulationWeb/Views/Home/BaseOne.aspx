@@ -29,6 +29,28 @@
     
                 <div class="top f-f0">预备知识</div>
                 <div class="bottom f-richEditorText"><p>（1）了解活塞式水驱油、非活塞式水驱油概念；<br/>（2）弄清影响水驱油过程非活塞性的因素。</p></div>
+                
+                <div class="top f-f0">实验仿真</div>
+                <div class="imgpic">
+                    <ul> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeOne');"><img src="<%=Url.Content("~/Images/活塞式驱油.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeOne');">活塞式驱油模拟</a>
+                           </p>
+                       </li> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeTwo');"><img src="<%=Url.Content("~/Images/非活塞驱油.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeTwo');">非活塞式驱油模拟</a>
+                           </p>
+                       </li> 
+                    </ul>
+                </div>
             </div>
         </div>
         <div style="width: 400px; margin-left: -400px; position: relative;float: right;">
@@ -45,7 +67,7 @@
                 <param name="allowScriptAccess" value="sameDomain">
                 <embed id="forfunex" src="/Flash/水驱油模拟.swf"
                     width="400"
-                    height="300"
+                    height="331"
                     align="middle"
                     quality="high"
                     bgcolor="#f0fff8"
@@ -60,7 +82,7 @@
                 </embed>
                 </object>
             </div> 
-            <div style="padding: 10px 20px 10px 0px;">
+            <div style="padding: 10px 20px 10px 0px;display:none;"> 
                 <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
                     <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeOne');" ><span class="f-da">1、活塞式水驱油模拟</span></a>

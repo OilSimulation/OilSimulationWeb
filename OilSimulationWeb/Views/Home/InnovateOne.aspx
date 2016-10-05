@@ -29,6 +29,28 @@
     
                 <div class="top f-f0">预备知识</div>
                 <div class="bottom f-richEditorText"><p>（1）油田勘探开发程序；<br/>（2）油田开发方案的编制的步骤；<br/>（3）油藏工程设计的主要内容。</p></div>
+            
+                <div class="top f-f0">实验仿真</div>
+                <div class="imgpic">
+                    <ul> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Innovate/InnModeOne');"><img src="<%=Url.Content("~/Images/油藏.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Innovate/InnModeOne');">均质油藏开发方案设计与开发效果预测实践</a>
+                           </p>
+                       </li> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Innovate/InnModeTwo');"><img src="<%=Url.Content("~/Images/油藏.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Innovate/InnModeTwo');">实际油藏开发方案设计与开发效果预测实践</a>
+                           </p>
+                       </li>  
+                    </ul>
+                </div>
             </div>
         </div>
         <div style="width: 400px; margin-left: -400px; position: relative;float: right;">
@@ -45,7 +67,7 @@
                 <param name="allowScriptAccess" value="sameDomain">
                 <embed id="forfunex" src="/Flash/油藏开发方案实践.swf"
                     width="400"
-                    height="300"
+                    height="331"
                     align="middle"
                     quality="high"
                     bgcolor="#f0fff8"
@@ -60,7 +82,7 @@
                 </embed>
                 </object>
             </div> 
-            <div style="padding: 10px 20px 10px 0px;">
+            <div style="padding: 10px 20px 10px 0px; display:none;">
                 <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
                     <a href="javascript:void(0);" onclick="LoadUrl('/Innovate/InnModeOne');" ><span class="f-da">1、均质油藏开发方案设计与开发效果预测实践</span></a>

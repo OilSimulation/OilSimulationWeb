@@ -86,6 +86,44 @@
     
                 <div class="top f-f0">预备知识</div>
                 <div class="bottom f-richEditorText"><p>（1）注水时机、井底流压、注入压力、注釆比、破裂压力。</p></div>
+            
+                <div class="top f-f0">实验仿真</div>
+                <div class="imgpic">
+                    <ul> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(321);LoadUrl('/Simulation/SimMode3211');"><img src="<%=Url.Content("~/Images/注水时机.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(321);LoadUrl('/Simulation/SimMode3211');">不同注水时机方案设计与开发效果预测实验</a>
+                           </p>
+                       </li> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(322);LoadUrl('/Simulation/SimMode3221');"><img src="<%=Url.Content("~/Images/注采比.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(322);LoadUrl('/Simulation/SimMode3221');">不同注采比方案设计与开发效果预测实验</a>
+                           </p>
+                       </li> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(323);LoadUrl('/Simulation/SimMode3231');"><img src="<%=Url.Content("~/Images/井底注入压力.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(323);LoadUrl('/Simulation/SimMode3231');">不同最大井底注入压力方案设计与开发效果预测实验</a>
+                           </p>
+                       </li> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(324);LoadUrl('/Simulation/SimMode3241');"><img src="<%=Url.Content("~/Images/井底流压.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(325);LoadUrl('/Simulation/SimMode3241');">不同最低井底流压方案设计与开发效果预测实验</a>
+                           </p>
+                       </li> 
+                    </ul>
+                </div>
             </div>
         </div>
         <div style="width: 400px; margin-left: -400px; position: relative;float: right;">
@@ -102,7 +140,7 @@
                 <param name="allowScriptAccess" value="sameDomain">
                 <embed id="forfunex" src="/Flash/注采系统优化.swf"
                     width="400"
-                    height="300"
+                    height="331"
                     align="middle"
                     quality="high"
                     bgcolor="#f0fff8"
@@ -117,7 +155,7 @@
                 </embed>
                 </object>
             </div> 
-            <div style="padding: 10px 20px 10px 0px;">
+            <div style="padding: 10px 20px 10px 0px; display:none;">
                 <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
                     <a href="javascript:void(0);" onclick="ShowVirControlDiv(321);LoadUrl('/Simulation/SimMode3211');" ><span class="f-da">1、不同注水时机方案设计与开发效果预测实验</span></a>
@@ -129,7 +167,7 @@
             <div style="padding: 10px 20px 20px 0px;">
                 <div class="t-title f-f0">随堂测试</div>
                 <div class="m-btnList">
-                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="LoadExam(8);">
+                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="ShowVirControlDiv(000);LoadExam(8);">
                         <span class="f-db">参加测试</span> 
                     </a>
                 </div>

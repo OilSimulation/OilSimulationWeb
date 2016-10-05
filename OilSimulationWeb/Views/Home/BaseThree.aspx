@@ -29,6 +29,28 @@
     
                 <div class="top f-f0">预备知识</div>
                 <div class="bottom f-richEditorText"><p>（1）弹性不稳定渗流的概念；<br/>（2）定压边界压力波传播变化规律；<br/>（3）封闭边界压力波传播变化规律。</p></div>
+                
+                <div class="top f-f0">实验仿真</div>
+                <div class="imgpic">
+                    <ul> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeSix');"><img src="<%=Url.Content("~/Images/稳定水压弹性驱动.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeSix');">稳定水压弹性驱动模拟</a>
+                           </p>
+                       </li> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeSeven');"><img src="<%=Url.Content("~/Images/封闭边界.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeSeven');">封闭弹性驱动模拟</a>
+                           </p>
+                       </li> 
+                    </ul>
+                </div>
             </div>
         </div>
         <div style="width: 400px; margin-left: -400px; position: relative;float: right;">
@@ -45,7 +67,7 @@
                 <param name="allowScriptAccess" value="sameDomain">
                 <embed id="forfunex" src="/Flash/弹性不稳定渗流模拟.swf"
                     width="400"
-                    height="300"
+                    height="331"
                     align="middle"
                     quality="high"
                     bgcolor="#f0fff8"
@@ -60,7 +82,7 @@
                 </embed>
                 </object>
             </div> 
-            <div style="padding: 10px 20px 10px 0px;">
+            <div style="padding: 10px 20px 10px 0px; display:none;">
                 <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
                     <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeSix');" ><span class="f-da">1、稳定水压弹性驱动模拟</span></a>

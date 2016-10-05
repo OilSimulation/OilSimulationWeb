@@ -73,6 +73,36 @@
     
                 <div class="top f-f0">预备知识</div>
                 <div class="bottom f-richEditorText"><p>（1）了解活塞式水驱油、非活塞式水驱油概念；<br/>（2）弄清影响水驱油过程非活塞性的因素。</p></div>
+                
+                <div class="top f-f0">实验仿真</div>
+                <div class="imgpic">
+                    <ul> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(211);LoadUrl('/VirExperiment/VirtualMode2111');"><img src="<%=Url.Content("~/Images/影响因素毛管力.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(211);LoadUrl('/VirExperiment/VirtualMode2111');">不同毛细管力对水驱油影响模拟</a>
+                           </p>
+                       </li> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(212);LoadUrl('/VirExperiment/VirtualMode2121');"><img src="<%=Url.Content("~/Images/影响因素密度.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(212);LoadUrl('/VirExperiment/VirtualMode2121');">不同油水比重差对水驱油影响模拟</a>
+                           </p>
+                       </li> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(213);LoadUrl('/VirExperiment/VirtualMode2131');"><img src="<%=Url.Content("~/Images/影响因素粘度.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(213);LoadUrl('/VirExperiment/VirtualMode2131');">不同油水粘度差对水驱油影响模拟</a>
+                           </p>
+                       </li> 
+                    </ul>
+                </div>
             </div>
         </div>
         <div style="width: 400px; margin-left: -400px; position: relative;float: right;">
@@ -89,7 +119,7 @@
                 <param name="allowScriptAccess" value="sameDomain">
                 <embed id="forfunex" src="/Flash/非活塞式水驱油影响因素.swf"
                     width="400"
-                    height="300"
+                    height="331"
                     align="middle"
                     quality="high"
                     bgcolor="#f0fff8"
@@ -104,7 +134,7 @@
                 </embed>
                 </object>
             </div> 
-            <div style="padding: 10px 20px 10px 0px;">
+            <div style="padding: 10px 20px 10px 0px; display:none;">
                 <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
                     <a href="javascript:void(0);" onclick="ShowVirControlDiv(211);LoadUrl('/VirExperiment/VirtualMode2111');" ><span class="f-da">1、不同毛细管力对水驱油影响模拟</span></a>
@@ -115,7 +145,7 @@
             <div style="padding: 10px 20px 20px 0px;">
                 <div class="t-title f-f0">随堂测试</div>
                 <div class="m-btnList">
-                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="LoadExam(4);">
+                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="ShowVirControlDiv(000);LoadExam(4);">
                         <span class="f-db">参加测试</span> 
                     </a>
                 </div>

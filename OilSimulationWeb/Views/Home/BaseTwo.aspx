@@ -30,6 +30,36 @@
     
                 <div class="top f-f0">预备知识</div>
                 <div class="bottom f-richEditorText"><p>（1）单向流的概念、渗流规律及其特征、水动力学场图；<br/>（2）平面径向流的概念、渗流规律及其特征、水动力学场图；<br/>（3）球面向心流的概念、渗流规律及其特征。</p></div>
+                
+                <div class="top f-f0">实验仿真</div>
+                <div class="imgpic">
+                    <ul> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeThree');"><img src="<%=Url.Content("~/Images/单向流.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeThree');">单向渗流模拟</a>
+                           </p>
+                       </li> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeFour');"><img src="<%=Url.Content("~/Images/平面径向流.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeFour');">平面径向渗流模拟</a>
+                           </p>
+                       </li> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeFive');"><img src="<%=Url.Content("~/Images/球面向心流.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeFive');">球面向心流模拟</a>
+                           </p>
+                       </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div style="width: 400px; margin-left: -400px; position: relative;float: right;">
@@ -46,7 +76,7 @@
                 <param name="allowScriptAccess" value="sameDomain">
                 <embed id="forfunex" src="/Flash/渗流方式模拟.swf"
                     width="400"
-                    height="300"
+                    height="331"
                     align="middle"
                     quality="high"
                     bgcolor="#f0fff8"
@@ -61,12 +91,12 @@
                 </embed>
                 </object>
             </div> 
-            <div style="padding: 10px 20px 10px 0px;">
+            <div style="padding: 10px 20px 10px 0px; display:none;">
                 <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
                     <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeThree');" ><span class="f-da">1、单向渗流模拟</span></a>
                     <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeFour');" ><span class="f-da">2、平面径向渗流模拟</span></a> 
-                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeFive');" ><span class="f-da">2、球面向心流模拟</span></a> 
+                    <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeFive');" ><span class="f-da">3、球面向心流模拟</span></a> 
                 </div>
             </div>
             <div style="padding: 10px 20px 20px 0px;">

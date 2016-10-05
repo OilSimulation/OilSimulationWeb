@@ -70,6 +70,36 @@
     
                 <div class="top f-f0">预备知识</div>
                 <div class="bottom f-richEditorText"><p>（1）驱油效率概念，水驱油效率的影响因素；<br/>（2）水驱残余油微观分布特征；<br/>（3）水驱油物理实验流程。</p></div>
+            
+                <div class="top f-f0">实验仿真</div>
+                <div class="imgpic">
+                    <ul> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(221);LoadUrl('/VirExperiment/VirtualMode2211');"><img src="<%=Url.Content("~/Images/驱油效率毛管力.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(221);LoadUrl('/VirExperiment/VirtualMode2211');">三种类型毛管压力下的水驱油效率实验</a>
+                           </p>
+                       </li> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(222);LoadUrl('/VirExperiment/VirtualMode2221');"><img src="<%=Url.Content("~/Images/驱油效率原油粘度.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(222);LoadUrl('/VirExperiment/VirtualMode2221');">三种类型原油粘度级别下的水驱油效率实验</a>
+                           </p>
+                       </li> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(223);LoadUrl('/VirExperiment/VirtualMode2231');"><img src="<%=Url.Content("~/Images/驱油效率原油密度.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(223);LoadUrl('/VirExperiment/VirtualMode2231');">三种类型原油密度级别下的水驱油效率实验</a>
+                           </p>
+                       </li> 
+                    </ul>
+                </div>
             </div>
         </div>
         <div style="width: 400px; margin-left: -400px; position: relative;float: right;">
@@ -86,7 +116,7 @@
                 <param name="allowScriptAccess" value="sameDomain">
                 <embed id="forfunex" src="/Flash/水驱油效率实验.swf"
                     width="400"
-                    height="300"
+                    height="331"
                     align="middle"
                     quality="high"
                     bgcolor="#f0fff8"
@@ -101,7 +131,7 @@
                 </embed>
                 </object>
             </div> 
-            <div style="padding: 10px 20px 10px 0px;">
+            <div style="padding: 10px 20px 10px 0px; display:none;" >
                 <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
                     <a href="javascript:void(0);" onclick="ShowVirControlDiv(221);LoadUrl('/VirExperiment/VirtualMode2211');" ><span class="f-da">1、三种类型毛管压力下的水驱油效率实验</span></a>
@@ -112,7 +142,7 @@
             <div style="padding: 10px 20px 20px 0px;">
                 <div class="t-title f-f0">随堂测试</div>
                 <div class="m-btnList">
-                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="LoadExam(5);">
+                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="ShowVirControlDiv(000);LoadExam(5);">
                         <span class="f-db">参加测试</span> 
                     </a>
                 </div>

@@ -48,7 +48,7 @@
 
 .top
 {
-    font-size: 16px;
+    font-size: 18px;
     height: 50px;
     line-height: 51px;
     text-indent: 20px;
@@ -64,7 +64,8 @@
     border: 0;
     text-align: left;
     color: #eee;
-    line-height: 22px;
+    font-size:14px;
+    line-height: 25px;
     word-break: break-word;
     word-wrap: break-word;
     white-space: pre-wrap;
@@ -73,7 +74,7 @@
 .t-title
 {
     margin: 5px 20px 10px 0px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 
@@ -161,3 +162,50 @@
 .blk .head-right{background-position:right top;}
 .blk .foot{padding-left:4px;background-position:left bottom;_height:3px;}
 .blk .foot-right{background-position:right bottom;}
+
+#MainLayOut h2
+{
+    padding:10px 20px;    
+}
+
+#MainLayOut .imgpic
+{
+    padding:20px 30px;
+    height:210px;
+}
+.imgpic ul {
+    position: relative;
+    left: 0px;
+    top: 0;
+}
+.imgpic ul li {
+    width: 181px;
+    height: 210px;
+    float: left;
+    margin: 0px 10px 15px 0px;
+    border: 0;
+}
+.imgpic ul li .pro-pic {
+    height: 183px;
+}
+.imgpic ul li .pro-pic{
+    width: 180px;
+    height: 180px;
+    border: #fff 2px solid;    
+}
+.imgpic ul li .pro-pic img{
+    width: 180px;
+    height: 180px; 
+}
+a {
+    text-decoration: none;
+    color: #2c2c2c;
+}
+.imgpic ul li p {
+    text-align: center;
+    line-height: 24px;
+    font-size: 14px;
+}
+.imgpic ul li p a {
+    color: #fff;
+}

@@ -37,7 +37,7 @@ body {
 body, div, ul, li, img, p, dl, dt, dd, form, h2 {
     border: 0 none;
     margin: 0;
-    padding: 0;
+    padding:0;
 }
 ul, li 
 {
@@ -45,7 +45,7 @@ ul, li
     list-style: none outside none;
 }
 html {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 #divControl   

@@ -60,6 +60,28 @@
     
                 <div class="top f-f0">预备知识</div>
                 <div class="bottom f-richEditorText"><p>（1）油田注水方式的确定；<br/>（2）不同注采井网的主要特征参数；<br/>（3）合理井网密度的确定方法。</p></div>
+            
+                <div class="top f-f0">实验仿真</div>
+                <div class="imgpic">
+                    <ul> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(311);LoadUrl('/Simulation/SimMode3111');"><img src="<%=Url.Content("~/Images/井距.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(311);LoadUrl('/Simulation/SimMode3111');">不同井距网方案设计与开发效果预测实验</a>
+                           </p>
+                       </li> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(312);LoadUrl('/Simulation/SimMode3121');"><img src="<%=Url.Content("~/Images/井网.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(312);LoadUrl('/Simulation/SimMode3121');">不同井网方案设计与开发效果预测实验</a>
+                           </p>
+                       </li>  
+                    </ul>
+                </div>
             </div>
         </div>
         <div style="width: 400px; margin-left: -400px; position: relative;float: right;">
@@ -76,7 +98,7 @@
                 <param name="allowScriptAccess" value="sameDomain">
                 <embed id="forfunex" src="/Flash/井网井距设计.swf"
                     width="400"
-                    height="300"
+                    height="331"
                     align="middle"
                     quality="high"
                     bgcolor="#f0fff8"
@@ -91,7 +113,7 @@
                 </embed>
                 </object>
             </div> 
-            <div style="padding: 10px 20px 10px 0px;">
+            <div style="padding: 10px 20px 10px 0px; display:none;">
                 <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
                     <a href="javascript:void(0);" onclick="ShowVirControlDiv(311);LoadUrl('/Simulation/SimMode3111');" ><span class="f-da">1、不同井网方案设计与开发效果预测实验</span></a>
@@ -101,7 +123,7 @@
             <div style="padding: 10px 20px 20px 0px;">
                 <div class="t-title f-f0">随堂测试</div>
                 <div class="m-btnList">
-                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="LoadExam(7);">
+                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="ShowVirControlDiv(000);LoadExam(7);">
                         <span class="f-db">参加测试</span> 
                     </a>
                 </div>

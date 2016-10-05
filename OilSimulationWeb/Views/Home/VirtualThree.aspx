@@ -70,6 +70,36 @@
     
                 <div class="top f-f0">预备知识</div>
                 <div class="bottom f-richEditorText"><p>（1）宏观波及系数、微观驱油效率、采收率、采收率等基本概念；<br/>（2）影响宏观波及系数的因素；<br/>（2）影响微观驱油效率的因素。</p></div>
+                
+                <div class="top f-f0">实验仿真</div>
+                <div class="imgpic">
+                    <ul> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(231);LoadUrl('/VirExperiment/VirtualMode2311');"><img src="<%=Url.Content("~/Images/采收率束缚水.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(231);LoadUrl('/VirExperiment/VirtualMode2311');">三种类型束缚水饱和度下的采收率实验</a>
+                           </p>
+                       </li> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(232);LoadUrl('/VirExperiment/VirtualMode2321');"><img src="<%=Url.Content("~/Images/采收率残余油.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(232);LoadUrl('/VirExperiment/VirtualMode2321');">三种类型残余油饱和度下的采收率实验</a>
+                           </p>
+                       </li> 
+                       <li>
+                           <div class="pro-pic">
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(233);LoadUrl('/VirExperiment/VirtualMode2331');"><img src="<%=Url.Content("~/Images/采收率相渗曲线.png")%>"></a>
+                           </div>
+                           <p>
+                                <a href="javascript:void(0);" onclick="ShowVirControlDiv(233);LoadUrl('/VirExperiment/VirtualMode2331');">三种类型油水相渗曲线下的采收率实验</a>
+                           </p>
+                       </li> 
+                    </ul>
+                </div>
             </div>
         </div>
         <div style="width: 400px; margin-left: -400px; position: relative;float: right;">
@@ -86,7 +116,7 @@
                 <param name="allowScriptAccess" value="sameDomain">
                 <embed id="forfunex" src="/Flash/采收率实验.swf"
                     width="400"
-                    height="300"
+                    height="331"
                     align="middle"
                     quality="high"
                     bgcolor="#f0fff8"
@@ -101,7 +131,7 @@
                 </embed>
                 </object>
             </div> 
-            <div style="padding: 10px 20px 10px 0px;">
+            <div style="padding: 10px 20px 10px 0px; display:none;">
                 <div class="t-title f-f0">实验演示</div>
                 <div class="m-btnList">
                     <a href="javascript:void(0);" onclick="ShowVirControlDiv(231);LoadUrl('/VirExperiment/VirtualMode2311');" ><span class="f-da">1、三种类型束缚水饱和度下的采收率实验</span></a>
@@ -112,7 +142,7 @@
             <div style="padding: 10px 20px 20px 0px;">
                 <div class="t-title f-f0">随堂测试</div>
                 <div class="m-btnList">
-                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="LoadExam(6);">
+                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="ShowVirControlDiv(000);LoadExam(6);">
                         <span class="f-db">参加测试</span> 
                     </a>
                 </div>
