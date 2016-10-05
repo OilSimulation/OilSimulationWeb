@@ -568,6 +568,7 @@
     <Content Include="Scripts\renderers\RaytracingRenderer.js" />
     <Content Include="Scripts\renderers\SoftwareRenderer.js" />
     <Content Include="Scripts\renderers\SVGRenderer.js" />
+    <Content Include="Scripts\scrollable.js" />
     <Content Include="Scripts\three.js" />
     <Content Include="Views\Base\BaseModeFive.aspx" />
     <Content Include="Views\Base\BaseModeFour.aspx" />

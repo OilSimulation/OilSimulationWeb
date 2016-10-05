@@ -15,7 +15,7 @@
             $("#ModeTwo").css("display", "block");
             $("#ExpFive").addClass("select");
             $("#curMode").text($("#ModeTwo").prev().text());
-            $("#curitem").text($("#ExpFive").children().text());
+            $("#curitem").text($("#ExpFive").children().text()); 
         });
         function ShowVirControlDiv(sId) {
             $("#Virtual221").hide();
@@ -32,7 +32,7 @@
                     $("#Virtual223").show();
                     break;
             }
-        }
+        };
     </script>
     <div id="WebGLLayOut">
         <div id="Virtual221" style="display:inline;">
@@ -63,7 +63,36 @@
     </div>
     <div id="MainLayOut" style="width:100%;">
         <div style="width:100%; float:left;">
-            <div style="margin-right: 415px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);">
+            <div id="wizard" style="margin-right: 415px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);"> 
+                <ul id="status"> 
+                    <li class="active"><strong>1.</strong>创建账户</li> 
+                    <li><strong>2.</strong>填写联系信息</li> 
+                    <li><strong>3.</strong>完成</li> 
+                </ul>
+                <div class="items"> 
+                    <div class="page"> 
+                       -----任意html内容----- 
+                       <div class="btn_nav"> 
+                          <input type="button" class="f-ib u-btn u-btn-lg u-btn-orange" value="下一步»" /> 
+                       </div> 
+                    </div> 
+                    <div class="page"> 
+                       -----任意html内容----- 
+                       <div class="btn_nav"> 
+                           <input type="button" class="f-ib u-btn u-btn-lg u-btn-orange" style="float:left" value="«上一步" /> 
+                           <input type="button" class="f-ib u-btn u-btn-lg u-btn-orange" value="下一步»" /> 
+                       </div> 
+                    </div> 
+                    <div class="page"> 
+                       -----任意html内容----- 
+                       <div class="btn_nav"> 
+                           <input type="button" class="f-ib u-btn u-btn-lg u-btn-orange" style="float:left" value="«上一步" /> 
+                           <input type="button" class="f-ib u-btn u-btn-lg u-btn-orange" id="sub" value="确定" /> 
+                       </div> 
+                    </div> 
+                </div>          
+            </div>
+            <div style="margin-right: 415px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1); display:none;">
                 <h2>实验五、水驱油效率实验</h2>
                 <div class="top f-f0">实验简介</div>
                 <div class="bottom f-richEditorText"><p>&nbsp; &nbsp; &nbsp; &nbsp; 在驱油剂波及范围内，所驱替出的原油体积与总含油体积的比值称为驱油效率。驱油效率与原始含油分布状态、岩石孔隙度结构、岩石表面性质、驱油剂性质等有关。油水流动被复杂的毛细管现象所左右，由毛管力和润湿性作用所产生的阻力而圈闭的油膜、油滴、油块等，在通常情况下成为所谓“死油”。为了使“死油”投入流动，必须克服由此而产生的阻力。因此，微观状态下的界面现象，包括油水间的界面张力、润湿接触角、孔隙大小（分布）和孔喉比等是决定驱油效率的关键因素，所以降低毛管力，使岩石表面由亲油转变为亲水是增加驱油效率最关键的措施之一。本实验是以一维水驱油理论为基础，利用外部注水进行驱油，模拟实际非活塞式驱替过程。水驱油采用恒速法，在岩样出口端记录每种流体的产量、岩样两端的压差，计算水驱油效率。</p></div>

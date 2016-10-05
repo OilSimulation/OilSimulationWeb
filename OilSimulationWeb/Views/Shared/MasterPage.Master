@@ -12,6 +12,7 @@
     <link href="<%=Url.Content("~/Content/Loading.css")%>" rel="stylesheet" type="text/css" /> 
     <link href="<%=Url.Content("~/Content/jquery-ui-1.10.2.custom.css")%>" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/jquery-1.4.1.min.js")%>"></script>
+    <script type="text/javascript" src="<%=Url.Content("~/Scripts/scrollable.js")%>"></script>
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/loading-overlay.min.js")%>"></script> 
     <script type="text/javascript">
         var ExercisesTestId = -1;
