@@ -33,6 +33,9 @@
                     break;
             }
         };
+        $(function () {
+            $("#wizard").scrollable();
+        }); 
     </script>
     <div id="WebGLLayOut">
         <div id="Virtual221" style="display:inline;">
@@ -63,36 +66,157 @@
     </div>
     <div id="MainLayOut" style="width:100%;">
         <div style="width:100%; float:left;">
-            <div id="wizard" style="margin-right: 415px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);"> 
-                <ul id="status"> 
-                    <li class="active"><strong>1.</strong>创建账户</li> 
-                    <li><strong>2.</strong>填写联系信息</li> 
-                    <li><strong>3.</strong>完成</li> 
-                </ul>
-                <div class="items"> 
-                    <div class="page"> 
-                       -----任意html内容----- 
+            <div id="wizard" style="margin-right: 415px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);">  
+                <h2>实验流程</h2>
+                <div class="items">  
+                    <div class="page">  
+                       <div class="top f-f0">（一）配制实验用油和水</div>
+                       <div class="bottom f-richEditorText"><p>将脱气原油脱水、过滤，按一定比列加入煤油，充分搅拌后，测量模拟油粘度。一般模拟油粘度与地层油粘度一致。<br/>采用按地层水离子组成与矿化度配置，或用标准盐水。标准盐水配方：Nacl:Cacl2:Mgcl2&bull;6H2O=7:0.6:0.4(质量比)。</p></div>
                        <div class="btn_nav"> 
-                          <input type="button" class="f-ib u-btn u-btn-lg u-btn-orange" value="下一步»" /> 
+                          <input type="button" class="next f-ib u-btn u-btn-orange" value="下一步»" /> 
                        </div> 
                     </div> 
                     <div class="page"> 
-                       -----任意html内容----- 
+                       <div class="top f-f0">（二）抽真空饱和盐水（地层水）</div>
+                       <div class="bottom f-richEditorText"><p>将处理好的岩样放入真空干燥器中，真空度达到133.3Pa时，抽空2~8个小时。</p></div>
+                       <object id="Object1" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="400" height="300"
+                            codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0">
+                            <param name="movie" value="/seufld/seufld/flash/focus2.swf">
+                            <param name="quality" value="high">
+                            <param name="bgcolor" value="#F0F0F0">
+                            <param name="menu" value="false">
+                            <param name="wmode" value="opaque"><!--Window|Opaque|Transparent-->
+                            <param name="FlashVars" value="">
+                            <param name="allowScriptAccess" value="sameDomain">
+                            <embed id="forfunex" src="/Flash/演示-饱.swf"
+                                width="750"
+                                height="550"
+                                align="middle"
+                                quality="high"
+                                bgcolor="#f0fff8"
+                                menu="false"
+                                play="true"
+                                loop="false"
+                                FlashVars=""
+                                allowfullscreen="true"
+                                allowScriptAccess="sameDomain"
+                                type="application/x-shockwave-flash"
+                                pluginspage="http://www.adobe.com/go/getflashplayer">
+                            </embed>
+                            </object>
                        <div class="btn_nav"> 
-                           <input type="button" class="f-ib u-btn u-btn-lg u-btn-orange" style="float:left" value="«上一步" /> 
-                           <input type="button" class="f-ib u-btn u-btn-lg u-btn-orange" value="下一步»" /> 
+                           <input type="button" class="prev f-ib u-btn u-btn-orange" style="float:left" value="«上一步" /> 
+                           <input type="button" class="next f-ib u-btn u-btn-orange" value="下一步»" /> 
                        </div> 
                     </div> 
                     <div class="page"> 
-                       -----任意html内容----- 
+                       <div class="top f-f0">（三）将实验用油（模拟油）放入相应容器中</div> 
+                       <object id="Object3" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="400" height="300"
+                            codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0">
+                            <param name="movie" value="/seufld/seufld/flash/focus2.swf">
+                            <param name="quality" value="high">
+                            <param name="bgcolor" value="#F0F0F0">
+                            <param name="menu" value="false">
+                            <param name="wmode" value="opaque"><!--Window|Opaque|Transparent-->
+                            <param name="FlashVars" value="">
+                            <param name="allowScriptAccess" value="sameDomain">
+                            <embed id="forfunex" src="/Flash/演示-抽油.swf"
+                                width="750"
+                                height="550"
+                                align="middle"
+                                quality="high"
+                                bgcolor="#f0fff8"
+                                menu="false"
+                                play="true"
+                                loop="false"
+                                FlashVars=""
+                                allowfullscreen="true"
+                                allowScriptAccess="sameDomain"
+                                type="application/x-shockwave-flash"
+                                pluginspage="http://www.adobe.com/go/getflashplayer">
+                            </embed>
+                            </object>
                        <div class="btn_nav"> 
-                           <input type="button" class="f-ib u-btn u-btn-lg u-btn-orange" style="float:left" value="«上一步" /> 
-                           <input type="button" class="f-ib u-btn u-btn-lg u-btn-orange" id="sub" value="确定" /> 
+                           <input type="button" class="prev f-ib u-btn u-btn-orange" style="float:left" value="«上一步" /> 
+                           <input type="button" class="next f-ib u-btn u-btn-orange" value="下一步»" /> 
+                       </div> 
+                    </div>
+                    <div class="page"> 
+                       <div class="top f-f0">（四）将实验用水放入相应容器中</div> 
+                       <div class="bottom f-richEditorText"></div>
+                       <object id="Object2" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="400" height="300"
+                            codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0">
+                            <param name="movie" value="/seufld/seufld/flash/focus2.swf">
+                            <param name="quality" value="high">
+                            <param name="bgcolor" value="#F0F0F0">
+                            <param name="menu" value="false">
+                            <param name="wmode" value="opaque"><!--Window|Opaque|Transparent-->
+                            <param name="FlashVars" value="">
+                            <param name="allowScriptAccess" value="sameDomain">
+                            <embed id="forfunex" src="/Flash/演示-抽水.swf"
+                                width="750"
+                                height="550"
+                                align="middle"
+                                quality="high"
+                                bgcolor="#f0fff8"
+                                menu="false"
+                                play="true"
+                                loop="false"
+                                FlashVars=""
+                                allowfullscreen="true"
+                                allowScriptAccess="sameDomain"
+                                type="application/x-shockwave-flash"
+                                pluginspage="http://www.adobe.com/go/getflashplayer">
+                            </embed>
+                            </object>
+                       <div class="btn_nav"> 
+                           <input type="button" class="prev f-ib u-btn u-btn-orange" style="float:left" value="«上一步" /> 
+                           <input type="button" class="next f-ib u-btn u-btn-orange" value="下一步»" /> 
+                       </div> 
+                    </div>
+                    <div class="page"> 
+                       <div class="top f-f0">（五）流程接入</div> 
+                       <div class="bottom f-richEditorText"></div>
+                       <object id="Object4" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="400" height="300"
+                            codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0">
+                            <param name="movie" value="/seufld/seufld/flash/focus2.swf">
+                            <param name="quality" value="high">
+                            <param name="bgcolor" value="#F0F0F0">
+                            <param name="menu" value="false">
+                            <param name="wmode" value="opaque"><!--Window|Opaque|Transparent-->
+                            <param name="FlashVars" value="">
+                            <param name="allowScriptAccess" value="sameDomain">
+                            <embed id="forfunex" src="/Flash/演示-水驱油.swf"
+                                width="750"
+                                height="550"
+                                align="middle"
+                                quality="high"
+                                bgcolor="#f0fff8"
+                                menu="false"
+                                play="true"
+                                loop="false"
+                                FlashVars=""
+                                allowfullscreen="true"
+                                allowScriptAccess="sameDomain"
+                                type="application/x-shockwave-flash"
+                                pluginspage="http://www.adobe.com/go/getflashplayer">
+                            </embed>
+                            </object>
+                       <div class="btn_nav"> 
+                           <input type="button" class="prev f-ib u-btn u-btn-orange" style="float:left" value="«上一步" /> 
+                           <input type="button" class="next f-ib u-btn u-btn-orange" value="下一步»" /> 
+                       </div> 
+                    </div>
+                    <div class="page"> 
+                       <div class="top f-f0">（六）数据处理</div> 
+                       <div class="btn_nav"> 
+                           <input type="button" class="prev f-ib u-btn u-btn-orange" style="float:left" value="«上一步" /> 
+                           <input type="button" class="next f-ib u-btn u-btn-orange" id="sub" value="确定" /> 
                        </div> 
                     </div> 
                 </div>          
             </div>
-            <div style="margin-right: 415px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1); display:none;">
+            <div id="" style="margin-right: 415px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1); display:none;">
                 <h2>实验五、水驱油效率实验</h2>
                 <div class="top f-f0">实验简介</div>
                 <div class="bottom f-richEditorText"><p>&nbsp; &nbsp; &nbsp; &nbsp; 在驱油剂波及范围内，所驱替出的原油体积与总含油体积的比值称为驱油效率。驱油效率与原始含油分布状态、岩石孔隙度结构、岩石表面性质、驱油剂性质等有关。油水流动被复杂的毛细管现象所左右，由毛管力和润湿性作用所产生的阻力而圈闭的油膜、油滴、油块等，在通常情况下成为所谓“死油”。为了使“死油”投入流动，必须克服由此而产生的阻力。因此，微观状态下的界面现象，包括油水间的界面张力、润湿接触角、孔隙大小（分布）和孔喉比等是决定驱油效率的关键因素，所以降低毛管力，使岩石表面由亲油转变为亲水是增加驱油效率最关键的措施之一。本实验是以一维水驱油理论为基础，利用外部注水进行驱油，模拟实际非活塞式驱替过程。水驱油采用恒速法，在岩样出口端记录每种流体的产量、岩样两端的压差，计算水驱油效率。</p></div>
