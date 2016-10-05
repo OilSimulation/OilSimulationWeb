@@ -10,6 +10,8 @@
         $(document).ready(function () {
             $("#WebGLLayOut").hide();
             $("#MainLayOut").show();
+            $("#wizard").hide();
+            $("#explainPage").show();   
             $(".liNav").each(function () { $(this).removeClass("select"); });
             $(".zbar ul").each(function () { $(this).css("display", "none"); });
             $("#ModeTwo").css("display", "block");
@@ -33,6 +35,11 @@
                     break;
             }
         };
+        function ShowWizard()
+        {
+            $("#wizard").show();
+            $("#explainPage").hide();   
+        }
         $(function () {
             $("#wizard").scrollable();
         }); 
@@ -66,7 +73,7 @@
     </div>
     <div id="MainLayOut" style="width:100%;">
         <div style="width:100%; float:left;">
-            <div id="wizard" style="margin-right: 415px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);">  
+            <div id="wizard" style="margin-right: 415px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1); display:none;">  
                 <h2>实验流程</h2>
                 <div class="items">  
                     <div class="page">  
@@ -216,7 +223,7 @@
                     </div> 
                 </div>          
             </div>
-            <div id="" style="margin-right: 415px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1); display:none;">
+            <div id="explainPage" style="margin-right: 415px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);">
                 <h2>实验五、水驱油效率实验</h2>
                 <div class="top f-f0">实验简介</div>
                 <div class="bottom f-richEditorText"><p>&nbsp; &nbsp; &nbsp; &nbsp; 在驱油剂波及范围内，所驱替出的原油体积与总含油体积的比值称为驱油效率。驱油效率与原始含油分布状态、岩石孔隙度结构、岩石表面性质、驱油剂性质等有关。油水流动被复杂的毛细管现象所左右，由毛管力和润湿性作用所产生的阻力而圈闭的油膜、油滴、油块等，在通常情况下成为所谓“死油”。为了使“死油”投入流动，必须克服由此而产生的阻力。因此，微观状态下的界面现象，包括油水间的界面张力、润湿接触角、孔隙大小（分布）和孔喉比等是决定驱油效率的关键因素，所以降低毛管力，使岩石表面由亲油转变为亲水是增加驱油效率最关键的措施之一。本实验是以一维水驱油理论为基础，利用外部注水进行驱油，模拟实际非活塞式驱替过程。水驱油采用恒速法，在岩样出口端记录每种流体的产量、岩样两端的压差，计算水驱油效率。</p></div>
@@ -290,6 +297,12 @@
                     <a href="javascript:void(0);" onclick="ShowVirControlDiv(221);LoadUrl('/VirExperiment/VirtualMode2211');" ><span class="f-da">1、三种类型毛管压力下的水驱油效率实验</span></a>
                     <a href="javascript:void(0);" onclick="ShowVirControlDiv(222);LoadUrl('/VirExperiment/VirtualMode2221');" ><span class="f-da">2、三种类型原油粘度级别下的水驱油效率实验</span></a> 
                     <a href="javascript:void(0);" onclick="ShowVirControlDiv(223);LoadUrl('/VirExperiment/VirtualMode2231');" ><span class="f-da">2、三种类型原油密度级别下的水驱油效率实验</span></a> 
+                </div>
+            </div>
+            <div style="padding: 10px 20px 10px 0px; " >
+                <div class="t-title f-f0">实验流程</div>
+                <div class="m-btnList"> 
+                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(000);ShowWizard();" ><span class="f-da">观看实验流程</span></a> 
                 </div>
             </div>
             <div style="padding: 10px 20px 20px 0px;">
