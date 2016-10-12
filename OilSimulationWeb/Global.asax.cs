@@ -21,7 +21,7 @@ namespace OilSimulationWeb
                 "Default", // 路由名称
                 "{controller}/{action}/{id}", // 带有参数的 URL
                 //new { controller = "Manage", action = "Login", id = UrlParameter.Optional } // 参数默认值
-                new { controller = "Home", action = "BaseOne", id = UrlParameter.Optional } // 参数默认值
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // 参数默认值
             );
 
         }

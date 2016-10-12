@@ -32,6 +32,66 @@ namespace OilSimulationController
             
             return View();
         }
+        public ActionResult BaseIndex()
+        {
+            string szMac = CommonModel.GetMACID();
+            ViewData["szMac"] = szMac;
+            if (lstThread.Count >= iCoreCount)
+            {
+                int a = 0;
+            }
+            else
+            {
+                lstThread.Add(new stMultiTread());
+            }
+
+            return View();
+        }
+        public ActionResult VirtualIndex()
+        {
+            string szMac = CommonModel.GetMACID();
+            ViewData["szMac"] = szMac;
+            if (lstThread.Count >= iCoreCount)
+            {
+                int a = 0;
+            }
+            else
+            {
+                lstThread.Add(new stMultiTread());
+            }
+
+            return View();
+        }
+        public ActionResult SimulationIndex()
+        {
+            string szMac = CommonModel.GetMACID();
+            ViewData["szMac"] = szMac;
+            if (lstThread.Count >= iCoreCount)
+            {
+                int a = 0;
+            }
+            else
+            {
+                lstThread.Add(new stMultiTread());
+            }
+
+            return View();
+        }
+        public ActionResult InnovateIndex()
+        {
+            string szMac = CommonModel.GetMACID();
+            ViewData["szMac"] = szMac;
+            if (lstThread.Count >= iCoreCount)
+            {
+                int a = 0;
+            }
+            else
+            {
+                lstThread.Add(new stMultiTread());
+            }
+
+            return View();
+        }
         /// <summary>
         /// 水驱油模拟
         /// </summary>

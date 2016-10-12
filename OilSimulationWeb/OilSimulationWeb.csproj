@@ -107,6 +107,14 @@
     <Content Include="Images\db-bg.jpg" />
     <Content Include="Images\foot-nei-bg.jpg" />
     <Content Include="Images\icon-step.png" />
+    <Content Include="Images\img10.jpg" />
+    <Content Include="Images\img11.jpg" />
+    <Content Include="Images\img12.jpg" />
+    <Content Include="Images\img14.jpg" />
+    <Content Include="Images\img15.jpg" />
+    <Content Include="Images\img2.jpg" />
+    <Content Include="Images\img8.jpg" />
+    <Content Include="Images\log.jpg" />
     <Content Include="Images\pop_up_bg.png" />
     <Content Include="Images\ui-bg_glass_20_555555_1x400.png" />
     <Content Include="Images\ui-icons_cccccc_256x240.png" />
@@ -606,6 +614,7 @@
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Home\InnovateOne.aspx" />
     <Content Include="Views\Home\InnovateTwo.aspx" />
+    <Content Include="Views\Home\BaseIndex.aspx" />
     <Content Include="Views\Home\VirtualOne.aspx" />
     <Content Include="Views\Home\VirtualThree.aspx" />
     <Content Include="Views\Home\VirtualTwo.aspx" />
