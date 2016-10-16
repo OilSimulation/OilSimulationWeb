@@ -386,6 +386,11 @@ namespace DBHelper.Model
         public double Score { get; set; }
 
         /// <summary>
+        /// 题目类型名称(选择或判断)
+        /// </summary>
+        public string TitleTypeName { get; set; }
+
+        /// <summary>
         /// 题目选项(已按照选项顺序位置排好,前台直接按索引取)
         /// </summary>
         public List<ExamItemInfo> ListExamItem { get; set; }

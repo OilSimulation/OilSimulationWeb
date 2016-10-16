@@ -168,9 +168,14 @@ namespace DBHelper.Bll
         public List<ExamTitleInfo> GetExamTitleInfo(int ExercisesTestId, int StudentId)
         {
             //c.Score 该题分数非学生得分
-            string strSql = @"select c.TitleInfoId,c.TitleConent,c.CorrectAnswer,c.Score,c.ExercisesTitleIndex,c.ExercisesTestId,d.StudentAnswer from 
-(select b.TitleInfoId,b.TitleConent,b.CorrectAnswer,b.Score,a.ExercisesTitleIndex,a.ExercisesTestId from ExercisesTitle a,TitleInfo b 
+//            string strSql = @"select c.TitleInfoId,c.TitleConent,c.CorrectAnswer,c.Score,c.ExercisesTitleIndex,c.ExercisesTestId,d.StudentAnswer from 
+//(select b.TitleInfoId,b.TitleConent,b.CorrectAnswer,b.Score,a.ExercisesTitleIndex,a.ExercisesTestId from ExercisesTitle a,TitleInfo b 
+//where a.ExercisesTestId=@ExercisesTestId and a.TitleInfoId=b.TitleInfoId order by a.ExercisesTitleIndex asc) c 
+//left join StudentExaminationPaper d on c.ExercisesTestId=d.ExercisesTestId and c.TitleInfoId=d.TitleInfoId and d.StudentExamId=@StudentExamId";
+            string strSql = @"select c.TitleInfoId,c.TitleConent,c.CorrectAnswer,c.Score,c.ExercisesTitleIndex,c.ExercisesTestId,d.StudentAnswer,e.TitleTypeName from 
+(select b.TitleInfoId,b.TitleConent,b.CorrectAnswer,b.Score,a.ExercisesTitleIndex,a.ExercisesTestId,b.TitleTypeId from ExercisesTitle a,TitleInfo b 
 where a.ExercisesTestId=@ExercisesTestId and a.TitleInfoId=b.TitleInfoId order by a.ExercisesTitleIndex asc) c 
+left join TitleType e on c.TitleTypeId=e.TiteTypeId
 left join StudentExaminationPaper d on c.ExercisesTestId=d.ExercisesTestId and c.TitleInfoId=d.TitleInfoId and d.StudentExamId=@StudentExamId";
             return DataTableToExamTitleInfo(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
                 new SQLiteParameter(){  Value=ExercisesTestId, ParameterName="@ExercisesTestId"},
@@ -218,6 +223,7 @@ left join StudentExaminationPaper d on c.ExercisesTestId=d.ExercisesTestId and c
                     info.TitleConent = dr.ItemArray[1] == DBNull.Value ? "" : dr.ItemArray[1].ToString();
                     info.CorrectAnswer = dr.ItemArray[2] == DBNull.Value ? -100 : Convert.ToInt32(dr.ItemArray[2]);
                     info.StudentAnswer = dr.ItemArray[6] == DBNull.Value ? -100 : Convert.ToInt32(dr.ItemArray[6]);
+                    info.TitleTypeName = dr.ItemArray[7] == DBNull.Value ? "" : dr.ItemArray[7].ToString();
                     if (info.CorrectAnswer != -100 && info.StudentAnswer != -100 && info.CorrectAnswer == info.StudentAnswer)
                     {
                         info.Score = dr.ItemArray[3] == DBNull.Value ? -100 : Convert.ToInt32(dr.ItemArray[3]);

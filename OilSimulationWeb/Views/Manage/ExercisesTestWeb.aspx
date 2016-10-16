@@ -353,9 +353,11 @@
                     //$(obj).parents("tr").remove().draw();
                     if (result > 0) {
                         var table = $('#datatables').DataTable();
+                        table.row($(obj).parents('tr')).remove().draw();
+                        table.row($(obj).parents('tr')).remove();//.draw();
 
-                        var rowf = table.row($(obj).parent().parent());
-                        rowf.remove().draw(false);
+//                        var rowf = table.row($(obj).parent().parent());
+//                        rowf.remove().draw(false);
 
                         layer.msg('已删除!');
 
