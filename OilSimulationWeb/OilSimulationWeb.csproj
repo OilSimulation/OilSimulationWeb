@@ -612,6 +612,7 @@
     <Content Include="Views\Home\EmulateOne.aspx" />
     <Content Include="Views\Home\EmulateTwo.aspx" />
     <Content Include="Views\Home\Index.aspx" />
+    <Content Include="Views\Home\InnovateIndex.aspx" />
     <Content Include="Views\Home\InnovateOne.aspx" />
     <Content Include="Views\Home\InnovateTwo.aspx" />
     <Content Include="Views\Home\BaseIndex.aspx" />
