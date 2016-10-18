@@ -615,6 +615,8 @@
     <Content Include="Views\Home\InnovateOne.aspx" />
     <Content Include="Views\Home\InnovateTwo.aspx" />
     <Content Include="Views\Home\BaseIndex.aspx" />
+    <Content Include="Views\Home\SimulationIndex.aspx" />
+    <Content Include="Views\Home\VirtualIndex.aspx" />
     <Content Include="Views\Home\VirtualOne.aspx" />
     <Content Include="Views\Home\VirtualThree.aspx" />
     <Content Include="Views\Home\VirtualTwo.aspx" />
