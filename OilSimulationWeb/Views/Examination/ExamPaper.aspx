@@ -126,7 +126,7 @@
         function submitPaper() {
             
         }
-
+        var varTd34;
 
         //加载试卷
         function LoadPaper(examid, studentid) {
@@ -197,10 +197,10 @@
                     varTd33.appendTo(varTr3);
 
 
-                    var varTd34 = $("<td></td>");
+                    varTd34 = $("<td id='studentscore'></td>");
                     varTd34.attr("id", "StudentScore");
                     varTd34.addClass("td4");
-                    if (resultData.IsOver > 0) {
+                    if (resultData.IsOver > 0||resultData.State>0) {
                         varTd34.html(resultData.StudentScore);
                     }
 
@@ -468,11 +468,14 @@
                 contentType: 'application/json',
                 success: function (result) {
                     if (result > 0) {
-                        $("#div" + id).css("color","blue");
+                        $("#div" + id).css("color", "blue");
                     }
                     else {
                         if (result == -200) {
                             alert("考试已结束！不可再修改！");
+                        }
+                        else if (result == -100) {
+                            alert("已交卷！不可再修改！");
                         }
                         else {
                             alert("操作失败！");
@@ -487,24 +490,47 @@
         }
 
         //交卷，生成成绩
-        function Save() {
-            var jsonData = { Id1: parent.StudentExamId, Id2: parent.ExercisesTestId };
-            var option = {
-                url: '<%:Url.Action("GetStudentScore","Manage") %>',
-                data: JSON.stringify(jsonData),
+        function submitPaper() {
+            if(confirm('请确认题目是否做完,点击确定后不可再修改！')) {
+
+            var jsonsubmit = { StudentId: parent.StudentExamId, ExercisesTestId: parent.ExercisesTestId, State: 1 };
+            var option2 = {
+                url: '<%:Url.Action("EditStudentExamState","Examination") %>',
+                data: JSON.stringify(jsonsubmit),
                 dataType: 'html',
                 type: 'POST',
                 async: false,
                 contentType: 'application/json',
                 success: function (result) {
-                    //$("#StudentScore").html(result);
-                    $("#table2").attr("disabled", "disabled");
-                }
+                    if (result>0) {
+                        var jsonData = { Id1: parent.StudentExamId, Id2: parent.ExercisesTestId };
+                        var option = {
+                            url: '<%:Url.Action("GetStudentScore","Manage") %>',
+                            data: JSON.stringify(jsonData),
+                            dataType: 'html',
+                            type: 'POST',
+                            async: false,
+                            contentType: 'application/json',
+                            success: function (result) {
+                                //$("#studentscore").val(result);
+                                varTd34.html(result);
+                                $("#table2").attr("disabled", "disabled");
+                            }
+                        }
+                        $.ajax(option);
+                    }
+                    else {
+                        alert('提示','操作失败！');
+
+                    }
+                 }
             }
-            $.ajax(option);
+            $.ajax(option2);
+            }
+
 
         }
-    </script>
+      </script>
 </body>
 
 

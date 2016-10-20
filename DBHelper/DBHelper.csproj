@@ -49,6 +49,7 @@
     <Compile Include="Bll\ExperimentTypeBLL.cs" />
     <Compile Include="Bll\StudentExamBLL.cs" />
     <Compile Include="Bll\StudentExaminationPaperBLL.cs" />
+    <Compile Include="Bll\StudentExamStateBLL.cs" />
     <Compile Include="Bll\TitleInfoBLL.cs" />
     <Compile Include="Bll\TitleItemAssocBLL.cs" />
     <Compile Include="Bll\TitleItemBLL.cs" />

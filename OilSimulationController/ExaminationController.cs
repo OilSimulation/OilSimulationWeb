@@ -21,6 +21,7 @@ namespace OilSimulationController
 
         StudentExaminationPaperBLL StudentExaminationPaperbll = new StudentExaminationPaperBLL(strConn);
         StudentExamBLL StudentExambll = new StudentExamBLL(strConn);
+        StudentExamStateBLL StudentExamStatebll = new StudentExamStateBLL(strConn);
         public ActionResult ExamPaper()
         {
             return View();
@@ -32,6 +33,22 @@ namespace OilSimulationController
         }
 
         #region *************************************** 试卷信息
+
+        /// <summary>
+        /// 获取学生交卷状态
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public ActionResult GetStudentExamState(stId2 info)
+        {
+            StudentExamState? result = StudentExamStatebll.GetStudentExamState(info.Id1, info.Id2);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
+
 
         public ActionResult GetExamInfo(stId2 info)
         {
@@ -79,6 +96,15 @@ namespace OilSimulationController
 
         }
 
+        public ActionResult EditStudentExamState(StudentExamState info)
+        {
+            int result = StudentExamStatebll.EditStudentExamState(info.StudentId, info.ExercisesTestId, info.State);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
 
         #endregion
 

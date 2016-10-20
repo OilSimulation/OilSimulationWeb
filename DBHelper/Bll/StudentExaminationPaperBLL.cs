@@ -14,6 +14,7 @@ namespace DBHelper.Bll
 
         ExercisesTestBLL ExercisesTestbll;
         StudentExamBLL StudentExambll;
+        StudentExamStateBLL StudentExamStatebll;
 
         private string m_strConn;
         public StudentExaminationPaperBLL(string strConn)
@@ -21,6 +22,7 @@ namespace DBHelper.Bll
             m_strConn = strConn;
             ExercisesTestbll = new ExercisesTestBLL(m_strConn);
             StudentExambll = new StudentExamBLL(m_strConn);
+            StudentExamStatebll = new StudentExamStateBLL(m_strConn);
         }
 
 
@@ -86,12 +88,20 @@ namespace DBHelper.Bll
         public int AddExamInfo(int ExercisesTestId, int StudentExamId, int TitleInfoId, int StudentAnswer)
         {
             string strSql = "";
-            ExercisesTest? t =ExercisesTestbll.GetExercisesTest(ExercisesTestId);
+            ExercisesTest? t = ExercisesTestbll.GetExercisesTest(ExercisesTestId);
             if (t != null && t.Value.IsOver > 0)
             {
                 //考试已经结束
                 return -200;
             }
+            StudentExamState? info = StudentExamStatebll.GetStudentExamState(StudentExamId, ExercisesTestId);
+            if (info!=null&&info.Value.State>0)
+            {
+                //学生自己已交卷
+                return -100;
+            }
+
+
             if (IsExist(ExercisesTestId, StudentExamId, TitleInfoId))
             {
                 //修改
@@ -130,7 +140,7 @@ namespace DBHelper.Bll
         /// <returns></returns>
         public ExamInfo GetExamInfo(int ExercisesTestId, int StudentId)
         {
-
+            StudentExamState? stateinfo =  StudentExamStatebll.GetStudentExamState(StudentId, ExercisesTestId); 
             ExercisesTest? info1 = ExercisesTestbll.GetExercisesTest(ExercisesTestId);
             StudentExam? info2 = StudentExambll.GetStudentExam(StudentId);
             ExamInfo info = new ExamInfo();
@@ -141,6 +151,15 @@ namespace DBHelper.Bll
                 info.ExercisesTestId = info1.Value.ExercisesTestId;
                 info.TotleScore = ExercisesTestbll.GetExercisesTestTotleScore(info.ExercisesTestId);
                 info.IsOver = info1.Value.IsOver;
+                if (stateinfo != null)
+                {
+                    info.State = stateinfo.Value.State;
+
+                }
+                else
+                {
+                    info.State = 0;
+                }
 
 
                 info.StudentExamId = info2.Value.StudentExamId;

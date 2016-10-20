@@ -285,6 +285,26 @@ namespace DBHelper.Model
         public int ExercisesTypeId { get; set; }
     }
 
+    public struct StudentExamState
+    {
+        /// <summary>
+        /// 学生考试 状态ID
+        /// </summary>
+        public int StudentExamStateId { get; set; }
+        /// <summary>
+        /// 学生ID
+        /// </summary>
+        public int StudentId { get; set; }
+        /// <summary>
+        /// 考试ID
+        /// </summary>
+        public int ExercisesTestId { get; set; }
+        /// <summary>
+        /// 状态(0 可继续答题,1 已交卷不可再答题)
+        /// </summary>
+        public int State { get; set; }
+    }
+
 
     #region **********************************************  考试 前台传到后台参数
     public struct stGetExperimentType
@@ -435,6 +455,11 @@ namespace DBHelper.Model
         /// 考试是否结束
         /// </summary>
         public int IsOver { get; set; }
+
+        /// <summary>
+        /// 学生是否交卷(0 未交,1 已交)
+        /// </summary>
+        public int State { get; set; }
 
         /// <summary>
         /// 题目列表(按照题目顺序排好顺序)
