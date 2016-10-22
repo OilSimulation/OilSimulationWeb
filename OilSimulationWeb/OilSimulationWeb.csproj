@@ -109,9 +109,13 @@
     <Content Include="Images\icon-step.png" />
     <Content Include="Images\img10.jpg" />
     <Content Include="Images\img11.jpg" />
+    <Content Include="Images\img11.png" />
     <Content Include="Images\img12.jpg" />
+    <Content Include="Images\img12.png" />
+    <Content Include="Images\img13.jpg" />
     <Content Include="Images\img14.jpg" />
     <Content Include="Images\img15.jpg" />
+    <Content Include="Images\img16.jpg" />
     <Content Include="Images\img2.jpg" />
     <Content Include="Images\img8.jpg" />
     <Content Include="Images\log.jpg" />
