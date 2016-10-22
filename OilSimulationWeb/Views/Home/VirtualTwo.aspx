@@ -86,19 +86,19 @@
                     <div class="page"> 
                        <div class="top f-f0">（二）抽真空饱和盐水（地层水）</div>
                        <div class="bottom f-richEditorText"><p>将处理好的岩样放入真空干燥器中，真空度达到133.3Pa时，抽空2~8个小时。</p></div>
-                       <object id="Object1" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="400" height="300"
+                       <object id="Object1" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" 
                             codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0">
                             <param name="movie" value="/seufld/seufld/flash/focus2.swf">
                             <param name="quality" value="high">
                             <param name="bgcolor" value="#F0F0F0">
-                            <param name="menu" value="false">
-                            <param name="wmode" value="opaque"><!--Window|Opaque|Transparent-->
+                            <param name="menu" value="false"> 
+                            <param name="wmode" value="Opaque"><!--Window|Opaque|Transparent-->
                             <param name="FlashVars" value="">
                             <param name="allowScriptAccess" value="sameDomain">
                             <embed id="forfunex" src="/Flash/演示-饱.swf"
                                 width="750"
                                 height="550"
-                                align="middle"
+                                align="middle" 
                                 quality="high"
                                 bgcolor="#f0fff8"
                                 menu="false"
@@ -119,7 +119,7 @@
                     <div class="page"> 
                        <div class="top f-f0">（三）将实验用油（模拟油）放入相应容器中</div> 
                        <div class="bottom f-richEditorText"></div>
-                       <object id="Object3" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="400" height="300"
+                       <object id="Object3" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
                             codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0">
                             <param name="movie" value="/seufld/seufld/flash/focus2.swf">
                             <param name="quality" value="high">
