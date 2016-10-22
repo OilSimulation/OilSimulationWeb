@@ -118,6 +118,7 @@
     <Content Include="Images\img16.jpg" />
     <Content Include="Images\img2.jpg" />
     <Content Include="Images\img8.jpg" />
+    <Content Include="Images\img8.png" />
     <Content Include="Images\log.jpg" />
     <Content Include="Images\pop_up_bg.png" />
     <Content Include="Images\ui-bg_glass_20_555555_1x400.png" />
