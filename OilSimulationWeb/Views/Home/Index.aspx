@@ -9,8 +9,8 @@
         $(document).ready(function () {
             $("#cmode").hide();
             $("#citem").hide();
-            $("#passwordtable").css("display","block");
-            $("#logintable").css("display", "none");
+            $("#passwordtable").css("display", "none");
+            $("#logintable").css("display", "block");
         });
         function updatepassword() {
             var oldpassword = $("oldpassword").val();
@@ -66,13 +66,13 @@
         <div style="width: 500px; margin-left: -500px; position: relative;float: right;">
             <div style="margin:5px auto;"><img alt="" width="490px" src="../../Images/img2.jpg" /></div>
             <div class="login">
-            <table id="logintable"  border="0" cellspacing="0" cellpadding="0" width="100%">
+            <table id="logintable"  border="0" cellspacing="0" cellpadding="0" width="100%" style="display:block;">
                 <tr><td>用户名：</td><td><input id="userid" type="text" /></td></tr>
                 <tr><td>密&nbsp;&nbsp;&nbsp;码：</td><td><input id="password" type="text" /></td></tr>
                 <tr><td>角&nbsp;&nbsp;&nbsp;色：</td><td>学生<input type="radio" name="1" id="student" />教师<input type="radio" name="1" id="teacher"/></td></tr>
                 <tr><td colspan="2"><input class="loginButton" type="button" value="登录" onclick="login()" /></td></tr>
             </table>
-            <table id="passwordtable"  border="0" cellspacing="0" cellpadding="0" width="100%">
+            <table id="passwordtable"  border="0" cellspacing="0" cellpadding="0" width="100%" style="display:none;">
                 <tr><td colspan="2">请修改密码</td></tr>
                 <tr><td>&nbsp;&nbsp;原密码：</td><td><input id="olduserid" type="text" /></td></tr>
                 <tr><td>&nbsp;&nbsp;新密码：</td><td><input id="newuserid" type="text" /></td></tr>
