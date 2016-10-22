@@ -305,6 +305,22 @@ namespace DBHelper.Model
         public int State { get; set; }
     }
 
+    public struct LoginInfo
+    {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public int Type { get; set; }
+    }
+
+    public struct LoginResult
+    {
+        public string UserName;
+        /// <summary>
+        /// 1 是第一次登录，需要修改密码
+        /// </summary>
+        public int IsFirstLogin;
+    }
+
 
     #region **********************************************  考试 前台传到后台参数
     public struct stGetExperimentType

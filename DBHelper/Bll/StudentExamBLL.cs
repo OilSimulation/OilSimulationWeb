@@ -19,6 +19,19 @@ namespace DBHelper.Bll
             ExercisesTestbll = new ExercisesTestBLL(strConn);
         }
 
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="username">用户名</param>
+        /// <param name="password"></param>
+        /// <param name="type">角色 1:学生,2:教师</param>
+        /// <returns>用户名</returns>
+        public LoginResult? Login(string username, string password, int type)
+        {
+            string strSql = "select 1 from StudentExam where ";
+            return new LoginResult();
+        }
+
         public List<StudentExam> GetStudentExam()
         {
             string strSql = "select * from StudentExam";
