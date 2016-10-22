@@ -19,6 +19,8 @@ namespace OilSimulationController
         
         public ActionResult Index()
         {
+            //存储用户名
+            Session["userid"] = "";
             string szMac = CommonModel.GetMACID();
             ViewData["szMac"] = szMac;
             if (lstThread.Count >= iCoreCount)

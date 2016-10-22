@@ -108,5 +108,23 @@ namespace OilSimulationController
 
         #endregion
 
+
+        #region *************************************** 登录
+
+        public ActionResult Login(LoginInfo info)
+        {
+            LoginResult? result = StudentExambll.Login(info.UserName, info.Password, info.Type);
+            if (result!=null)
+            {
+                Session["userid"] = result.Value.UserName;
+            }
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        #endregion
+
     }
 }
