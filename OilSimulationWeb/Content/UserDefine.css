@@ -70,6 +70,17 @@
     word-wrap: break-word;
     white-space: pre-wrap;
 }
+.f-richEditorIndex{
+    margin: 0;
+    border: 0;
+    text-align: left;
+    color: #eee;
+    font-size:18px;
+    line-height: 35px;
+    word-break: break-word;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
 
 .t-title
 {
