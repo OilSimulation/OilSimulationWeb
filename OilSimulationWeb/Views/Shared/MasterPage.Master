@@ -17,7 +17,6 @@
     <script type="text/javascript">
         var ExercisesTestId = -1;
         var ExperimentTypeId = -1;
-        var StudentExamId = -1;
         var StudentName = "";
         var StudentExamId = -1;
         var StudentNumber = "";
@@ -95,6 +94,11 @@
         });
         //导航点击对应控制栏的显示
         function ShowMode(modeCtrlId) {
+            var userid = '<%=Session["userid"] %>';
+            if (userid == "") {
+                alert("请先登录！");
+                return;
+            }
             var sUrl = curWebRootUrl + "/Home/" + modeCtrlId;
             window.location.href = sUrl;
         }

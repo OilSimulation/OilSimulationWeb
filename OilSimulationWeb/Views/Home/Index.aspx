@@ -8,8 +8,54 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#cmode").hide();
-            $("#citem").hide();  
+            $("#citem").hide();
+            $("#passwordtable").css("display","block");
+            $("#logintable").css("display", "none");
         });
+        function updatepassword() {
+            var oldpassword = $("oldpassword").val();
+            var newpassword = $("newpassword").val();
+            var okpassword = $("okpassword").val();
+            if (oldpassword.length <= 0 || newpassword <= 0 || okpassword <= 0) {
+                alert("请输入密码！");
+                return;
+            }
+        }
+         function login() {
+             var type=1;
+             var vteacher = $("#teacher").val();
+             var vstudent = $("#student").val();
+             var vuserid = $("#userid").val();
+             var vpassword = $("#password").val();
+             if (vuserid.length <= 0 || vpassword.length <= 0) {
+                 alert("请输入用户名和密码！");
+                 return;
+             }
+             if (vteacher=="yes") {
+                type = 2;
+             }
+             var jsonData = {UserName:vuserid,Password:vpassword,Type:type};
+             var option = {
+                 url: '<%:Url.Action("Login","Examination") %>',
+                 data: JSON.stringify(jsonData),
+                 dataType: 'html',
+                 type: 'POST',
+                 async: false,
+                 contentType: 'application/json',
+                 success: function (result) {
+                     if (result != null) {
+                         var resultData  = JSON.parse(result);
+                     }
+                     if (resultData.IsFirstLogin > 0) {
+                         $("#passwordtable").css("display", "none");
+                         $("#logintable").css("display", "block");
+                     }
+
+                 }
+             }
+             $.ajax(option);
+
+         }
     </script>
     <div id="MainLayOut" style="width:100%">
         <div style="float:left;margin-right:515px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);">
@@ -19,6 +65,21 @@
         </div>
         <div style="width: 500px; margin-left: -500px; position: relative;float: right;">
             <div style="margin:5px auto;"><img alt="" width="490px" src="../../Images/img2.jpg" /></div>
+            <div class="login">
+            <table id="logintable"  border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tr><td>用户名：</td><td><input id="userid" type="text" /></td></tr>
+                <tr><td>密&nbsp;&nbsp;&nbsp;码：</td><td><input id="password" type="text" /></td></tr>
+                <tr><td>角&nbsp;&nbsp;&nbsp;色：</td><td>学生<input type="radio" name="1" id="student" />教师<input type="radio" name="1" id="teacher"/></td></tr>
+                <tr><td colspan="2"><input class="loginButton" type="button" value="登录" onclick="login()" /></td></tr>
+            </table>
+            <table id="passwordtable"  border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tr><td colspan="2">请修改密码</td></tr>
+                <tr><td>&nbsp;&nbsp;原密码：</td><td><input id="olduserid" type="text" /></td></tr>
+                <tr><td>&nbsp;&nbsp;新密码：</td><td><input id="newuserid" type="text" /></td></tr>
+                <tr><td>确认密码：</td><td><input id="okuserid" type="text" /></td></tr>
+                <tr><td colspan="2"><input class="loginButton" type="button" value="确定" onclick="updatepassword()" /></td></tr>
+            </table>
+            </div>
         </div>
     </div>
 </asp:Content>
