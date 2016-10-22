@@ -162,9 +162,10 @@
         //获取网站根目录或者二级目录
         function GetRootPath() {
             var strFullPath = window.document.location.href;
-            var strPath = window.document.location.pathname; 
+            var strPath = window.document.location.pathname;
             var pos = strFullPath.indexOf(strPath);
             var prePath = strFullPath.substring(0, pos);
+            
             var postPath;
             
             if (strPath.indexOf('/Home') == -1) {
@@ -176,7 +177,10 @@
             else {
                 postPath = strPath.substring(0, strPath.indexOf('/Home'));
             }
-            curWebRootUrl = (prePath + postPath);
+            if (strPath == "/")
+                curWebRootUrl = strFullPath.substring(0, strFullPath.length-1); 
+            else
+                curWebRootUrl = (prePath + postPath);
         }
 
         function LoadExam(experimenttypeid) {
