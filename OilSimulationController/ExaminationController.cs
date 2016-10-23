@@ -113,11 +113,60 @@ namespace OilSimulationController
 
         public ActionResult Login(LoginInfo info)
         {
-            LoginResult? result = StudentExambll.Login(info.UserName, info.Password, info.Type);
+            LoginResult? result = StudentExambll.Login(info.UserId, info.Password, info.Type);
             if (result!=null)
             {
-                Session["userid"] = result.Value.UserName;
+                Session["userid"] = result.Value.UserID;
             }
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        /// <summary>
+        /// 获取保存的Session值
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetSessionState()
+        {
+            string str = "";
+            if (Session["userid"] != null)
+            {
+                str =  Session["userid"].ToString().Trim();
+            }
+            else
+            {
+                str = "";
+            }
+            var res = new ConfigurableJsonResult();
+            res.Data = str;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="info"></param>
+        /// <returns></returns>
+        public ActionResult UpdatePassword(LoginInfo info)
+        {
+            int result = StudentExambll.UpdatePassword(info.UserId, info.Password, info.NewPassword, info.Type);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="userid">用户ID</param>
+        /// <returns></returns>
+        public ActionResult GetUserInfo(stringId userid)
+        {
+            StudentExam? result = StudentExambll.GetUserInfo(userid.strId);
             var res = new ConfigurableJsonResult();
             res.Data = result;
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");

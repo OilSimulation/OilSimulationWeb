@@ -25,11 +25,148 @@ namespace DBHelper.Bll
         /// <param name="username">用户名</param>
         /// <param name="password"></param>
         /// <param name="type">角色 1:学生,2:教师</param>
-        /// <returns>用户名</returns>
-        public LoginResult? Login(string username, string password, int type)
+        /// <returns>用户名,是否是第一次登录</returns>
+        public LoginResult? Login(string userid, string password, int type)
         {
-            string strSql = "select 1 from StudentExam where ";
-            return new LoginResult();
+            string strSql = "select IsFirstLogin,StudentNumber,StudentName,LoginDateTime from StudentExam where StudentNumber=@StudentNumber and Password=@Password and Type=@Type";
+            LoginResult? result =  DataTableToLoginResult(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=userid, ParameterName="@StudentNumber"},
+                new SQLiteParameter(){  Value=password, ParameterName="@Password"},
+                new SQLiteParameter(){  Value=type, ParameterName="@Type"}
+            }));
+
+            if (result!=null)
+            {
+                //登录成功，修改登录时间和是否是第一次登录
+                strSql = "update StudentExam set LoginDateTime=@LoginDateTime,IsFirstLogin=2 where  StudentNumber=@StudentNumber and Password=@Password and Type=@Type";
+                DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=userid, ParameterName="@StudentNumber"},
+                new SQLiteParameter(){  Value=DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), ParameterName="@LoginDateTime"},
+                new SQLiteParameter(){  Value=password, ParameterName="@Password"},
+                new SQLiteParameter(){  Value=type, ParameterName="@Type"}
+                });
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userid">用户名</param>
+        /// <param name="oldpassword"></param>
+        /// <param name="newpassword"></param>
+        /// <param name="type">角色类型(学生、教师)</param>
+        /// <returns></returns>
+        public int UpdatePassword(string userid, string oldpassword, string newpassword, int type)
+        {
+            string strSql = "";
+            //验证旧密码是否正确
+            strSql = "select 1 from StudentExam where StudentNumber=@StudentNumber and Password=@Password and Type=@Type";
+            object obj = DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteScalar(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=userid, ParameterName="@StudentNumber"},
+                new SQLiteParameter(){  Value=oldpassword, ParameterName="@Password"},
+                new SQLiteParameter(){  Value=type, ParameterName="@Type"}
+            });
+            if (obj != null)//旧密码正确
+            {
+                //修改密码
+                strSql = "update StudentExam set Password=@NewPassword where StudentNumber=@StudentNumber and Password=@Password and Type=@Type";
+                int result = DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=userid, ParameterName="@StudentNumber"},
+                new SQLiteParameter(){  Value=oldpassword, ParameterName="@Password"},
+                new SQLiteParameter(){  Value=newpassword, ParameterName="@NewPassword"},
+                new SQLiteParameter(){  Value=type, ParameterName="@Type"}
+                });
+                if (result>0)
+                {
+                    //修改成功
+                    return 1;
+                }
+                else
+                {
+                    //修改失败
+                    return -101;
+                }
+
+            }
+            else
+            {
+                //旧密码不正确
+                return -100;
+            }
+
+        }
+
+        /// <summary>
+        /// 获取用户所有信息
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
+        public StudentExam? GetUserInfo(string userid)
+        {
+            string strSql = "select * from StudentExam where StudentNumber=@StudentNumber";
+            return DataTableToStudentExam(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=userid, ParameterName="@StudentNumber"}
+            }));
+
+        }
+
+
+        private StudentExam? DataTableToStudentExam(DataTable dt)
+        {
+            if (dt!=null&&dt.Rows.Count>0)
+            {
+                StudentExam info = new StudentExam();
+                info.IsFirstLogin = dt.Rows[0]["IsFirstLogin"] == DBNull.Value ? 2 : Convert.ToInt32(dt.Rows[0]["IsFirstLogin"]);
+                info.StudentName = dt.Rows[0]["StudentName"] == DBNull.Value ? "" : dt.Rows[0]["StudentName"].ToString();
+                info.StudentExamId = dt.Rows[0]["StudentExamId"] == DBNull.Value ? -100 : Convert.ToInt32(dt.Rows[0]["StudentExamId"]);
+                info.StudentNumber = dt.Rows[0]["StudentNumber"] == DBNull.Value ? "" : dt.Rows[0]["StudentNumber"].ToString();
+                info.StudentSex = dt.Rows[0]["StudentSex"] == DBNull.Value ? -100 : Convert.ToInt32(dt.Rows[0]["StudentSex"]);
+                info.StudentPhone = dt.Rows[0]["StudentPhone"] == DBNull.Value ? "" : dt.Rows[0]["StudentPhone"].ToString();
+                info.Type = dt.Rows[0]["Type"] == DBNull.Value ? -100 : Convert.ToInt32(dt.Rows[0]["Type"]);
+                if (dt.Rows[0]["LoginDateTime"] != DBNull.Value)
+                {
+                    DateTime datetime;
+                    if (DateTime.TryParse(dt.Rows[0]["LoginDateTime"].ToString(), out datetime))
+                    {
+                        info.LoginDateTime = datetime.ToString("yyyy-MM-dd HH:mm:ss");
+                    }
+
+                }
+                return info;
+
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+        private LoginResult? DataTableToLoginResult(DataTable dt)
+        {
+            if (dt!=null&&dt.Rows.Count>0)
+            {
+                LoginResult info = new LoginResult();
+                info.IsFirstLogin = dt.Rows[0]["IsFirstLogin"] == DBNull.Value ? 2 : Convert.ToInt32(dt.Rows[0]["IsFirstLogin"]);
+                info.UserName = dt.Rows[0]["StudentName"] == DBNull.Value ? "" : dt.Rows[0]["StudentName"].ToString();
+                info.UserID = dt.Rows[0]["StudentNumber"] == DBNull.Value ? "" : dt.Rows[0]["StudentNumber"].ToString();
+                if (dt.Rows[0]["LoginDateTime"] != DBNull.Value)
+                {
+                    DateTime datetime;
+                    if (DateTime.TryParse(dt.Rows[0]["LoginDateTime"].ToString(), out datetime))
+                    {
+                        info.LoginDateTime = datetime.ToString("yyyy-MM-dd HH:mm:ss");
+                    }
+
+                }
+                return info;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public List<StudentExam> GetStudentExam()

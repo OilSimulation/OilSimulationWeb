@@ -94,13 +94,25 @@
         });
         //导航点击对应控制栏的显示
         function ShowMode(modeCtrlId) {
-            var userid = '<%=Session["userid"] %>';
-            if (userid == "") {
-                alert("请先登录！");
-                return;
+            var option = {
+                url: '<%:Url.Action("GetSessionState","Examination") %>',
+                dataType: 'html',
+                type: 'POST',
+                async: false,
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result == null || result == "") {
+                        alert("请先登录！");
+                    }
+                    else {
+                        //已经登录
+                        var sUrl = curWebRootUrl + "/Home/" + modeCtrlId;
+                        window.location.href = sUrl;
+
+                    }
+                }
             }
-            var sUrl = curWebRootUrl + "/Home/" + modeCtrlId;
-            window.location.href = sUrl;
+            $.ajax(option);
         }
         //显示加载动画
         function ShowLoading() {
@@ -183,32 +195,87 @@
                 curWebRootUrl = (prePath + postPath);
         }
 
-        function LoadExam(experimenttypeid) {
-            ExperimentTypeId = experimenttypeid;
-            var jsonData = { Id: experimenttypeid };
-            //获取当前使用的试卷
+        function GetLoginState() {
+            var vresult = "";
             var option = {
-                url: '<%:Url.Action("GetCurrentExercises","Manage") %>',
-                data: JSON.stringify(jsonData),
+                url: '<%:Url.Action("GetSessionState","Examination") %>',
                 dataType: 'html',
                 type: 'POST',
                 async: false,
                 contentType: 'application/json',
                 success: function (result) {
-                    if (result == null) {
-                        return;
-                    }
-                    var resultData = JSON.parse(result);
-                    if (resultData != null) {
-                        ExercisesTestId = resultData.ExercisesTestId;
-                    }
-
+                    vresult =  result;//用户ID
 
                 }
             }
             $.ajax(option);
+            return vresult;
+        }
 
-            LoadExamUrl('/Examination/StudentLogin');
+
+        function LoadExam(experimenttypeid) {
+            //先判断是否登录
+            var userid = GetLoginState();
+            if (userid == "") {
+                alert("请先登录！");
+            }
+            else {
+                //获取考试相关信息
+                ExperimentTypeId = experimenttypeid;
+                var jsonData = { Id: experimenttypeid };
+                //获取当前使用的试卷
+                var option = {
+                    url: '<%:Url.Action("GetCurrentExercises","Manage") %>',
+                    data: JSON.stringify(jsonData),
+                    dataType: 'html',
+                    type: 'POST',
+                    async: false,
+                    contentType: 'application/json',
+                    success: function (result) {
+                        if (result == null) {
+                            return;
+                        }
+                        var resultData = JSON.parse(result);
+                        if (resultData != null) {
+                            ExercisesTestId = resultData.ExercisesTestId;
+                        }
+
+
+                    }
+                }
+                $.ajax(option);
+
+                //获取用户信息
+                var jsonid = { Id: userid };
+                //获取当前使用的试卷
+                var option = {
+                    url: '<%:Url.Action("GetUserInfo","Examination") %>',
+                    data: JSON.stringify(jsonid),
+                    dataType: 'html',
+                    type: 'POST',
+                    async: false,
+                    contentType: 'application/json',
+                    success: function (result) {
+                        if (result.length <= 0) {
+                            return;
+                        }
+                        var resultData = JSON.parse(result);
+                        if (resultData != null) {
+                            StudentName = result.StudentName;
+                            StudentNumber = result.StudentNumber;
+                        }
+
+
+                    }
+                }
+                $.ajax(option);
+
+
+                //已经登录成功才能加载考试页面
+                LoadExamUrl('/Examination/ExamPaper');
+
+            }
+            //LoadExamUrl('/Examination/StudentLogin');
         }
         //加载新URL路径
         function LoadExamUrl(inUrl) {

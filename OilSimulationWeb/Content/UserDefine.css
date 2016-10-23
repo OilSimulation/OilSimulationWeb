@@ -303,3 +303,8 @@ input
 {
     border-radius:.4em;
     }
+    
+    .tableleft
+    {
+        text-align:right;
+        } 

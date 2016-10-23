@@ -13,13 +13,55 @@
             $("#logintable").css("display", "block");
         });
         function updatepassword() {
-            var oldpassword = $("oldpassword").val();
-            var newpassword = $("newpassword").val();
-            var okpassword = $("okpassword").val();
+
+            var oldpassword = $("#oldpassword").val();
+            var newpassword = $("#newpassword").val();
+            var okpassword = $("#okpassword").val();
             if (oldpassword.length <= 0 || newpassword <= 0 || okpassword <= 0) {
                 alert("请输入密码！");
                 return;
             }
+            if (newpassword != okpassword) {
+                alert("确认密码错误！");
+                return;
+            }
+            var type = 1;
+            var vteacher = $("#teacher").val();
+            if (vteacher == "yes") {
+                type = 2;
+            }
+            var vuserid = $("#userid").val();
+
+            var jsonData = { UserId: vuserid, Password: oldpassword, NewPassword: newpassword, Type: type };
+            var option = {
+                url: '<%:Url.Action("UpdatePassword","Examination") %>',
+                data: JSON.stringify(jsonData),
+                dataType: 'html',
+                type: 'POST',
+                async: false,
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result.length>0) {
+                        if (result > 0) {
+                            //密码修改成功,显示用户信息
+                            $("#userinfo").css("display", "block");
+                            $("#passwordtable").css("display", "none");
+                            //$("userinfo").css("display", "block");
+                        }
+                        else if (result == -100) {
+                            alert("原密码错误！");
+                        }
+                        else if (result == -101) {
+                            alert("密码修改失败！");
+                        }
+
+                    }
+
+                }
+            }
+            $.ajax(option);
+
+
         }
          function login() {
              var type=1;
@@ -34,7 +76,7 @@
              if (vteacher=="yes") {
                 type = 2;
              }
-             var jsonData = {UserName:vuserid,Password:vpassword,Type:type};
+             var jsonData = {UserId:vuserid,Password:vpassword,Type:type};
              var option = {
                  url: '<%:Url.Action("Login","Examination") %>',
                  data: JSON.stringify(jsonData),
@@ -43,19 +85,46 @@
                  async: false,
                  contentType: 'application/json',
                  success: function (result) {
-                     if (result != null) {
-                         var resultData  = JSON.parse(result);
+                     if (result.length>0) {
+                         var resultData = JSON.parse(result);
+                         //第一次登录需要修改密码
+                         if (resultData.IsFirstLogin == 1) {
+                             $("#passwordtable").css("display", "block");
+                             $("#logintable").css("display", "none");
+                         }
+                         else {
+                             //不需要修改密码，显示用户信息
+                             $("#passwordtable").css("display", "none");
+                             $("#userinfo").css("display", "block");
+                             $("#logintable").css("display", "none");
+                         }
+
+
+                         $("#userinfoid").text(resultData.UserID);
+                         $("#username").text(resultData.UserName);
+                         $("#logindatetime").text(resultData.LoginDateTime);
+
                      }
-                     if (resultData.IsFirstLogin > 0) {
-                         $("#passwordtable").css("display", "none");
-                         $("#logintable").css("display", "block");
+                     else {
+                        alert("登录失败！");
                      }
+
 
                  }
              }
              $.ajax(option);
 
          }
+
+         function showpassword() {
+             //显示密码修改框
+             $("#passwordtable").css("display", "block");
+             $("#userinfo").css("display", "none");
+
+
+
+         }
+
     </script>
     <div id="MainLayOut" style="width:100%">
         <div style="float:left;margin-right:515px;box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);">
@@ -66,18 +135,28 @@
         <div style="width: 500px; margin-left: -500px; position: relative;float: right;">
             <div style="margin:5px auto;"><img alt="" width="490px" src="../../Images/img2.jpg" /></div>
             <div class="login">
+            <!-- 登录-->
             <table id="logintable"  border="0" cellspacing="0" cellpadding="0" width="100%" style="display:block;">
-                <tr><td>用户名：</td><td><input id="userid" type="text" /></td></tr>
-                <tr><td>密&nbsp;&nbsp;&nbsp;码：</td><td><input id="password" type="text" /></td></tr>
-                <tr><td>角&nbsp;&nbsp;&nbsp;色：</td><td>学生<input type="radio" name="1" id="student" />教师<input type="radio" name="1" id="teacher"/></td></tr>
+                <tr><td class="tableleft">用户名：</td><td><input id="userid" type="text" /></td></tr>
+                <tr><td class="tableleft">密码：</td><td><input id="password" type="text" /></td></tr>
+                <tr><td class="tableleft">角色：</td><td>学生<input type="radio" name="1" id="student" />教师<input type="radio" name="1" id="teacher"/></td></tr>
                 <tr><td colspan="2"><input class="loginButton" type="button" value="登录" onclick="login()" /></td></tr>
             </table>
+            <!-- 第一次登录需要修改密码-->
             <table id="passwordtable"  border="0" cellspacing="0" cellpadding="0" width="100%" style="display:none;">
                 <tr><td colspan="2">请修改密码</td></tr>
-                <tr><td>&nbsp;&nbsp;原密码：</td><td><input id="olduserid" type="text" /></td></tr>
-                <tr><td>&nbsp;&nbsp;新密码：</td><td><input id="newuserid" type="text" /></td></tr>
-                <tr><td>确认密码：</td><td><input id="okuserid" type="text" /></td></tr>
+                <tr><td class="tableleft">原密码：</td><td><input id="oldpassword" type="text" /></td></tr>
+                <tr><td class="tableleft">新密码：</td><td><input id="newpassword" type="text" /></td></tr>
+                <tr><td class="tableleft">确认密码：</td><td><input id="okpassword" type="text" /></td></tr>
                 <tr><td colspan="2"><input class="loginButton" type="button" value="确定" onclick="updatepassword()" /></td></tr>
+            </table>
+            <!-- 登录成功后显示的用户信息-->
+            <table id="userinfo"  border="0" cellspacing="0" cellpadding="0" width="100%" style="display:none;">
+                <tr><td colspan="2">用户信息</td></tr>
+                <tr><td class="tableleft">用户名：</td><td><label id="userinfoid"></label></td></tr>
+                <tr><td class="tableleft">姓名：</td><td><label id="username"></label></td></tr>
+                <tr><td class="tableleft">登录时间：</td><td><label id="logindatetime"></label></td></tr>
+                <tr><td colspan="2"><a style="color:Blue" href="#" onclick="showpassword()">密码修改</a></td></tr>
             </table>
             </div>
         </div>

@@ -142,6 +142,18 @@ namespace DBHelper.Model
         /// 电话号码
         /// </summary>
         public string StudentPhone { get; set; }
+        /// <summary>
+        /// 是否是第一次登录 
+        /// </summary>
+        public int IsFirstLogin{ get; set; }
+        /// <summary>
+        /// 最后一次登录 时间
+        /// </summary>
+        public string LoginDateTime { get; set; }
+        /// <summary>
+        /// 角色类型(学生或教师)
+        /// </summary>
+        public int Type { get; set; }
 
         #region ************  其他
         /// <summary>
@@ -307,18 +319,35 @@ namespace DBHelper.Model
 
     public struct LoginInfo
     {
-        public string UserName { get; set; }
+        public string UserId { get; set; }
         public string Password { get; set; }
         public int Type { get; set; }
+
+        public string NewPassword { get; set; }
     }
+
+
+    
 
     public struct LoginResult
     {
+        /// <summary>
+        /// 学号或教师工号
+        /// </summary>
+        public string UserID;
+        /// <summary>
+        /// 学号或教师姓名
+        /// </summary>
         public string UserName;
         /// <summary>
-        /// 1 是第一次登录，需要修改密码
+        /// 1 是第一次登录需要修改密码,其他不需要修改密码
         /// </summary>
         public int IsFirstLogin;
+
+        /// <summary>
+        /// 最后一次登录时间
+        /// </summary>
+        public string LoginDateTime;
     }
 
 
@@ -333,6 +362,11 @@ namespace DBHelper.Model
         /// 每页显示个数
         /// </summary>
         public int ShowCount { get; set; }
+    }
+
+    public struct stringId
+    {
+        public string strId { get; set; }
     }
 
     public struct stId

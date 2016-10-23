@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bll\DESClass.cs" />
     <Compile Include="Bll\ExercisesTestBLL.cs" />
     <Compile Include="Bll\ExercisesTitleBLL.cs" />
     <Compile Include="Bll\ExperimentTypeBLL.cs" />
