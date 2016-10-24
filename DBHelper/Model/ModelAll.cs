@@ -155,6 +155,8 @@ namespace DBHelper.Model
         /// </summary>
         public int Type { get; set; }
 
+        public string Password { get; set; }
+
         #region ************  其他
         /// <summary>
         /// 总分
