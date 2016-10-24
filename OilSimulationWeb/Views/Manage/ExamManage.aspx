@@ -50,10 +50,11 @@
 			</dd>
 		</dl>
 		<dl id="menu-product">
-			<dt><i class="Hui-iconfont">&#xe620;</i> 学生信息管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+			<dt><i class="Hui-iconfont">&#xe620;</i> 学生教师管理<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a _href="StudentExamWeb" data-title="学生信息管理" href="javascript:void(0)">学生信息管理</a></li>
+					<li><a _href="UserInfoWeb" data-title="学生教师管理" href="javascript:void(0)">学生教师管理</a></li>
+					<li><a _href="StudentExamWeb" data-title="学生成绩管理" href="javascript:void(0)">学生成绩管理</a></li>
 				</ul>
 			</dd>
 		</dl>

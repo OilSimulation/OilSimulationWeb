@@ -204,7 +204,8 @@
                 async: false,
                 contentType: 'application/json',
                 success: function (result) {
-                    vresult =  result;//用户ID
+                    //vresult =  result;//用户ID
+                    vresult = result.substring(1, result.length - 1);
 
                 }
             }
@@ -246,8 +247,8 @@
                 $.ajax(option);
 
                 //获取用户信息
-                var jsonid = { Id: userid };
-                //获取当前使用的试卷
+                var jsonid = { strId: userid };
+
                 var option = {
                     url: '<%:Url.Action("GetUserInfo","Examination") %>',
                     data: JSON.stringify(jsonid),
@@ -261,8 +262,9 @@
                         }
                         var resultData = JSON.parse(result);
                         if (resultData != null) {
-                            StudentName = result.StudentName;
-                            StudentNumber = result.StudentNumber;
+                            StudentName = resultData.StudentName;
+                            StudentNumber = resultData.StudentNumber;
+                            StudentExamId = resultData.StudentExamId;
                         }
 
 

@@ -636,6 +636,7 @@
     <Content Include="Views\Manage\AddTitleInfoWeb.aspx" />
     <Content Include="Views\Manage\AddTitleItemAssocWeb.aspx" />
     <Content Include="Views\Manage\AddTitleItemWeb.aspx" />
+    <Content Include="Views\Manage\AddUserInfoWeb.aspx" />
     <Content Include="Views\Manage\ExamManage.aspx" />
     <Content Include="Views\Manage\ExercisesTestWeb.aspx" />
     <Content Include="Views\Manage\ExercisesTitleWeb.aspx" />
@@ -646,6 +647,7 @@
     <Content Include="Views\Manage\TitleInfoWeb.aspx" />
     <Content Include="Views\Manage\TitleItemAssocWeb.aspx" />
     <Content Include="Views\Manage\TitleItemWeb.aspx" />
+    <Content Include="Views\Manage\UserInfoWeb.aspx" />
     <Content Include="Views\Manage\Welcome.aspx" />
     <Content Include="Views\Simulation\SimMode3111.aspx" />
     <Content Include="Views\Simulation\SimMode3112.aspx" />

@@ -25,11 +25,7 @@
                 alert("确认密码错误！");
                 return;
             }
-            var type = 1;
-            var vteacher = $("#teacher").val();
-            if (vteacher == "yes") {
-                type = 2;
-            }
+            var type = $('input:radio[name="role"]:checked').val();
             var vuserid = $("#userid").val();
 
             var jsonData = { UserId: vuserid, Password: oldpassword, NewPassword: newpassword, Type: type };
@@ -64,17 +60,12 @@
 
         }
          function login() {
-             var type=1;
-             var vteacher = $("#teacher").val();
-             var vstudent = $("#student").val();
+             var type = $('input:radio[name="role"]:checked').val();
              var vuserid = $("#userid").val();
              var vpassword = $("#password").val();
              if (vuserid.length <= 0 || vpassword.length <= 0) {
                  alert("请输入用户名和密码！");
                  return;
-             }
-             if (vteacher=="yes") {
-                type = 2;
              }
              var jsonData = {UserId:vuserid,Password:vpassword,Type:type};
              var option = {
@@ -139,7 +130,7 @@
             <table id="logintable"  border="0" cellspacing="0" cellpadding="0" width="100%" style="display:block;">
                 <tr><td class="tableleft">用户名：</td><td><input id="userid" type="text" /></td></tr>
                 <tr><td class="tableleft">密码：</td><td><input id="password" type="text" /></td></tr>
-                <tr><td class="tableleft">角色：</td><td>学生<input type="radio" name="1" id="student" />教师<input type="radio" name="1" id="teacher"/></td></tr>
+                <tr><td class="tableleft">角色：</td><td>学生<input type="radio" name="role" id="student" value="1" />教师<input type="radio" name="role" id="teacher" value="2"/></td></tr>
                 <tr><td colspan="2"><input class="loginButton" type="button" value="登录" onclick="login()" /></td></tr>
             </table>
             <!-- 第一次登录需要修改密码-->
