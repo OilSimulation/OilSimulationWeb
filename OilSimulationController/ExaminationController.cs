@@ -32,6 +32,8 @@ namespace OilSimulationController
             return View();
         }
 
+
+
         #region *************************************** 试卷信息
 
         /// <summary>
@@ -173,6 +175,53 @@ namespace OilSimulationController
             return res;
         }
 
+        public ActionResult GetUserInfoId(stId StudnetExamid)
+        {
+            StudentExam? result = StudentExambll.GetUserInfo(StudnetExamid.Id);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        public ActionResult AddUserInfo(StudentExam info)
+        {
+            int result = StudentExambll.AddUserInfo(info);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
+
+        public ActionResult GetUserInfos()
+        {
+            List<StudentExam> result = StudentExambll.GetUserInfos();
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        public ActionResult DelUserInfo(stId info)
+        {
+            int result = StudentExambll.DelUserInfo(info.Id);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
+
+
+        public ActionResult UpdateUserInfo(StudentExam info)
+        {
+            int result = StudentExambll.UpdateUserInfo(info.StudentExamId,info.StudentName,info.StudentNumber,info.Password,info.Type);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
         #endregion
 
     }

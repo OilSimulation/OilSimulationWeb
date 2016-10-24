@@ -49,7 +49,15 @@ namespace OilSimulationController
             return View();
         }
 
-        
+        public ActionResult AddUserInfoWeb()
+        {
+            return View();
+        }
+
+        public ActionResult UserInfoWeb()
+        {
+            return View();
+        }
 
 
         #region *************************************** 实验类型
