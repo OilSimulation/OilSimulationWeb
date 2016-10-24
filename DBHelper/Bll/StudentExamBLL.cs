@@ -112,6 +112,97 @@ namespace DBHelper.Bll
 
         }
 
+        public StudentExam? GetUserInfo(int StudentExamId)
+        {
+            string strSql = "select * from StudentExam where StudentExamId=@StudentExamId";
+            return DataTableToStudentExam(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=StudentExamId, ParameterName="@StudentExamId"}
+            }));
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="StudentExamId"></param>
+        /// <param name="StudentName"></param>
+        /// <param name="StudentNumber"></param>
+        /// <param name="Password"></param>
+        /// <param name="Type"></param>
+        /// <returns></returns>
+        public int UpdateUserInfo(int StudentExamId, string StudentName, string StudentNumber, string Password, int Type)
+        {
+            string strSql = @"update StudentExam set StudentName=@StudentName,StudentNumber=@StudentNumber,
+                            Password=@Password,Type=@Type where StudentExamId=@StudentExamId";
+            return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=StudentExamId, ParameterName="@StudentExamId"},
+                new SQLiteParameter(){  Value=StudentName, ParameterName="@StudentName"},
+                new SQLiteParameter(){  Value=StudentNumber, ParameterName="@StudentNumber"},
+                new SQLiteParameter(){  Value=Password, ParameterName="@Password"},
+                new SQLiteParameter(){  Value=Type, ParameterName="@Type"}
+            });
+
+        }
+
+        public int AddUserInfo(StudentExam info)
+        {
+            string strSql = @"insert into StudentExam(StudentName,StudentNumber,Password,Type,IsFirstLogin) 
+                            values(@StudentName,@StudentNumber,@Password,@Type,@IsFirstLogin)";
+            return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=info.Password, ParameterName="@Password"},
+                new SQLiteParameter(){  Value=info.StudentName, ParameterName="@StudentName"},
+                new SQLiteParameter(){  Value=info.StudentNumber, ParameterName="@StudentNumber"},
+                new SQLiteParameter(){  Value=info.Type, ParameterName="@Type"},
+                //new SQLiteParameter(){  Value=DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), ParameterName="@LoginDateTime"},
+                new SQLiteParameter(){  Value=1, ParameterName="@IsFirstLogin"}
+            });
+        }
+
+        public int DelUserInfo(int StudentExamId)
+        {
+            string strSql = "delete from StudentExam where StudentExamId=@StudentExamId";
+            return DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteNonQuery(strSql, new DbParameter[]{
+                new SQLiteParameter(){  Value=StudentExamId, ParameterName="@StudentExamId"}
+            });
+        }
+
+        public List<StudentExam> GetUserInfos()
+        {
+            string strSql = "select * from StudentExam";
+            return DataTableToStudentExams(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql));
+
+        }
+        private List<StudentExam> DataTableToStudentExams(DataTable dt)
+        {
+            List<StudentExam> listInfo = new List<StudentExam>();
+            if (dt != null)
+            {
+                foreach (DataRow dr in dt.Rows)
+                {
+                    StudentExam info = new StudentExam();
+                    info.IsFirstLogin = dr["IsFirstLogin"] == DBNull.Value ? 2 : Convert.ToInt32(dr["IsFirstLogin"]);
+                    info.StudentName = dr["StudentName"] == DBNull.Value ? "" : dr["StudentName"].ToString();
+                    info.StudentExamId = dr["StudentExamId"] == DBNull.Value ? -100 : Convert.ToInt32(dr["StudentExamId"]);
+                    info.StudentNumber = dr["StudentNumber"] == DBNull.Value ? "" : dr["StudentNumber"].ToString();
+                    info.StudentSex = dr["StudentSex"] == DBNull.Value ? -100 : Convert.ToInt32(dr["StudentSex"]);
+                    info.StudentPhone = dr["StudentPhone"] == DBNull.Value ? "" : dr["StudentPhone"].ToString();
+                    info.Type = dr["Type"] == DBNull.Value ? -100 : Convert.ToInt32(dr["Type"]);
+                    if (dr["LoginDateTime"] != DBNull.Value)
+                    {
+                        DateTime datetime;
+                        if (DateTime.TryParse(dr["LoginDateTime"].ToString(), out datetime))
+                        {
+                            info.LoginDateTime = datetime.ToString("yyyy-MM-dd HH:mm:ss");
+                        }
+
+                    }
+
+                    listInfo.Add(info);
+                }
+            }
+            return listInfo;
+        }
+
 
         private StudentExam? DataTableToStudentExam(DataTable dt)
         {
@@ -124,6 +215,7 @@ namespace DBHelper.Bll
                 info.StudentNumber = dt.Rows[0]["StudentNumber"] == DBNull.Value ? "" : dt.Rows[0]["StudentNumber"].ToString();
                 info.StudentSex = dt.Rows[0]["StudentSex"] == DBNull.Value ? -100 : Convert.ToInt32(dt.Rows[0]["StudentSex"]);
                 info.StudentPhone = dt.Rows[0]["StudentPhone"] == DBNull.Value ? "" : dt.Rows[0]["StudentPhone"].ToString();
+                info.Password = dt.Rows[0]["Password"] == DBNull.Value ? "" : dt.Rows[0]["Password"].ToString();
                 info.Type = dt.Rows[0]["Type"] == DBNull.Value ? -100 : Convert.ToInt32(dt.Rows[0]["Type"]);
                 if (dt.Rows[0]["LoginDateTime"] != DBNull.Value)
                 {
@@ -171,7 +263,7 @@ namespace DBHelper.Bll
 
         public List<StudentExam> GetStudentExam()
         {
-            string strSql = "select * from StudentExam";
+            string strSql = "select StudentExamId,StudentSex,StudentName,StudentNumber,StudentPhone from StudentExam";
             return DataTableToList(DBFactory.GetDB(DBType.SQLITE, m_strConn).ExecuteStrSql(strSql));
         }
         public StudentExam? GetStudentExam(int StudentExamId)
