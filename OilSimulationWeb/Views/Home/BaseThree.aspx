@@ -89,13 +89,14 @@
                     <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeSeven');" ><span class="f-da">2、封闭弹性驱动模拟</span></a>  
                 </div>
             </div>
-            <div style="padding: 10px 20px 20px 0px;">
+            <div style="padding: 10px 20px 20px 0px;position: relative;">
                 <div class="t-title f-f0">随堂测试</div>
-                <div class="m-btnList">
-                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="LoadExam(3);">
-                        <span class="f-db">参加测试</span> 
-                    </a>
-                </div>
+                <div class="g-sd2">
+                    <div id="j-courseImg" class="m-recimg canlick">
+                        <img class="img" id="" src="/Images/exam.png" alt="图片" width="350" height="240" />
+                        <a  onclick="LoadExam(3);" class="f-db clickBtn"></a>
+                    </div>
+                </div> 
             </div>
         </div>
     </div>  

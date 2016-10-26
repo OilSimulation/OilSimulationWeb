@@ -300,19 +300,22 @@
                     <a href="javascript:void(0);" onclick="ShowVirControlDiv(223);LoadUrl('/VirExperiment/VirtualMode2231');" ><span class="f-da">2、三种类型原油密度级别下的水驱油效率实验</span></a> 
                 </div>
             </div>
-            <div style="padding: 10px 20px 10px 0px; " >
-                <div class="t-title f-f0">实验流程</div>
-                <div class="m-btnList"> 
-                    <a href="javascript:void(0);" onclick="ShowVirControlDiv(000);ShowWizard();" ><span class="f-da">观看实验流程</span></a> 
-                </div>
-            </div>
-            <div style="padding: 10px 20px 20px 0px;">
+            <div style="padding: 10px 20px 20px 0px;position: relative;">
                 <div class="t-title f-f0">随堂测试</div>
+                <div class="g-sd2">
+                    <div id="j-courseImg" class="m-recimg canlick">
+                        <img class="img" id="" src="/Images/exam.png" alt="图片" width="350" height="240" />
+                        <a  onclick="ShowVirControlDiv(000);LoadExam(5);" class="f-db clickBtn"></a>
+                    </div>
+                </div> 
+            </div> 
+            <div style="padding: 0 20px 50px 0px; " >
+                <div class="t-title f-f0">实验流程</div> 
                 <div class="m-btnList">
-                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="ShowVirControlDiv(000);LoadExam(5);">
-                        <span class="f-db">参加测试</span> 
+                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="ShowVirControlDiv(000);ShowWizard();">
+                        <span class="f-db">观看实验流程</span> 
                     </a>
-                </div>
+                </div> 
             </div>
         </div>
     </div>  

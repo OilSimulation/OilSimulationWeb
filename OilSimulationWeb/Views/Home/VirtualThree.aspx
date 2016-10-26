@@ -139,14 +139,15 @@
                     <a href="javascript:void(0);" onclick="ShowVirControlDiv(233);LoadUrl('/VirExperiment/VirtualMode2331');" ><span class="f-da">3、三种类型油水相渗曲线下的采收率实验</span></a> 
                 </div>
             </div>
-            <div style="padding: 10px 20px 20px 0px;">
+            <div style="padding: 10px 20px 20px 0px;position: relative;">
                 <div class="t-title f-f0">随堂测试</div>
-                <div class="m-btnList">
-                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="ShowVirControlDiv(000);LoadExam(6);">
-                        <span class="f-db">参加测试</span> 
-                    </a>
-                </div>
-            </div>
+                <div class="g-sd2">
+                    <div id="j-courseImg" class="m-recimg canlick">
+                        <img class="img" id="" src="/Images/exam.png" alt="图片" width="350" height="240" />
+                        <a  onclick="ShowVirControlDiv(000);LoadExam(6);" class="f-db clickBtn"></a>
+                    </div>
+                </div> 
+            </div> 
         </div>
     </div>  
 </asp:Content>

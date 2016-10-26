@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div style="width: 400px; margin-left: -400px; position: relative;float: right;">
+        <div style="width: 400px; margin-left: -400px; float: right;">
            <div>
                 <div class="t-title f-f0">课程内容</div>
                 <object id="forfun" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="400" height="300" 
@@ -89,14 +89,14 @@
                     <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeTwo');" ><span class="f-da">2、非活塞式水驱油模拟</span></a> 
                 </div>
             </div>
-            <div style="padding: 10px 20px 20px 0px;">
+            <div style="padding: 10px 20px 20px 0px;position: relative;">
                 <div class="t-title f-f0">随堂测试</div>
-                <div class="m-btnList">
-                    <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="LoadExam(1);">
-                        <span class="f-db">参加测试</span>
-
-                    </a>
-                </div>
+                <div class="g-sd2">
+                    <div id="j-courseImg" class="m-recimg canlick">
+                        <img class="img" id="" src="/Images/exam.png" alt="图片" width="350" height="240" />
+                        <a  onclick="LoadExam(1);" class="f-db clickBtn"></a>
+                    </div>
+                </div> 
             </div>
         </div>
     </div>  

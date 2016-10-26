@@ -94,6 +94,7 @@
         });
         //导航点击对应控制栏的显示
         function ShowMode(modeCtrlId) {
+
             var option = {
                 url: '<%:Url.Action("GetSessionState","Examination") %>',
                 dataType: 'html',
