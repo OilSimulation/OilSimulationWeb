@@ -21,8 +21,8 @@
             </div>
         </div>
         <div style="width: 300px; margin-left: -300px; position: relative;float: right;">
-            <div style="padding:5px auto;"><img alt="" width="300px" src="../../Images/img11.png" /></div>
-            <div style="padding:5px auto;"><img alt="" width="300px" src="../../Images/img12.png" /></div>
+            <div style="padding:5px auto;"><img alt="" width="300px" src="../Images/img11.png" /></div>
+            <div style="padding:5px auto;"><img alt="" width="300px" src="../Images/img12.png" /></div>
         </div>
     </div>
 </asp:Content>

@@ -124,7 +124,7 @@
             </div>
         </div>
         <div style="width: 500px; margin-left: -500px; position: relative;float: right;">
-            <div style="margin:5px auto;"><img alt="" width="490px" src="../../Images/img2.jpg" /></div>
+            <div style="margin:5px auto;"><img alt="" width="490px" src="../Images/img2.jpg" /></div>
             <div class="login">
             <!-- 登录-->
             <table id="logintable"  border="0" cellspacing="0" cellpadding="0" width="100%" style="display:block;">

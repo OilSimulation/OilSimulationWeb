@@ -74,7 +74,7 @@
                 <param name="wmode" value="opaque"><!--Window|Opaque|Transparent-->
                 <param name="FlashVars" value="">
                 <param name="allowScriptAccess" value="sameDomain">
-                <embed id="forfunex" src="/Flash/渗流方式模拟.swf"
+                <embed id="forfunex" src="../Flash/渗流方式模拟.swf"
                     width="400"
                     height="331"
                     align="middle"
@@ -103,7 +103,7 @@
                 <div class="t-title f-f0">随堂测试</div>
                 <div class="g-sd2">
                     <div id="j-courseImg" class="m-recimg canlick">
-                        <img class="img" id="" src="/Images/exam.png" alt="图片" width="350" height="240" />
+                        <img class="img" id="" src="../Images/exam.png" alt="图片" width="350" height="240" />
                         <a  onclick="LoadExam(2);" class="f-db clickBtn"></a>
                     </div>
                 </div> 

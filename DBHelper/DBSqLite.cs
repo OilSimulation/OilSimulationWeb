@@ -5,6 +5,7 @@ using System.Text;
 using System.Data.SQLite;
 using System.Data.Common;
 using System.Data;
+using System.IO;
 
 namespace DBHelper
 {
@@ -58,11 +59,37 @@ namespace DBHelper
 
             }
         }
+        /// <summary>
+        /// 写日志
+        /// </summary>
+        /// <param name="strLog"></param>
+        public static void WriteLog(string strLog)
+        {
+
+            string path = "c://1.txt";
+
+            //string pathLog = Application.StartupPath + "\\Log\\" + DateTime.Now.ToString("yyyy-MM-dd");
+//             if (Directory.Exists(pathLog))
+//             {
+// 
+//             }
+//             else
+//             {
+//                 Directory.CreateDirectory(pathLog);
+//             }
+            using (StreamWriter sw1 = new StreamWriter(path, true))
+            {
+                sw1.WriteLine("");
+                sw1.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "  " + strLog);
+            }
+
+        }
 
         public DataTable ExecuteStrSql(string strSql)
         {
             try
             {
+                
                 using (SQLiteConnection sqliteConn = new SQLiteConnection(stringConn))
                 {
                     sqliteConn.Open();
@@ -130,6 +157,7 @@ namespace DBHelper
         {
             try
             {
+                WriteLog(stringConn);
                 using (SQLiteConnection sqliteConn = new SQLiteConnection(stringConn))
                 {
                     sqliteConn.Open();
@@ -147,6 +175,8 @@ namespace DBHelper
             }
             catch (Exception ex)
             {
+                WriteLog(ex.ToString());
+
                 return null;
 
             }

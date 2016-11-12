@@ -95,7 +95,7 @@
                             <param name="wmode" value="Opaque"><!--Window|Opaque|Transparent-->
                             <param name="FlashVars" value="">
                             <param name="allowScriptAccess" value="sameDomain">
-                            <embed id="forfunex" src="/Flash/演示-饱.swf"
+                            <embed id="forfunex" src="../Flash/演示-饱.swf"
                                 width="750"
                                 height="550"
                                 align="middle" 
@@ -128,7 +128,7 @@
                             <param name="wmode" value="opaque"><!--Window|Opaque|Transparent-->
                             <param name="FlashVars" value="">
                             <param name="allowScriptAccess" value="sameDomain">
-                            <embed id="forfunex" src="/Flash/演示-抽油.swf"
+                            <embed id="forfunex" src="../Flash/演示-抽油.swf"
                                 width="750"
                                 height="550"
                                 align="middle"
@@ -161,7 +161,7 @@
                             <param name="wmode" value="opaque"><!--Window|Opaque|Transparent-->
                             <param name="FlashVars" value="">
                             <param name="allowScriptAccess" value="sameDomain">
-                            <embed id="forfunex" src="/Flash/演示-抽水.swf"
+                            <embed id="forfunex" src="../Flash/演示-抽水.swf"
                                 width="750"
                                 height="550"
                                 align="middle"
@@ -194,7 +194,7 @@
                             <param name="wmode" value="opaque"><!--Window|Opaque|Transparent-->
                             <param name="FlashVars" value="">
                             <param name="allowScriptAccess" value="sameDomain">
-                            <embed id="forfunex" src="/Flash/演示-水驱油.swf"
+                            <embed id="forfunex" src="../Flash/演示-水驱油.swf"
                                 width="750"
                                 height="550"
                                 align="middle"
@@ -275,7 +275,7 @@
                 <param name="wmode" value="opaque"><!--Window|Opaque|Transparent-->
                 <param name="FlashVars" value="">
                 <param name="allowScriptAccess" value="sameDomain">
-                <embed id="forfunex" src="/Flash/水驱油效率实验.swf"
+                <embed id="forfunex" src="../Flash/水驱油效率实验.swf"
                     width="400"
                     height="331"
                     align="middle"
@@ -304,7 +304,7 @@
                 <div class="t-title f-f0">随堂测试</div>
                 <div class="g-sd2">
                     <div id="j-courseImg" class="m-recimg canlick">
-                        <img class="img" id="" src="/Images/exam.png" alt="图片" width="350" height="240" />
+                        <img class="img" id="" src="../Images/exam.png" alt="图片" width="350" height="240" />
                         <a  onclick="ShowVirControlDiv(000);LoadExam(5);" class="f-db clickBtn"></a>
                     </div>
                 </div> 
