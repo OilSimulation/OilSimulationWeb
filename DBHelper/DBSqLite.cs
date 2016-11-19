@@ -65,7 +65,7 @@ namespace DBHelper
         /// <param name="strLog"></param>
         public static void WriteLog(string strLog)
         {
-
+            return;
             string path = "c://1.txt";
 
             //string pathLog = Application.StartupPath + "\\Log\\" + DateTime.Now.ToString("yyyy-MM-dd");
