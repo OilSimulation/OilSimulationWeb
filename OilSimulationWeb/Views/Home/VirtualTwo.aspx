@@ -216,7 +216,22 @@
                        </div> 
                     </div>
                     <div class="page"> 
-                       <div class="top f-f0">（六）数据处理</div> 
+                        <div class="top f-f0">（六）数据处理</div> 
+                        <div class="bottom f-richEditorText"><h4>基础数据</h4><p>岩样长度：5CM；<br />岩样直径：2.5CM；<br />岩样重量：65g；<br />盐水密度：1.01；<br /></p></div>  
+                        <table id="tabRecord">
+                            <tr>
+                                <th>序号</th>
+                                <th>产油（Qo）</th>
+                                <th>产水（Qw）</th>  
+                                <th>时间（t）</th>  
+                            </tr>
+                            <tr>
+                                <td>sdddd</td>
+                                <td>sdddd</td>
+                                <td>sdddd</td>
+                                <td>sdddd</td>
+                            </tr>
+                       </table>
                        <div class="btn_nav"> 
                            <input type="button" class="prev f-ib u-btn u-btn-orange" style="float:left" value="«上一步" /> 
                            <input type="button" class="next f-ib u-btn u-btn-orange" id="sub" value="确定" /> 
