@@ -79,6 +79,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebReport.aspx.cs">
+      <DependentUpon>WebReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebReport.aspx.designer.cs">
+      <DependentUpon>WebReport.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\EclipseParser.dll" />
@@ -732,6 +738,7 @@
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Views\Web.config" />
+    <Content Include="WebReport.aspx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OilSimulationController\OilSimulationController.csproj">
