@@ -163,7 +163,6 @@
     <Content Include="Images\驱油效率原油密度.png" />
     <Content Include="Images\驱油效率原油粘度.png" />
     <Content Include="Images\驱油效率毛管力.png" />
-    <Content Include="OilSimulationWeb.Publish.xml" />
     <Content Include="Scripts\controls\DeviceOrientationControls.js" />
     <Content Include="Scripts\controls\DragControls.js" />
     <Content Include="Scripts\controls\EditorControls.js" />
