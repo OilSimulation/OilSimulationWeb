@@ -333,3 +333,32 @@ input
 {
    text-align:right;
 } 
+
+#tabRecord 
+{
+    margin-top:20px;
+    margin-left:20px;
+    width:500px;
+    border-left:1px solid; 
+    border-top:1px solid;   
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+}
+#tabRecord td
+{ 
+    border-right:1px solid; 
+    border-bottom:1px solid;   
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+} 
+#tabRecord th
+{ 
+    background:#b5cfd2;
+    border-right:1px solid; 
+    border-bottom:1px solid;   
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+}  
