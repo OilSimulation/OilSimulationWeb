@@ -124,18 +124,12 @@
 .u-btn-orange{
     background-color: #FF6C00;
     background-repeat: repeat-x;
-    background-image: -khtml-gradient(linear, left top, left bottom, from(#FF7E00), to(#FF6C00));
-    background-image: -moz-linear-gradient(#FF7E00, #FF6C00);
-    background-image: -ms-linear-gradient(#FF7E00, #FF6C00);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #FF7E00), color-stop(100%, #FF6C00));
-    background-image: -webkit-linear-gradient(#FF7E00, #FF6C00);
-    background-image: -o-linear-gradient(#FF7E00, #FF6C00);
-    background-image: linear-gradient(#FF7E00, #FF6C00);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff$startColor',endColorstr='#ff$endColor',GradientType=0);
-    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-    border-color: #EF6502;
     color: #fff;
-    border-bottom: 1px solid #b25900;  
+    border-bottom: 1px solid #b25900;
+    background-image: linear-gradient(#FF7E00, #FF6C00);
+    border-left-color: #EF6502;
+    border-right-color: #EF6502;
+    border-top-color: #EF6502;
 }
 .foot2 {
     background: url("../Images/foot-nei-bg.jpg") no-repeat scroll center top transparent;
@@ -362,3 +356,18 @@ input
 	border-color: #999999;
 	border-collapse: collapse;
 }  
+.ReportDiv
+{
+    float:left;
+    border-left:1px solid black;
+    border-top:1px solid black;
+    line-height:22px;
+    height:22px;
+    text-align:center;
+}
+.ReportDiv input
+{
+    border:0;
+    height:20px;
+    width:100%;
+}
