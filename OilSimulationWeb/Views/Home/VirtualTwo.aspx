@@ -11,13 +11,19 @@
             $("#WebGLLayOut").hide();
             $("#MainLayOut").show();
             $("#wizard").hide();
-            $("#explainPage").show();   
+            $("#explainPage").show();
             $(".liNav").each(function () { $(this).removeClass("select"); });
             $(".zbar ul").each(function () { $(this).css("display", "none"); });
             $("#ModeTwo").css("display", "block");
             $("#ExpFive").addClass("select");
             $("#curMode").text($("#ModeTwo").prev().text());
-            $("#curitem").text($("#ExpFive").children().text()); 
+            $("#curitem").text($("#ExpFive").children().text());
+
+            var sFeatures = "height=600, width=1050, scrollbars=yes, resizable=yes, location=no";
+            $("#sub").click(function () {
+                window.open(curWebRootUrl + "/WebReport.aspx", '3km', sFeatures);
+                return false;
+            });
         });
         function ShowVirControlDiv(sId) {
             $("#Virtual221").hide();
@@ -43,6 +49,7 @@
         $(function () {
             $("#wizard").scrollable();
         }); 
+
     </script>
     <div id="WebGLLayOut">
         <div id="Virtual221" style="display:inline;">
@@ -226,15 +233,15 @@
                                 <th>时间（t）</th>  
                             </tr>
                             <tr>
-                                <td>sdddd</td>
-                                <td>sdddd</td>
+                                <td>1</td>
+                                <td>30</td>
                                 <td>sdddd</td>
                                 <td>sdddd</td>
                             </tr>
                        </table>
                        <div class="btn_nav"> 
                            <input type="button" class="prev f-ib u-btn u-btn-orange" style="float:left" value="«上一步" /> 
-                           <input type="button" class="next f-ib u-btn u-btn-orange" id="sub" value="确定" /> 
+                           <input type="button" class="next f-ib u-btn u-btn-orange" id="sub" value="填写报告" /> 
                        </div> 
                     </div> 
                 </div>          
