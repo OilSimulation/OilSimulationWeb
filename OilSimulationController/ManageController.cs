@@ -18,6 +18,7 @@ namespace OilSimulationController
     public class ManageController : Controller
     {
         public static string strConn = @"Data Source =" + HttpRuntime.AppDomainAppPath + "DBFile\\DB.db";
+        WebReportBLL WebReportBll = new WebReportBLL(strConn);
 
         ExercisesTestBLL ExercisesTestbll = new ExercisesTestBLL(strConn);
         ExperimentTypeBLL ExperimentTypebll = new ExperimentTypeBLL(strConn);
@@ -654,6 +655,26 @@ namespace OilSimulationController
         }
         #endregion
 
+        public ActionResult EditWebReportInfo(WebReportInfo info)
+        {
+            int result = WebReportBll.EditWebReportInfo(info);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
+
+
+        public ActionResult GetWebReportInfo(stringId info)
+        {
+            WebReportInfo? result = WebReportBll.GetWebReportInfo(info.strId);
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
 
     }
 }

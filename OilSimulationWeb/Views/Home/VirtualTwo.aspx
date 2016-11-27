@@ -21,7 +21,16 @@
 
             var sFeatures = "height=600, width=1050, scrollbars=yes, resizable=yes, location=no";
             $("#sub").click(function () {
-                window.open(curWebRootUrl + "/WebReport.aspx", '3km', sFeatures);
+                var  userid = GetLoginState();
+                $("#useridDisplay").val(userid);
+                if (userid == "") {
+                    alert("请先登录！");
+                    var sUrl = curWebRootUrl + "/Home/Index";
+                    window.location.href = sUrl;
+                }
+                else {
+                    window.open(curWebRootUrl + "/WebReport.aspx", '3km', sFeatures);
+                }
                 return false;
             });
         });
@@ -51,6 +60,7 @@
         }); 
 
     </script>
+    <input style="display:none;" id="useridDisplay"/>
     <div id="WebGLLayOut">
         <div id="Virtual221" style="display:inline;">
             毛细管压力:

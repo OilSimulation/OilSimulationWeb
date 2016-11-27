@@ -543,4 +543,58 @@ namespace DBHelper.Model
     }
 
     #endregion
+
+
+    /// <summary>
+    /// 报告信息
+    /// </summary>
+    public struct WebReportInfo
+    {
+        public int WebReportId { get; set; }
+        /// <summary>
+        /// 课程名称
+        /// </summary>
+        public string CourseName { get; set; }
+        /// <summary>
+        /// 实验项目名称
+        /// </summary>
+        public string ExperimentName { get; set; }
+        /// <summary>
+        /// 开课学院及实验室
+        /// </summary>
+        public string ExperimentAddress { get; set; }
+        /// <summary>
+        /// 实验日期
+        /// </summary>
+        public string ExperimentDate { get; set; }
+        /// <summary>
+        /// 学号
+        /// </summary>
+        public string StudentNumber { get; set; }
+        /// <summary>
+        /// 学生姓名
+        /// </summary>
+        public string StudentName { get; set; }
+        /// <summary>
+        /// 班级名称
+        /// </summary>
+        public string ClassName { get; set; }
+
+        /// <summary>
+        /// 老师姓名
+        /// </summary>
+        public string TeacherName { get; set; }
+        /// <summary>
+        /// 得分
+        /// </summary>
+        public double Score { get; set; }
+        public string Title1 { get; set; }
+        public string Title2 { get; set; }
+        public string Title3 { get; set; }
+        public string Title4 { get; set; }
+        public string Title5 { get; set; }
+        public string Title6 { get; set; }
+        public string Title7 { get; set; }
+    }
 }
+

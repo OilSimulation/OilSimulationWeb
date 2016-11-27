@@ -7,6 +7,8 @@
     <title>实验报告</title>
     <link href="./Content/Site.css"" rel="stylesheet" type="text/css" />
     <link href="./Content/UserDefine.css"" rel="stylesheet" type="text/css" /> 
+    <script type="text/javascript" src="Scripts/jquery-1.4.1.min.js"></script>
+
 </head>
 <body>
     <div>  
@@ -27,21 +29,21 @@
                 <div style="width:800px;margin:0 auto;">  
                     <div style="text-align:center;"> <h1>重庆科技学院学生实验报告</h1></div>
                     <div style="float:left;width:100%;">
-                        <div class="ReportDiv" style="width:120px;">课程名称</div><div class="ReportDiv" style="width:200px;"><input type="text" /></div>
-                        <div class="ReportDiv" style="width:149px;">实验项目名称</div><div class="ReportDiv" style="width:326px;border-right:1px solid black;"><input type="text" /></div>
+                        <div class="ReportDiv" style="width:120px;">课程名称</div><div class="ReportDiv" style="width:200px;"><input id="CourseName" type="text" /></div>
+                        <div class="ReportDiv" style="width:149px;">实验项目名称</div><div class="ReportDiv" style="width:326px;border-right:1px solid black;"><input id="ExperimentName" type="text" /></div>
                     </div>
                     <div style="float:left;width:100%;">
-                        <div class="ReportDiv" style="width:200px;">开课学院及实验室</div><div class="ReportDiv" style="width:270px;"><input type="text" /></div>
-                        <div class="ReportDiv" style="width:120px;">实验日期</div><div class="ReportDiv" style="width:205px;border-right:1px solid black;"><input type="text" /></div>
+                        <div class="ReportDiv" style="width:200px;">开课学院及实验室</div><div class="ReportDiv" style="width:270px;"><input id="ExperimentAddress" type="text" /></div>
+                        <div class="ReportDiv" style="width:120px;">实验日期</div><div class="ReportDiv" style="width:205px;border-right:1px solid black;"><input id="ExperimentDate" type="text" /></div>
                     </div>
                     <div style="float:left;width:100%;">
-                        <div class="ReportDiv" style="width:120px;">学生姓名</div><div class="ReportDiv" style="width:110px;"><input type="text" /></div>
-                        <div class="ReportDiv" style="width:118px;">学号</div><div class="ReportDiv" style="width:120px;"><input type="text" /></div>
-                        <div class="ReportDiv" style="width:120px;">专业班级</div><div class="ReportDiv" style="width:205px;border-right:1px solid black;"><input type="text" /></div>
+                        <div class="ReportDiv" style="width:120px;">学生姓名</div><div class="ReportDiv" style="width:110px;"><input id="StudentName" type="text" /></div>
+                        <div class="ReportDiv" style="width:118px;">学号</div><div class="ReportDiv" style="width:120px;"><input id="StudentNumber" type="text"  readonly="readonly"  /></div>
+                        <div class="ReportDiv" style="width:120px;">专业班级</div><div class="ReportDiv" style="width:205px;border-right:1px solid black;"><input id="ClassName" type="text" /></div>
                     </div>
                     <div style="float:left;width:100%;">
-                        <div class="ReportDiv" style="width:120px;">指导老师</div><div class="ReportDiv" style="width:229px;"><input type="text" /></div>
-                        <div class="ReportDiv" style="width:200px;">实验成绩</div><div class="ReportDiv" style="width:246px;border-right:1px solid black;"><input type="text" /></div>
+                        <div class="ReportDiv" style="width:120px;">指导老师</div><div class="ReportDiv" style="width:229px;"><input id="TeacherName" type="text" /></div>
+                        <div class="ReportDiv" style="width:200px;">实验成绩</div><div class="ReportDiv" style="width:246px;border-right:1px solid black;"><input id="Score" type="text" /></div>
                     </div>
                     <div class="ReportDiv" style="float:left;width:798px;border-right:1px solid black; text-align:left; height:200px;">
                         <div style=" font-size:18px; font-weight:bold;">一、实验目的和要求</div> 
@@ -72,7 +74,7 @@
                         <textarea id="expContent7"  style="width:792px; height:145px; margin-top:5px;" ></textarea>
                     </div>
                     <div class="clear"></div>
-                    <div style=" text-align:center;"><input id="save" type="button" value="保存" /> &nbsp;&nbsp;&nbsp;&nbsp;<input id="print" type="button" onclick="window.print();" value="打印" /></div>
+                    <div style=" text-align:center;"><input id="save" type="button" value="保存" onclick="SaveWebReport()" /> &nbsp;&nbsp;&nbsp;&nbsp;<input id="print" type="button" onclick="window.print();" value="打印" /></div>
                     <div class="clear"></div>
                 </div> 
             </div> 
@@ -85,5 +87,105 @@
             </div>
         </div>--%>
     </div> 
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var userid = window.opener.document.getElementById("useridDisplay").value;
+            LoadWebReport(userid);
+            //var userid = Request.getParameter("userid");
+            $("#StudentNumber").val(userid);
+
+        });
+        function LoadWebReport(userid) {
+            var jsonData = { strId: userid };
+            var option = {
+                url: 'Manage/GetWebReportInfo',
+                type: 'POST',
+                data: JSON.stringify(jsonData),
+                dataType: 'html',
+                async: false,
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result !=null) {
+                        var resultData = JSON.parse(result);
+                        $("#CourseName").val(resultData.CourseName);
+                        $("#ExperimentName").val(resultData.ExperimentName);
+                        $("#ExperimentAddress").val(resultData.ExperimentAddress);
+                        $("#ExperimentDate").val(resultData.ExperimentDate);
+                        $("#StudentNumber").val(resultData.StudentNumber);
+                        $("#StudentName").val(resultData.StudentName);
+                        $("#ClassName").val(resultData.ClassName);
+
+                        $("#TeacherName").val(resultData.TeacherName);
+                        $("#expContent1").val(resultData.Title1);
+                        $("#expContent2").val(resultData.Title2);
+                        $("#expContent3").val(resultData.Title3);
+                        $("#expContent4").val(resultData.Title4);
+                        $("#expContent5").val(resultData.Title5);
+                        $("#expContent6").val(resultData.Title6);
+                        $("#expContent7").val(resultData.Title7);
+                    }
+                    else {
+                       
+                    }
+                },
+                error: function (e) {
+                    
+                }
+
+            }
+            $.ajax(option);
+
+        }
+                 function SaveWebReport() {
+                     var CourseName = $("#CourseName").val();
+                     var ExperimentName = $("#ExperimentName").val();
+                     var ExperimentAddress = $("#ExperimentAddress").val();
+                     var ExperimentDate = $("#ExperimentDate").val();
+                     var StudentNumber = $("#StudentNumber").val();
+                     var StudentName = $("#StudentName").val();
+                     var ClassName = $("#ClassName").val();
+
+                     var TeacherName = $("#TeacherName").val();
+                     var Score = $("#Score").val();
+                     var Title1 = $("#expContent1").val();
+                     var Title2 = $("#expContent2").val();
+                     var Title3 = $("#expContent3").val();
+                     var Title4 = $("#expContent4").val();
+                     var Title5 = $("#expContent5").val();
+                     var Title6 = $("#expContent6").val();
+                     var Title7 = $("#expContent7").val();
+         
+                     var jsonData = { CourseName: CourseName, ExperimentName: ExperimentName, ExperimentAddress: ExperimentAddress, ExperimentDate: ExperimentDate,
+                         StudentNumber: StudentNumber, StudentName: StudentName, ClassName: ClassName, TeacherName: TeacherName, Score: Score,
+                         Title1: Title1, Title2: Title2, Title3: Title3, Title4: Title4, Title5: Title5, Title6: Title6, Title7: Title7
+                     };
+                     var option = {
+                         url: 'Manage/EditWebReportInfo',
+                         type: 'POST',
+                         data: JSON.stringify(jsonData),
+                         dataType: 'html',
+                         async: false,
+                         contentType: 'application/json',
+                         success: function (result) {
+                             if (result > 0) {
+                                 alert("保存成功");
+                             }
+                             else {
+                                 alert("保存失败");
+                             }
+                         },
+                         error: function (e) {
+                             alert("保存失败");
+                         }
+         
+                     }
+         
+                     $.ajax(option);
+         
+                 }
+
+
+    </script>
 </body>
 </html>

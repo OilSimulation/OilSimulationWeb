@@ -55,6 +55,7 @@
     <Compile Include="Bll\TitleItemAssocBLL.cs" />
     <Compile Include="Bll\TitleItemBLL.cs" />
     <Compile Include="Bll\TitleTypeBLL.cs" />
+    <Compile Include="Bll\WebReportBLL.cs" />
     <Compile Include="DBFactory.cs" />
     <Compile Include="DBSqLite.cs" />
     <Compile Include="IDBHelper.cs" />
