@@ -148,6 +148,38 @@ namespace OilSimulationController
         }
 
         /// <summary>
+        /// 获取当前登录用户的类型（学生或老师）
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult GetCurrentUserType()
+        {
+            int result = -1;
+            string str = "";
+            if (Session["userid"] != null)
+            {
+                str = Session["userid"].ToString().Trim();
+
+                StudentExam? info = StudentExambll.GetUserInfo(str);
+                if (info!=null)
+                {
+                    result = info.Value.Type;
+                }
+                else
+                {
+                    result = -1;
+                }
+            }
+            else
+            {
+                result = -1;
+            }
+            var res = new ConfigurableJsonResult();
+            res.Data = result;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+        }
+
+        /// <summary>
         /// 修改密码
         /// </summary>
         /// <param name="info"></param>

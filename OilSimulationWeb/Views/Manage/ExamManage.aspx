@@ -93,6 +93,55 @@
     <script type="text/javascript" src="<%=Url.Content("~/Scripts/Exam/static/h-ui.admin/js/H-ui.admin.js")%>"></script>
 
 <script type="text/javascript">
+    var curWebRootUrl;
+    $(document).ready(function () {
+        GetRootPath();
+        var option = {
+            url: '<%:Url.Action("GetCurrentUserType","Examination") %>',
+            type: 'POST',
+            dataType: 'html',
+            async: false,
+            contentType: 'application/json',
+            success: function (result) {
+                if (result != 2) {
+                    //非教师不可操作。
+                    alert("权限不够！");
+                    var sUrl = "/Home/Index";
+                    window.location.href = sUrl;
+                    return;
+                }
+
+
+
+            }
+        }
+        $.ajax(option)
+
+    })
+    //获取网站根目录或者二级目录
+    function GetRootPath() {
+        var strFullPath = window.document.location.href;
+        var strPath = window.document.location.pathname;
+        var pos = strFullPath.indexOf(strPath);
+        var prePath = strFullPath.substring(0, pos);
+
+        var postPath;
+
+        if (strPath.indexOf('/Home') == -1) {
+            if (strPath.substr(1).indexOf('/') == -1)
+                postPath = strPath;
+            else
+                postPath = strPath.substring(0, strPath.substr(1).indexOf('/') + 1);
+        }
+        else {
+            postPath = strPath.substring(0, strPath.indexOf('/Home'));
+        }
+        if (strPath == "/")
+            curWebRootUrl = strFullPath.substring(0, strFullPath.length - 1);
+        else
+            curWebRootUrl = (prePath + postPath);
+    }
+
     /*资讯-添加*/
     function article_add(title, url) {
         var index = layer.open({

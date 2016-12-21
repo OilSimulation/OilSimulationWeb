@@ -178,7 +178,7 @@
     function updatedata(title, url, StudentExamId) {
         $("#StudentExamId").val(StudentExamId);
         $("#AddOrUpdate").val("2");
-        layer_show(title, url, '', 200);
+        layer_show(title, url, '', 400);
     }
 
     function adddata(title, url) {
