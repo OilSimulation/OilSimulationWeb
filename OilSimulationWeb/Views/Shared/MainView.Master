@@ -305,7 +305,7 @@
             {
                 case 1:
                     {
-                        var model = <%= new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(ViewData["lstFPR"]) %>;
+                        var model = <%= new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(ViewData["lstFOPT"]) %>;
                         /*
                         new Dygraph(document.getElementById("graph"), model, { 
                           title: '累产油（万方）', 
