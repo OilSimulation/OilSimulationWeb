@@ -15,8 +15,16 @@ namespace OilSimulationController
     {
         //计算机逻辑内核数量
         int iCoreCount = Environment.ProcessorCount;
-        private static List<stMultiTread> lstThread = new List<stMultiTread>(); 
-        
+        private static List<stMultiTread> lstThread = new List<stMultiTread>();
+
+        /// <summary>
+        /// 试用到期页面
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ExpireInfo()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             //存储用户名
@@ -36,62 +44,19 @@ namespace OilSimulationController
         }
         public ActionResult BaseIndex()
         {
-            string szMac = CommonModel.GetMACID();
-            ViewData["szMac"] = szMac;
-            if (lstThread.Count >= iCoreCount)
-            {
-                int a = 0;
-            }
-            else
-            {
-                lstThread.Add(new stMultiTread());
-            }
-
-            return View();
+            return RedirectToAction("ExpireInfo", "Home");
+            //return View();
         }
         public ActionResult VirtualIndex()
-        {
-            string szMac = CommonModel.GetMACID();
-            ViewData["szMac"] = szMac;
-            if (lstThread.Count >= iCoreCount)
-            {
-                int a = 0;
-            }
-            else
-            {
-                lstThread.Add(new stMultiTread());
-            }
-
+        { 
             return View();
         }
         public ActionResult SimulationIndex()
-        {
-            string szMac = CommonModel.GetMACID();
-            ViewData["szMac"] = szMac;
-            if (lstThread.Count >= iCoreCount)
-            {
-                int a = 0;
-            }
-            else
-            {
-                lstThread.Add(new stMultiTread());
-            }
-
+        {  
             return View();
         }
         public ActionResult InnovateIndex()
-        {
-            string szMac = CommonModel.GetMACID();
-            ViewData["szMac"] = szMac;
-            if (lstThread.Count >= iCoreCount)
-            {
-                int a = 0;
-            }
-            else
-            {
-                lstThread.Add(new stMultiTread());
-            }
-
+        {  
             return View();
         }
         /// <summary>
