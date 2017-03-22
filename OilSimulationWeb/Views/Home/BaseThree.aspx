@@ -98,6 +98,9 @@
                     </div>
                 </div> 
             </div>
+            <div style="padding: 10px 20px 20px 0px;"> 
+                <div class="t-title f-f0">规格型号：CB-SIM03</div> 
+            </div>
         </div>
     </div>  
 </asp:Content>

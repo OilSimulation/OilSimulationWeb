@@ -425,13 +425,16 @@
                     </div>
                 </div> 
             </div> 
-            <div style="padding: 0 20px 50px 0px; " >
+            <div style="padding: 0 20px 10px 0px; " >
                 <div class="t-title f-f0">实验流程及报告</div> 
                 <div class="m-btnList">
                     <a class="f-ib u-btn u-btn-lg u-btn-orange" id="j-startLearn" href="javascript:void(0);" onclick="ShowVirControlDiv(000);ShowWizard();">
                         <span class="f-db">观看实验流程</span> 
                     </a>
                 </div> 
+            </div>
+            <div style="padding: 10px 20px 20px 0px;"> 
+                <div class="t-title f-f0">规格型号：CB-SIM12</div> 
             </div>
         </div>
     </div>  

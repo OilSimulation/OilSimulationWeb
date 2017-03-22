@@ -89,7 +89,7 @@
                     <a href="javascript:void(0);" onclick="LoadUrl('/Base/BaseModeTwo');" ><span class="f-da">2、非活塞式水驱油模拟</span></a> 
                 </div>
             </div>
-            <div style="padding: 10px 20px 20px 0px;position: relative;">
+            <div style="padding: 10px 20px 10px 0px;position: relative;">
                 <div class="t-title f-f0">随堂测试</div>
                 <div class="g-sd2">
                     <div id="j-courseImg" class="m-recimg canlick">
@@ -97,6 +97,9 @@
                         <a  onclick="LoadExam(1);" class="f-db clickBtn"></a>
                     </div>
                 </div> 
+            </div>
+            <div style="padding: 10px 20px 20px 0px;"> 
+                <div class="t-title f-f0">规格型号：CB-SIM01</div> 
             </div>
         </div>
     </div>  

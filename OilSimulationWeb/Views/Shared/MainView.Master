@@ -347,7 +347,7 @@
                 break;
                 case 2:
                     {
-                        var model = <%= new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(ViewData["lstFOPT"]) %>;
+                        var model = <%= new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(ViewData["lstFLPT"]) %>;
                         var myChart = new JSChart('graph', 'line');
                         myChart.setDataArray(model);
                         myChart.setAxisNameFontSize(10);
