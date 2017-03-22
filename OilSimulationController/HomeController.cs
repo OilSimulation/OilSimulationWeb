@@ -27,36 +27,29 @@ namespace OilSimulationController
         }
         public ActionResult Index()
         {
+            if (false) return RedirectToAction("ExpireInfo", "Home");
             //存储用户名
-            Session["userid"] = "";
-            string szMac = CommonModel.GetMACID();
-            ViewData["szMac"] = szMac;
-            if (lstThread.Count >= iCoreCount)
-            {
-                int a = 0;
-            }
-            else
-            {
-                lstThread.Add(new stMultiTread());
-            } 
-            
+            Session["userid"] = ""; 
             return View();
         }
         public ActionResult BaseIndex()
         {
-            return RedirectToAction("ExpireInfo", "Home");
-            //return View();
+            if (false) return RedirectToAction("ExpireInfo", "Home");
+            return View();
         }
         public ActionResult VirtualIndex()
-        { 
+        {
+            if (false) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         public ActionResult SimulationIndex()
-        {  
+        {
+            if (false) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         public ActionResult InnovateIndex()
-        {  
+        {
+            if (false) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         /// <summary>
@@ -65,7 +58,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult BaseOne()
         { 
-
+            if (false) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         /// <summary>
@@ -73,8 +66,8 @@ namespace OilSimulationController
         /// </summary>
         /// <returns></returns>
         public ActionResult BaseTwo()
-        {
-
+        { 
+            if (false) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         /// <summary>
@@ -83,7 +76,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult BaseThree()
         {
-
+            if (false) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
 
@@ -95,7 +88,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult VirtualOne()
         {
-
+            if (false) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         /// <summary>
@@ -104,7 +97,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult VirtualTwo()
         {
-
+            if (false) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         /// <summary>
@@ -113,7 +106,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult VirtualThree()
         {
-
+            if (false) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
 
@@ -124,7 +117,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult EmulateOne()
         {
-
+            if (false) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         /// <summary>
@@ -133,7 +126,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult EmulateTwo()
         {
-
+            if (false) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
 
@@ -144,7 +137,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult InnovateOne()
         {
-
+            if (false) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         /// <summary>
@@ -153,7 +146,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult InnovateTwo()
         {
-
+            if (false) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
     }
