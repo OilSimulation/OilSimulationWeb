@@ -129,16 +129,16 @@
             <!-- 登录-->
             <table id="logintable"  border="0" cellspacing="0" cellpadding="0" width="100%" style="display:block;">
                 <tr><td class="tableleft">用户名：</td><td><input id="userid" type="text" /></td></tr>
-                <tr><td class="tableleft">密码：</td><td><input id="password" type="text" /></td></tr>
+                <tr><td class="tableleft">密码：</td><td><input id="password" type="password" /></td></tr>
                 <tr><td class="tableleft">角色：</td><td>学生<input type="radio" name="role" id="student" value="1" />教师<input type="radio" name="role" id="teacher" value="2"/></td></tr>
                 <tr><td colspan="2"><input class="loginButton" type="button" value="登录" onclick="login()" /></td></tr>
             </table>
             <!-- 第一次登录需要修改密码-->
             <table id="passwordtable"  border="0" cellspacing="0" cellpadding="0" width="100%" style="display:none;">
                 <tr><td colspan="2">请修改密码</td></tr>
-                <tr><td class="tableleft">原密码：</td><td><input id="oldpassword" type="text" /></td></tr>
-                <tr><td class="tableleft">新密码：</td><td><input id="newpassword" type="text" /></td></tr>
-                <tr><td class="tableleft">确认密码：</td><td><input id="okpassword" type="text" /></td></tr>
+                <tr><td class="tableleft">原密码：</td><td><input id="oldpassword" type="password" /></td></tr>
+                <tr><td class="tableleft">新密码：</td><td><input id="newpassword" type="password" /></td></tr>
+                <tr><td class="tableleft">确认密码：</td><td><input id="okpassword" type="password" /></td></tr>
                 <tr><td colspan="2"><input class="loginButton" type="button" value="确定" onclick="updatepassword()" /></td></tr>
             </table>
             <!-- 登录成功后显示的用户信息-->
