@@ -11,7 +11,12 @@
             $("#citem").hide();
             $("#passwordtable").css("display", "none");
             $("#logintable").css("display", "block");
+
+
         });
+
+        
+
         function updatepassword() {
 
             var oldpassword = $("#oldpassword").val();

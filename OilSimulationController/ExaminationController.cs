@@ -22,6 +22,7 @@ namespace OilSimulationController
         StudentExaminationPaperBLL StudentExaminationPaperbll = new StudentExaminationPaperBLL(strConn);
         StudentExamBLL StudentExambll = new StudentExamBLL(strConn);
         StudentExamStateBLL StudentExamStatebll = new StudentExamStateBLL(strConn);
+        PeriodTotalBLL PeriodTotalbll = new PeriodTotalBLL(strConn);
         public ActionResult ExamPaper()
         {
             return View();
@@ -115,10 +116,19 @@ namespace OilSimulationController
 
         public ActionResult Login(LoginInfo info)
         {
-            LoginResult? result = StudentExambll.Login(info.UserId, info.Password, info.Type);
-            if (result!=null)
+            LoginResult? result = null;
+            if (PeriodTotalbll.IsPeriod())
             {
-                Session["userid"] = result.Value.UserID;
+                
+            }
+            else
+            {
+
+                result = StudentExambll.Login(info.UserId, info.Password, info.Type);
+                if (result != null)
+                {
+                    Session["userid"] = result.Value.UserID;
+                }
             }
             var res = new ConfigurableJsonResult();
             res.Data = result;

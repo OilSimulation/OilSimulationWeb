@@ -27,6 +27,21 @@
 
             $("#RightPanl").width($(".greybg .main").width() - 200);
 
+            if (IsPeriod()) {
+                //到期
+                $("#Index").css("display", "none");
+                alert("试用时间已经结束，请联系公司！");
+                //$("#MainLayOut").css("display", "block");
+                //LeftPanel
+
+//                $("#LeftPanel").css("display", "none");
+//                $("#RightPanel").css("display", "none");
+
+                //return;
+            }
+            else {
+                var a = 0;
+            }
             //初始化Iframe窗口正常
             isIframeMax = false;
             //判断本地是否可用
@@ -92,6 +107,35 @@
 
 
         });
+
+        //判断是否到期
+        function IsPeriod() {
+            var vResult = false;
+            var option = {
+                url: '<%:Url.Action("IsPeriod","Home") %>',
+                dataType: 'html',
+                type: 'POST',
+                async: false,
+                contentType: 'application/json',
+                success: function (result) {
+                    if (result.length > 0 && result == 1) {
+                        //到期
+                        vResult =  true;
+                    }
+                    else {
+                        vResult =  false;
+                    }
+
+
+                }
+            }
+            $.ajax(option);
+
+            return vResult;
+
+        }
+
+
         //导航点击对应控制栏的显示
         function ShowMode(modeCtrlId) {
             var userid = GetLoginState();

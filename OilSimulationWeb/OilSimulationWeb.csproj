@@ -685,6 +685,7 @@
     <Content Include="Views\Manage\ExercisesTitleWeb.aspx" />
     <Content Include="Views\Manage\ExperimentTypeWeb.aspx" />
     <Content Include="Views\Manage\Login.aspx" />
+    <Content Include="Views\Manage\PeriodWeb.aspx" />
     <Content Include="Views\Manage\StudentExamExercisesTestWeb.aspx" />
     <Content Include="Views\Manage\StudentExamWeb.aspx" />
     <Content Include="Views\Manage\TitleInfoWeb.aspx" />

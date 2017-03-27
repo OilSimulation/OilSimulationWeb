@@ -7,16 +7,19 @@ using System.IO;
 using System.Management;
 using OilSimulationModel;
 using EclipseUtils;
+using DBHelper.Bll;
+using DBHelper.Model;
 
 namespace OilSimulationController
 {
     [HandleError]
     public class HomeController : Controller
     {
+        public static string strConn = @"Data Source =" + HttpRuntime.AppDomainAppPath + "DBFile\\DB.db";
         //计算机逻辑内核数量
         int iCoreCount = Environment.ProcessorCount;
         private static List<stMultiTread> lstThread = new List<stMultiTread>();
-
+        PeriodTotalBLL PeriodTotalBll = new PeriodTotalBLL(strConn);
         /// <summary>
         /// 试用到期页面
         /// </summary>
@@ -25,6 +28,24 @@ namespace OilSimulationController
         {
             return View();
         }
+
+
+
+        /// <summary>
+        /// 判断是否到期
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult IsPeriod()
+        {
+            bool result = PeriodTotalBll.IsPeriod();
+            var res = new ConfigurableJsonResult();
+            res.Data = result == true ? 1 : 0;
+            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            return res;
+
+        }
+
         public ActionResult Index()
         {
             if (false) return RedirectToAction("ExpireInfo", "Home");

@@ -596,5 +596,47 @@ namespace DBHelper.Model
         public string Title6 { get; set; }
         public string Title7 { get; set; }
     }
+
+    /// <summary>
+    /// 试用信息
+    /// </summary>
+    public class PeriodInfo
+    {
+        public int PeriodId { get; set; }
+        /// <summary>
+        /// 硬盘号
+        /// </summary>
+        public string PeriodNumber { get; set; }
+        /// <summary>
+        /// 开始试用时间
+        /// </summary>
+        public string StartDateTime { get; set; }
+        /// <summary>
+        /// 试用天数(暂未使用,通过试用总控来控制试用天数)
+        /// </summary>
+        public int PeriodDay { get; set; }
+        /// <summary>
+        /// 试用别名
+        /// </summary>
+        public string PeriodAlias { get; set; }
+
+    }
+
+
+    /// <summary>
+    /// 试用总控
+    /// </summary>
+    public class PeriodTotalInfo
+    {
+        public int PeriodTotalId { get; set; }
+        /// <summary>
+        /// 试用天数
+        /// </summary>
+        public int PeriodDay { get; set; }
+        /// <summary>
+        /// 是否试用
+        /// </summary>
+        public bool PeriodBool { get; set; }
+    }
 }
 
