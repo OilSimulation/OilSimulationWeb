@@ -161,6 +161,7 @@ namespace DBHelper
                 using (SQLiteConnection sqliteConn = new SQLiteConnection(stringConn))
                 {
                     sqliteConn.Open();
+                    //sqliteConn.ChangePassword("zhizaiz,xmcnvb");
                     SQLiteCommand sqliteComm = new SQLiteCommand(sqliteConn);
                     sqliteComm.CommandText = strSql;
                     sqliteComm.CommandType = System.Data.CommandType.Text;

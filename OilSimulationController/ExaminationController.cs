@@ -17,7 +17,7 @@ namespace OilSimulationController
 {
     public class ExaminationController : Controller
     {
-        public static string strConn = @"Data Source =" + HttpRuntime.AppDomainAppPath + "DBFile\\DB.db";
+        public static string strConn = @"Data Source =" + HttpRuntime.AppDomainAppPath + "DBFile\\DB.db;password = zhizaiz,xmcnvb";
 
         StudentExaminationPaperBLL StudentExaminationPaperbll = new StudentExaminationPaperBLL(strConn);
         StudentExamBLL StudentExambll = new StudentExamBLL(strConn);
@@ -117,19 +117,13 @@ namespace OilSimulationController
         public ActionResult Login(LoginInfo info)
         {
             LoginResult? result = null;
-            if (PeriodTotalbll.IsPeriod())
-            {
-                
-            }
-            else
-            {
+             
 
-                result = StudentExambll.Login(info.UserId, info.Password, info.Type);
-                if (result != null)
-                {
-                    Session["userid"] = result.Value.UserID;
-                }
-            }
+            result = StudentExambll.Login(info.UserId, info.Password, info.Type);
+            if (result != null)
+            {
+                Session["userid"] = result.Value.UserID;
+            } 
             var res = new ConfigurableJsonResult();
             res.Data = result;
             HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");

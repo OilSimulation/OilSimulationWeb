@@ -15,11 +15,12 @@ namespace OilSimulationController
     [HandleError]
     public class HomeController : Controller
     {
-        public static string strConn = @"Data Source =" + HttpRuntime.AppDomainAppPath + "DBFile\\DB.db";
+        public static string strConn = @"Data Source =" + HttpRuntime.AppDomainAppPath + "DBFile\\DB.db;password = zhizaiz,xmcnvb";
         //计算机逻辑内核数量
         int iCoreCount = Environment.ProcessorCount;
         private static List<stMultiTread> lstThread = new List<stMultiTread>();
-        PeriodTotalBLL PeriodTotalBll = new PeriodTotalBLL(strConn);
+        private static string szVerInfo = "WXP1AC5ETYZ4";
+        PeriodTotalBLL PeriodTotalBll = new PeriodTotalBLL(strConn); 
         /// <summary>
         /// 试用到期页面
         /// </summary>
@@ -28,49 +29,33 @@ namespace OilSimulationController
         {
             return View();
         }
-
-
-
-        /// <summary>
-        /// 判断是否到期
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult IsPeriod()
-        {
-            bool result = PeriodTotalBll.IsPeriod();
-            var res = new ConfigurableJsonResult();
-            res.Data = result == true ? 1 : 0;
-            HttpContext.Response.AppendHeader("Access-Control-Allow-Origin", "*");
-            return res;
-
-        }
+          
 
         public ActionResult Index()
         {
-            if (false) return RedirectToAction("ExpireInfo", "Home");
+            if ( PeriodTotalBll.IsPeriod(szVerInfo) ) return RedirectToAction("ExpireInfo", "Home");
             //存储用户名
             Session["userid"] = ""; 
             return View();
         }
         public ActionResult BaseIndex()
         {
-            if (false) return RedirectToAction("ExpireInfo", "Home");
+            if ( PeriodTotalBll.IsPeriod(szVerInfo) ) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         public ActionResult VirtualIndex()
         {
-            if (false) return RedirectToAction("ExpireInfo", "Home");
+            if ( PeriodTotalBll.IsPeriod(szVerInfo) ) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         public ActionResult SimulationIndex()
         {
-            if (false) return RedirectToAction("ExpireInfo", "Home");
+            if (  PeriodTotalBll.IsPeriod(szVerInfo) ) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         public ActionResult InnovateIndex()
         {
-            if (false) return RedirectToAction("ExpireInfo", "Home");
+            if ( PeriodTotalBll.IsPeriod(szVerInfo) ) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         /// <summary>
@@ -79,7 +64,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult BaseOne()
         { 
-            if (false) return RedirectToAction("ExpireInfo", "Home");
+            if ( PeriodTotalBll.IsPeriod(szVerInfo) ) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         /// <summary>
@@ -88,7 +73,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult BaseTwo()
         { 
-            if (false) return RedirectToAction("ExpireInfo", "Home");
+            if ( PeriodTotalBll.IsPeriod(szVerInfo) ) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         /// <summary>
@@ -97,7 +82,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult BaseThree()
         {
-            if (false) return RedirectToAction("ExpireInfo", "Home");
+            if ( PeriodTotalBll.IsPeriod(szVerInfo) ) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
 
@@ -109,7 +94,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult VirtualOne()
         {
-            if (false) return RedirectToAction("ExpireInfo", "Home");
+            if ( PeriodTotalBll.IsPeriod(szVerInfo) ) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         /// <summary>
@@ -118,7 +103,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult VirtualTwo()
         {
-            if (false) return RedirectToAction("ExpireInfo", "Home");
+            if ( PeriodTotalBll.IsPeriod(szVerInfo) ) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         /// <summary>
@@ -127,7 +112,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult VirtualThree()
         {
-            if (false) return RedirectToAction("ExpireInfo", "Home");
+            if ( PeriodTotalBll.IsPeriod(szVerInfo) ) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
 
@@ -138,7 +123,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult EmulateOne()
         {
-            if (false) return RedirectToAction("ExpireInfo", "Home");
+            if ( PeriodTotalBll.IsPeriod(szVerInfo) ) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         /// <summary>
@@ -147,7 +132,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult EmulateTwo()
         {
-            if (false) return RedirectToAction("ExpireInfo", "Home");
+            if ( PeriodTotalBll.IsPeriod(szVerInfo) ) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
 
@@ -158,7 +143,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult InnovateOne()
         {
-            if (false) return RedirectToAction("ExpireInfo", "Home");
+            if ( PeriodTotalBll.IsPeriod(szVerInfo) ) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
         /// <summary>
@@ -167,7 +152,7 @@ namespace OilSimulationController
         /// <returns></returns>
         public ActionResult InnovateTwo()
         {
-            if (false) return RedirectToAction("ExpireInfo", "Home");
+            if ( PeriodTotalBll.IsPeriod(szVerInfo) ) return RedirectToAction("ExpireInfo", "Home");
             return View();
         }
     }

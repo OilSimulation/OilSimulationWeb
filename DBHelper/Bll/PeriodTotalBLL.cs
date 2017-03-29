@@ -42,11 +42,12 @@ namespace DBHelper.Bll
             }
         }
 
-        public bool IsPeriod()
+        public bool IsPeriod(string szHardNumber)
         {
-            int periodresult = 0;
+            //return false;
+            //UpdatePeriodTotal(new PeriodTotalInfo() { PeriodTotalId = 2, PeriodDay = 1, PeriodBool = true });
             DateTime CurrentDateTime = DateTime.Now;
-            PeriodInfo info = PeriodBll.GetPeriod(GetHardDiskNumber());
+            PeriodInfo info = PeriodBll.GetPeriod(szHardNumber);
 
             PeriodTotalInfo tinfo = GetPeriodTotal();
             if (tinfo == null)
@@ -66,7 +67,7 @@ namespace DBHelper.Bll
                     {
                         PeriodAlias = "",
                         PeriodDay = 30,
-                        PeriodNumber = GetHardDiskNumber(),
+                        PeriodNumber = szHardNumber,
                         StartDateTime = CurrentDateTime.ToString("yyyy-MM-dd HH:mm:ss")
                     });
                 }

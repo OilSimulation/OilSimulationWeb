@@ -17,7 +17,7 @@ namespace OilSimulationController
     [HandleError]
     public class ManageController : Controller
     {
-        public static string strConn = @"Data Source =" + HttpRuntime.AppDomainAppPath + "DBFile\\DB.db";
+        public static string strConn = @"Data Source =" + HttpRuntime.AppDomainAppPath + "DBFile\\DB.db;password = zhizaiz,xmcnvb";
         WebReportBLL WebReportBll = new WebReportBLL(strConn);
 
         ExercisesTestBLL ExercisesTestbll = new ExercisesTestBLL(strConn);
